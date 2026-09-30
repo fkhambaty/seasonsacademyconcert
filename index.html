@@ -114,7 +114,7 @@
       body.printing-act #printSheets{display:block!important}
     }
     #printSheets{display:none}
-    .sheet{width:277mm;height:188mm;display:grid;grid-template-rows:auto 1fr auto;gap:4mm;color:#1b1826;font:10pt/1.35 "DM Sans",system-ui,sans-serif;break-after:page;page-break-after:always;overflow:hidden}
+    .sheet{width:297mm;height:210mm;box-sizing:border-box;padding:10mm 10mm 11mm;display:grid;grid-template-rows:auto 1fr auto;gap:4mm;color:#1b1826;font:10pt/1.35 "DM Sans",system-ui,sans-serif;break-after:page;page-break-after:always;overflow:hidden}
     .sheet:last-child{break-after:auto;page-break-after:auto}
     .sheet-head{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:5mm;padding-bottom:3mm;border-bottom:.6mm solid #1b1826}
     .sheet-head img{height:15mm;width:auto}
@@ -782,7 +782,7 @@
       holder.innerHTML=events.map(actSheetHtml).join("");
       await Promise.all([...holder.querySelectorAll("img")].map(img=>img.decode().catch(()=>{})));
       const orientation=document.createElement("style");
-      orientation.textContent="@page{size:A4 landscape;margin:10mm}";
+      orientation.textContent="@page{size:A4 landscape;margin:0}";
       document.head.appendChild(orientation);
       document.body.classList.add("printing-act");
       window.print();
