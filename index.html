@@ -8,10 +8,10 @@
   <style>
     :root{--ink:#1b1826;--muted:#5c5768;--night:#f7f5f0;--panel:#ffffff;--line:#e4e0d8;--gold:#b8892f;--pink:#d83a7f;--cyan:#1a9ea3;--danger:#d9434d;--stage:#ffffff;--shadow:0 24px 60px #1b182618}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--night);color:var(--ink);font:15px/1.45 "DM Sans",system-ui,sans-serif;min-height:100vh;overflow-x:hidden}button,input,select,textarea{font:inherit}button,a{color:inherit}a{text-decoration:none}.noise{position:fixed;inset:0;pointer-events:none;opacity:.025;z-index:20;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
-    .app-header{height:76px;display:flex;align-items:center;gap:30px;padding:0 34px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#f7f5f0e8;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);z-index:15}.brand{display:flex;align-items:center;gap:12px;margin-right:auto;text-decoration:none}.brand-mark{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#b8892f,#d9ad4f);font:600 20px/1 "Playfair Display",Georgia,serif;box-shadow:0 6px 16px #b8892f3d;flex:none}.brand-copy b{display:block;font:600 17px/1.15 "Playfair Display",Georgia,serif;letter-spacing:-.01em;color:var(--ink)}.brand-copy span{display:block;font-size:12px;color:var(--muted);margin-top:2px}.nav{display:flex;gap:5px}.nav a,.soft-btn,.icon-btn{border:1px solid transparent;text-decoration:none;background:transparent;padding:9px 13px;border-radius:10px;cursor:pointer;transition:.2s}.nav a:hover,.nav a.active,.soft-btn:hover{background:#1b18260a;border-color:var(--line)}.edit-link{display:none!important;background:var(--ink)!important;color:#fff!important;font-weight:700}.icon-btn{width:42px;height:42px;padding:0;display:grid;place-items:center;border-color:var(--line)}
+    .app-header{height:76px;display:flex;align-items:center;gap:30px;padding:0 34px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#f7f5f0e8;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);z-index:15}.brand{display:flex;align-items:center;gap:12px;margin-right:auto;text-decoration:none}.brand-mark{width:46px;height:46px;object-fit:contain;flex:none;display:block}.brand-copy b{display:block;font:600 17px/1.15 "Playfair Display",Georgia,serif;letter-spacing:-.01em;color:var(--ink)}.brand-copy span{display:block;font-size:12px;color:var(--muted);margin-top:2px}.nav{display:flex;gap:5px}.nav a,.soft-btn,.icon-btn{border:1px solid transparent;text-decoration:none;background:transparent;padding:9px 13px;border-radius:10px;cursor:pointer;transition:.2s}.nav a:hover,.nav a.active,.soft-btn:hover{background:#1b18260a;border-color:var(--line)}.edit-link{display:none!important;background:var(--ink)!important;color:#fff!important;font-weight:700}.icon-btn{width:42px;height:42px;padding:0;display:grid;place-items:center;border-color:var(--line)}
     main{min-height:calc(100vh - 76px)}.view{display:none}.view.active{display:block}.eyebrow{text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--gold);font-weight:700}.serif{font-family:"Playfair Display",Georgia,serif}.muted{color:var(--muted)}.control-help{color:var(--muted);font-size:12px}.editor-runtime{font:600 36px "Playfair Display";color:var(--gold)}
     .primary{border:0;padding:14px 20px;border-radius:12px;background:linear-gradient(120deg,#b8892f,#d9ad4f);color:#fff;font-weight:700;cursor:pointer;box-shadow:0 9px 30px #b8892f40}
-    .home{min-height:calc(100vh - 76px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 24px 64px;position:relative;overflow:hidden}.home:before{content:"";position:absolute;width:760px;height:760px;left:50%;top:44%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#b8892f24 0,#b8892f00 62%);pointer-events:none}.home>*{position:relative}
+    .home{min-height:calc(100vh - 76px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 24px 64px;position:relative;overflow:hidden}.home:before{content:"";position:absolute;width:760px;height:760px;left:50%;top:44%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#b8892f24 0,#b8892f00 62%);pointer-events:none}.home>*{position:relative}.home-logo{height:132px;width:auto;margin:0 0 18px}
     .home-title{font:600 clamp(44px,7.5vw,104px)/.95 "Playfair Display",Georgia,serif;letter-spacing:-.04em;margin:18px 0 44px}.home-title i{color:var(--gold)}
     .countdown{display:flex;align-items:flex-start;gap:clamp(8px,2vw,22px);margin-bottom:56px}.countdown div{min-width:clamp(62px,11vw,120px)}.countdown strong{display:block;font:700 clamp(40px,7vw,84px)/1 "DM Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.04em}.countdown span{display:block;margin-top:10px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600}.countdown>b{font:400 clamp(30px,5vw,60px)/1 "Playfair Display",Georgia,serif;color:#1b182633;padding-top:.1em}
     .home-actions{display:grid;grid-template-columns:repeat(2,minmax(0,300px));gap:18px}.home-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:30px 28px;border-radius:22px;background:#fff;border:1px solid var(--line);box-shadow:0 18px 50px #1b182612;transition:transform .25s,box-shadow .25s,border-color .25s}.home-btn:hover{transform:translateY(-4px);border-color:#b8892f80;box-shadow:0 26px 60px #b8892f2e}.home-btn b{font:600 30px "Playfair Display",Georgia,serif}.home-btn small{font-size:14px;color:var(--muted)}.home-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:22px;color:#fff;background:linear-gradient(135deg,#b8892f,#d9ad4f);margin-bottom:6px}
@@ -56,9 +56,8 @@
     @media(max-width:600px){
       .brand-copy span{display:none}
       .brand-copy b{font-size:15px}
-      .home-title{margin-bottom:28px}
+      .home-logo{height:84px;margin-bottom:8px}.home-title{font-size:42px;margin:6px 0 16px}.countdown{margin-bottom:20px}.countdown strong{font-size:34px}.home-btn{padding:16px 18px}
       .home-actions{grid-template-columns:1fr;width:min(100%,420px)}
-      .home-btn{padding:22px 18px}
       .countdown{gap:6px;margin-bottom:36px;width:100%}
       .countdown div{min-width:0;flex:1}
       .countdown span{font-size:10px;letter-spacing:.08em}
@@ -99,7 +98,7 @@
   <div class="noise"></div>
   <header class="app-header">
     <a class="brand" href="#overview" aria-label="Seasons Academy overview">
-      <span class="brand-mark">S</span><span class="brand-copy"><b>Seasons Academy</b><span>Showcase run sheet &amp; stage plans</span></span>
+      <img class="brand-mark" src="logo-mark.png" alt=""><span class="brand-copy"><b>Seasons Academy</b><span>Showcase run sheet &amp; stage plans</span></span>
     </a>
     <nav class="nav" aria-label="Main navigation">
       <a href="#overview" data-route="overview">Overview</a><a href="#timeline" data-route="timeline">Timeline</a><a href="#stage" data-route="stage">Stage map</a><a class="edit-link" href="#edit" data-route="edit">Edit show</a>
@@ -110,6 +109,7 @@
   <main>
     <section class="view" id="overviewView">
       <div class="home">
+        <img class="home-logo" src="logo.png" alt="Seasons Music Academy">
         <div class="eyebrow">Friday · 9 October · 3:45 PM</div>
         <h1 class="home-title">Seasons Academy <i>Showcase</i></h1>
         <div class="countdown" id="countdown" aria-live="polite">
@@ -189,7 +189,7 @@
   <div class="toast" id="toast" role="status"></div>
 
   <script>
-    const STORAGE_KEY = "seasons-academy-show-v8";
+    const STORAGE_KEY = "seasons-academy-show-v9";
     const DEFAULT_RIG = {drumSide:"right",keyboardsPerSide:3,guitarSlots:5,overrides:{}};
     const colors = {
       "Drums":"#e0357f","Keyboard":"#6c5ce7","Guitar":"#f2712e",
@@ -216,7 +216,6 @@
           item(7,"Raag Yaman",[["Flute",5]]),
           item(8,"The Flute Song",[["Guitar",1],["Keyboard",5],["Keyboard & Vocals",1]]),
           item(9,"Saiyaara",[["Guitar",4],["Keyboard",5],["Drums",1],["Bass Guitar",1]]),filler(),
-          item(10,"Dance — Bharatanatyam",[["Dance",1]]),filler(),
           item(11,"G Minute",[["Violin",7]]),
           item(12,"Ghar More Pardesiya & Moh Moh Ke Dhaage",[["Hindustani Vocals",4]]),
           item(13,"Challa — Jab Tak Hai Jaan",[["Drums",1],["Keyboard",1],["Vocals",1],["Guitar",5],["Bass Guitar",1]]),
