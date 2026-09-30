@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f5f0">
+  <title>Trial · Seasons Academy — Show Flow</title>
+  <meta name="robots" content="noindex">
+  <style>
+    :root{--ink:#1b1826;--muted:#5c5768;--night:#f7f5f0;--panel:#ffffff;--line:#e4e0d8;--gold:#b8892f;--pink:#d83a7f;--cyan:#1a9ea3;--danger:#d9434d;--stage:#ffffff;--shadow:0 24px 60px #1b182618}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--night);color:var(--ink);font:15px/1.45 "DM Sans",system-ui,sans-serif;min-height:100vh;overflow-x:hidden}button,input,select,textarea{font:inherit}button,a{color:inherit}a{text-decoration:none}.noise{position:fixed;inset:0;pointer-events:none;opacity:.025;z-index:20;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
+    .app-header{height:76px;display:flex;align-items:center;gap:30px;padding:0 34px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#f7f5f0e8;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);z-index:15}.brand{display:flex;align-items:center;gap:12px;margin-right:auto;text-decoration:none}.brand-mark{width:46px;height:46px;object-fit:contain;flex:none;display:block}.brand-copy b{display:block;font:600 17px/1.15 "Playfair Display",Georgia,serif;letter-spacing:-.01em;color:var(--ink)}.brand-copy span{display:block;font-size:12px;color:var(--muted);margin-top:2px}.nav{display:flex;gap:5px}.nav a,.soft-btn,.icon-btn{border:1px solid transparent;text-decoration:none;background:transparent;padding:9px 13px;border-radius:10px;cursor:pointer;transition:.2s}.nav a:hover,.nav a.active,.soft-btn:hover{background:#1b18260a;border-color:var(--line)}.edit-link{display:none!important;background:var(--ink)!important;color:#fff!important;font-weight:700}.icon-btn{width:42px;height:42px;padding:0;display:grid;place-items:center;border-color:var(--line)}
+    main{min-height:calc(100vh - 76px)}.view{display:none}.view.active{display:block}.eyebrow{text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--gold);font-weight:700}.serif{font-family:"Playfair Display",Georgia,serif}.muted{color:var(--muted)}.control-help{color:var(--muted);font-size:12px}.editor-runtime{font:600 36px "Playfair Display";color:var(--gold)}
+    .primary{border:0;padding:14px 20px;border-radius:12px;background:linear-gradient(120deg,#b8892f,#d9ad4f);color:#fff;font-weight:700;cursor:pointer;box-shadow:0 9px 30px #b8892f40}
+    .home{min-height:calc(100vh - 76px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 24px 64px;position:relative;overflow:hidden}.home:before{content:"";position:absolute;width:760px;height:760px;left:50%;top:44%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#b8892f24 0,#b8892f00 62%);pointer-events:none}.home>*{position:relative}.home-logo{height:132px;width:auto;margin:0 0 18px}
+    .home-title{font:600 clamp(44px,7.5vw,104px)/.95 "Playfair Display",Georgia,serif;letter-spacing:-.04em;margin:18px 0 44px}.home-title i{color:var(--gold)}
+    .countdown{display:flex;align-items:flex-start;gap:clamp(8px,2vw,22px);margin-bottom:56px}.countdown div{min-width:clamp(62px,11vw,120px)}.countdown strong{display:block;font:700 clamp(40px,7vw,84px)/1 "DM Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.04em}.countdown span{display:block;margin-top:10px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600}.countdown>b{font:400 clamp(30px,5vw,60px)/1 "Playfair Display",Georgia,serif;color:#1b182633;padding-top:.1em}
+    .home-actions{display:grid;grid-template-columns:repeat(2,minmax(0,300px));gap:18px}.home-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:30px 28px;border-radius:22px;background:#fff;border:1px solid var(--line);box-shadow:0 18px 50px #1b182612;transition:transform .25s,box-shadow .25s,border-color .25s}.home-btn:hover{transform:translateY(-4px);border-color:#b8892f80;box-shadow:0 26px 60px #b8892f2e}.home-btn b{font:600 30px "Playfair Display",Georgia,serif}.home-btn small{font-size:14px;color:var(--muted)}.home-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:22px;color:#fff;background:linear-gradient(135deg,#b8892f,#d9ad4f);margin-bottom:6px}
+    .timeline-shell{display:grid;grid-template-columns:290px 1fr;height:calc(100vh - 76px)}.run-rail{border-right:1px solid var(--line);overflow:auto;background:#faf8f3}.rail-head{padding:25px 20px 15px;position:sticky;top:0;background:#faf8f3ee;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);z-index:3}.rail-head h2{font:600 25px "Playfair Display";margin:5px 0}.rail-list{padding:8px 10px 80px}.rail-item{display:grid;grid-template-columns:35px 1fr auto;gap:9px;align-items:center;width:100%;text-align:left;border:1px solid transparent;color:inherit;background:transparent;padding:11px 9px;border-radius:12px;cursor:pointer}.rail-item:hover{background:#1b182608}.rail-item.active{background:#b8892f10;border-color:#b8892f4d}.rail-item.filler{opacity:.55}.rail-num{font:600 17px "Playfair Display";color:var(--gold)}.rail-copy b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:165px}.rail-copy small,.rail-time{font-size:11px;color:var(--muted)}.timeline-main{overflow:auto;padding:45px clamp(25px,5vw,70px)}.timeline-top{display:flex;justify-content:space-between;align-items:end;margin-bottom:30px}.timeline-top h1{font:600 clamp(37px,5vw,65px) "Playfair Display";margin:8px 0 0}.runtime-card{text-align:right}.runtime-card strong{font:600 35px "Playfair Display";color:var(--gold);display:block}.schedule{position:relative;padding-left:100px}.schedule:before{content:"";position:absolute;left:72px;top:0;bottom:0;width:1px;background:var(--line)}.schedule-row{position:relative;display:grid;grid-template-columns:1fr auto;gap:20px;padding:16px 20px;margin-bottom:10px;border:1px solid var(--line);border-radius:14px;background:#ffffff;cursor:pointer;transition:.2s}.schedule-row:hover{border-color:#1b182640;transform:translateX(4px)}.schedule-row:before{content:"";position:absolute;width:9px;height:9px;border:2px solid var(--gold);border-radius:50%;left:-35px;top:24px;background:var(--night)}.schedule-row .clock{position:absolute;left:-105px;top:19px;width:65px;text-align:right;color:var(--muted);font-size:12px;font-weight:600}.schedule-row h3{margin:0 0 4px;font-size:16px}.schedule-row p{margin:0;color:var(--muted);font-size:12.5px}.schedule-row.filler{min-height:44px;padding:11px 20px;background:linear-gradient(90deg,#1a9ea314,transparent)}.schedule-row.filler:before{border-color:var(--cyan)}.schedule-row.parallel{margin-top:-6px;border-color:#b8892f40}.schedule-row.parallel:before{border-color:var(--gold);background:var(--gold)}.schedule-row.parallel .clock{color:var(--gold)}.schedule-row .cue{margin-top:8px;color:#2a2636;font-size:12.5px;line-height:1.5;padding-left:10px;border-left:2px solid var(--cyan)}.schedule-row .cue.led{border-left-color:#6c5ce7;color:#5a4bc7}
+    .cue-note{margin-top:16px;padding:13px;border-left:2px solid var(--cyan);background:#1a9ea30d;color:#2a2636;font-size:12.5px;line-height:1.5}.cue-note b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:var(--cyan);margin:8px 0 3px}.cue-note b:first-child{margin-top:0}.cue-note[hidden]{display:none!important}.led-wall.custom{color:#fff;font-weight:700;letter-spacing:.2em;box-shadow:0 8px 40px #8c7ff255}
+    .stage-shell{height:calc(100vh - 76px);display:grid;grid-template-columns:270px 1fr}.stage-sidebar{border-right:1px solid var(--line);background:#faf8f3;padding:25px 18px;overflow:auto}.stage-sidebar .back{margin-bottom:25px}.event-kicker{display:flex;justify-content:space-between;color:var(--gold);font-size:12px;font-weight:700}.stage-sidebar h1{font:600 34px/1.05 "Playfair Display";margin:13px 0}.stage-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0}.meta-box{border:1px solid var(--line);border-radius:12px;padding:12px}.meta-box strong{display:block;font-size:18px}.meta-box span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}.legend{border-top:1px solid var(--line);padding-top:20px}.legend h3{font-size:12px;text-transform:uppercase;letter-spacing:.14em}.legend-item{display:flex;align-items:center;gap:9px;color:var(--ink);font-size:13px;margin:8px 0}.legend-dot{width:10px;height:10px;border-radius:50%;background:var(--dot);flex:none}.setup-note{margin-top:18px;padding:13px;border-left:2px solid var(--gold);background:#b8892f0d;color:var(--muted);font-size:12px;line-height:1.5}.changeover{border-top:1px solid var(--line);margin-top:18px;padding-top:16px}.changeover h3{font-size:12px;text-transform:uppercase;letter-spacing:.14em;margin:0 0 10px}.chips{display:flex;flex-wrap:wrap;gap:5px}.chip{font-size:11.5px;padding:4px 9px;border-radius:99px;border:1px solid var(--line)}.chip.add{color:#2f9e5a;border-color:#2f9e5a4d}.chip.remove{color:var(--danger);border-color:#d9434d4d}.next-up{margin-top:16px;font-size:12px;color:var(--muted)}.next-up b{display:block;color:var(--ink);font-size:13px;margin-top:3px}.rig-hint{font-size:11.5px;color:var(--muted);margin:9px 0 0;line-height:1.45}.rig-settings{border-top:1px solid var(--line);margin-top:6px;padding-top:16px}.rig-settings h3{font-size:12px;text-transform:uppercase;letter-spacing:.15em;margin:0 0 12px}.stage-main{position:relative;padding:22px clamp(20px,3vw,48px) 80px;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:12px;background:radial-gradient(circle at 50% 12%,#e9e3f4 0,transparent 45%)}.stage-labels{display:flex;justify-content:space-between;align-items:end}.stage-labels span{font-size:11px;letter-spacing:.18em;color:var(--muted)}.stage-labels b{font:600 24px "Playfair Display"}.stage-frame{display:flex;align-items:stretch;gap:10px}.wing{flex:0 0 clamp(46px,6%,74px);border:1px dashed #1b182630;border-radius:10px;background:repeating-linear-gradient(45deg,#1b182608 0 6px,transparent 6px 12px);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:12px 4px;gap:8px}.wing-label{writing-mode:vertical-rl;text-orientation:mixed;font-size:10px;letter-spacing:.2em;color:#1b182680;text-align:center}.wing.right .wing-label{transform:rotate(180deg)}.wing-count{font:600 16px "Playfair Display";color:var(--gold)}.wing-count small{display:block;font-size:8px;letter-spacing:.14em;color:var(--muted)}.stage-map{flex:1 1 auto;aspect-ratio:2.4;min-height:190px;max-height:calc(100vh - 290px);position:relative;border:1px solid #1b18262b;border-radius:12px 12px 3px 3px;background:linear-gradient(180deg,#ffffff,#f1eee6);overflow:hidden;box-shadow:0 30px 80px #1b18261f}.stage-map:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 49.85%,#1b182618 50%,transparent 50.15%),repeating-linear-gradient(90deg,transparent 0 9.9%,#1b182608 10%),repeating-linear-gradient(0deg,transparent 0 24.8%,#1b182608 25%)}.zones{position:absolute;inset:0;pointer-events:none}.zone{position:absolute;left:0;right:0;border-top:1px dashed #1b18261c}.zone.up{top:0}.zone.mid{top:38%}.zone.down{top:70%}.zone span{position:absolute;left:8px;top:4px;font-size:8.5px;letter-spacing:.22em;color:#1b182659}.stage-lip{position:absolute;bottom:0;left:4%;right:4%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);box-shadow:0 0 22px var(--gold)}.house-band{border:1px solid var(--line);border-radius:8px;padding:7px;text-align:center;font-size:10.5px;letter-spacing:.4em;color:#1b18268c;background:repeating-linear-gradient(90deg,#1b182606 0 14px,transparent 14px 28px)}.performer{position:absolute;width:60px;height:60px;transform:translate(-50%,-50%);border:1px solid var(--role);background:#ffffff;border-radius:50%;display:grid;place-items:center;text-align:center;padding:4px;box-shadow:0 4px 14px #1b182626;cursor:grab;-webkit-user-select:none;user-select:none;touch-action:none;transition:box-shadow .2s}.performer:active{cursor:grabbing;box-shadow:0 0 35px var(--role);z-index:5}.performer.used{border-width:2px;box-shadow:0 0 16px -2px var(--role),0 8px 18px #1b182633}.performer.idle{opacity:.4;border-style:dashed;border-color:#b3afbd;box-shadow:none;background:transparent}.performer.idle span{font-weight:500}.performer.idle small{color:#1b18266b}.performer.idle:hover{opacity:.7}.led-wall{position:absolute;left:24%;right:24%;top:3%;height:11%;border-radius:4px;border:1px solid #1b182633;background:linear-gradient(90deg,#f0509b66,#8c7ff280,#56d9dd66) #1b1826;background-size:220% 100%;animation:wallShift 9s linear infinite;display:grid;place-items:center;font-size:9.5px;letter-spacing:.38em;color:#ffffffd9;box-shadow:0 8px 24px #1b182633}@keyframes wallShift{to{background-position:220% 0}}.performer span{font-size:9px;line-height:1.1;font-weight:700}.performer small{display:block;font-size:8px;color:#1b18268c;margin-top:2px;font-weight:600}.empty-stage{position:absolute;inset:0;display:grid;place-content:center;text-align:center;color:var(--muted);pointer-events:none;padding:0 15%;font-size:13px}.empty-stage>div{background:#fffffff2;border:1px solid var(--line);border-radius:14px;padding:16px 24px;box-shadow:var(--shadow)}.empty-stage b{font:600 24px "Playfair Display";color:var(--ink);display:block;margin-bottom:4px}.stage-controls{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:7px;background:#ffffffe8;border:1px solid var(--line);border-radius:14px;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:var(--shadow)}.counter{min-width:90px;text-align:center;font-size:12.5px}.counter b{color:var(--gold)}.stage-controls button{border:0;background:#1b18260a;color:var(--ink);border-radius:9px;padding:9px 13px;cursor:pointer}.stage-controls button:hover{background:#1b182618}
+    .editor{padding:42px clamp(20px,4vw,60px) 90px}.editor-head{display:flex;justify-content:space-between;gap:25px;align-items:end;margin-bottom:25px}.editor-head h1{font:600 clamp(38px,5vw,60px) "Playfair Display";margin:7px 0}.editor-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.form-btn{border:1px solid var(--line);background:#1b182608;color:var(--ink);padding:10px 13px;border-radius:10px;cursor:pointer}.form-btn:hover{border-color:#1b18264d}.form-btn.danger{color:var(--danger)}.control-grid{display:grid;grid-template-columns:300px 1fr;gap:20px}.settings-card,.edit-panel{border:1px solid var(--line);background:#ffffff;border-radius:16px}.settings-card{padding:20px;height:max-content;position:sticky;top:100px}.field{margin-bottom:15px}.field label{display:block;text-transform:uppercase;letter-spacing:.12em;font-size:10.5px;color:var(--muted);margin-bottom:6px}.field input,.field select,.field textarea{width:100%;color:var(--ink);background:#ffffff;border:1px solid var(--line);border-radius:9px;padding:10px;outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold)}.field textarea{min-height:130px;resize:vertical}.save-status{font-size:11.5px;color:var(--cyan);margin-top:8px}.edit-list{padding:10px}.edit-row{display:grid;grid-template-columns:34px 48px minmax(180px,1fr) 95px 105px 100px;gap:8px;align-items:center;padding:10px;border-bottom:1px solid var(--line)}.edit-row:last-child{border:0}.edit-row.dragging{opacity:.35}.drag-handle{cursor:grab;color:var(--muted);font-size:18px}.edit-row input,.edit-row select{min-width:0;width:100%;background:#ffffff;color:var(--ink);border:1px solid var(--line);padding:8px;border-radius:8px}.row-actions{display:flex;gap:3px}.row-actions button{width:28px;height:28px;border:0;border-radius:7px;background:#1b182609;color:var(--muted);cursor:pointer}.row-actions button:hover{color:var(--ink);background:#1b182618}.editor-note{font-size:12px;color:var(--muted);padding:14px 16px;border-bottom:1px solid var(--line)}.instrument-editor{padding:16px;border-top:1px solid var(--line);display:none}.instrument-editor.open{display:block}.instrument-editor h3{font:600 22px "Playfair Display";margin:0 0 5px}.instrument-editor p{font-size:12.5px;color:var(--muted)}
+    .toast{position:fixed;right:25px;bottom:25px;background:#1b1826;color:#f8f4eb;border-radius:10px;padding:12px 16px;font-weight:700;font-size:12px;transform:translateY(100px);opacity:0;transition:.3s;z-index:40}.toast.show{transform:none;opacity:1}
+    @media(max-width:900px){
+      .app-header{height:60px;gap:10px;padding:0 14px;background:#f7f5f0;-webkit-backdrop-filter:none;backdrop-filter:none}
+      .nav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;gap:0;justify-content:stretch;padding:6px 8px calc(6px + env(safe-area-inset-bottom));background:#f7f5f0f5;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-top:1px solid var(--line)}
+      .nav a{flex:1;text-align:center;padding:12px 6px;font-size:15px;font-weight:700;border-radius:12px}
+      .icon-btn{width:40px;height:40px}
+      .timeline-shell{grid-template-columns:1fr;height:auto}
+      .run-rail{display:none}
+      .timeline-main{padding:28px 16px 110px}
+      .timeline-top{flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:22px}
+      .timeline-top h1{font-size:40px}
+      .runtime-card{text-align:left}
+      .runtime-card strong{font-size:28px}
+      .schedule{padding-left:0}
+      .schedule:before,.schedule-row:before{display:none}
+      .schedule-row{grid-template-columns:1fr auto;padding:14px 14px}
+      .schedule-row:hover{transform:none}
+      .schedule-row .clock{position:static;width:auto;text-align:left;grid-column:1/-1;margin-bottom:2px}
+      .stage-shell{display:flex;flex-direction:column;height:auto}
+      .stage-sidebar{border-right:0;border-bottom:1px solid var(--line);padding:16px 16px 8px;overflow:visible}
+      .stage-sidebar .back{margin-bottom:10px;display:inline-block}
+      .stage-sidebar h1{font-size:30px;margin:8px 0}
+      .stage-meta{max-width:none;margin:12px 0}
+      .stage-main{padding:16px 12px 96px;justify-content:flex-start;overflow:visible}
+      .stage-map{aspect-ratio:1.7;max-height:none}
+      .stage-controls{position:static;left:auto;transform:none;width:100%;max-width:100%;margin:10px 0 0;flex-wrap:wrap;justify-content:center}
+      .stage-controls button{padding:10px 12px}
+      .counter{min-width:72px}
+      .control-grid{grid-template-columns:1fr}
+      .settings-card{position:static}
+      .edit-row{grid-template-columns:30px 38px 1fr 75px 80px}
+      .edit-row select{display:none}
+      .home{min-height:calc(100dvh - 60px);padding:28px 20px 120px}
+    }
+    @media(max-width:600px){
+      .brand-copy span{display:none}
+      .brand-copy b{font-size:15px}
+      .home-logo{height:84px;margin-bottom:8px}.home-title{font-size:42px;margin:6px 0 16px}.countdown{margin-bottom:20px}.countdown strong{font-size:34px}.home-btn{padding:16px 18px}
+      .home-actions{grid-template-columns:1fr;width:min(100%,420px)}
+      .countdown{gap:6px;margin-bottom:36px;width:100%}
+      .countdown div{min-width:0;flex:1}
+      .countdown span{font-size:10px;letter-spacing:.08em}
+      .countdown>b{padding-top:.15em}
+      .stage-sidebar h1{font-size:26px}
+      .performer{width:52px;height:52px}
+      .performer span{font-size:8px}
+      .stage-frame{overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+      .stage-map{flex:0 0 560px;aspect-ratio:1.75}
+      .stage-labels{justify-content:space-between}
+      .stage-labels span{letter-spacing:.08em;font-size:9px}
+      .led-wall,.led-wall.custom{font-size:8px;letter-spacing:.12em;padding:0 6px;text-align:center}
+      .zone span{font-size:7px;letter-spacing:.12em}
+      .wing{flex-basis:34px}
+      .wing-label{display:none}
+      .editor{padding:24px 14px 120px}
+      .editor-head{display:block}
+      .editor-actions{justify-content:flex-start}
+      .edit-row{grid-template-columns:24px 1fr 64px}
+      .edit-row .row-actions{grid-column:2/4}
+      .edit-row select,.edit-row input[data-field="number"]{display:none}
+      .toast{left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom))}
+    }
+    body[data-trial="panel"] .only-map,body[data-trial="map"] .only-panel,.cast-link[hidden],.costume-box[hidden]{display:none!important}
+    .cast-link{margin-top:10px;display:inline-flex;align-items:center;gap:7px;border:1px solid #b8892f59;background:#b8892f12;color:#8a6420;font-weight:700;font-size:13px;padding:7px 12px;border-radius:99px;cursor:pointer}
+    .cast-link:before{content:"";width:14px;height:14px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm-8 0a3 3 0 1 0-3-3 3 3 0 0 0 3 3zm8 2c-2.7 0-8 1.3-8 4v3h16v-3c0-2.7-5.3-4-8-4zm-8 0c-.3 0-.7 0-1.1.1A4.6 4.6 0 0 1 9 17v3H1v-3c0-2.2 4.4-4 7-4z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm-8 0a3 3 0 1 0-3-3 3 3 0 0 0 3 3zm8 2c-2.7 0-8 1.3-8 4v3h16v-3c0-2.7-5.3-4-8-4zm-8 0c-.3 0-.7 0-1.1.1A4.6 4.6 0 0 1 9 17v3H1v-3c0-2.2 4.4-4 7-4z'/%3E%3C/svg%3E") center/contain no-repeat}
+    .cast-link:hover{background:#b8892f22}.stage-sidebar .cast-link{margin:16px 0 0;width:100%;justify-content:center;padding:10px 12px}
+    .cast-backdrop{position:fixed;inset:0;background:#1b182640;opacity:0;pointer-events:none;transition:opacity .25s;z-index:49}
+    .cast-drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:#fff;border-left:1px solid var(--line);box-shadow:-30px 0 80px #1b182626;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.8,.2,1);z-index:50;display:flex;flex-direction:column}
+    body.cast-open .cast-drawer{transform:none}body.cast-open .cast-backdrop{opacity:1;pointer-events:auto}
+    .cast-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:22px 22px 14px;border-bottom:1px solid var(--line)}.cast-head h2{font:600 26px/1.1 "Playfair Display",Georgia,serif;margin:6px 0 0}
+    .cast-close{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:22px;line-height:1;cursor:pointer;color:var(--ink)}
+    .cast-body{overflow:auto;padding:6px 22px 30px}
+    .cast-label{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);margin:20px 0 10px}
+    .costume-cards{display:grid;gap:8px}.costume-card{border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:#faf8f3}.costume-card b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);margin-bottom:3px}.costume-card span{font-size:14px;line-height:1.45}
+    .cast-group{border-top:1px solid var(--line);padding:10px 0}.cast-group h3{display:flex;align-items:center;gap:8px;font-size:14px;margin:0 0 6px}.cast-group h3 small{margin-left:auto;color:var(--muted);font-weight:600}
+    .cast-group ul{list-style:none;margin:0;padding:0 0 0 18px;display:grid;grid-template-columns:1fr 1fr;gap:4px 14px}.cast-group li{font-size:14px;line-height:1.35}
+    .performer .first-name{color:var(--ink);font-weight:700;font-size:8.5px;max-width:52px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .name-tip{position:absolute;transform:translate(-50%,calc(-100% - 40px));background:var(--ink);color:#fff;border-radius:10px;padding:8px 12px;font-size:13px;white-space:nowrap;z-index:8;box-shadow:0 10px 30px #1b182640;pointer-events:none}.name-tip b{display:block}.name-tip span{font-size:11px;opacity:.7}.name-tip:after{content:"";position:absolute;left:50%;bottom:-5px;width:10px;height:10px;background:var(--ink);transform:translateX(-50%) rotate(45deg)}.name-tip.edge-left{transform:translate(-26px,calc(-100% - 40px))}.name-tip.edge-left:after{left:26px}.name-tip.edge-right{transform:translate(calc(-100% + 26px),calc(-100% - 40px))}.name-tip.edge-right:after{left:auto;right:21px;transform:rotate(45deg)}
+    .costume-box{margin-top:16px;border:1px solid var(--line);border-radius:12px;background:#fff}.costume-box summary{cursor:pointer;padding:11px 13px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;list-style:none;display:flex;justify-content:space-between}.costume-box summary::-webkit-details-marker{display:none}.costume-box summary:after{content:"+";font-size:16px;color:var(--gold)}.costume-box[open] summary:after{content:"−"}.costume-box .costume-cards{padding:0 10px 10px}
+    .trial-switch{position:fixed;left:18px;bottom:18px;z-index:40;display:flex;align-items:center;gap:4px;padding:5px;background:#1b1826;color:#fff;border-radius:99px;box-shadow:0 14px 40px #1b182640;font-size:13px}.trial-switch span{padding:0 8px 0 10px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:.6;font-weight:700}.trial-switch button{border:0;background:transparent;color:#fff;padding:8px 13px;border-radius:99px;cursor:pointer;font-weight:600}.trial-switch button.active{background:#fff;color:var(--ink)}
+    @media(max-width:900px){
+      .cast-drawer{top:auto;left:0;width:100%;height:84dvh;border-left:0;border-radius:22px 22px 0 0;transform:translateY(100%)}
+      .cast-drawer:before{content:"";position:absolute;top:8px;left:50%;width:40px;height:4px;border-radius:4px;background:#1b182626;transform:translateX(-50%)}
+      .trial-switch{left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom));white-space:nowrap}
+      .stage-main{padding-bottom:150px}.timeline-main{padding-bottom:160px}.home{padding-bottom:170px}
+      .cast-group li,.costume-card span{font-size:15px}
+    }
+    @media print{.trial-switch,.cast-drawer,.cast-backdrop,.cast-link,.costume-box{display:none!important}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+    @media print{.app-header,.stage-controls,.editor-actions,.noise{display:none!important}body{background:white;color:#111}.view{display:none!important}#timelineView{display:block!important}.timeline-shell{display:block;height:auto}.run-rail{display:none}.timeline-main{padding:20px}.schedule-row{break-inside:avoid;background:white;border-color:#bbb}.schedule:before{background:#bbb}.schedule-row p,.clock{color:#555!important}
+      .schedule-row .cue{color:#333!important;border-left-color:#888}
+      /* Stage plan prints on ONE landscape sheet: notes column on the left, stage drawing filling the right. */
+      body.printing-stage{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff}body.printing-stage main{min-height:0}body.printing-stage #timelineView{display:none!important}body.printing-stage #stageView{display:block!important}
+      body.printing-stage .stage-shell{display:grid;grid-template-columns:62mm 1fr;gap:8mm;height:auto;align-items:start;page-break-inside:avoid}
+      body.printing-stage .stage-sidebar{border:0;border-right:1px solid #ddd;padding:0 6mm 0 0;background:none;overflow:visible;font-size:10px}body.printing-stage .stage-sidebar .back{display:none}body.printing-stage .stage-sidebar h1{font-size:22px;margin:3px 0 8px;line-height:1.1}body.printing-stage .event-kicker{font-size:10px}body.printing-stage .stage-meta{margin:0 0 10px;gap:6px}body.printing-stage .meta-box{padding:7px 9px;border-radius:8px}body.printing-stage .meta-box strong{font-size:15px}body.printing-stage .legend{padding-top:10px}body.printing-stage .legend h3,body.printing-stage .changeover h3{margin:0 0 6px;font-size:9px}body.printing-stage .legend-item{margin:4px 0;font-size:10px}body.printing-stage .changeover{margin-top:10px;padding-top:10px}body.printing-stage .next-up{margin-top:8px}body.printing-stage .rig-hint{display:none}body.printing-stage .cue-note,body.printing-stage .setup-note{margin-top:10px;padding:8px 10px;font-size:9.5px;line-height:1.45}
+      body.printing-stage .stage-sidebar *,body.printing-stage .stage-labels *{color:#111!important;border-color:#bbb}body.printing-stage .eyebrow,body.printing-stage .event-kicker,body.printing-stage .legend h3,body.printing-stage .changeover h3,body.printing-stage .cue-note b{color:#555!important}body.printing-stage .setup-note,body.printing-stage .cue-note{background:none;border-left-color:#888}body.printing-stage .chip{border-color:#bbb;font-size:9px;padding:3px 7px}body.printing-stage .chip.add{color:#1d7a43!important}body.printing-stage .chip.remove{color:#b3262e!important}
+      body.printing-stage .stage-main{height:auto;padding:0;background:none;display:flex;flex-direction:column;gap:6px}body.printing-stage .stage-labels{margin-bottom:2px}body.printing-stage .stage-labels span:last-child{visibility:hidden}body.printing-stage .stage-labels b{font-size:18px}
+      body.printing-stage .stage-frame{overflow:visible;page-break-inside:avoid;gap:6px}body.printing-stage .stage-map{max-height:none;min-height:0;flex:1 1 auto;aspect-ratio:1.3;background:#fff;border-color:#999;box-shadow:none;border-radius:8px 8px 2px 2px}body.printing-stage .stage-map:before{background:linear-gradient(90deg,transparent 49.85%,#ccc 50%,transparent 50.15%),repeating-linear-gradient(90deg,transparent 0 9.9%,#eee 10%),repeating-linear-gradient(0deg,transparent 0 24.8%,#eee 25%)}
+      body.printing-stage .performer{background:#fff;box-shadow:none;color:#111;width:52px;height:52px}body.printing-stage .performer.used{border-width:2.5px}body.printing-stage .performer.idle{opacity:.45;border-color:#999}body.printing-stage .performer small{color:#555}body.printing-stage .led-wall{background:#222;color:#fff;border-color:#000;animation:none;box-shadow:none;font-weight:700}body.printing-stage .empty-stage{color:#444}body.printing-stage .empty-stage>div{background:#fff;border-color:#bbb;box-shadow:none}body.printing-stage .empty-stage b{color:#111}body.printing-stage .zone{border-top-color:#ccc}body.printing-stage .zone span{color:#888}body.printing-stage .stage-lip{background:#333;box-shadow:none;height:3px}body.printing-stage .wing{border-color:#aaa;background:repeating-linear-gradient(45deg,#f0f0f0 0 6px,transparent 6px 12px);flex-basis:34px}body.printing-stage .wing-label{color:#555}body.printing-stage .wing-count{color:#111}body.printing-stage .house-band{background:#f2f2f2;color:#444;border-color:#bbb;padding:5px}}
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <header class="app-header">
+    <a class="brand" href="#overview" aria-label="Seasons Academy overview">
+      <img class="brand-mark" src="logo-mark.png" alt=""><span class="brand-copy"><b>Seasons Academy</b><span>Showcase run sheet &amp; stage plans</span></span>
+    </a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#overview" data-route="overview">Overview</a><a href="#timeline" data-route="timeline">Timeline</a><a href="#stage" data-route="stage">Stage map</a><a class="edit-link" href="#edit" data-route="edit">Edit show</a>
+    </nav>
+    <button class="icon-btn" id="fullscreenBtn" aria-label="Enter fullscreen" title="Fullscreen">⛶</button>
+  </header>
+
+  <main>
+    <section class="view" id="overviewView">
+      <div class="home">
+        <img class="home-logo" src="logo.png" alt="Seasons Music Academy">
+        <div class="eyebrow">Friday · 9 October · 3:45 PM</div>
+        <h1 class="home-title">Seasons Academy <i>Showcase</i></h1>
+        <div class="countdown" id="countdown" aria-live="polite">
+          <div><strong data-unit="days">00</strong><span>Days</span></div><b>:</b>
+          <div><strong data-unit="hours">00</strong><span>Hours</span></div><b>:</b>
+          <div><strong data-unit="minutes">00</strong><span>Minutes</span></div><b>:</b>
+          <div><strong data-unit="seconds">00</strong><span>Seconds</span></div>
+        </div>
+        <div class="home-actions">
+          <a class="home-btn" href="#timeline"><span class="home-icon">☰</span><b>Timeline</b><small>Full running order, minute by minute</small></a>
+          <a class="home-btn" href="#stage"><span class="home-icon">◎</span><b>Stage map</b><small>Who stands where, for every act</small></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="timelineView">
+      <div class="timeline-shell">
+        <aside class="run-rail"><div class="rail-head"><div class="eyebrow">Master run</div><h2>Show flow</h2></div><div class="rail-list" id="timelineRail"></div></aside>
+        <div class="timeline-main">
+          <div class="timeline-top"><div><div class="eyebrow">Seasons Academy</div><h1>Running order</h1></div><div class="runtime-card"><strong id="totalRuntime">—</strong><span id="showWindow">total running time</span></div></div>
+          <div class="schedule" id="schedule"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="stageView">
+      <div class="stage-shell">
+        <aside class="stage-sidebar">
+          <a class="soft-btn back" href="#timeline">← Running order</a>
+          <div class="event-kicker"><span id="stageNumber">ACT 01</span><span id="stageTime">00:00</span></div>
+          <h1 id="stageTitle">Performance</h1>
+          <div class="stage-meta"><div class="meta-box"><strong id="stagePeople">0</strong><span>Performers</span></div><div class="meta-box"><strong id="stageDuration">3m</strong><span>Duration</span></div></div>
+          <div class="legend"><h3>On stage</h3><div id="legend"></div></div>
+          <button class="cast-link only-panel" id="stageCastBtn" data-cast="" hidden>Names &amp; costume</button>
+          <details class="costume-box only-map" id="costumeBox" hidden><summary>Costume</summary><div id="costumeBoxBody"></div></details>
+          <div class="cue-note" id="cueNote" hidden></div>
+          <div class="changeover"><h3>Fixed rig in use</h3><div class="chips" id="rigStatus"></div><p class="rig-hint">Faded circles stay wired and patched, just unused this act.</p></div>
+          <div class="changeover"><h3>Changeover from previous</h3><div class="chips" id="changeover"></div><div class="next-up" id="nextUp"></div></div>
+          <div class="setup-note" id="setupNote"></div>
+        </aside>
+        <div class="stage-main">
+          <div class="stage-labels"><span>BACKSTAGE / UPSTAGE</span><b>Stage plan</b><span>Drag to fine-tune</span></div>
+          <div class="stage-frame">
+            <div class="wing left"><span class="wing-label">STAGE RIGHT WING · HOUSE LEFT</span><span class="wing-count" id="wingLeft">0<small>ENTER</small></span></div>
+            <div class="stage-map" id="stageMap"></div>
+            <div class="wing right"><span class="wing-label">STAGE LEFT WING · HOUSE RIGHT</span><span class="wing-count" id="wingRight">0<small>ENTER</small></span></div>
+          </div>
+          <div class="house-band">AUDIENCE</div>
+          <div class="stage-controls"><button id="prevBtn" aria-label="Previous act">←</button><span class="counter"><b id="currentCount">1</b> / <span id="eventCount">23</span></span><button id="nextBtn" aria-label="Next act">→</button><button id="resetLayoutBtn" title="Reset this layout">Reset layout</button><button id="printStageBtn" title="Print this stage plan">Print plan</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view editor" id="editView">
+      <div class="editor-head">
+        <div><div class="eyebrow">Control booth</div><h1>Build the show</h1><p class="muted">Every change saves automatically on this device.</p></div>
+        <div class="editor-actions"><button class="form-btn" id="addEventBtn">+ Add event</button><button class="form-btn" id="exportBtn">Export JSON</button><button class="form-btn" id="importBtn">Import JSON</button><button class="form-btn" id="printBtn">Print run sheet</button><button class="form-btn danger" id="restoreBtn">Restore defaults</button><input type="file" id="importInput" accept=".json,application/json" hidden></div>
+      </div>
+      <div class="control-grid">
+        <aside class="settings-card">
+          <div class="field"><label for="showTitle">Show title</label><input id="showTitle"></div>
+          <div class="field"><label for="showDate">Show date</label><input type="date" id="showDate"></div>
+          <div class="field"><label for="startTime">Show starts at</label><input type="time" id="startTime"></div>
+          <div class="field"><label>Total run time</label><div class="editor-runtime" id="editorRuntime">—</div></div>
+          <div class="rig-settings">
+            <h3>Fixed stage rig</h3>
+            <div class="field"><label for="drumSide">Drum kit sits</label><select id="drumSide"><option value="right">Right of LED wall (audience view)</option><option value="left">Left of LED wall (audience view)</option></select></div>
+            <div class="field"><label for="keyboardsPerSide">Keyboards per side</label><input type="number" id="keyboardsPerSide" min="1" max="5"></div>
+            <div class="field"><label for="guitarSlots">Wired guitar positions</label><input type="number" id="guitarSlots" min="1" max="8"></div>
+            <button class="form-btn" id="resetRigBtn">Reset rig positions</button>
+          </div>
+          <p class="control-help">Click the instrument button on any row to edit its stage roster. Drag the handle to reorder.</p>
+          <div class="save-status" id="saveStatus">Saved locally</div>
+        </aside>
+        <div class="edit-panel"><div class="editor-note">Order · Number · Event · Duration · Type · Actions</div><div class="edit-list" id="editList"></div><div class="instrument-editor" id="instrumentEditor"></div></div>
+      </div>
+    </section>
+  </main>
+  <div class="cast-backdrop" id="castBackdrop"></div>
+  <aside class="cast-drawer" id="castDrawer" role="dialog" aria-modal="true" aria-labelledby="castTitle" aria-hidden="true">
+    <div class="cast-head">
+      <div><div class="eyebrow" id="castKicker"></div><h2 id="castTitle"></h2></div>
+      <button class="cast-close" id="castClose" aria-label="Close">×</button>
+    </div>
+    <div class="cast-body" id="castBody"></div>
+  </aside>
+  <div class="trial-switch" role="group" aria-label="Trial layout">
+    <span>Trial</span>
+    <button data-trial="panel">1 · Panel</button>
+    <button data-trial="map">2 · Names on stage</button>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    const STORAGE_KEY = "seasons-academy-show-v9";
+    const DEFAULT_RIG = {drumSide:"right",keyboardsPerSide:3,guitarSlots:5,overrides:{}};
+    const colors = {
+      "Drums":"#e0357f","Keyboard":"#6c5ce7","Guitar":"#f2712e",
+      "Bass Guitar":"#1a9ea3","Vocals":"#e2639a","Western Vocals":"#e2639a","Hindustani Vocals":"#e2639a",
+      "Violin":"#2f9e5a","Flute":"#2f8fc4","Djembe":"#c0603e","Dance":"#b8892f","Unassigned":"#8a8594","Speaker":"#e2639a","Lamp":"#b8892f","Host":"#e8735a"
+    };
+    const item = (number,title,instruments,duration=7,type="performance",extra={}) => ({id:crypto.randomUUID(),number,title,duration,type,instruments,layout:{},...extra});
+    const filler = () => item(null,"Filler / Stage reset",[],7,"filler");
+    const hostsCentre = () => ({"Host-1":{x:45,y:84},"Host-2":{x:55,y:84}});
+    const CAST = {
+      "Tauba Tauba, Urvashi Urvashi Mashup":{
+        costume:"Girls : Maroon Satin shirts, Black trousers, chunky jewellery and black formal shoe. Boys : Maroon Satin shirts, Black trousers and black formal shoe.",
+        people:[["Eliana Vineet Sasane","Keyboard"],["Adarsh Satheesh","Keyboard"],["Milee Ninad Mahadik","Keyboard"],["Harshvardhan S Kendre","Drums"],["Maghizini Viswanathan","Guitar"],["Vibhav Coimbatore Balachandar","Guitar"],["Amaaya Nair","Guitar"],["Kush Jigar Shah","Bass Guitar"]]},
+      "Bharat Humko Jaan Se Pyara Hai":{
+        costume:"Girls : White long kurti, blue sleeveless denim jacket and blue jean, white ballerinas / sneakers. Boys : White long kurta, Blue denim jacket and blue jean, white sneakers.",
+        people:[["Srihitha Potnuru","Keyboard"],["Diya Tuteja","Keyboard"],["Kush Jigar Shah","Keyboard"],["Virat Jauhari","Keyboard"],["Harland Sir","Djembe"]]},
+      "Drum Circle":{
+        costume:"Girls : Black T-shirt, Blue shorts, Black stockings, Black Boots, Red Bandanas and accessories. Boys : Black T-shirt, Blue Jeans, Sneakers, Red Bandanas and accessories.",
+        people:[["Immanuel Lojo","Drums"],["Myra Gomes","Drums"],["Myraa Vivian Pillai","Drums"],["Kaivalya Shastry","Drums"],["Aryan Halkude","Drums"],["Vivaan Jitendra Virbhani","Drums"],["Reyansh Sinha","Drums"],["Shatakshi Shankar","Drums"],["Benita Fernandes","Drums"],["Nevaeh Sharma","Drums"],["Harshvardhan S Kendre","Drums"],["Nathania Joseph","Drums"]]},
+      "Old Woman Shoe":{
+        costume:"Girls : White top/shirt, Black short skirt, Black stockings, Black ballerinas. Boys : White shirt, Black pant, Black socks, Black shoe, Black bow tie and suspender.",
+        people:[["Myra Pokhrel","Keyboard"],["Parthvee Jain","Keyboard"],["Ayansh Aniket Zarkar","Keyboard"],["Adelyn Grace","Keyboard"]]},
+      "Chammak Challo Mashup":{
+        costume:"Boys : White shirt, black Bow tie, Black formal pant, Black satin belt, Black formal shoe.",
+        people:[["Shaurya Mohit Sharma","Guitar"],["Sharwin Mani","Guitar"],["Aayush Jahagirdar","Guitar"],["Viraj Phillips","Guitar"],["Amaaya Nair","Guitar"],["Aarush Sandip Kawade","Keyboard"],["Ariyan Bhattacharya","Keyboard"],["Amish Singh","Vocals"],["Vivaan Jitendra Virbhani","Drums"],["Vinay Sir","Bass Guitar"]]}
+    };
+    function createDefaults(){
+      return {
+        title:"Seasons Academy Showcase",date:"",startTime:"15:45",rig:{...DEFAULT_RIG},
+        events:[
+          item(null,"Hosts Welcome",[["Host",2]],3,"ceremony",{layout:hostsCentre(),notes:"Both hosts at centre stage. They greet the audience, then immediately call Sonal on stage for the welcome speech."}),
+          item(null,"Welcome Speech — Sonal",[["Speaker",1]],7,"ceremony",{group:"opening",notes:"Sonal delivers the welcome speech and calls the respective guests up to light the lamp. Speech and lamp lighting run in sync."}),
+          item(null,"Lighting the Lamp",[],7,"ceremony",{group:"opening",notes:"Guests called by Sonal light the lamp while she continues the speech. Lamp position and who lights it are still to be confirmed — no stage positions marked yet."}),
+          item(null,"Ice Breaker — Hosts & Joseph",[["Host",2],["Guitar",1]],6,"ceremony",{layout:hostsCentre(),centerFirst:true,notes:"Sonal calls the hosts back; both stand at centre stage. Hosts demand to see the owner of Seasons Academy — Joseph enters and takes the guitar position nearest centre. He plays a complicated guitar piece; hosts try to clap along, can't match his expertise, stop him and ask for a simple tune. Hosts clap along, then get the whole audience clapping in the same rhythm."}),
+          item(1,"Tauba Tauba, Urvashi Urvashi Mashup",[["Keyboard",3],["Drums",1],["Guitar",3],["Bass Guitar",1]]),
+          item(2,"Bharat Humko Jaan Se Pyara Hai",[["Keyboard",4],["Djembe",1]]),filler(),
+          item(3,"Drum Circle",[["Drums",12]]),filler(),
+          item(4,"Old Woman Shoe",[["Keyboard",4]]),
+          item(5,"Mission Impossible",[["Guitar",5],["Keyboard",5],["Drums",1],["Bass Guitar",1]]),filler(),
+          item(6,"We Are the Champions Mashup",[["Western Vocals",12],["Keyboard",1]]),
+          item(7,"Raag Yaman",[["Flute",5]]),
+          item(8,"The Flute Song",[["Guitar",1],["Keyboard",5],["Keyboard & Vocals",1]]),
+          item(9,"Saiyaara",[["Guitar",4],["Keyboard",5],["Drums",1],["Bass Guitar",1]]),filler(),
+          item(11,"G Minute",[["Violin",7]]),
+          item(12,"Ghar More Pardesiya & Moh Moh Ke Dhaage",[["Hindustani Vocals",4]]),
+          item(13,"Challa — Jab Tak Hai Jaan",[["Drums",1],["Keyboard",1],["Vocals",1],["Guitar",5],["Bass Guitar",1]]),
+          item(14,"Chammak Challo Mashup",[["Guitar",5],["Keyboard",2],["Vocals",1],["Drums",1],["Bass Guitar",1]]),
+          item(15,"Eye of the Tiger, Gehra Hua Mashup",[["Drums",1],["Guitar",4],["Bass Guitar",1],["Keyboard",1],["Unassigned",1]]),
+          item(16,"Dil Diya Hai Jaan Bhi Denge — Karma",[["Vocals",4],["Keyboard",1],["Djembe",1]]),
+          item(17,"How Long — Charlie Puth",[["Guitar",3],["Drums",1]]),filler(),
+          item(18,"Final Countdown",[["Guitar",5],["Keyboard",4],["Drums",1],["Bass Guitar",1],["Vocals",1]]),
+          item(19,"O Haseena",[["Guitar",1],["Bass Guitar",1],["Vocals",2],["Keyboard",1],["Drums",1]]),
+          item(20,"Ajeeb Daastaan",[["Guitar",5],["Bass Guitar",1],["Violin",6],["Keyboard",4],["Drums",1]]),
+          item(21,"Felicitation",[["Speaker",1]],7,"ceremony",{led:"STUDENT CREDITS + BLOOPERS",notes:"While felicitation is on, the LED wall runs the student credits roll with bloopers shot during rehearsals."}),
+          item(22,"Vote of Thanks — Joseph",[["Speaker",1]],7,"ceremony"),
+          item(23,"National Anthem",[],7,"ceremony",{led:"ALL RISE FOR THE NATIONAL ANTHEM",notes:"All rise for the National Anthem."})
+        ]
+      };
+    }
+    let state = loadState();
+    let currentId = state.events.find(e=>e.type!=="filler")?.id;
+    let editingInstrumentsId = null;
+    let draggedId = null;
+
+    function loadState(){
+      try{
+        const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if(saved?.events?.length) return withRig(saved);
+      }catch(error){ console.warn("Could not load saved show",error); }
+      return createDefaults();
+    }
+    function withRig(show){return {...show,rig:{...DEFAULT_RIG,...show.rig,overrides:{...show.rig?.overrides}}}}
+    function saveState(message="Saved locally"){
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+      const status=document.getElementById("saveStatus");
+      if(status){status.textContent=message;setTimeout(()=>status.textContent="Saved locally",1300);}
+    }
+    function peopleCount(event){return event.instruments.reduce((sum,[,count])=>sum+(Number(count)||0),0)}
+    function performanceEvents(){return state.events.filter(e=>e.type!=="filler")}
+    function formatDuration(minutes){
+      const total=Math.round(minutes*60),h=Math.floor(total/3600),m=Math.floor(total%3600/60),s=total%60;
+      return h?`${h}h ${m}m`:s?`${m}m ${s}s`:`${m} min`;
+    }
+    function formatClock(minutes){
+      const [h,m]=state.startTime.split(":").map(Number),total=h*60+m+minutes;
+      return `${String(Math.floor(total/60)%24).padStart(2,"0")}:${String(Math.round(total%60)).padStart(2,"0")}`;
+    }
+    function timings(){
+      const groupSpan={};
+      state.events.forEach(event=>{
+        if(!event.group)return;
+        groupSpan[event.group]=Math.max(groupSpan[event.group]||0,Number(event.duration)||0);
+      });
+      let elapsed=0;
+      const started={};
+      return state.events.map(event=>{
+        if(event.group){
+          if(!(event.group in started)){
+            started[event.group]=elapsed;
+            elapsed+=groupSpan[event.group];
+          }
+          const start=started[event.group];
+          return {event,start,end:start+groupSpan[event.group],parallel:true};
+        }
+        const start=elapsed;
+        elapsed+=Number(event.duration);
+        return {event,start,end:elapsed,parallel:false};
+      });
+    }
+    function showLength(){return timings().at(-1)?.end||0}
+    function escapeHtml(value){return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+    function slugRole(role){
+      if(role.includes("Vocal"))return "Vocals";
+      if(role.includes("Keyboard"))return role.includes("&")?"Vocals":"Keyboard";
+      if(role.includes("Guitar")&&!role.includes("Bass"))return "Guitar";
+      return role;
+    }
+    function toast(message){
+      const el=document.getElementById("toast");el.textContent=message;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2200);
+    }
+    function navigate(route){
+      const valid=["overview","timeline","stage","edit"],next=valid.includes(route)?route:"overview";
+      document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+      document.getElementById(`${next}View`).classList.add("active");
+      document.querySelectorAll("[data-route]").forEach(a=>a.classList.toggle("active",a.dataset.route===next));
+      if(next==="overview")renderOverview();
+      if(next==="timeline")renderTimeline();
+      if(next==="stage")renderStage();
+      if(next==="edit")renderEditor();
+    }
+
+    const SHOW_START = new Date("2026-10-09T15:45:00+05:30");
+    let countdownTimer=null;
+    function tickCountdown(){
+      const left=Math.max(0,SHOW_START-Date.now()),s=Math.floor(left/1000);
+      const parts={days:Math.floor(s/86400),hours:Math.floor(s%86400/3600),minutes:Math.floor(s%3600/60),seconds:s%60};
+      document.querySelectorAll("#countdown [data-unit]").forEach(el=>el.textContent=String(parts[el.dataset.unit]).padStart(2,"0"));
+      if(!left)clearInterval(countdownTimer);
+    }
+    function renderOverview(){
+      clearInterval(countdownTimer);
+      tickCountdown();
+      countdownTimer=setInterval(tickCountdown,1000);
+    }
+    function mates(event){return event.group?state.events.filter(e=>e.group===event.group && e.id!==event.id):[]}
+    function railHtml(activeId){
+      return timings().map(({event,start})=>`<button class="rail-item ${event.id===activeId?"active":""} ${event.type}" data-open="${event.id}">
+        <span class="rail-num">${event.number??"•"}</span><span class="rail-copy"><b>${escapeHtml(event.title)}</b><small>${mates(event).length?"In parallel":`${peopleCount(event)} on stage`}</small></span><span class="rail-time">${formatClock(start)}</span></button>`).join("");
+    }
+    function instrumentKey(value){
+      const v=String(value).toLowerCase();
+      if(v.includes("bass"))return "Bass Guitar";
+      if(v.includes("guitar"))return "Guitar";
+      if(v.includes("keyboard"))return "Keyboard";
+      if(v.includes("drum"))return "Drums";
+      if(v.includes("djembe")||v.includes("djambe"))return "Djembe";
+      if(v.includes("vocal"))return "Vocals";
+      return value;
+    }
+    function castFor(event){return event&&CAST[event.title]}
+    function nameFor(event,role,index){
+      const cast=castFor(event);
+      if(!cast)return null;
+      return cast.people.filter(([,inst])=>instrumentKey(inst)===instrumentKey(role))[index-1]?.[0]||null;
+    }
+    function costumeParts(text){
+      const clean=text.replace(/\(image for reference\)/i,"").trim();
+      const parts=[...clean.matchAll(/(Girls|Boys)\s*:\s*([^]*?)(?=(?:Girls|Boys)\s*:|$)/gi)].map(m=>[m[1][0].toUpperCase()+m[1].slice(1).toLowerCase(),m[2].trim().replace(/[.,\s]+$/,"")]);
+      return parts.length?parts:[["Everyone",clean]];
+    }
+    function costumeHtml(cast){
+      return `<div class="costume-cards">${costumeParts(cast.costume).map(([who,what])=>`<div class="costume-card"><b>${who}</b><span>${escapeHtml(what)}</span></div>`).join("")}</div>`;
+    }
+    function castBodyHtml(cast){
+      const groups=cast.people.reduce((all,[name,inst])=>{(all[instrumentKey(inst)]??=[]).push(name);return all},{});
+      const names=Object.entries(groups).map(([inst,list])=>`
+        <section class="cast-group"><h3><span class="legend-dot" style="--dot:${colors[inst]||colors.Unassigned}"></span>${escapeHtml(inst)}<small>${list.length}</small></h3>
+        <ul>${list.map(n=>`<li>${escapeHtml(n)}</li>`).join("")}</ul></section>`).join("");
+      return `<h3 class="cast-label">Costume</h3>${costumeHtml(cast)}<h3 class="cast-label">On stage · ${cast.people.length}</h3>${names}`;
+    }
+    function openCast(id){
+      const event=state.events.find(e=>e.id===id),cast=castFor(event);
+      if(!cast)return;
+      const acts=performanceEvents(),timing=timings().find(t=>t.event.id===id);
+      document.getElementById("castKicker").textContent=`Act ${String(event.number||acts.indexOf(event)+1).padStart(2,"0")} · ${formatClock(timing?.start||0)}`;
+      document.getElementById("castTitle").textContent=event.title;
+      document.getElementById("castBody").innerHTML=castBodyHtml(cast);
+      document.body.classList.add("cast-open");
+      document.getElementById("castDrawer").setAttribute("aria-hidden","false");
+      document.getElementById("castClose").focus();
+    }
+    function closeCast(){
+      document.body.classList.remove("cast-open");
+      document.getElementById("castDrawer").setAttribute("aria-hidden","true");
+    }
+    function setTrialMode(mode){
+      document.body.dataset.trial=mode;
+      localStorage.setItem("seasons-trial-mode",mode);
+      document.querySelectorAll("[data-trial]").forEach(b=>b.classList.toggle("active",b.dataset.trial===mode));
+      closeCast();
+      if(document.getElementById("stageView").classList.contains("active"))renderStage();
+    }
+    function showNameTip(el){
+      const map=document.getElementById("stageMap");
+      map.querySelector(".name-tip")?.remove();
+      const tip=document.createElement("div");
+      tip.className="name-tip";
+      tip.innerHTML=`<b>${escapeHtml(el.dataset.name)}</b><span>${escapeHtml(el.dataset.role)}</span>`;
+      const x=parseFloat(el.style.left);
+      tip.classList.toggle("edge-left",x<22);
+      tip.classList.toggle("edge-right",x>78);
+      tip.style.left=el.style.left;tip.style.top=el.style.top;
+      map.appendChild(tip);
+    }
+    function renderTimeline(){
+      const list=timings(),total=showLength();
+      document.getElementById("timelineRail").innerHTML=railHtml(currentId);
+      document.getElementById("totalRuntime").textContent=formatDuration(total);
+      document.getElementById("showWindow").textContent=`${formatClock(0)} → ${formatClock(total)}`;
+      document.getElementById("schedule").innerHTML=list.map(({event,start},index)=>{
+        const together=index>0 && list[index-1].start===start;
+        const partner=mates(event);
+        const detail=event.type==="filler"?"Transition and stage reset":peopleCount(event)?`${peopleCount(event)} performers · ${event.instruments.map(([r,c])=>`${c} ${escapeHtml(r)}`).join(" · ")}`:"Stage positions to be confirmed";
+        const note=partner.length?`Runs in parallel with ${partner.map(e=>escapeHtml(e.title)).join(" & ")}. `:"";
+        const cue=event.notes?`<p class="cue">${escapeHtml(event.notes)}</p>`:"";
+        const led=event.led?`<p class="cue led">LED wall: ${escapeHtml(event.led)}</p>`:"";
+        const castLink=castFor(event)?`<button class="cast-link only-panel" data-cast="${event.id}">Names &amp; costume</button>`:"";
+        return `<article class="schedule-row ${event.type} ${together?"parallel":""}" data-open="${event.id}">
+          <span class="clock">${together?"same":formatClock(start)}</span><div><h3>${escapeHtml(event.title)}</h3><p>${note}${detail}</p>${cue}${led}${castLink}</div><strong>${event.duration}m</strong>
+        </article>`;
+      }).join("");
+    }
+
+    function rigSlots(){
+      const {drumSide,keyboardsPerSide,guitarSlots,overrides={}}=state.rig;
+      const flip=x=>drumSide==="left"?100-x:x;
+      const farCount=Math.ceil(guitarSlots/2);
+      const column=(length,start,direction,y)=>Array.from({length},(_,i)=>({x:start+direction*i*12,y}));
+      const interleave=(a,b)=>Array.from({length:Math.max(a.length,b.length)},(_,i)=>[a[i],b[i]]).flat().filter(Boolean);
+      const build=(kind,label,positions)=>positions.map((position,i)=>{
+        const slot={id:`${kind}-${i+1}`,kind,label,x:flip(position.x),y:position.y};
+        return {...slot,...(overrides[slot.id]||{})};
+      });
+      return [
+        ...build("guitar","Guitar",interleave(column(farCount,8,1,30),column(guitarSlots-farCount,74,-1,30))),
+        ...build("keys","Keys",interleave(column(keyboardsPerSide,8,1,54),column(keyboardsPerSide,82,-1,54))),
+        ...build("drums","Drum kit",[{x:90,y:22}]),
+        ...build("bass","Bass",[{x:90,y:38}])
+      ];
+    }
+    function rigKind(role){
+      switch(slugRole(role)){
+        case "Keyboard":return "keys";
+        case "Drums":return "drums";
+        case "Bass Guitar":return "bass";
+        case "Guitar":return "guitar";
+        default:return null;
+      }
+    }
+    function stagePlan(event){
+      const performers=event.instruments.flatMap(([role,count])=>Array.from({length:Number(count)||0},(_,i)=>({role,index:i+1,key:`${role}-${i+1}`})));
+      const pools=rigSlots().reduce((all,slot)=>{(all[slot.kind]??=[]).push(slot);return all},{});
+      if(event.centerFirst)Object.values(pools).forEach(list=>list.sort((a,b)=>Math.abs(a.x-50)-Math.abs(b.x-50)));
+      const taken=new Map(),free=[];
+      performers.forEach(performer=>{
+        const slot=pools[rigKind(performer.role)]?.shift();
+        if(slot)taken.set(slot.id,performer);else free.push(performer);
+      });
+      const rows=Math.max(1,Math.ceil(free.length/8)),perRow=Math.ceil(free.length/rows);
+      const placedFree=free.map((performer,i)=>{
+        const row=Math.floor(i/perRow),column=i%perRow,rowItems=Math.min(perRow,free.length-row*perRow);
+        const x=rowItems===1?50:12+76*(column/(rowItems-1));
+        return {...performer,x,y:88-row*18,...(event.layout?.[performer.key]||{})};
+      });
+      return {slots:rigSlots().map(slot=>({...slot,performer:taken.get(slot.id)||null})),free:placedFree};
+    }
+    function changeover(event){
+      const acts=performanceEvents(),previous=acts[acts.findIndex(e=>e.id===event.id)-1];
+      const tally=source=>(source?.instruments||[]).reduce((all,[role,count])=>{all[role]=(all[role]||0)+Number(count);return all},{});
+      const before=tally(previous),after=tally(event);
+      return [...new Set([...Object.keys(before),...Object.keys(after)])]
+        .map(role=>({role,delta:(after[role]||0)-(before[role]||0)}))
+        .filter(change=>change.delta)
+        .sort((a,b)=>b.delta-a.delta);
+    }
+    function setupText(plan){
+      const idle=plan.slots.filter(slot=>!slot.performer).length;
+      if(!plan.slots.some(slot=>slot.performer))return "No wired positions in use — the rig stays dark and the act plays downstage.";
+      return idle?`${idle} wired position${idle>1?"s stay":" stays"} patched but dark this act. Nothing is unplugged or moved.`:"Every wired position is live this act.";
+    }
+    const zonesHtml=led=>`<div class="led-wall ${led?"custom":""}">${escapeHtml(led||"LED WALL")}</div><div class="zones"><div class="zone up"><span>UPSTAGE</span></div><div class="zone mid"><span>MIDSTAGE</span></div><div class="zone down"><span>DOWNSTAGE / APRON</span></div></div>`;
+    function renderStage(){
+      let event=state.events.find(e=>e.id===currentId);
+      if(!event||event.type==="filler"){event=performanceEvents()[0];currentId=event?.id}
+      if(!event)return;
+      const acts=performanceEvents(),index=acts.findIndex(e=>e.id===event.id),timing=timings().find(t=>t.event.id===event.id);
+      document.getElementById("stageNumber").textContent=`ACT ${String(event.number||index+1).padStart(2,"0")}`;
+      document.getElementById("stageTime").textContent=formatClock(timing?.start||0);
+      document.getElementById("stageTitle").textContent=event.title;
+      document.getElementById("stagePeople").textContent=peopleCount(event);
+      document.getElementById("stageDuration").textContent=`${event.duration}m`;
+      document.getElementById("currentCount").textContent=index+1;
+      document.getElementById("eventCount").textContent=acts.length;
+      const used=event.instruments.filter(([,c])=>Number(c)>0);
+      document.getElementById("legend").innerHTML=used.map(([r,c])=>`<div class="legend-item"><span class="legend-dot" style="--dot:${colors[slugRole(r)]||colors.Unassigned}"></span><span>${c} × ${escapeHtml(r)}</span></div>`).join("")||`<span class="muted">Positions to be confirmed</span>`;
+      const changes=changeover(event);
+      document.getElementById("changeover").innerHTML=changes.length?changes.map(({role,delta})=>`<span class="chip ${delta>0?"add":"remove"}">${delta>0?"+":"−"}${Math.abs(delta)} ${escapeHtml(role)}</span>`).join(""):`<span class="muted">Same setup as the previous act</span>`;
+      const upcoming=acts[(index+1)%acts.length];
+      document.getElementById("nextUp").innerHTML=`Next up<b>${escapeHtml(upcoming.title)} · ${peopleCount(upcoming)} on stage</b>`;
+      const plan=stagePlan(event),map=document.getElementById("stageMap");
+      document.getElementById("setupNote").textContent=setupText(plan);
+      const cueNote=document.getElementById("cueNote");
+      cueNote.hidden=!event.notes&&!event.led;
+      cueNote.innerHTML=`${event.notes?`<b>Cue</b>${escapeHtml(event.notes)}`:""}${event.led?`<b>LED wall</b>${escapeHtml(event.led)}`:""}`;
+      const cast=castFor(event),showNames=cast&&document.body.dataset.trial==="map";
+      const stageCastBtn=document.getElementById("stageCastBtn");
+      stageCastBtn.hidden=!cast;stageCastBtn.dataset.cast=event.id;
+      const costumeBox=document.getElementById("costumeBox");
+      costumeBox.hidden=!cast;
+      document.getElementById("costumeBoxBody").innerHTML=cast?costumeHtml(cast):"";
+      const nameAttrs=(role,index)=>{
+        const name=showNames&&nameFor(event,role,index);
+        return name?` data-name="${escapeHtml(name)}" data-role="${escapeHtml(`${role} ${index}`)}"`:"";
+      };
+      const label=(role,index)=>{
+        const name=showNames&&nameFor(event,role,index);
+        return name?`${escapeHtml(role)}<small class="first-name">${escapeHtml(name.split(" ")[0])}</small>`:`${escapeHtml(role)}<small>${index}</small>`;
+      };
+      const rigMarkup=plan.slots.map(slot=>{
+        const live=slot.performer;
+        const color=live?colors[slugRole(live.role)]||colors.Unassigned:"#6f6d7c";
+        return `<div class="performer rig ${live?"used":"idle"}" data-slot="${slot.id}"${live?nameAttrs(live.role,live.index):""} style="left:${slot.x}%;top:${slot.y}%;--role:${color}" title="${live?"Wired position in use — drag to match your venue":"Wired position patched but unused this act"}">
+          <span>${live?label(live.role,live.index):`${escapeHtml(slot.label)}<small>idle</small>`}</span></div>`;
+      }).join("");
+      const freeMarkup=plan.free.map(p=>`
+        <div class="performer free" data-key="${escapeHtml(p.key)}"${nameAttrs(p.role,p.index)} style="left:${p.x}%;top:${p.y}%;--role:${colors[slugRole(p.role)]||colors.Unassigned}" title="Drag to move">
+          <span>${label(p.role,p.index)}</span></div>`).join("");
+      const nobody=!plan.free.length&&!plan.slots.some(slot=>slot.performer);
+      const emptyMarkup=nobody?`<div class="empty-stage"><div><b>Positions to be confirmed</b><span>Nothing is marked on the stage for this moment yet.</span></div></div>`:"";
+      map.innerHTML=zonesHtml(event.led)+'<div class="stage-lip"></div>'+rigMarkup+freeMarkup+emptyMarkup;
+      map.querySelectorAll(".performer.free").forEach(el=>attachDrag(el,map,(x,y)=>{event.layout[el.dataset.key]={x,y};return "Stage position saved"}));
+      map.querySelectorAll(".performer.rig").forEach(el=>attachDrag(el,map,(x,y)=>{(state.rig.overrides??={})[el.dataset.slot]={x,y};return "Rig moved for the whole show"}));
+      const usage=["guitar","keys","drums","bass"].map(kind=>{
+        const of=plan.slots.filter(slot=>slot.kind===kind);
+        return `<span class="chip ${of.some(s=>s.performer)?"add":""}">${of.filter(s=>s.performer).length}/${of.length} ${of[0]?.label||kind}</span>`;
+      }).join("");
+      document.getElementById("rigStatus").innerHTML=usage;
+      updateWings([...plan.slots.filter(s=>s.performer),...plan.free]);
+    }
+    function updateWings(positions){
+      const left=positions.filter(p=>p.x<50).length;
+      document.getElementById("wingLeft").innerHTML=`${left}<small>ENTER</small>`;
+      document.getElementById("wingRight").innerHTML=`${positions.length-left}<small>ENTER</small>`;
+    }
+    function attachDrag(el,map,commit){
+      el.addEventListener("pointerdown",down=>{
+        el.setPointerCapture(down.pointerId);
+        let message="Saved locally";
+        const move=e=>{
+          const rect=map.getBoundingClientRect(),x=Math.max(4,Math.min(96,(e.clientX-rect.left)/rect.width*100)),y=Math.max(9,Math.min(91,(e.clientY-rect.top)/rect.height*100));
+          el.style.left=`${x}%`;el.style.top=`${y}%`;message=commit(x,y);
+        };
+        const up=()=>{el.removeEventListener("pointermove",move);saveState(message)};
+        el.addEventListener("pointermove",move);el.addEventListener("pointerup",up,{once:true});
+      });
+    }
+    function moveStage(direction){
+      const acts=performanceEvents(),index=acts.findIndex(e=>e.id===currentId);
+      currentId=acts[(index+direction+acts.length)%acts.length].id;renderStage();
+    }
+
+    function renderEditor(){
+      document.getElementById("showTitle").value=state.title;
+      document.getElementById("showDate").value=state.date||"";
+      document.getElementById("startTime").value=state.startTime;
+      document.getElementById("drumSide").value=state.rig.drumSide;
+      document.getElementById("keyboardsPerSide").value=state.rig.keyboardsPerSide;
+      document.getElementById("guitarSlots").value=state.rig.guitarSlots;
+      document.getElementById("editorRuntime").textContent=formatDuration(showLength());
+      document.getElementById("editList").innerHTML=state.events.map((event,index)=>`
+        <div class="edit-row" draggable="true" data-id="${event.id}">
+          <span class="drag-handle" title="Drag to reorder">⠿</span>
+          <input type="number" min="1" data-field="number" value="${event.number??""}" aria-label="Event number">
+          <input data-field="title" value="${escapeHtml(event.title)}" aria-label="Event title">
+          <input type="number" min=".5" step=".5" data-field="duration" value="${event.duration}" aria-label="Duration in minutes">
+          <select data-field="type" aria-label="Event type"><option value="performance" ${event.type==="performance"?"selected":""}>Performance</option><option value="filler" ${event.type==="filler"?"selected":""}>Filler</option><option value="ceremony" ${event.type==="ceremony"?"selected":""}>Ceremony</option></select>
+          <span class="row-actions"><button data-action="instruments" title="Edit instruments">♫</button><button data-action="duplicate" title="Duplicate">⧉</button><button data-action="delete" title="Delete">×</button></span>
+        </div>`).join("");
+      bindEditorRows();renderInstrumentEditor();
+    }
+    function bindEditorRows(){
+      document.querySelectorAll(".edit-row").forEach(row=>{
+        const event=state.events.find(e=>e.id===row.dataset.id);
+        row.querySelectorAll("[data-field]").forEach(input=>input.addEventListener("change",()=>{
+          const field=input.dataset.field;
+          event[field]=field==="number"?(input.value?Number(input.value):null):field==="duration"?Math.max(.5,Number(input.value)||7):input.value;
+          saveState();renderEditor();
+        }));
+        row.querySelectorAll("[data-action]").forEach(button=>button.addEventListener("click",()=>{
+          const action=button.dataset.action,index=state.events.findIndex(e=>e.id===event.id);
+          if(action==="delete"){if(!confirm(`Delete “${event.title}”?`))return;state.events.splice(index,1);if(currentId===event.id)currentId=performanceEvents()[0]?.id}
+          if(action==="duplicate"){const copy=structuredClone(event);copy.id=crypto.randomUUID();copy.title+= " — Copy";state.events.splice(index+1,0,copy)}
+          if(action==="instruments"){editingInstrumentsId=editingInstrumentsId===event.id?null:event.id}
+          saveState();renderEditor();
+        }));
+        row.addEventListener("dragstart",()=>{draggedId=event.id;row.classList.add("dragging")});
+        row.addEventListener("dragend",()=>row.classList.remove("dragging"));
+        row.addEventListener("dragover",e=>e.preventDefault());
+        row.addEventListener("drop",e=>{
+          e.preventDefault();if(!draggedId||draggedId===event.id)return;
+          const from=state.events.findIndex(x=>x.id===draggedId),to=state.events.findIndex(x=>x.id===event.id),[moved]=state.events.splice(from,1);state.events.splice(to,0,moved);saveState("Order saved");renderEditor();
+        });
+      });
+    }
+    function renderInstrumentEditor(){
+      const panel=document.getElementById("instrumentEditor"),event=state.events.find(e=>e.id===editingInstrumentsId);
+      panel.classList.toggle("open",Boolean(event));if(!event){panel.innerHTML="";return}
+      panel.innerHTML=`<h3>${escapeHtml(event.title)}</h3><p>One line per role, written as <b>Instrument, count</b>. Saving regenerates the suggested layout.</p>
+        <div class="field"><label for="instrumentText">Stage roster</label><textarea id="instrumentText">${event.instruments.map(([r,c])=>`${r}, ${c}`).join("\n")}</textarea></div>
+        <div class="field"><label for="notesText">Cue notes — what happens in this moment (shown on timeline and stage plan)</label><textarea id="notesText" style="min-height:80px">${escapeHtml(event.notes||"")}</textarea></div>
+        <div class="field"><label for="ledText">LED wall shows (leave blank for plain LED wall)</label><input id="ledText" value="${escapeHtml(event.led||"")}" placeholder="e.g. STUDENT CREDITS + BLOOPERS"></div>
+        <button class="primary" id="saveInstrumentsBtn">Save this moment</button>`;
+      document.getElementById("saveInstrumentsBtn").addEventListener("click",()=>{
+        const parsed=document.getElementById("instrumentText").value.split("\n").map(line=>{const bits=line.split(","),count=Number(bits.pop()?.trim());return [bits.join(",").trim(),count]}).filter(([r,c])=>r&&c>0);
+        event.instruments=parsed;event.layout={};
+        event.notes=document.getElementById("notesText").value.trim();
+        event.led=document.getElementById("ledText").value.trim();
+        saveState("Moment saved");toast(`${peopleCount(event)} stage positions ready`);renderEditor();
+      });
+    }
+    function exportJson(){
+      const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");
+      a.href=URL.createObjectURL(blob);a.download="seasons-show-flow.json";a.click();URL.revokeObjectURL(a.href);toast("Show file exported");
+    }
+    function importJson(file){
+      const reader=new FileReader();
+      reader.onload=()=>{try{const next=JSON.parse(reader.result);if(!Array.isArray(next.events))throw Error("Missing events");state=withRig(next);currentId=performanceEvents()[0]?.id;saveState("Imported and saved");renderEditor();toast("Show imported successfully")}catch(error){alert("That file is not a valid Seasons show export.")}};
+      reader.readAsText(file);
+    }
+
+    document.addEventListener("click",e=>{
+      const castBtn=e.target.closest("[data-cast]");
+      if(castBtn){openCast(castBtn.dataset.cast);return}
+      const named=e.target.closest(".performer[data-name]");
+      if(named){showNameTip(named);return}
+      if(!e.target.closest(".name-tip"))document.querySelector(".name-tip")?.remove();
+      const target=e.target.closest("[data-open]");
+      if(target){currentId=target.dataset.open;location.hash="stage"}
+    });
+    document.getElementById("castClose").addEventListener("click",closeCast);
+    document.getElementById("castBackdrop").addEventListener("click",closeCast);
+    document.querySelectorAll("[data-trial]").forEach(b=>b.addEventListener("click",()=>setTrialMode(b.dataset.trial)));
+    setTrialMode(localStorage.getItem("seasons-trial-mode")==="map"?"map":"panel");
+    window.addEventListener("hashchange",()=>navigate(location.hash.slice(1)));
+    document.getElementById("prevBtn").addEventListener("click",()=>moveStage(-1));
+    document.getElementById("nextBtn").addEventListener("click",()=>moveStage(1));
+    document.getElementById("resetLayoutBtn").addEventListener("click",()=>{const e=state.events.find(x=>x.id===currentId);e.layout={};saveState("Layout reset");renderStage()});
+    function printStagePlan(){
+      const orientation=document.createElement("style");
+      orientation.textContent="@page{size:A4 landscape;margin:9mm}";
+      document.head.appendChild(orientation);
+      document.body.classList.add("printing-stage");
+      window.print();
+      document.body.classList.remove("printing-stage");
+      orientation.remove();
+    }
+    document.getElementById("printStageBtn").addEventListener("click",printStagePlan);
+    document.getElementById("fullscreenBtn").addEventListener("click",()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen());
+    document.getElementById("addEventBtn").addEventListener("click",()=>{const e=item(null,"New performance",[["Unassigned",1]]);state.events.push(e);editingInstrumentsId=e.id;saveState();renderEditor()});
+    document.getElementById("exportBtn").addEventListener("click",exportJson);
+    document.getElementById("importBtn").addEventListener("click",()=>document.getElementById("importInput").click());
+    document.getElementById("importInput").addEventListener("change",e=>e.target.files[0]&&importJson(e.target.files[0]));
+    document.getElementById("printBtn").addEventListener("click",()=>{renderTimeline();window.print()});
+    document.getElementById("restoreBtn").addEventListener("click",()=>{if(confirm("Restore the original running order and remove your edits?")){state=createDefaults();currentId=performanceEvents()[0].id;saveState("Defaults restored");renderEditor();toast("Original show restored")}});
+    const showFields={showTitle:"title",showDate:"date",startTime:"startTime"};
+    Object.entries(showFields).forEach(([id,key])=>document.getElementById(id).addEventListener("change",e=>{state[key]=e.target.value;saveState();renderEditor()}));
+    const rigFields={drumSide:"drumSide",keyboardsPerSide:"keyboardsPerSide",guitarSlots:"guitarSlots"};
+    Object.entries(rigFields).forEach(([id,key])=>document.getElementById(id).addEventListener("change",e=>{
+      state.rig[key]=key==="drumSide"?e.target.value:Math.max(1,Number(e.target.value)||1);
+      state.rig.overrides={};saveState("Rig updated");renderEditor();toast("Fixed rig updated for every act");
+    }));
+    document.getElementById("resetRigBtn").addEventListener("click",()=>{state.rig.overrides={};saveState("Rig positions reset");toast("Rig positions reset")});
+    document.addEventListener("keydown",e=>{
+      if(document.body.classList.contains("cast-open")){if(e.key==="Escape")closeCast();return}
+      if(!document.getElementById("stageView").classList.contains("active")||["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName))return;
+      if(e.key==="ArrowRight"||e.key===" ")moveStage(1);
+      if(e.key==="ArrowLeft")moveStage(-1);
+      if(e.key.toLowerCase()==="f")document.getElementById("fullscreenBtn").click();
+    });
+    if(!location.hash)location.hash="overview";else navigate(location.hash.slice(1));
+  </script>
+</body>
+</html>
