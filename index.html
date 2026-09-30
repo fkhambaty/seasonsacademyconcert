@@ -128,7 +128,7 @@
   <div class="toast" id="toast" role="status"></div>
 
   <script>
-    const STORAGE_KEY = "seasons-academy-show-v7";
+    const STORAGE_KEY = "seasons-academy-show-v8";
     const DEFAULT_RIG = {drumSide:"right",keyboardsPerSide:3,guitarSlots:5,overrides:{}};
     const colors = {
       "Drums":"#e0357f","Keyboard":"#6c5ce7","Guitar":"#f2712e",
@@ -142,7 +142,7 @@
       return {
         title:"Seasons Academy Showcase",date:"",startTime:"15:45",rig:{...DEFAULT_RIG},
         events:[
-          item(null,"Hosts Welcome",[["Host",2]],3,"ceremony",{layout:hostsCentre(),notes:"Both hosts stand together at centre stage. They greet the audience, then immediately call Sonal on stage for the welcome speech."}),
+          item(null,"Hosts Welcome",[["Host",2]],3,"ceremony",{layout:hostsCentre(),notes:"Both hosts at centre stage. They greet the audience, then immediately call Sonal on stage for the welcome speech."}),
           item(null,"Welcome Speech — Sonal",[["Speaker",1]],7,"ceremony",{group:"opening",notes:"Sonal delivers the welcome speech and calls the respective guests up to light the lamp. Speech and lamp lighting run in sync."}),
           item(null,"Lighting the Lamp",[],7,"ceremony",{group:"opening",notes:"Guests called by Sonal light the lamp while she continues the speech. Lamp position and who lights it are still to be confirmed — no stage positions marked yet."}),
           item(null,"Ice Breaker — Hosts & Joseph",[["Host",2],["Guitar",1]],6,"ceremony",{layout:hostsCentre(),centerFirst:true,notes:"Sonal calls the hosts back; both stand at centre stage. Hosts demand to see the owner of Seasons Academy — Joseph enters and takes the guitar position nearest centre. He plays a complicated guitar piece; hosts try to clap along, can't match his expertise, stop him and ask for a simple tune. Hosts clap along, then get the whole audience clapping in the same rhythm."}),
@@ -168,7 +168,7 @@
           item(20,"Ajeeb Daastaan",[["Guitar",5],["Bass Guitar",1],["Violin",6],["Keyboard",4],["Drums",1]]),
           item(21,"Felicitation",[["Speaker",1]],7,"ceremony",{led:"STUDENT CREDITS + BLOOPERS",notes:"While felicitation is on, the LED wall runs the student credits roll with bloopers shot during rehearsals."}),
           item(22,"Vote of Thanks — Joseph",[["Speaker",1]],7,"ceremony"),
-          item(23,"National Anthem",[["Vocals",1]],7,"ceremony")
+          item(23,"National Anthem",[],7,"ceremony",{led:"ALL RISE FOR THE NATIONAL ANTHEM",notes:"All rise for the National Anthem."})
         ]
       };
     }
