@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#08080d">
+  <title>Seasons Academy — Show Flow</title>
+  <style>
+    :root{--ink:#f8f4eb;--muted:#a7a3ad;--night:#08080d;--panel:#111119;--line:#282631;--gold:#e8c67a;--pink:#f0509b;--cyan:#56d9dd;--danger:#ff6b74;--stage:#171622;--shadow:0 24px 80px #0008}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--night);color:var(--ink);font:15px/1.45 "DM Sans",system-ui,sans-serif;min-height:100vh;overflow-x:hidden}button,input,select,textarea{font:inherit}button,a{color:inherit}.noise{position:fixed;inset:0;pointer-events:none;opacity:.025;z-index:20;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
+    .app-header{height:76px;display:flex;align-items:center;gap:30px;padding:0 34px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#08080de8;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);z-index:15}.brand{display:flex;align-items:center;gap:12px;margin-right:auto}.brand-mark{width:39px;height:39px;border:1px solid #e8c67a80;border-radius:50%;display:grid;place-items:center;color:var(--gold);font:600 21px "Playfair Display"}.brand-copy b{display:block;letter-spacing:.12em;font-size:12px}.brand-copy span{font-size:10px;color:var(--muted);letter-spacing:.18em}.nav{display:flex;gap:5px}.nav a,.soft-btn,.icon-btn{border:1px solid transparent;text-decoration:none;background:transparent;padding:9px 13px;border-radius:10px;cursor:pointer;transition:.2s}.nav a:hover,.nav a.active,.soft-btn:hover{background:#ffffff0b;border-color:var(--line)}.edit-link{background:var(--ink)!important;color:#111!important;font-weight:700}.icon-btn{width:42px;height:42px;padding:0;display:grid;place-items:center;border-color:var(--line)}
+    main{min-height:calc(100vh - 76px)}.view{display:none}.view.active{display:block}.eyebrow{text-transform:uppercase;letter-spacing:.22em;font-size:10px;color:var(--gold);font-weight:700}.serif{font-family:"Playfair Display",Georgia,serif}.muted{color:var(--muted)}.control-help{color:var(--muted);font-size:11px}.editor-runtime{font:600 36px "Playfair Display";color:var(--gold)}
+    .hero{min-height:570px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;padding:55px clamp(28px,6vw,90px);position:relative;overflow:hidden}.hero:before,.hero:after{content:"";position:absolute;width:480px;height:480px;border-radius:50%;filter:blur(90px);opacity:.13;pointer-events:none}.hero:before{background:var(--pink);left:-200px;top:-220px}.hero:after{background:var(--cyan);right:-200px;bottom:-250px}.hero h1{font-size:clamp(54px,7vw,102px);line-height:.86;letter-spacing:-.055em;margin:22px 0 26px;max-width:780px}.hero h1 i{color:var(--gold);font-weight:600}.hero p{color:var(--muted);font-size:17px;max-width:530px}.primary{border:0;padding:14px 20px;border-radius:12px;background:linear-gradient(120deg,var(--gold),#fff0c7);color:#16120a;font-weight:700;cursor:pointer;box-shadow:0 9px 30px #e8c67a1c}.hero-actions{display:flex;gap:10px;margin-top:30px}.hero-stage{perspective:900px;position:relative}.mini-stage{aspect-ratio:1.42;background:linear-gradient(145deg,#232130,#0f0e16);border:1px solid #ffffff18;transform:rotateX(57deg) rotateZ(-5deg);border-radius:16px;box-shadow:0 70px 90px #000;position:relative;overflow:hidden}.mini-stage:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 9.9%,#ffffff09 10%),repeating-linear-gradient(0deg,transparent 0 19.5%,#ffffff08 20%)}.light{position:absolute;top:-40%;width:24%;height:130%;filter:blur(12px);opacity:.36;transform-origin:top;animation:sweep 8s ease-in-out infinite alternate}.light.a{left:12%;background:linear-gradient(var(--pink),transparent);transform:rotate(-18deg)}.light.b{right:15%;background:linear-gradient(var(--cyan),transparent);transform:rotate(20deg);animation-delay:-4s}.stage-word{position:absolute;inset:0;display:grid;place-items:center;font:600 clamp(40px,6vw,84px) "Playfair Display";color:#ffffff0c;letter-spacing:.08em}
+    @keyframes sweep{to{transform:rotate(14deg) translateX(30px)}}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-block:1px solid var(--line)}.stat{background:#0c0c12;padding:28px clamp(20px,4vw,55px)}.stat strong{font:600 35px "Playfair Display";display:block}.stat span{color:var(--muted);font-size:12px}
+    .section{padding:70px clamp(24px,5vw,72px)}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:28px}.section-head h2{font:600 clamp(30px,4vw,48px) "Playfair Display";margin:8px 0 0}.section-head p{color:var(--muted);max-width:460px}.preview-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.preview-card{background:linear-gradient(145deg,#15141d,#0e0d14);border:1px solid var(--line);padding:22px;border-radius:16px;min-height:150px;position:relative;overflow:hidden;cursor:pointer;transition:.25s}.preview-card:hover{transform:translateY(-4px);border-color:#e8c67a60}.preview-card .num{font:600 46px "Playfair Display";position:absolute;right:16px;top:4px;color:#ffffff09}.preview-card h3{font-size:16px;margin:20px 0 8px;max-width:85%}.pills{display:flex;gap:6px;flex-wrap:wrap}.pill{font-size:10px;padding:5px 8px;border-radius:99px;background:#ffffff0b;color:var(--muted)}
+    .timeline-shell{display:grid;grid-template-columns:290px 1fr;height:calc(100vh - 76px)}.run-rail{border-right:1px solid var(--line);overflow:auto;background:#0b0b11}.rail-head{padding:25px 20px 15px;position:sticky;top:0;background:#0b0b11ee;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);z-index:3}.rail-head h2{font:600 25px "Playfair Display";margin:5px 0}.rail-list{padding:8px 10px 80px}.rail-item{display:grid;grid-template-columns:35px 1fr auto;gap:9px;align-items:center;width:100%;text-align:left;border:1px solid transparent;color:inherit;background:transparent;padding:11px 9px;border-radius:12px;cursor:pointer}.rail-item:hover{background:#ffffff08}.rail-item.active{background:#e8c67a10;border-color:#e8c67a4d}.rail-item.filler{opacity:.55}.rail-num{font:600 17px "Playfair Display";color:var(--gold)}.rail-copy b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:165px}.rail-copy small,.rail-time{font-size:10px;color:var(--muted)}.timeline-main{overflow:auto;padding:45px clamp(25px,5vw,70px)}.timeline-top{display:flex;justify-content:space-between;align-items:end;margin-bottom:30px}.timeline-top h1{font:600 clamp(37px,5vw,65px) "Playfair Display";margin:8px 0 0}.runtime-card{text-align:right}.runtime-card strong{font:600 35px "Playfair Display";color:var(--gold);display:block}.schedule{position:relative;padding-left:100px}.schedule:before{content:"";position:absolute;left:72px;top:0;bottom:0;width:1px;background:var(--line)}.schedule-row{position:relative;display:grid;grid-template-columns:1fr auto;gap:20px;padding:16px 20px;margin-bottom:10px;border:1px solid var(--line);border-radius:14px;background:#111118;cursor:pointer;transition:.2s}.schedule-row:hover{border-color:#ffffff33;transform:translateX(4px)}.schedule-row:before{content:"";position:absolute;width:9px;height:9px;border:2px solid var(--gold);border-radius:50%;left:-35px;top:24px;background:var(--night)}.schedule-row .clock{position:absolute;left:-105px;top:19px;width:65px;text-align:right;color:var(--muted);font-size:11px}.schedule-row h3{margin:0 0 4px;font-size:15px}.schedule-row p{margin:0;color:var(--muted);font-size:11px}.schedule-row.filler{min-height:44px;padding:11px 20px;background:linear-gradient(90deg,#56d9dd0d,transparent)}.schedule-row.filler:before{border-color:var(--cyan)}.schedule-row.parallel{margin-top:-6px;border-color:#e8c67a40}.schedule-row.parallel:before{border-color:var(--gold);background:var(--gold)}.schedule-row.parallel .clock{color:var(--gold)}.schedule-row .cue{margin-top:7px;color:#e6e1d6;font-size:11px;line-height:1.5;padding-left:10px;border-left:2px solid var(--cyan)}.schedule-row .cue.led{border-left-color:#8c7ff2;color:#cfc8ff}
+    .cue-note{margin-top:16px;padding:13px;border-left:2px solid var(--cyan);background:#56d9dd0a;color:#e6e1d6;font-size:11px;line-height:1.5}.cue-note b{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.15em;color:var(--cyan);margin:8px 0 3px}.cue-note b:first-child{margin-top:0}.cue-note[hidden]{display:none!important}.led-wall.custom{color:#fff;font-weight:700;letter-spacing:.2em;box-shadow:0 8px 40px #8c7ff255}
+    .stage-shell{height:calc(100vh - 76px);display:grid;grid-template-columns:270px 1fr}.stage-sidebar{border-right:1px solid var(--line);background:#0b0b11;padding:25px 18px;overflow:auto}.stage-sidebar .back{margin-bottom:25px}.event-kicker{display:flex;justify-content:space-between;color:var(--gold);font-size:11px}.stage-sidebar h1{font:600 34px/1.05 "Playfair Display";margin:13px 0}.stage-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0}.meta-box{border:1px solid var(--line);border-radius:12px;padding:12px}.meta-box strong{display:block;font-size:18px}.meta-box span{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.13em}.legend{border-top:1px solid var(--line);padding-top:20px}.legend h3{font-size:11px;text-transform:uppercase;letter-spacing:.15em}.legend-item{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:11px;margin:8px 0}.legend-dot{width:9px;height:9px;border-radius:50%;background:var(--dot)}.setup-note{margin-top:18px;padding:13px;border-left:2px solid var(--gold);background:#e8c67a08;color:var(--muted);font-size:11px}.changeover{border-top:1px solid var(--line);margin-top:18px;padding-top:16px}.changeover h3{font-size:11px;text-transform:uppercase;letter-spacing:.15em;margin:0 0 10px}.chips{display:flex;flex-wrap:wrap;gap:5px}.chip{font-size:10px;padding:4px 8px;border-radius:99px;border:1px solid var(--line)}.chip.add{color:#84d89b;border-color:#84d89b4d}.chip.remove{color:var(--danger);border-color:#ff6b744d}.next-up{margin-top:16px;font-size:11px;color:var(--muted)}.next-up b{display:block;color:var(--ink);font-size:12px;margin-top:3px}.rig-hint{font-size:10px;color:var(--muted);margin:9px 0 0}.rig-settings{border-top:1px solid var(--line);margin-top:6px;padding-top:16px}.rig-settings h3{font-size:11px;text-transform:uppercase;letter-spacing:.15em;margin:0 0 12px}.stage-main{position:relative;padding:22px clamp(20px,3vw,48px) 80px;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:12px;background:radial-gradient(circle at 50% 12%,#272234 0,transparent 45%)}.stage-labels{display:flex;justify-content:space-between;align-items:end}.stage-labels span{font-size:10px;letter-spacing:.2em;color:var(--muted)}.stage-labels b{font:600 24px "Playfair Display"}.stage-frame{display:flex;align-items:stretch;gap:10px}.wing{flex:0 0 clamp(46px,6%,74px);border:1px dashed #ffffff26;border-radius:10px;background:repeating-linear-gradient(45deg,#ffffff06 0 6px,transparent 6px 12px);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:12px 4px;gap:8px}.wing-label{writing-mode:vertical-rl;text-orientation:mixed;font-size:9px;letter-spacing:.24em;color:#ffffff59;text-align:center}.wing.right .wing-label{transform:rotate(180deg)}.wing-count{font:600 15px "Playfair Display";color:var(--gold)}.wing-count small{display:block;font-size:7px;letter-spacing:.14em;color:var(--muted)}.stage-map{flex:1 1 auto;aspect-ratio:2.4;min-height:190px;max-height:calc(100vh - 290px);position:relative;border:1px solid #ffffff2b;border-radius:12px 12px 3px 3px;background:linear-gradient(180deg,#1e1c28,#12111a);overflow:hidden;box-shadow:0 30px 100px #0008}.stage-map:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 49.85%,#ffffff12 50%,transparent 50.15%),repeating-linear-gradient(90deg,transparent 0 9.9%,#ffffff05 10%),repeating-linear-gradient(0deg,transparent 0 24.8%,#ffffff05 25%)}.zones{position:absolute;inset:0;pointer-events:none}.zone{position:absolute;left:0;right:0;border-top:1px dashed #ffffff14}.zone.up{top:0}.zone.mid{top:38%}.zone.down{top:70%}.zone span{position:absolute;left:8px;top:4px;font-size:7px;letter-spacing:.24em;color:#ffffff2e}.stage-lip{position:absolute;bottom:0;left:4%;right:4%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);box-shadow:0 0 22px var(--gold)}.house-band{border:1px solid var(--line);border-radius:8px;padding:7px;text-align:center;font-size:9px;letter-spacing:.45em;color:#ffffff40;background:repeating-linear-gradient(90deg,#ffffff05 0 14px,transparent 14px 28px)}.performer{position:absolute;width:56px;height:56px;transform:translate(-50%,-50%);border:1px solid var(--role);background:#171622;border-radius:50%;display:grid;place-items:center;text-align:center;padding:4px;box-shadow:0 0 22px #000;cursor:grab;-webkit-user-select:none;user-select:none;touch-action:none;transition:box-shadow .2s}.performer:active{cursor:grabbing;box-shadow:0 0 35px var(--role);z-index:5}.performer.used{border-width:2px;box-shadow:0 0 16px -2px var(--role),0 8px 22px #000a}.performer.idle{opacity:.26;border-style:dashed;border-color:#8b8896;box-shadow:none}.performer.idle span{font-weight:500}.performer.idle small{color:#ffffff6b}.performer.idle:hover{opacity:.5}.led-wall{position:absolute;left:24%;right:24%;top:3%;height:11%;border-radius:4px;border:1px solid #ffffff2e;background:linear-gradient(90deg,#f0509b2e,#8c7ff23d,#56d9dd2e);background-size:220% 100%;animation:wallShift 9s linear infinite;display:grid;place-items:center;font-size:8px;letter-spacing:.42em;color:#ffffff8a;box-shadow:0 8px 34px #8c7ff21f}@keyframes wallShift{to{background-position:220% 0}}.performer span{font-size:8px;line-height:1.05;font-weight:700}.performer small{display:block;font-size:7px;color:#ffffff8c;margin-top:2px}.empty-stage{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--muted)}.empty-stage b{font:600 35px "Playfair Display";color:var(--ink);display:block}.stage-controls{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:7px;background:#111119e8;border:1px solid var(--line);border-radius:14px;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:var(--shadow)}.counter{min-width:90px;text-align:center;font-size:11px}.counter b{color:var(--gold)}.stage-controls button{border:0;background:#ffffff0a;color:var(--ink);border-radius:9px;padding:9px 13px;cursor:pointer}.stage-controls button:hover{background:#ffffff18}
+    .editor{padding:42px clamp(20px,4vw,60px) 90px}.editor-head{display:flex;justify-content:space-between;gap:25px;align-items:end;margin-bottom:25px}.editor-head h1{font:600 clamp(38px,5vw,60px) "Playfair Display";margin:7px 0}.editor-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.form-btn{border:1px solid var(--line);background:#ffffff08;color:var(--ink);padding:10px 13px;border-radius:10px;cursor:pointer}.form-btn:hover{border-color:#ffffff4d}.form-btn.danger{color:var(--danger)}.control-grid{display:grid;grid-template-columns:300px 1fr;gap:20px}.settings-card,.edit-panel{border:1px solid var(--line);background:#101017;border-radius:16px}.settings-card{padding:20px;height:max-content;position:sticky;top:100px}.field{margin-bottom:15px}.field label{display:block;text-transform:uppercase;letter-spacing:.13em;font-size:9px;color:var(--muted);margin-bottom:6px}.field input,.field select,.field textarea{width:100%;color:var(--ink);background:#08080d;border:1px solid var(--line);border-radius:9px;padding:10px;outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold)}.field textarea{min-height:130px;resize:vertical}.save-status{font-size:10px;color:var(--cyan);margin-top:8px}.edit-list{padding:10px}.edit-row{display:grid;grid-template-columns:34px 48px minmax(180px,1fr) 95px 105px 100px;gap:8px;align-items:center;padding:10px;border-bottom:1px solid var(--line)}.edit-row:last-child{border:0}.edit-row.dragging{opacity:.35}.drag-handle{cursor:grab;color:var(--muted);font-size:18px}.edit-row input,.edit-row select{min-width:0;width:100%;background:#08080d;color:var(--ink);border:1px solid var(--line);padding:8px;border-radius:8px}.row-actions{display:flex;gap:3px}.row-actions button{width:28px;height:28px;border:0;border-radius:7px;background:#ffffff09;color:var(--muted);cursor:pointer}.row-actions button:hover{color:var(--ink);background:#ffffff18}.editor-note{font-size:11px;color:var(--muted);padding:14px 16px;border-bottom:1px solid var(--line)}.instrument-editor{padding:16px;border-top:1px solid var(--line);display:none}.instrument-editor.open{display:block}.instrument-editor h3{font:600 22px "Playfair Display";margin:0 0 5px}.instrument-editor p{font-size:11px;color:var(--muted)}
+    .toast{position:fixed;right:25px;bottom:25px;background:#f8f4eb;color:#121116;border-radius:10px;padding:12px 16px;font-weight:700;font-size:12px;transform:translateY(100px);opacity:0;transition:.3s;z-index:40}.toast.show{transform:none;opacity:1}
+    @media(max-width:900px){.nav a:not(.edit-link){display:none}.hero{grid-template-columns:1fr;min-height:initial}.hero-stage{display:none}.stats{grid-template-columns:1fr 1fr}.preview-list{grid-template-columns:1fr 1fr}.timeline-shell{grid-template-columns:1fr}.run-rail{display:none}.stage-shell{display:flex;flex-direction:column;height:auto}.stage-sidebar{border-right:0;border-bottom:1px solid var(--line);padding:18px 20px;overflow:visible}.stage-sidebar .back{margin-bottom:14px;display:inline-block}.stage-sidebar h1{font-size:28px;margin:8px 0}.stage-meta{max-width:320px;margin:14px 0 0}.stage-sidebar .legend,.setup-note,.changeover{display:none}.stage-main{padding:18px 16px 84px;justify-content:flex-start}.stage-map{aspect-ratio:1.65;max-height:none}.control-grid{grid-template-columns:1fr}.settings-card{position:static}.edit-row{grid-template-columns:30px 38px 1fr 75px 80px}.edit-row select{display:none}}@media(max-width:600px){.app-header{padding:0 15px;height:66px}.brand-copy{display:none}.hero{padding:45px 22px}.hero h1{font-size:55px}.stats{grid-template-columns:1fr 1fr}.preview-list{grid-template-columns:1fr}.section{padding:50px 20px}.stage-sidebar h1{font-size:24px}.meta-box{padding:8px}.performer{width:46px;height:46px;padding:2px}.performer span{font-size:6px}.performer small{display:none}.stage-main{padding:14px 10px 100px}.stage-frame{overflow-x:auto;padding-bottom:8px;scrollbar-width:thin}.stage-map{flex:0 0 540px;aspect-ratio:1.7}.stage-labels{justify-content:center}.stage-labels span{display:none}.stage-labels b{font-size:18px}.led-wall{font-size:6px;letter-spacing:.3em}.zone span{font-size:6px}.wing{flex-basis:26px;padding:8px 2px}.wing-label{font-size:7px;letter-spacing:.1em}.wing-count{font-size:12px}.editor-head{display:block}.editor-actions{justify-content:flex-start}.edit-row{grid-template-columns:25px 30px 1fr 65px}.edit-row .row-actions{grid-column:3/5}.edit-row select{display:none}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+    @media print{.app-header,.stage-controls,.editor-actions,.noise{display:none!important}body{background:white;color:#111}.view{display:none!important}#timelineView{display:block!important}.timeline-shell{display:block;height:auto}.run-rail{display:none}.timeline-main{padding:20px}.schedule-row{break-inside:avoid;background:white;border-color:#bbb}.schedule:before{background:#bbb}.schedule-row p,.clock{color:#555!important}
+      body.printing-stage{-webkit-print-color-adjust:exact;print-color-adjust:exact}body.printing-stage #timelineView{display:none!important}body.printing-stage #stageView{display:block!important}body.printing-stage .stage-shell{display:block;height:auto}body.printing-stage .stage-sidebar{border:0;padding:0 0 14px;background:none;overflow:visible}body.printing-stage .stage-sidebar .back{display:none}body.printing-stage .stage-sidebar h1{font-size:30px;margin:4px 0 10px}body.printing-stage .stage-meta{max-width:340px;margin:0 0 14px}body.printing-stage .stage-sidebar *,body.printing-stage .stage-labels *{color:#111!important;border-color:#bbb}body.printing-stage .eyebrow,body.printing-stage .event-kicker,body.printing-stage .legend h3,body.printing-stage .changeover h3{color:#555!important}body.printing-stage .setup-note,body.printing-stage .cue-note{background:none;border-left-color:#888}.schedule-row .cue{color:#333!important;border-left-color:#888}body.printing-stage .chip{border-color:#bbb}body.printing-stage .stage-main{height:auto;padding:0;background:none;display:block}body.printing-stage .stage-frame{overflow:visible;page-break-inside:avoid}body.printing-stage .stage-map{max-height:none;flex:1 1 auto;aspect-ratio:2.25;background:#fff;border-color:#999}body.printing-stage .stage-map:before{background:linear-gradient(90deg,transparent 49.85%,#ddd 50%,transparent 50.15%)}body.printing-stage .performer{background:#fff;box-shadow:none;color:#111}body.printing-stage .performer.idle{opacity:.5;border-color:#aaa}body.printing-stage .performer small{color:#666}body.printing-stage .led-wall{background:#eee;color:#333;border-color:#999;animation:none}body.printing-stage .zone{border-top-color:#ddd}body.printing-stage .zone span{color:#999}body.printing-stage .stage-lip{background:#999;box-shadow:none}body.printing-stage .wing{border-color:#bbb;background:repeating-linear-gradient(45deg,#f0f0f0 0 6px,transparent 6px 12px)}body.printing-stage .wing-label{color:#666}body.printing-stage .wing-count{color:#111}body.printing-stage .house-band{background:#f2f2f2;color:#555;border-color:#ccc}}
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <header class="app-header">
+    <a class="brand" href="#overview" aria-label="Seasons Academy overview">
+      <span class="brand-mark">S</span><span class="brand-copy"><b>SEASONS ACADEMY</b><span>PERFORMANCE MAP</span></span>
+    </a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#overview" data-route="overview">Overview</a><a href="#timeline" data-route="timeline">Timeline</a><a href="#stage" data-route="stage">Stage map</a><a class="edit-link" href="#edit" data-route="edit">Edit show</a>
+    </nav>
+    <button class="icon-btn" id="fullscreenBtn" aria-label="Enter fullscreen" title="Fullscreen">⛶</button>
+  </header>
+
+  <main>
+    <section class="view" id="overviewView">
+      <div class="hero">
+        <div>
+          <div class="eyebrow">Live performance • master run</div>
+          <h1 class="serif">Every act.<br><i>Perfectly placed.</i></h1>
+          <p>A living visual map for the Seasons Academy showcase—from the first cue to the final bow.</p>
+          <div class="hero-actions"><button class="primary" id="openStageBtn">Open stage map</button><a class="soft-btn" href="#timeline">View running order</a></div>
+        </div>
+        <div class="hero-stage"><div class="mini-stage"><div class="light a"></div><div class="light b"></div><div class="stage-word">LIVE</div></div></div>
+      </div>
+      <div class="stats" id="stats"></div>
+      <div class="section">
+        <div class="section-head"><div><div class="eyebrow">Coming up</div><h2>The running order</h2></div><p>Select any performance to see its instrument-aware stage plan.</p></div>
+        <div class="preview-list" id="previewList"></div>
+      </div>
+    </section>
+
+    <section class="view" id="timelineView">
+      <div class="timeline-shell">
+        <aside class="run-rail"><div class="rail-head"><div class="eyebrow">Master run</div><h2>Show flow</h2></div><div class="rail-list" id="timelineRail"></div></aside>
+        <div class="timeline-main">
+          <div class="timeline-top"><div><div class="eyebrow">Seasons Academy</div><h1>Running order</h1></div><div class="runtime-card"><strong id="totalRuntime">—</strong><span id="showWindow">total running time</span></div></div>
+          <div class="schedule" id="schedule"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="stageView">
+      <div class="stage-shell">
+        <aside class="stage-sidebar">
+          <a class="soft-btn back" href="#timeline">← Running order</a>
+          <div class="event-kicker"><span id="stageNumber">ACT 01</span><span id="stageTime">00:00</span></div>
+          <h1 id="stageTitle">Performance</h1>
+          <div class="stage-meta"><div class="meta-box"><strong id="stagePeople">0</strong><span>Performers</span></div><div class="meta-box"><strong id="stageDuration">3m</strong><span>Duration</span></div></div>
+          <div class="legend"><h3>On stage</h3><div id="legend"></div></div>
+          <div class="cue-note" id="cueNote" hidden></div>
+          <div class="changeover"><h3>Fixed rig in use</h3><div class="chips" id="rigStatus"></div><p class="rig-hint">Faded circles stay wired and patched, just unused this act.</p></div>
+          <div class="changeover"><h3>Changeover from previous</h3><div class="chips" id="changeover"></div><div class="next-up" id="nextUp"></div></div>
+          <div class="setup-note" id="setupNote"></div>
+        </aside>
+        <div class="stage-main">
+          <div class="stage-labels"><span>BACKSTAGE / UPSTAGE</span><b>Stage plan</b><span>Drag to fine-tune</span></div>
+          <div class="stage-frame">
+            <div class="wing left"><span class="wing-label">STAGE RIGHT WING · HOUSE LEFT</span><span class="wing-count" id="wingLeft">0<small>ENTER</small></span></div>
+            <div class="stage-map" id="stageMap"></div>
+            <div class="wing right"><span class="wing-label">STAGE LEFT WING · HOUSE RIGHT</span><span class="wing-count" id="wingRight">0<small>ENTER</small></span></div>
+          </div>
+          <div class="house-band">AUDIENCE</div>
+          <div class="stage-controls"><button id="prevBtn" aria-label="Previous act">←</button><span class="counter"><b id="currentCount">1</b> / <span id="eventCount">23</span></span><button id="nextBtn" aria-label="Next act">→</button><button id="resetLayoutBtn" title="Reset this layout">Reset layout</button><button id="printStageBtn" title="Print this stage plan">Print plan</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view editor" id="editView">
+      <div class="editor-head">
+        <div><div class="eyebrow">Control booth</div><h1>Build the show</h1><p class="muted">Every change saves automatically on this device.</p></div>
+        <div class="editor-actions"><button class="form-btn" id="addEventBtn">+ Add event</button><button class="form-btn" id="exportBtn">Export JSON</button><button class="form-btn" id="importBtn">Import JSON</button><button class="form-btn" id="printBtn">Print run sheet</button><button class="form-btn danger" id="restoreBtn">Restore defaults</button><input type="file" id="importInput" accept=".json,application/json" hidden></div>
+      </div>
+      <div class="control-grid">
+        <aside class="settings-card">
+          <div class="field"><label for="showTitle">Show title</label><input id="showTitle"></div>
+          <div class="field"><label for="showDate">Show date</label><input type="date" id="showDate"></div>
+          <div class="field"><label for="startTime">Show starts at</label><input type="time" id="startTime"></div>
+          <div class="field"><label>Total run time</label><div class="editor-runtime" id="editorRuntime">—</div></div>
+          <div class="rig-settings">
+            <h3>Fixed stage rig</h3>
+            <div class="field"><label for="drumSide">Drum kit sits</label><select id="drumSide"><option value="right">Right of LED wall (audience view)</option><option value="left">Left of LED wall (audience view)</option></select></div>
+            <div class="field"><label for="keyboardsPerSide">Keyboards per side</label><input type="number" id="keyboardsPerSide" min="1" max="5"></div>
+            <div class="field"><label for="guitarSlots">Wired guitar positions</label><input type="number" id="guitarSlots" min="1" max="8"></div>
+            <button class="form-btn" id="resetRigBtn">Reset rig positions</button>
+          </div>
+          <p class="control-help">Click the instrument button on any row to edit its stage roster. Drag the handle to reorder.</p>
+          <div class="save-status" id="saveStatus">Saved locally</div>
+        </aside>
+        <div class="edit-panel"><div class="editor-note">Order · Number · Event · Duration · Type · Actions</div><div class="edit-list" id="editList"></div><div class="instrument-editor" id="instrumentEditor"></div></div>
+      </div>
+    </section>
+  </main>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    const STORAGE_KEY = "seasons-academy-show-v5";
+    const DEFAULT_RIG = {drumSide:"right",keyboardsPerSide:3,guitarSlots:5,overrides:{}};
+    const colors = {
+      "Drums":"#f0509b","Keyboard":"#8c7ff2","Guitar":"#ff8b5e",
+      "Bass Guitar":"#56d9dd","Vocals":"#f6a6c9","Western Vocals":"#f6a6c9","Hindustani Vocals":"#f6a6c9",
+      "Violin":"#84d89b","Flute":"#77c8ee","Djembe":"#dc8268","Dance":"#e8c67a","Unassigned":"#a7a3ad","Speaker":"#f6a6c9","Lamp":"#e8c67a","Host":"#ffb4a2"
+    };
+    const item = (number,title,instruments,duration=7,type="performance",extra={}) => ({id:crypto.randomUUID(),number,title,duration,type,instruments,layout:{},...extra});
+    const filler = () => item(null,"Filler / Stage reset",[],7,"filler");
+    function createDefaults(){
+      return {
+        title:"Seasons Academy Showcase",date:"",startTime:"15:45",rig:{...DEFAULT_RIG},
+        events:[
+          item(null,"Hosts Welcome",[["Host",2]],3,"ceremony",{notes:"Hosts greet the audience, then immediately call Sonal on stage for the welcome speech."}),
+          item(null,"Welcome Speech — Sonal",[["Speaker",1]],7,"ceremony",{group:"opening",notes:"Sonal delivers the welcome speech and calls the respective guests up to light the lamp. Speech and lamp lighting run in sync."}),
+          item(null,"Lighting the Lamp",[["Lamp",3]],7,"ceremony",{group:"opening",notes:"Guests called by Sonal light the lamp while she continues the speech."}),
+          item(null,"Ice Breaker — Hosts & Joseph",[["Host",2],["Guitar",1]],6,"ceremony",{notes:"Sonal calls the hosts back on stage. Hosts demand to see the owner of Seasons Academy — Joseph enters and plays a complicated guitar piece. Hosts try to clap along, can't match his expertise, stop him and ask for a simple tune. Hosts clap along, then get the whole audience clapping in the same rhythm."}),
+          item(1,"Tauba Tauba, Urvashi Urvashi Mashup",[["Keyboard",3],["Drums",1],["Guitar",3],["Bass Guitar",1]]),
+          item(2,"Bharat Humko Jaan Se Pyara Hai",[["Keyboard",4],["Djembe",1]]),filler(),
+          item(3,"Drum Circle",[["Drums",12]]),filler(),
+          item(4,"Old Woman Shoe",[["Keyboard",4]]),
+          item(5,"Mission Impossible",[["Guitar",5],["Keyboard",5],["Drums",1],["Bass Guitar",1]]),filler(),
+          item(6,"We Are the Champions Mashup",[["Western Vocals",12],["Keyboard",1]]),
+          item(7,"Raag Yaman",[["Flute",5]]),
+          item(8,"The Flute Song",[["Guitar",1],["Keyboard",5],["Keyboard & Vocals",1]]),
+          item(9,"Saiyaara",[["Guitar",4],["Keyboard",5],["Drums",1],["Bass Guitar",1]]),filler(),
+          item(10,"Dance — Bharatanatyam",[["Dance",1]]),filler(),
+          item(11,"G Minute",[["Violin",7]]),
+          item(12,"Ghar More Pardesiya & Moh Moh Ke Dhaage",[["Hindustani Vocals",4]]),
+          item(13,"Challa — Jab Tak Hai Jaan",[["Drums",1],["Keyboard",1],["Vocals",1],["Guitar",5],["Bass Guitar",1]]),
+          item(14,"Chammak Challo Mashup",[["Guitar",5],["Keyboard",2],["Vocals",1],["Drums",1],["Bass Guitar",1]]),
+          item(15,"Eye of the Tiger, Gehra Hua Mashup",[["Drums",1],["Guitar",4],["Bass Guitar",1],["Keyboard",1],["Unassigned",1]]),
+          item(16,"Dil Diya Hai Jaan Bhi Denge — Karma",[["Vocals",4],["Keyboard",1],["Djembe",1]]),
+          item(17,"How Long — Charlie Puth",[["Guitar",3],["Drums",1]]),filler(),
+          item(18,"Final Countdown",[["Guitar",5],["Keyboard",4],["Drums",1],["Bass Guitar",1],["Vocals",1]]),
+          item(19,"O Haseena",[["Guitar",1],["Bass Guitar",1],["Vocals",2],["Keyboard",1],["Drums",1]]),
+          item(20,"Ajeeb Daastaan",[["Guitar",5],["Bass Guitar",1],["Violin",6],["Keyboard",4],["Drums",1]]),
+          item(21,"Felicitation",[["Speaker",1]],7,"ceremony",{led:"STUDENT CREDITS + BLOOPERS",notes:"While felicitation is on, the LED wall runs the student credits roll with bloopers shot during rehearsals."}),
+          item(22,"Vote of Thanks — Joseph",[["Speaker",1]],7,"ceremony"),
+          item(23,"National Anthem",[["Vocals",1]],7,"ceremony")
+        ]
+      };
+    }
+    let state = loadState();
+    let currentId = state.events.find(e=>e.type!=="filler")?.id;
+    let editingInstrumentsId = null;
+    let draggedId = null;
+
+    function loadState(){
+      try{
+        const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if(saved?.events?.length) return withRig(saved);
+      }catch(error){ console.warn("Could not load saved show",error); }
+      return createDefaults();
+    }
+    function withRig(show){return {...show,rig:{...DEFAULT_RIG,...show.rig,overrides:{...show.rig?.overrides}}}}
+    function saveState(message="Saved locally"){
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+      const status=document.getElementById("saveStatus");
+      if(status){status.textContent=message;setTimeout(()=>status.textContent="Saved locally",1300);}
+    }
+    function peopleCount(event){return event.instruments.reduce((sum,[,count])=>sum+(Number(count)||0),0)}
+    function performanceEvents(){return state.events.filter(e=>e.type!=="filler")}
+    function formatDuration(minutes){
+      const total=Math.round(minutes*60),h=Math.floor(total/3600),m=Math.floor(total%3600/60),s=total%60;
+      return h?`${h}h ${m}m`:s?`${m}m ${s}s`:`${m} min`;
+    }
+    function formatClock(minutes){
+      const [h,m]=state.startTime.split(":").map(Number),total=h*60+m+minutes;
+      return `${String(Math.floor(total/60)%24).padStart(2,"0")}:${String(Math.round(total%60)).padStart(2,"0")}`;
+    }
+    function timings(){
+      const groupSpan={};
+      state.events.forEach(event=>{
+        if(!event.group)return;
+        groupSpan[event.group]=Math.max(groupSpan[event.group]||0,Number(event.duration)||0);
+      });
+      let elapsed=0;
+      const started={};
+      return state.events.map(event=>{
+        if(event.group){
+          if(!(event.group in started)){
+            started[event.group]=elapsed;
+            elapsed+=groupSpan[event.group];
+          }
+          const start=started[event.group];
+          return {event,start,end:start+groupSpan[event.group],parallel:true};
+        }
+        const start=elapsed;
+        elapsed+=Number(event.duration);
+        return {event,start,end:elapsed,parallel:false};
+      });
+    }
+    function showLength(){return timings().at(-1)?.end||0}
+    function escapeHtml(value){return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+    function slugRole(role){
+      if(role.includes("Vocal"))return "Vocals";
+      if(role.includes("Keyboard"))return role.includes("&")?"Vocals":"Keyboard";
+      if(role.includes("Guitar")&&!role.includes("Bass"))return "Guitar";
+      return role;
+    }
+    function toast(message){
+      const el=document.getElementById("toast");el.textContent=message;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2200);
+    }
+    function navigate(route){
+      const valid=["overview","timeline","stage","edit"],next=valid.includes(route)?route:"overview";
+      document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+      document.getElementById(`${next}View`).classList.add("active");
+      document.querySelectorAll("[data-route]").forEach(a=>a.classList.toggle("active",a.dataset.route===next));
+      if(next==="overview")renderOverview();
+      if(next==="timeline")renderTimeline();
+      if(next==="stage")renderStage();
+      if(next==="edit")renderEditor();
+    }
+
+    function renderOverview(){
+      const acts=performanceEvents(),people=acts.reduce((s,e)=>s+peopleCount(e),0),total=showLength();
+      document.getElementById("stats").innerHTML=[
+        [acts.length,"moments on stage"],[people,"performer positions"],[formatDuration(total),"full show"],[new Set(acts.flatMap(e=>e.instruments.map(i=>slugRole(i[0])))).size,"instrument families"]
+      ].map(([v,l])=>`<div class="stat"><strong>${v}</strong><span>${l}</span></div>`).join("");
+      document.getElementById("previewList").innerHTML=acts.slice(0,6).map(e=>`
+        <article class="preview-card" data-open="${e.id}"><span class="num">${String(e.number||"").padStart(2,"0")}</span><div class="eyebrow">${peopleCount(e)} performers • ${e.duration} min</div><h3>${escapeHtml(e.title)}</h3><div class="pills">${e.instruments.slice(0,3).map(([r,c])=>`<span class="pill">${c} ${escapeHtml(r)}</span>`).join("")}</div></article>`).join("");
+    }
+    function mates(event){return event.group?state.events.filter(e=>e.group===event.group && e.id!==event.id):[]}
+    function railHtml(activeId){
+      return timings().map(({event,start})=>`<button class="rail-item ${event.id===activeId?"active":""} ${event.type}" data-open="${event.id}">
+        <span class="rail-num">${event.number??"•"}</span><span class="rail-copy"><b>${escapeHtml(event.title)}</b><small>${mates(event).length?"In parallel":`${peopleCount(event)} on stage`}</small></span><span class="rail-time">${formatClock(start)}</span></button>`).join("");
+    }
+    function renderTimeline(){
+      const list=timings(),total=showLength();
+      document.getElementById("timelineRail").innerHTML=railHtml(currentId);
+      document.getElementById("totalRuntime").textContent=formatDuration(total);
+      document.getElementById("showWindow").textContent=`${formatClock(0)} → ${formatClock(total)}`;
+      document.getElementById("schedule").innerHTML=list.map(({event,start},index)=>{
+        const together=index>0 && list[index-1].start===start;
+        const partner=mates(event);
+        const detail=event.type==="filler"?"Transition and stage reset":`${peopleCount(event)} performers · ${event.instruments.map(([r,c])=>`${c} ${r}`).join(" · ")||"Details to be confirmed"}`;
+        const note=partner.length?`Runs in parallel with ${partner.map(e=>escapeHtml(e.title)).join(" & ")}. `:"";
+        const cue=event.notes?`<p class="cue">${escapeHtml(event.notes)}</p>`:"";
+        const led=event.led?`<p class="cue led">LED wall: ${escapeHtml(event.led)}</p>`:"";
+        return `<article class="schedule-row ${event.type} ${together?"parallel":""}" data-open="${event.id}">
+          <span class="clock">${together?"same":formatClock(start)}</span><div><h3>${escapeHtml(event.title)}</h3><p>${note}${detail}</p>${cue}${led}</div><strong>${event.duration}m</strong>
+        </article>`;
+      }).join("");
+    }
+
+    function rigSlots(){
+      const {drumSide,keyboardsPerSide,guitarSlots,overrides={}}=state.rig;
+      const flip=x=>drumSide==="left"?100-x:x;
+      const farCount=Math.ceil(guitarSlots/2);
+      const column=(length,start,direction,y)=>Array.from({length},(_,i)=>({x:start+direction*i*12,y}));
+      const interleave=(a,b)=>Array.from({length:Math.max(a.length,b.length)},(_,i)=>[a[i],b[i]]).flat().filter(Boolean);
+      const build=(kind,label,positions)=>positions.map((position,i)=>{
+        const slot={id:`${kind}-${i+1}`,kind,label,x:flip(position.x),y:position.y};
+        return {...slot,...(overrides[slot.id]||{})};
+      });
+      return [
+        ...build("guitar","Guitar",interleave(column(farCount,8,1,30),column(guitarSlots-farCount,74,-1,30))),
+        ...build("keys","Keys",interleave(column(keyboardsPerSide,8,1,54),column(keyboardsPerSide,82,-1,54))),
+        ...build("drums","Drum kit",[{x:90,y:22}]),
+        ...build("bass","Bass",[{x:90,y:38}])
+      ];
+    }
+    function rigKind(role){
+      switch(slugRole(role)){
+        case "Keyboard":return "keys";
+        case "Drums":return "drums";
+        case "Bass Guitar":return "bass";
+        case "Guitar":return "guitar";
+        default:return null;
+      }
+    }
+    function stagePlan(event){
+      const performers=event.instruments.flatMap(([role,count])=>Array.from({length:Number(count)||0},(_,i)=>({role,index:i+1,key:`${role}-${i+1}`})));
+      const pools=rigSlots().reduce((all,slot)=>{(all[slot.kind]??=[]).push(slot);return all},{});
+      const taken=new Map(),free=[];
+      performers.forEach(performer=>{
+        const slot=pools[rigKind(performer.role)]?.shift();
+        if(slot)taken.set(slot.id,performer);else free.push(performer);
+      });
+      const rows=Math.max(1,Math.ceil(free.length/8)),perRow=Math.ceil(free.length/rows);
+      const placedFree=free.map((performer,i)=>{
+        const row=Math.floor(i/perRow),column=i%perRow,rowItems=Math.min(perRow,free.length-row*perRow);
+        const x=rowItems===1?50:12+76*(column/(rowItems-1));
+        return {...performer,x,y:88-row*18,...(event.layout?.[performer.key]||{})};
+      });
+      return {slots:rigSlots().map(slot=>({...slot,performer:taken.get(slot.id)||null})),free:placedFree};
+    }
+    function changeover(event){
+      const acts=performanceEvents(),previous=acts[acts.findIndex(e=>e.id===event.id)-1];
+      const tally=source=>(source?.instruments||[]).reduce((all,[role,count])=>{all[role]=(all[role]||0)+Number(count);return all},{});
+      const before=tally(previous),after=tally(event);
+      return [...new Set([...Object.keys(before),...Object.keys(after)])]
+        .map(role=>({role,delta:(after[role]||0)-(before[role]||0)}))
+        .filter(change=>change.delta)
+        .sort((a,b)=>b.delta-a.delta);
+    }
+    function setupText(plan){
+      const idle=plan.slots.filter(slot=>!slot.performer).length;
+      if(!plan.slots.some(slot=>slot.performer))return "No wired positions in use — the rig stays dark and the act plays downstage.";
+      return idle?`${idle} wired position${idle>1?"s stay":" stays"} patched but dark this act. Nothing is unplugged or moved.`:"Every wired position is live this act.";
+    }
+    const zonesHtml=led=>`<div class="led-wall ${led?"custom":""}">${escapeHtml(led||"LED WALL")}</div><div class="zones"><div class="zone up"><span>UPSTAGE</span></div><div class="zone mid"><span>MIDSTAGE</span></div><div class="zone down"><span>DOWNSTAGE / APRON</span></div></div>`;
+    function renderStage(){
+      let event=state.events.find(e=>e.id===currentId);
+      if(!event||event.type==="filler"){event=performanceEvents()[0];currentId=event?.id}
+      if(!event)return;
+      const acts=performanceEvents(),index=acts.findIndex(e=>e.id===event.id),timing=timings().find(t=>t.event.id===event.id);
+      document.getElementById("stageNumber").textContent=`ACT ${String(event.number||index+1).padStart(2,"0")}`;
+      document.getElementById("stageTime").textContent=formatClock(timing?.start||0);
+      document.getElementById("stageTitle").textContent=event.title;
+      document.getElementById("stagePeople").textContent=peopleCount(event);
+      document.getElementById("stageDuration").textContent=`${event.duration}m`;
+      document.getElementById("currentCount").textContent=index+1;
+      document.getElementById("eventCount").textContent=acts.length;
+      const used=event.instruments.filter(([,c])=>Number(c)>0);
+      document.getElementById("legend").innerHTML=used.map(([r,c])=>`<div class="legend-item"><span class="legend-dot" style="--dot:${colors[slugRole(r)]||colors.Unassigned}"></span><span>${c} × ${escapeHtml(r)}</span></div>`).join("")||`<span class="muted">Details to be confirmed</span>`;
+      const changes=changeover(event);
+      document.getElementById("changeover").innerHTML=changes.length?changes.map(({role,delta})=>`<span class="chip ${delta>0?"add":"remove"}">${delta>0?"+":"−"}${Math.abs(delta)} ${escapeHtml(role)}</span>`).join(""):`<span class="muted">Same setup as the previous act</span>`;
+      const upcoming=acts[(index+1)%acts.length];
+      document.getElementById("nextUp").innerHTML=`Next up<b>${escapeHtml(upcoming.title)} · ${peopleCount(upcoming)} on stage</b>`;
+      const plan=stagePlan(event),map=document.getElementById("stageMap");
+      document.getElementById("setupNote").textContent=setupText(plan);
+      const cueNote=document.getElementById("cueNote");
+      cueNote.hidden=!event.notes&&!event.led;
+      cueNote.innerHTML=`${event.notes?`<b>Cue</b>${escapeHtml(event.notes)}`:""}${event.led?`<b>LED wall</b>${escapeHtml(event.led)}`:""}`;
+      const rigMarkup=plan.slots.map(slot=>{
+        const live=slot.performer;
+        const color=live?colors[slugRole(live.role)]||colors.Unassigned:"#6f6d7c";
+        return `<div class="performer rig ${live?"used":"idle"}" data-slot="${slot.id}" style="left:${slot.x}%;top:${slot.y}%;--role:${color}" title="${live?"Wired position in use — drag to match your venue":"Wired position patched but unused this act"}">
+          <span>${escapeHtml(live?live.role:slot.label)}<small>${live?live.index:"idle"}</small></span></div>`;
+      }).join("");
+      const freeMarkup=plan.free.map(p=>`
+        <div class="performer free" data-key="${escapeHtml(p.key)}" style="left:${p.x}%;top:${p.y}%;--role:${colors[slugRole(p.role)]||colors.Unassigned}" title="Drag to move">
+          <span>${escapeHtml(p.role)}<small>${p.index}</small></span></div>`).join("");
+      map.innerHTML=zonesHtml(event.led)+'<div class="stage-lip"></div>'+rigMarkup+freeMarkup;
+      map.querySelectorAll(".performer.free").forEach(el=>attachDrag(el,map,(x,y)=>{event.layout[el.dataset.key]={x,y};return "Stage position saved"}));
+      map.querySelectorAll(".performer.rig").forEach(el=>attachDrag(el,map,(x,y)=>{(state.rig.overrides??={})[el.dataset.slot]={x,y};return "Rig moved for the whole show"}));
+      const usage=["guitar","keys","drums","bass"].map(kind=>{
+        const of=plan.slots.filter(slot=>slot.kind===kind);
+        return `<span class="chip ${of.some(s=>s.performer)?"add":""}">${of.filter(s=>s.performer).length}/${of.length} ${of[0]?.label||kind}</span>`;
+      }).join("");
+      document.getElementById("rigStatus").innerHTML=usage;
+      updateWings([...plan.slots.filter(s=>s.performer),...plan.free]);
+    }
+    function updateWings(positions){
+      const left=positions.filter(p=>p.x<50).length;
+      document.getElementById("wingLeft").innerHTML=`${left}<small>ENTER</small>`;
+      document.getElementById("wingRight").innerHTML=`${positions.length-left}<small>ENTER</small>`;
+    }
+    function attachDrag(el,map,commit){
+      el.addEventListener("pointerdown",down=>{
+        el.setPointerCapture(down.pointerId);
+        let message="Saved locally";
+        const move=e=>{
+          const rect=map.getBoundingClientRect(),x=Math.max(4,Math.min(96,(e.clientX-rect.left)/rect.width*100)),y=Math.max(9,Math.min(91,(e.clientY-rect.top)/rect.height*100));
+          el.style.left=`${x}%`;el.style.top=`${y}%`;message=commit(x,y);
+        };
+        const up=()=>{el.removeEventListener("pointermove",move);saveState(message)};
+        el.addEventListener("pointermove",move);el.addEventListener("pointerup",up,{once:true});
+      });
+    }
+    function moveStage(direction){
+      const acts=performanceEvents(),index=acts.findIndex(e=>e.id===currentId);
+      currentId=acts[(index+direction+acts.length)%acts.length].id;renderStage();
+    }
+
+    function renderEditor(){
+      document.getElementById("showTitle").value=state.title;
+      document.getElementById("showDate").value=state.date||"";
+      document.getElementById("startTime").value=state.startTime;
+      document.getElementById("drumSide").value=state.rig.drumSide;
+      document.getElementById("keyboardsPerSide").value=state.rig.keyboardsPerSide;
+      document.getElementById("guitarSlots").value=state.rig.guitarSlots;
+      document.getElementById("editorRuntime").textContent=formatDuration(showLength());
+      document.getElementById("editList").innerHTML=state.events.map((event,index)=>`
+        <div class="edit-row" draggable="true" data-id="${event.id}">
+          <span class="drag-handle" title="Drag to reorder">⠿</span>
+          <input type="number" min="1" data-field="number" value="${event.number??""}" aria-label="Event number">
+          <input data-field="title" value="${escapeHtml(event.title)}" aria-label="Event title">
+          <input type="number" min=".5" step=".5" data-field="duration" value="${event.duration}" aria-label="Duration in minutes">
+          <select data-field="type" aria-label="Event type"><option value="performance" ${event.type==="performance"?"selected":""}>Performance</option><option value="filler" ${event.type==="filler"?"selected":""}>Filler</option><option value="ceremony" ${event.type==="ceremony"?"selected":""}>Ceremony</option></select>
+          <span class="row-actions"><button data-action="instruments" title="Edit instruments">♫</button><button data-action="duplicate" title="Duplicate">⧉</button><button data-action="delete" title="Delete">×</button></span>
+        </div>`).join("");
+      bindEditorRows();renderInstrumentEditor();
+    }
+    function bindEditorRows(){
+      document.querySelectorAll(".edit-row").forEach(row=>{
+        const event=state.events.find(e=>e.id===row.dataset.id);
+        row.querySelectorAll("[data-field]").forEach(input=>input.addEventListener("change",()=>{
+          const field=input.dataset.field;
+          event[field]=field==="number"?(input.value?Number(input.value):null):field==="duration"?Math.max(.5,Number(input.value)||7):input.value;
+          saveState();renderEditor();
+        }));
+        row.querySelectorAll("[data-action]").forEach(button=>button.addEventListener("click",()=>{
+          const action=button.dataset.action,index=state.events.findIndex(e=>e.id===event.id);
+          if(action==="delete"){if(!confirm(`Delete “${event.title}”?`))return;state.events.splice(index,1);if(currentId===event.id)currentId=performanceEvents()[0]?.id}
+          if(action==="duplicate"){const copy=structuredClone(event);copy.id=crypto.randomUUID();copy.title+= " — Copy";state.events.splice(index+1,0,copy)}
+          if(action==="instruments"){editingInstrumentsId=editingInstrumentsId===event.id?null:event.id}
+          saveState();renderEditor();
+        }));
+        row.addEventListener("dragstart",()=>{draggedId=event.id;row.classList.add("dragging")});
+        row.addEventListener("dragend",()=>row.classList.remove("dragging"));
+        row.addEventListener("dragover",e=>e.preventDefault());
+        row.addEventListener("drop",e=>{
+          e.preventDefault();if(!draggedId||draggedId===event.id)return;
+          const from=state.events.findIndex(x=>x.id===draggedId),to=state.events.findIndex(x=>x.id===event.id),[moved]=state.events.splice(from,1);state.events.splice(to,0,moved);saveState("Order saved");renderEditor();
+        });
+      });
+    }
+    function renderInstrumentEditor(){
+      const panel=document.getElementById("instrumentEditor"),event=state.events.find(e=>e.id===editingInstrumentsId);
+      panel.classList.toggle("open",Boolean(event));if(!event){panel.innerHTML="";return}
+      panel.innerHTML=`<h3>${escapeHtml(event.title)}</h3><p>One line per role, written as <b>Instrument, count</b>. Saving regenerates the suggested layout.</p>
+        <div class="field"><label for="instrumentText">Stage roster</label><textarea id="instrumentText">${event.instruments.map(([r,c])=>`${r}, ${c}`).join("\n")}</textarea></div>
+        <div class="field"><label for="notesText">Cue notes — what happens in this moment (shown on timeline and stage plan)</label><textarea id="notesText" style="min-height:80px">${escapeHtml(event.notes||"")}</textarea></div>
+        <div class="field"><label for="ledText">LED wall shows (leave blank for plain LED wall)</label><input id="ledText" value="${escapeHtml(event.led||"")}" placeholder="e.g. STUDENT CREDITS + BLOOPERS"></div>
+        <button class="primary" id="saveInstrumentsBtn">Save this moment</button>`;
+      document.getElementById("saveInstrumentsBtn").addEventListener("click",()=>{
+        const parsed=document.getElementById("instrumentText").value.split("\n").map(line=>{const bits=line.split(","),count=Number(bits.pop()?.trim());return [bits.join(",").trim(),count]}).filter(([r,c])=>r&&c>0);
+        event.instruments=parsed;event.layout={};
+        event.notes=document.getElementById("notesText").value.trim();
+        event.led=document.getElementById("ledText").value.trim();
+        saveState("Moment saved");toast(`${peopleCount(event)} stage positions ready`);renderEditor();
+      });
+    }
+    function exportJson(){
+      const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");
+      a.href=URL.createObjectURL(blob);a.download="seasons-show-flow.json";a.click();URL.revokeObjectURL(a.href);toast("Show file exported");
+    }
+    function importJson(file){
+      const reader=new FileReader();
+      reader.onload=()=>{try{const next=JSON.parse(reader.result);if(!Array.isArray(next.events))throw Error("Missing events");state=withRig(next);currentId=performanceEvents()[0]?.id;saveState("Imported and saved");renderEditor();toast("Show imported successfully")}catch(error){alert("That file is not a valid Seasons show export.")}};
+      reader.readAsText(file);
+    }
+
+    document.addEventListener("click",e=>{
+      const target=e.target.closest("[data-open]");
+      if(target){currentId=target.dataset.open;location.hash="stage"}
+    });
+    window.addEventListener("hashchange",()=>navigate(location.hash.slice(1)));
+    document.getElementById("openStageBtn").addEventListener("click",()=>location.hash="stage");
+    document.getElementById("prevBtn").addEventListener("click",()=>moveStage(-1));
+    document.getElementById("nextBtn").addEventListener("click",()=>moveStage(1));
+    document.getElementById("resetLayoutBtn").addEventListener("click",()=>{const e=state.events.find(x=>x.id===currentId);e.layout={};saveState("Layout reset");renderStage()});
+    document.getElementById("printStageBtn").addEventListener("click",()=>{document.body.classList.add("printing-stage");window.print();document.body.classList.remove("printing-stage")});
+    document.getElementById("fullscreenBtn").addEventListener("click",()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen());
+    document.getElementById("addEventBtn").addEventListener("click",()=>{const e=item(null,"New performance",[["Unassigned",1]]);state.events.push(e);editingInstrumentsId=e.id;saveState();renderEditor()});
+    document.getElementById("exportBtn").addEventListener("click",exportJson);
+    document.getElementById("importBtn").addEventListener("click",()=>document.getElementById("importInput").click());
+    document.getElementById("importInput").addEventListener("change",e=>e.target.files[0]&&importJson(e.target.files[0]));
+    document.getElementById("printBtn").addEventListener("click",()=>{renderTimeline();window.print()});
+    document.getElementById("restoreBtn").addEventListener("click",()=>{if(confirm("Restore the original running order and remove your edits?")){state=createDefaults();currentId=performanceEvents()[0].id;saveState("Defaults restored");renderEditor();toast("Original show restored")}});
+    const showFields={showTitle:"title",showDate:"date",startTime:"startTime"};
+    Object.entries(showFields).forEach(([id,key])=>document.getElementById(id).addEventListener("change",e=>{state[key]=e.target.value;saveState();renderEditor()}));
+    const rigFields={drumSide:"drumSide",keyboardsPerSide:"keyboardsPerSide",guitarSlots:"guitarSlots"};
+    Object.entries(rigFields).forEach(([id,key])=>document.getElementById(id).addEventListener("change",e=>{
+      state.rig[key]=key==="drumSide"?e.target.value:Math.max(1,Number(e.target.value)||1);
+      state.rig.overrides={};saveState("Rig updated");renderEditor();toast("Fixed rig updated for every act");
+    }));
+    document.getElementById("resetRigBtn").addEventListener("click",()=>{state.rig.overrides={};saveState("Rig positions reset");toast("Rig positions reset")});
+    document.addEventListener("keydown",e=>{
+      if(!document.getElementById("stageView").classList.contains("active")||["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName))return;
+      if(e.key==="ArrowRight"||e.key===" ")moveStage(1);
+      if(e.key==="ArrowLeft")moveStage(-1);
+      if(e.key.toLowerCase()==="f")document.getElementById("fullscreenBtn").click();
+    });
+    if(!location.hash)location.hash="overview";else navigate(location.hash.slice(1));
+  </script>
+</body>
+</html>
