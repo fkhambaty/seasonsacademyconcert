@@ -81,8 +81,33 @@
       .edit-row select,.edit-row input[data-field="number"]{display:none}
       .toast{left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom))}
     }
+    .cast-link{margin-top:10px;display:inline-flex;align-items:center;gap:7px;border:1px solid #b8892f59;background:#b8892f12;color:#8a6420;font-weight:700;font-size:13px;padding:7px 12px;border-radius:99px;cursor:pointer}
+    .cast-link:before{content:"";width:14px;height:14px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm-8 0a3 3 0 1 0-3-3 3 3 0 0 0 3 3zm8 2c-2.7 0-8 1.3-8 4v3h16v-3c0-2.7-5.3-4-8-4zm-8 0c-.3 0-.7 0-1.1.1A4.6 4.6 0 0 1 9 17v3H1v-3c0-2.2 4.4-4 7-4z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm-8 0a3 3 0 1 0-3-3 3 3 0 0 0 3 3zm8 2c-2.7 0-8 1.3-8 4v3h16v-3c0-2.7-5.3-4-8-4zm-8 0c-.3 0-.7 0-1.1.1A4.6 4.6 0 0 1 9 17v3H1v-3c0-2.2 4.4-4 7-4z'/%3E%3C/svg%3E") center/contain no-repeat}
+    .cast-link:hover{background:#b8892f22}
+    .cast-backdrop{position:fixed;inset:0;background:#1b182640;opacity:0;pointer-events:none;transition:opacity .25s;z-index:49}
+    .cast-drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:#fff;border-left:1px solid var(--line);box-shadow:-30px 0 80px #1b182626;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.8,.2,1);z-index:50;display:flex;flex-direction:column}
+    body.cast-open .cast-drawer{transform:none}body.cast-open .cast-backdrop{opacity:1;pointer-events:auto}
+    .cast-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:22px 22px 14px;border-bottom:1px solid var(--line)}.cast-head h2{font:600 26px/1.1 "Playfair Display",Georgia,serif;margin:6px 0 0}
+    .cast-close{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:22px;line-height:1;cursor:pointer;color:var(--ink)}
+    .cast-body{overflow:auto;padding:6px 22px 30px}
+    .cast-label{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);margin:20px 0 10px}
+    .costume-cards{display:grid;gap:8px}.costume-card{border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:#faf8f3}.costume-card b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);margin-bottom:3px}.costume-card span{font-size:14px;line-height:1.45}
+    .cast-group{border-top:1px solid var(--line);padding:10px 0}.cast-group h3{display:flex;align-items:center;gap:8px;font-size:14px;margin:0 0 6px}.cast-group h3 small{margin-left:auto;color:var(--muted);font-weight:600}
+    .cast-group ul{list-style:none;margin:0;padding:0 0 0 18px;display:grid;grid-template-columns:1fr 1fr;gap:4px 14px}.cast-group li{font-size:14px;line-height:1.35}
+    .names-toggle{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:99px;padding:5px 11px 5px 6px;font-size:12px;font-weight:700;cursor:pointer}
+    .names-toggle i{width:28px;height:16px;border-radius:99px;background:#e4e0d8;position:relative;display:block}
+    .names-toggle i:after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:left .2s}
+    .names-toggle.on{color:var(--ink);border-color:#b8892f80}.names-toggle.on i{background:#b8892f}.names-toggle.on i:after{left:14px}
+    .performer .first-name{color:var(--ink);font-weight:700;font-size:8.5px;max-width:52px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .name-tip{position:absolute;transform:translate(-50%,calc(-100% - 40px));background:var(--ink);color:#fff;border-radius:10px;padding:8px 12px;font-size:13px;white-space:nowrap;z-index:8;box-shadow:0 10px 30px #1b182640;pointer-events:none}.name-tip b{display:block}.name-tip span{font-size:11px;opacity:.7}.name-tip:after{content:"";position:absolute;left:50%;bottom:-5px;width:10px;height:10px;background:var(--ink);transform:translateX(-50%) rotate(45deg)}.name-tip.edge-left{transform:translate(-26px,calc(-100% - 40px))}.name-tip.edge-left:after{left:26px}.name-tip.edge-right{transform:translate(calc(-100% + 26px),calc(-100% - 40px))}.name-tip.edge-right:after{left:auto;right:21px;transform:rotate(45deg)}
+    .costume-box{margin-top:16px;border:1px solid var(--line);border-radius:12px;background:#fff}.costume-box[hidden]{display:none!important}.costume-box summary{cursor:pointer;padding:11px 13px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;list-style:none;display:flex;justify-content:space-between}.costume-box summary::-webkit-details-marker{display:none}.costume-box summary:after{content:"+";font-size:16px;color:var(--gold)}.costume-box[open] summary:after{content:"−"}.costume-box .costume-cards{padding:0 10px 10px}
+    @media(max-width:900px){
+      .cast-drawer{top:auto;left:0;width:100%;height:84dvh;border-left:0;border-radius:22px 22px 0 0;transform:translateY(100%)}
+      .cast-drawer:before{content:"";position:absolute;top:8px;left:50%;width:40px;height:4px;border-radius:4px;background:#1b182626;transform:translateX(-50%)}
+      .cast-group li,.costume-card span{font-size:15px}
+    }
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
-    @media print{.app-header,.stage-controls,.editor-actions,.noise{display:none!important}body{background:white;color:#111}.view{display:none!important}#timelineView{display:block!important}.timeline-shell{display:block;height:auto}.run-rail{display:none}.timeline-main{padding:20px}.schedule-row{break-inside:avoid;background:white;border-color:#bbb}.schedule:before{background:#bbb}.schedule-row p,.clock{color:#555!important}
+    @media print{.app-header,.stage-controls,.editor-actions,.noise,.cast-drawer,.cast-backdrop,.names-toggle,.cast-link{display:none!important}body{background:white;color:#111}.view{display:none!important}#timelineView{display:block!important}.timeline-shell{display:block;height:auto}.run-rail{display:none}.timeline-main{padding:20px}.schedule-row{break-inside:avoid;background:white;border-color:#bbb}.schedule:before{background:#bbb}.schedule-row p,.clock{color:#555!important}
       .schedule-row .cue{color:#333!important;border-left-color:#888}
       /* Stage plan prints on ONE landscape sheet: notes column on the left, stage drawing filling the right. */
       body.printing-stage{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff}body.printing-stage main{min-height:0}body.printing-stage #timelineView{display:none!important}body.printing-stage #stageView{display:block!important}
@@ -143,13 +168,14 @@
           <h1 id="stageTitle">Performance</h1>
           <div class="stage-meta"><div class="meta-box"><strong id="stagePeople">0</strong><span>Performers</span></div><div class="meta-box"><strong id="stageDuration">3m</strong><span>Duration</span></div></div>
           <div class="legend"><h3>On stage</h3><div id="legend"></div></div>
+          <details class="costume-box" id="costumeBox" hidden><summary>Costume</summary><div id="costumeBoxBody"></div></details>
           <div class="cue-note" id="cueNote" hidden></div>
           <div class="changeover"><h3>Fixed rig in use</h3><div class="chips" id="rigStatus"></div><p class="rig-hint">Faded circles stay wired and patched, just unused this act.</p></div>
           <div class="changeover"><h3>Changeover from previous</h3><div class="chips" id="changeover"></div><div class="next-up" id="nextUp"></div></div>
           <div class="setup-note" id="setupNote"></div>
         </aside>
         <div class="stage-main">
-          <div class="stage-labels"><span>BACKSTAGE / UPSTAGE</span><b>Stage plan</b><span>Drag to fine-tune</span></div>
+          <div class="stage-labels"><span>BACKSTAGE / UPSTAGE</span><b>Stage plan</b><button class="names-toggle" id="namesToggle" type="button" aria-pressed="false"><i></i>Names</button></div>
           <div class="stage-frame">
             <div class="wing left"><span class="wing-label">STAGE RIGHT WING · HOUSE LEFT</span><span class="wing-count" id="wingLeft">0<small>ENTER</small></span></div>
             <div class="stage-map" id="stageMap"></div>
@@ -186,10 +212,19 @@
       </div>
     </section>
   </main>
+  <div class="cast-backdrop" id="castBackdrop"></div>
+  <aside class="cast-drawer" id="castDrawer" role="dialog" aria-modal="true" aria-labelledby="castTitle" aria-hidden="true">
+    <div class="cast-head">
+      <div><div class="eyebrow" id="castKicker"></div><h2 id="castTitle"></h2></div>
+      <button class="cast-close" id="castClose" type="button" aria-label="Close">×</button>
+    </div>
+    <div class="cast-body" id="castBody"></div>
+  </aside>
   <div class="toast" id="toast" role="status"></div>
 
   <script>
     const STORAGE_KEY = "seasons-academy-show-v9";
+    const CAST = {"Old Woman Shoe":{"costume":"Girls : White top/shirt, Black short skirt, Black stockings, Black balarinas. Boys: White shirt, Black pant, Black socks, Black shoe, Black bow tie and suspender.","people":[["Myra Pokhrel","Keyboard"],["Parthvee Jain","Keyboard"],["Ayansh Aniket Zarkar","Keyboard"],["Adelyn Grace","Keyboard"]]},"Ajeeb Daastaan":{"costume":"","people":[["Eva Camillio Fernandes","Acoustic Guitar"],["Ridhaan Kavthekar","Acoustic Guitar"],["Natasha Chatterjee","Acoustic Guitar"],["Arnik Sharma","Acoustic Guitar"],["Vivaan Patel","Acoustic Guitar"],["Manoj Bhardwaj","Acoustic Guitar"],["Vinay Sir","Bass Guitar"],["Dilip Nitanta Ranade","Violin"],["Shreya Karthik","Violin"],["Ishanvi Batra","Violin"],["Harish Acharya","Violin"],["Aadhya Trivedi","Violin"],["Sankar Samia Sir","Violin"],["Eliana Vineet Sasane","Keyboard"],["Milee Ninad Mahadik","Keyboard"],["Ritu Rijhwani","Keyboard"],["Myraa Vivian Pillai","Drums"]]},"Bharat Humko Jaan Se Pyara Hai":{"costume":"Girls : White long kurti , blue sleeveless denim jacket and blue jean, white balarinas / sneakers. Boys : White long kurta ,Blue denim jacket and blue jean, white sneakers.","people":[["Srihitha Potnuru","Keyboard"],["Diya Tuteja","Keyboard"],["Kush Jigar Shah","Keyboard"],["Virat Jauhari","Keyboard"],["Harland Sir","Djambe"]]},"Challa — Jab Tak Hai Jaan":{"costume":"Girls : White long kurti , blue sleeveless denim jacket and blue jean, white balarinas / sneakers. Boys : White long kurta ,Blue denim jacket and blue jean, white sneakers.","people":[["Immanuel Lojo","Drums"],["K.Gayatri","Keyboard"],["Harland Sir","Vocals"],["Vihaani Roy","Acoustic Guitar"],["Arshaan K Dastoor","Acoustic Guitar"],["Siddhiksha Chaudhary","Acoustic Guitar"],["Pratibha Rathore","Acoustic Guitar"],["Navya Alung","Acoustic Guitar"],["Vinay Sir","Bass Guitar"]]},"Chammak Challo Mashup":{"costume":"Boys: White shirt, black Bow tie, Black formal pant, Black satin belt, Black formal shoe.","people":[["Shaurya Mohit Sharma","Electric guitar"],["Sharwin Mani","Electric guitar"],["Aayush Jahagirdar","Electric guitar"],["Viraj Phillips","Electric guitar"],["Amaaya Nair","Electric guitar"],["Aarush Sandip Kawade","Keyboard"],["Ariyan Bhattacharya","Keyboard"],["Amish Singh","Vocals"],["Vivaan Jitendra Virbhani","Drums"],["Vinay Sir","Bass Guitar"]]},"Drum Circle":{"costume":"Girls : Black T-shirt, Blue shorts, Black stockings, Black Boots, Red Bandanas and accessories. Boys : Black T-shirt, Blue Jeans, Sneakers, Red Bandanas and accessories.","people":[["Immanuel Lojo","Drums"],["Myra Gomes","Drums"],["Myraa Vivian Pillai","Drums"],["Kaivalya Shastry","Drums"],["Aryan Halkude","Drums"],["Vivaan Jitendra Virbhani","Drums"],["Reyansh Sinha","Drums"],["Shatakshi Shankar","Drums"],["Benita Fernandes","Drums"],["Nevaeh Sharma","Drums"],["Harshvardhan S Kendre","Drums"],["Nathania Joseph","Drums"]]},"Dil Diya Hai Jaan Bhi Denge — Karma":{"costume":"Girls : White long kurti , white pyjamas, Tricolour stole or dupatta. Boys : White long kurta , white pyjamas, Tricolour stole/dupatta.","people":[["Mustafa Sabuwala","Vocals"],["Jyotsanaa Lokhandde","Vocals"],["Simmi Arora","Vocals"],["Sujata Pasupathi","Vocals"],["Virat Jauhari","Keyboard"],["Harland Sir","Djambe"]]},"Eye of the Tiger, Gehra Hua Mashup":{"costume":"","people":[["Nathania Joseph","Drums"],["Veda Shrivastava","Electric guitar"],["Ishita Kothari","Electric guitar"],["Kinaera Sharma","Electric guitar"],["Richard D'souza","Electric guitar"],["Abhijeet Chowdhaury","Bass Guitar"],["Arjun Kelkar","Keyboard"]]},"Final Countdown":{"costume":"","people":[["Arnab Banerjee","Electric guitar"],["Nakul Chandrakant Chandak","Acoustic Guitar"],["Sarah MohmedIrfan Memon","Electric guitar"],["Leonora Mendis","Electric guitar"],["Aarya Pratap","Electric guitar"],["Nivita Baliga","Keyboard"],["Ayaan Solanki","Keyboard"],["Aviana Lalwani","Keyboard"],["Linisha Srivastava","Keyboard"],["Reyansh Sinha","Drums"],["Vinay Sir","Bass Guitar"],["Sabastian Sir","Vocals"]]},"G Minute":{"costume":"Girls : Satin gown and Balarinas/heels. Boys : , Black Pants, Black bow tie, Black socks and black shoes","people":[["Dilip Nitanta Ranade","Violin"],["Shreya Karthik","Violin"],["Ishanvi Batra","Violin"],["Harish Acharya","Violin"],["Aadhya Trivedi","Violin"],["Natasha Nainani","Violin"],["Sankar Samia Sir","Violin"]]},"Ghar More Pardesiya & Moh Moh Ke Dhaage":{"costume":"Gold Lehenga/ Salwar, Gold sandals","people":[["Trishaa Nikhil Shirude","Hindustani Vocals"],["Sanjeevini Chandramani Jarje","Hindustani Vocals"],["Savya Dubey","Hindustani Vocals"],["Preeti Bhandare","Hindustani Vocals"]]},"How Long — Charlie Puth":{"costume":"Girls : Maroon Satin shirts, Black trousers, chunky jewellery and black formal shoe. Boys : Maroon Satin shirts, Black trousers and black formal shoe.","people":[["Keshav Coimbatore Balachandar","Electric guitar"],["Vibhav Coimbatore Balachandar","Electric guitar"],["Maghizini Viswanathan","Electric guitar"],["Nathania Joseph","Drums"]]},"Mission Impossible":{"costume":"","people":[["Kartikeyan Jha","Electric guitar"],["Immanuel Lojo","Electric guitar"],["Rishi Chitresh Bhatia","Electric guitar"],["Avni Bhatia","Electric guitar"],["Agastya Anil Yadav","Electric guitar"],["Avyukth Ujwal","Keyboard"],["Sudiksha Moolani","Keyboard"],["Inaya Kapadiya","Keyboard"],["Dakshi Devi","Keyboard"],["Abigail Vairagar","Keyboard"],["Siddhartha Basuroy","Drums"],["Vinay Sir","Bass Guitar"]]},"O Haseena":{"costume":"","people":[["Joseph Sunil Sir","Electric guitar"],["Vinay Sir","Bass Guitar"],["Sabastian Sir","Vocals"],["Harland Sir","Keyboard"],["Nicholas Sir","Drums"],["Ashish Sir","Vocals"]]},"Raag Yaman":{"costume":"Girls: Navy Blue kurti, White Pyjama, white jooti Boys: Blue kurta, White Pyjama, kolapuri chappal/shoe","people":[["Ayansh Agrawal","Flute"],["Manoj Bhardwaj","Flute"],["Eva Alung","Flute"],["Pranchal","Flute"],["Ashish Sir","Flute"]]},"Saiyaara":{"costume":"","people":[["Aarush Sandip Kawade","Electric guitar"],["Ranvir Samrat Taware","Electric guitar"],["Avir Parinit Tathed","Electric guitar"],["Zoya Sajid Memon","Electric guitar"],["Sanjeevini Chandramani Jarje","Keyboard"],["Reyansh Bhatia","Keyboard"],["Rishika Singh","Keyboard"],["Shanaya Sanoj","Keyboard"],["Mireya Joseph","Keyboard"],["Myra Gomes","Drums"],["Ridhaan Kavthekar","Bass Guitar"]]},"Tauba Tauba, Urvashi Urvashi Mashup":{"costume":"Girls : Maroon Satin shirts, Black trousers, chunky jewellery and black formal shoe. Boys : Maroon Satin shirts, Black trousers and black formal shoe.","people":[["Eliana Vineet Sasane","Keyboard"],["Adarsh Satheesh","Keyboard"],["Milee Ninad Mahadik","Keyboard"],["Harshvardhan S Kendre","Drums"],["Maghizini Viswanathan","Acoustic Guitar"],["Vibhav Coimbatore Balachandar","Acoustic Guitar"],["Amaaya Nair","Acoustic Guitar"],["Kush Jigar Shah","Bass Guitar"]]},"The Flute Song":{"costume":"Girls : White top/shirt, Black short skirt, Black stockings, Black balarinas. Boys: White shirt, Black pant, Black socks, Black shoe, Black bow tie and suspender.","people":[["Ivan Raghava","Acoustic Guitar"],["Mahira Chandak","Keyboard"],["Kiana Mendis","Keyboard & Vocals"],["Devansh Wadhwa","Keyboard"],["Sesha Datta Abhiram Babbepalli","Keyboard"],["Aarush Rahul Zarpure","Keyboard"],["Aavya Brid","Keyboard"]]},"We Are the Champions Mashup":{"costume":"Black Dresses/Gown, Gold belt & Hair Bow, Black Balarinas, White pearl earing, Bracelet and neck piece.","people":[["Akriti Hemant Gaikwad","Western Vocals"],["Arika Hemant Gaikwad","Western Vocals"],["Mireya Joseph","Western Vocals"],["Lubaina Godhrawala","Western Vocals"],["Arohi Abhay Mundra","Western Vocals"],["Aahana Sen","Western Vocals"],["Aishni Ratadiya","Western Vocals"],["Naysa","Western Vocals"],["Diya Tuteja","Western Vocals"],["Ria Nikhil Naik","Western Vocals"],["Prisha Mathur","Western Vocals"],["Noyanika Amit Chaudhari","Western Vocals"],["Harland Sir","Keyboard"]]}};
     const DEFAULT_RIG = {drumSide:"right",keyboardsPerSide:3,guitarSlots:5,overrides:{}};
     const colors = {
       "Drums":"#e0357f","Keyboard":"#6c5ce7","Guitar":"#f2712e",
@@ -322,6 +357,75 @@
       return timings().map(({event,start})=>`<button class="rail-item ${event.id===activeId?"active":""} ${event.type}" data-open="${event.id}">
         <span class="rail-num">${event.number??"•"}</span><span class="rail-copy"><b>${escapeHtml(event.title)}</b><small>${mates(event).length?"In parallel":`${peopleCount(event)} on stage`}</small></span><span class="rail-time">${formatClock(start)}</span></button>`).join("");
     }
+    let showNames = localStorage.getItem("seasons-show-names")==="on";
+    function instrumentKey(value){
+      const v=String(value).toLowerCase();
+      if(v.includes("bass"))return "Bass Guitar";
+      if(v.includes("&"))return "Keyboard & Vocals";
+      if(v.includes("keyboard"))return "Keyboard";
+      if(v.includes("guitar"))return "Guitar";
+      if(v.includes("drum"))return "Drums";
+      if(v.includes("djembe")||v.includes("djambe"))return "Djembe";
+      if(v.includes("western"))return "Western Vocals";
+      if(v.includes("hindustani"))return "Hindustani Vocals";
+      if(v.includes("vocal"))return "Vocals";
+      if(v.includes("flute"))return "Flute";
+      if(v.includes("violin"))return "Violin";
+      return value;
+    }
+    function castFor(event){return event&&CAST[event.title]}
+    function nameFor(event,role,index){
+      const cast=castFor(event);
+      if(!cast)return null;
+      return cast.people.filter(([,inst])=>instrumentKey(inst)===instrumentKey(role))[index-1]?.[0]||null;
+    }
+    function costumeParts(text){
+      const parts=[...text.matchAll(/(Girls|Boys)\s*:\s*([^]*?)(?=(?:Girls|Boys)\s*:|$)/gi)].map(m=>[m[1][0].toUpperCase()+m[1].slice(1).toLowerCase(),m[2].trim().replace(/^[,\s]+/,"").replace(/[.,\s]+$/,"")]);
+      return parts.length?parts:[["Everyone",text]];
+    }
+    function costumeHtml(cast){
+      return `<div class="costume-cards">${costumeParts(cast.costume).map(([who,what])=>`<div class="costume-card"><b>${who}</b><span>${escapeHtml(what)}</span></div>`).join("")}</div>`;
+    }
+    function castBodyHtml(cast){
+      const groups=cast.people.reduce((all,[name,inst])=>{(all[instrumentKey(inst)]??=[]).push(name);return all},{});
+      const names=Object.entries(groups).map(([inst,list])=>`
+        <section class="cast-group"><h3><span class="legend-dot" style="--dot:${colors[inst]||colors.Unassigned}"></span>${escapeHtml(inst)}<small>${list.length}</small></h3>
+        <ul>${list.map(n=>`<li>${escapeHtml(n)}</li>`).join("")}</ul></section>`).join("");
+      const costume=cast.costume?`<h3 class="cast-label">Costume</h3>${costumeHtml(cast)}`:"";
+      return `${costume}<h3 class="cast-label">On stage · ${cast.people.length}</h3>${names}`;
+    }
+    function openCast(id){
+      const event=state.events.find(e=>e.id===id),cast=castFor(event);
+      if(!cast)return;
+      const acts=performanceEvents(),timing=timings().find(t=>t.event.id===id);
+      document.getElementById("castKicker").textContent=`Act ${String(event.number||acts.indexOf(event)+1).padStart(2,"0")} · ${formatClock(timing?.start||0)}`;
+      document.getElementById("castTitle").textContent=event.title;
+      document.getElementById("castBody").innerHTML=castBodyHtml(cast);
+      document.body.classList.add("cast-open");
+      document.getElementById("castDrawer").setAttribute("aria-hidden","false");
+      document.getElementById("castClose").focus();
+    }
+    function closeCast(){
+      document.body.classList.remove("cast-open");
+      document.getElementById("castDrawer").setAttribute("aria-hidden","true");
+    }
+    function paintNamesToggle(){
+      const btn=document.getElementById("namesToggle");
+      btn.classList.toggle("on",showNames);
+      btn.setAttribute("aria-pressed",String(showNames));
+    }
+    function showNameTip(el){
+      const map=document.getElementById("stageMap");
+      map.querySelector(".name-tip")?.remove();
+      const tip=document.createElement("div");
+      tip.className="name-tip";
+      tip.innerHTML=`<b>${escapeHtml(el.dataset.name)}</b><span>${escapeHtml(el.dataset.role)}</span>`;
+      const x=parseFloat(el.style.left);
+      tip.classList.toggle("edge-left",x<22);
+      tip.classList.toggle("edge-right",x>78);
+      tip.style.left=el.style.left;tip.style.top=el.style.top;
+      map.appendChild(tip);
+    }
     function renderTimeline(){
       const list=timings(),total=showLength();
       document.getElementById("timelineRail").innerHTML=railHtml(currentId);
@@ -334,8 +438,9 @@
         const note=partner.length?`Runs in parallel with ${partner.map(e=>escapeHtml(e.title)).join(" & ")}. `:"";
         const cue=event.notes?`<p class="cue">${escapeHtml(event.notes)}</p>`:"";
         const led=event.led?`<p class="cue led">LED wall: ${escapeHtml(event.led)}</p>`:"";
+        const castLink=castFor(event)?`<button class="cast-link" type="button" data-cast="${event.id}">Names &amp; costume</button>`:"";
         return `<article class="schedule-row ${event.type} ${together?"parallel":""}" data-open="${event.id}">
-          <span class="clock">${together?"same":formatClock(start)}</span><div><h3>${escapeHtml(event.title)}</h3><p>${note}${detail}</p>${cue}${led}</div><strong>${event.duration}m</strong>
+          <span class="clock">${together?"same":formatClock(start)}</span><div><h3>${escapeHtml(event.title)}</h3><p>${note}${detail}</p>${cue}${led}${castLink}</div><strong>${event.duration}m</strong>
         </article>`;
       }).join("");
     }
@@ -421,15 +526,28 @@
       const cueNote=document.getElementById("cueNote");
       cueNote.hidden=!event.notes&&!event.led;
       cueNote.innerHTML=`${event.notes?`<b>Cue</b>${escapeHtml(event.notes)}`:""}${event.led?`<b>LED wall</b>${escapeHtml(event.led)}`:""}`;
+      const cast=castFor(event);
+      const costumeBox=document.getElementById("costumeBox");
+      costumeBox.hidden=!(showNames&&cast?.costume);
+      document.getElementById("costumeBoxBody").innerHTML=cast?.costume?costumeHtml(cast):"";
+      paintNamesToggle();
+      const nameAttrs=(role,index)=>{
+        const name=showNames&&nameFor(event,role,index);
+        return name?` data-name="${escapeHtml(name)}" data-role="${escapeHtml(`${role} ${index}`)}"`:"";
+      };
+      const label=(role,index)=>{
+        const name=showNames&&nameFor(event,role,index);
+        return name?`${escapeHtml(role)}<small class="first-name">${escapeHtml(name.split(" ")[0])}</small>`:`${escapeHtml(role)}<small>${index}</small>`;
+      };
       const rigMarkup=plan.slots.map(slot=>{
         const live=slot.performer;
         const color=live?colors[slugRole(live.role)]||colors.Unassigned:"#6f6d7c";
-        return `<div class="performer rig ${live?"used":"idle"}" data-slot="${slot.id}" style="left:${slot.x}%;top:${slot.y}%;--role:${color}" title="${live?"Wired position in use — drag to match your venue":"Wired position patched but unused this act"}">
-          <span>${escapeHtml(live?live.role:slot.label)}<small>${live?live.index:"idle"}</small></span></div>`;
+        return `<div class="performer rig ${live?"used":"idle"}" data-slot="${slot.id}"${live?nameAttrs(live.role,live.index):""} style="left:${slot.x}%;top:${slot.y}%;--role:${color}" title="${live?"Wired position in use — drag to match your venue":"Wired position patched but unused this act"}">
+          <span>${live?label(live.role,live.index):`${escapeHtml(slot.label)}<small>idle</small>`}</span></div>`;
       }).join("");
       const freeMarkup=plan.free.map(p=>`
-        <div class="performer free" data-key="${escapeHtml(p.key)}" style="left:${p.x}%;top:${p.y}%;--role:${colors[slugRole(p.role)]||colors.Unassigned}" title="Drag to move">
-          <span>${escapeHtml(p.role)}<small>${p.index}</small></span></div>`).join("");
+        <div class="performer free" data-key="${escapeHtml(p.key)}"${nameAttrs(p.role,p.index)} style="left:${p.x}%;top:${p.y}%;--role:${colors[slugRole(p.role)]||colors.Unassigned}" title="Drag to move">
+          <span>${label(p.role,p.index)}</span></div>`).join("");
       const nobody=!plan.free.length&&!plan.slots.some(slot=>slot.performer);
       const emptyMarkup=nobody?`<div class="empty-stage"><div><b>Positions to be confirmed</b><span>Nothing is marked on the stage for this moment yet.</span></div></div>`:"";
       map.innerHTML=zonesHtml(event.led)+'<div class="stage-lip"></div>'+rigMarkup+freeMarkup+emptyMarkup;
@@ -534,8 +652,20 @@
     }
 
     document.addEventListener("click",e=>{
+      const castBtn=e.target.closest("[data-cast]");
+      if(castBtn){openCast(castBtn.dataset.cast);return}
+      const named=e.target.closest(".performer[data-name]");
+      if(named){showNameTip(named);return}
+      if(!e.target.closest(".name-tip"))document.querySelector(".name-tip")?.remove();
       const target=e.target.closest("[data-open]");
       if(target){currentId=target.dataset.open;location.hash="stage"}
+    });
+    document.getElementById("castClose").addEventListener("click",closeCast);
+    document.getElementById("castBackdrop").addEventListener("click",closeCast);
+    document.getElementById("namesToggle").addEventListener("click",()=>{
+      showNames=!showNames;
+      localStorage.setItem("seasons-show-names",showNames?"on":"off");
+      if(document.getElementById("stageView").classList.contains("active"))renderStage();
     });
     window.addEventListener("hashchange",()=>navigate(location.hash.slice(1)));
     document.getElementById("prevBtn").addEventListener("click",()=>moveStage(-1));
@@ -567,6 +697,7 @@
     }));
     document.getElementById("resetRigBtn").addEventListener("click",()=>{state.rig.overrides={};saveState("Rig positions reset");toast("Rig positions reset")});
     document.addEventListener("keydown",e=>{
+      if(document.body.classList.contains("cast-open")){if(e.key==="Escape")closeCast();return}
       if(!document.getElementById("stageView").classList.contains("active")||["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName))return;
       if(e.key==="ArrowRight"||e.key===" ")moveStage(1);
       if(e.key==="ArrowLeft")moveStage(-1);
