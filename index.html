@@ -114,19 +114,17 @@
       body.printing-act #printSheets{display:block!important}
     }
     #printSheets{display:none}
-    .sheet{width:297mm;height:210mm;box-sizing:border-box;padding:10mm 10mm 11mm;display:grid;grid-template-rows:auto 1fr auto;gap:4mm;color:#1b1826;font:10pt/1.35 "DM Sans",system-ui,sans-serif;break-after:page;page-break-after:always;overflow:hidden}
+    .sheet{width:297mm;height:210mm;box-sizing:border-box;padding:9mm 10mm 8mm;display:grid;grid-template-rows:auto auto 1fr auto;gap:3.5mm;color:#1b1826;font:10pt/1.35 "DM Sans",system-ui,sans-serif;break-after:page;page-break-after:always;overflow:hidden}
     .sheet:last-child{break-after:auto;page-break-after:auto}
-    .sheet-head{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:5mm;padding-bottom:3mm;border-bottom:.6mm solid #1b1826}
-    .sheet-head img{height:15mm;width:auto}
-    .sheet-kicker{font-size:8pt;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#8a6420}
-    .sheet-head h1{font:600 21pt/1.05 "Playfair Display",Georgia,serif;margin:1mm 0 0;letter-spacing:-.01em}
-    .sheet-facts{display:flex;gap:2.5mm}
-    .sheet-fact{border:.3mm solid #cfc9bd;border-radius:2.5mm;padding:1.8mm 3.5mm;text-align:center;min-width:19mm}
+    .sheet-head{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:5mm;padding-bottom:2.5mm;border-bottom:.6mm solid #1b1826}
+    .sheet-head img{height:13mm;width:auto}
+    .sheet-kicker{font-size:7.5pt;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#8a6420}
+    .sheet-head h1{font:600 20pt/1.05 "Playfair Display",Georgia,serif;margin:.8mm 0 0;letter-spacing:-.01em}
+    .sheet-fact{border:.3mm solid #cfc9bd;border-radius:2.5mm;padding:1.5mm 4mm;text-align:center;min-width:20mm}
     .sheet-fact b{display:block;font-size:14pt;line-height:1.1}
     .sheet-fact span{font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#5c5768}
-    .sheet-body{display:grid;grid-template-columns:136mm 1fr;gap:6mm;min-height:0}
-    .sheet-stage{display:grid;grid-template-rows:auto 1fr auto;gap:1.5mm;min-height:0}
-    .sheet-back,.sheet-front{text-align:center;font-size:7pt;font-weight:700;letter-spacing:.3em;text-transform:uppercase;border-radius:1.5mm;padding:1.4mm}
+    .sheet-stage{display:grid;grid-template-rows:auto 1fr auto;gap:1.5mm;height:98mm}
+    .sheet-back,.sheet-front{text-align:center;font-size:7pt;font-weight:700;letter-spacing:.3em;text-transform:uppercase;border-radius:1.5mm;padding:1.2mm}
     .sheet-back{background:#1b1826;color:#fff}
     .sheet-front{background:#f1eee6;color:#1b1826;border:.3mm solid #cfc9bd}
     .sheet-floor{display:grid;grid-template-columns:8mm 1fr 8mm;gap:1.5mm;min-height:0}
@@ -134,26 +132,29 @@
     .sheet-side.left{transform:rotate(180deg)}
     .sheet-map{position:relative;border:.4mm solid #8a8594;border-radius:2mm;background:linear-gradient(90deg,transparent 49.8%,#d9d4ca 50%,transparent 50.2%),linear-gradient(0deg,transparent 29.8%,#ece8df 30%,transparent 30.2%),linear-gradient(0deg,transparent 61.8%,#ece8df 62%,transparent 62.2%),#fff}
     .sheet-row-label{position:absolute;left:1.5mm;font-size:5.5pt;letter-spacing:.2em;text-transform:uppercase;color:#a09aa9;font-weight:700}
-    .sheet-spot{position:absolute;transform:translate(-50%,-50%);width:14mm;height:14mm;border-radius:50%;border:.6mm solid var(--role);background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.05}
-    .sheet-spot b{position:absolute;top:-2.2mm;left:-2.2mm;width:5.8mm;height:5.8mm;border-radius:50%;background:var(--role);color:#fff;font-size:7.5pt;display:grid;place-items:center}
-    .sheet-spot strong{font-size:6.8pt;max-width:13mm;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .sheet-spot small{font-size:5.3pt;color:#5c5768;margin-top:.5mm;max-width:13mm;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .sheet-spot.unused{width:7mm;height:7mm;border:.3mm dashed #cfc9bd;background:transparent}
+    .sheet-spot{position:absolute;transform:translate(-50%,-50%);width:13.5mm;height:13.5mm;border-radius:50%;border:.6mm solid var(--role);background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.05}
+    .sheet-spot b{position:absolute;top:-2mm;left:-2mm;width:5.5mm;height:5.5mm;border-radius:50%;background:var(--role);color:#fff;font-size:7pt;display:grid;place-items:center}
+    .sheet-spot strong{font-size:6pt;max-width:12.2mm;letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .sheet-spot small{font-size:5pt;color:#5c5768;margin-top:.4mm;max-width:12.2mm;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .sheet-spot.unused{width:6mm;height:6mm;border:.3mm dashed #cfc9bd;background:transparent}
     .sheet-empty{position:absolute;inset:0;display:grid;place-items:center;font:600 13pt "Playfair Display",Georgia,serif;color:#5c5768}
-    .sheet-side-panel{display:flex;flex-direction:column;gap:3mm;min-height:0}
-    .sheet-table{width:100%;border-collapse:collapse;font-size:8pt}
-    .sheet-table td:nth-child(n+3){white-space:nowrap}
-    .sheet-table th{text-align:left;font-size:6.2pt;letter-spacing:.12em;text-transform:uppercase;color:#5c5768;border-bottom:.4mm solid #1b1826;padding:0 1.2mm 1.2mm;white-space:nowrap}
-    .sheet-table td{padding:.9mm 1.2mm;border-bottom:.2mm solid #e4e0d8;vertical-align:middle}
-    .sheet-table tr:nth-child(even) td{background:#faf8f3}
+    .sheet-bottom{display:grid;grid-template-columns:1fr var(--info,62mm);gap:5mm;min-height:0}
+    .sheet-roster{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:1.2mm 4mm;align-content:start}
+    .sheet-roster h3,.sheet-box h3{margin:0 0 1mm;font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;color:#8a6420}
+    .sheet-roster h3{grid-column:1/-1;border-bottom:.4mm solid #1b1826;padding-bottom:1mm}
+    .sheet-person{display:grid;grid-template-columns:6mm 1fr;column-gap:1.5mm;align-items:start;border-bottom:.2mm solid #e4e0d8;padding-bottom:1mm;min-width:0}
     .sheet-num{width:6mm;height:6mm;border-radius:50%;background:var(--role);color:#fff;font-weight:700;font-size:7.5pt;display:inline-grid;place-items:center}
-    .sheet-table .who{font-weight:700;line-height:1.15}
-    .sheet-table .where{color:#2a2636}
-    .sheet-box{border:.3mm solid #cfc9bd;border-radius:2.5mm;padding:2.5mm 3.5mm;background:#faf8f3}
-    .sheet-box h3{margin:0 0 1.2mm;font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;color:#8a6420}
-    .sheet-box p{margin:.6mm 0;font-size:8.5pt}
-    .sheet-box p b{display:inline-block;min-width:13mm}
-    .sheet-foot{display:flex;justify-content:space-between;gap:6mm;font-size:7.5pt;color:#5c5768;border-top:.3mm solid #e4e0d8;padding-top:2mm}
+    .sheet-person .who{font-size:8pt;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .sheet-person .who b{font-weight:700}
+    .sheet-person .who span{color:#5c5768}
+    .sheet-person .loc{font-size:6.8pt;line-height:1.2;color:#2a2636;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .sheet-person .loc b{font-weight:700}
+    .sheet-info{display:flex;flex-direction:column;gap:2.5mm;min-height:0}
+    .sheet-box{border:.3mm solid #cfc9bd;border-radius:2.5mm;padding:2.2mm 3.2mm;background:#faf8f3}
+    .sheet-box p{margin:.5mm 0;font-size:8pt;line-height:1.3}
+    .sheet-box p b{display:inline-block;min-width:12mm}
+    .sheet-box.cue p{font-size:7.6pt}
+    .sheet-foot{display:flex;justify-content:space-between;gap:6mm;font-size:7.5pt;color:#5c5768;border-top:.3mm solid #e4e0d8;padding-top:1.8mm}
     .sheet-foot b{color:#1b1826}
   </style>
 </head>
@@ -526,7 +527,7 @@
       const placedFree=free.map((performer,i)=>{
         const row=Math.floor(i/perRow),column=i%perRow,rowItems=Math.min(perRow,free.length-row*perRow);
         const x=rowItems===1?50:12+76*(column/(rowItems-1));
-        return {...performer,x,y:88-row*18,...(event.layout?.[performer.key]||{})};
+        return {...performer,x,y:88-row*22,...(event.layout?.[performer.key]||{})};
       });
       return {slots:rigSlots().map(slot=>({...slot,performer:taken.get(slot.id)||null})),free:placedFree};
     }
@@ -737,39 +738,35 @@
       return {people,unused:plan.slots.filter(slot=>!slot.performer)};
     }
     function actSheetHtml(event){
-      const timing=timings().find(t=>t.event.id===event.id);
       const {people,unused}=sheetSpots(event),cast=castFor(event);
       const color=role=>colors[slugRole(role)]||colors.Unassigned;
       const spots=people.map(p=>`<div class="sheet-spot" style="left:${p.x}%;top:${p.y}%;--role:${color(p.role)}"><b>${p.number}</b><strong>${escapeHtml(p.name?p.name.split(" ")[0]:p.role)}</strong><small>${escapeHtml(p.name?p.role:`${p.role} ${p.index}`)}</small></div>`).join("");
       const ghosts=unused.map(s=>`<div class="sheet-spot unused" style="left:${s.x}%;top:${s.y}%"></div>`).join("");
-      const rows=people.map(p=>`<tr><td><span class="sheet-num" style="--role:${color(p.role)}">${p.number}</span></td><td class="who">${escapeHtml(p.name||"Name to be confirmed")}</td><td>${escapeHtml(p.role)}</td><td class="where"><b>${ROW_NAMES[p.row]}</b> · ${p.where}</td><td>${p.enter}</td></tr>`).join("");
+      const rows=people.map(p=>`<div class="sheet-person"><span class="sheet-num" style="--role:${color(p.role)}">${p.number}</span><div><div class="who"><b>${escapeHtml(p.name||"Name to be confirmed")}</b> <span>· ${escapeHtml(p.role)}</span></div><div class="loc"><b>${ROW_NAMES[p.row]}</b> · ${p.where} · via ${p.enter.toLowerCase()}</div></div></div>`).join("");
       const costume=cast?.costume?costumeParts(cast.costume).map(([who,what])=>`<p><b>${who}</b>${escapeHtml(what)}</p>`).join(""):`<p>No costume listed for this act.</p>`;
-      const cue=event.notes||event.led?`<div class="sheet-box"><h3>Cue</h3>${event.notes?`<p>${escapeHtml(event.notes)}</p>`:""}${event.led?`<p><b>LED wall</b>${escapeHtml(event.led)}</p>`:""}</div>`:"";
-      return `<section class="sheet">
+      const cue=event.notes||event.led?`<div class="sheet-box cue"><h3>Cue</h3>${event.notes?`<p>${escapeHtml(event.notes)}</p>`:""}${event.led?`<p><b>LED wall</b>${escapeHtml(event.led)}</p>`:""}</div>`:"";
+      const cols=people.length>8?3:people.length>4?2:1,info=cue&&people.length<=4?"150mm":"62mm";
+      return `<section class="sheet" style="--cols:${cols};--info:${info}">
         <header class="sheet-head">
           <img src="logo.png" alt="">
           <div><div class="sheet-kicker">${escapeHtml(state.title)} · ${event.number?`Act ${String(event.number).padStart(2,"0")}`:"Ceremony"}</div><h1>${escapeHtml(event.title)}</h1></div>
-          <div class="sheet-facts">
-            <div class="sheet-fact"><b>${formatClock(timing?.start||0)}</b><span>On stage</span></div>
-            <div class="sheet-fact"><b>${event.duration}m</b><span>Duration</span></div>
-            <div class="sheet-fact"><b>${people.length}</b><span>Performers</span></div>
-          </div>
+          <div class="sheet-fact"><b>${people.length}</b><span>On stage</span></div>
         </header>
-        <div class="sheet-body">
-          <div class="sheet-stage">
-            <div class="sheet-back">Back of stage · LED wall</div>
-            <div class="sheet-floor">
-              <div class="sheet-side left">Stage right · your right</div>
-              <div class="sheet-map">
-                <span class="sheet-row-label" style="top:1.5mm">Back row</span><span class="sheet-row-label" style="top:calc(38% + 1mm)">Middle row</span><span class="sheet-row-label" style="top:calc(70% + 1mm)">Front row</span>
-                ${ghosts}${spots}${people.length?"":`<div class="sheet-empty">Positions to be confirmed</div>`}
-              </div>
-              <div class="sheet-side">Stage left · your left</div>
+        <div class="sheet-stage">
+          <div class="sheet-back">Back of stage · LED wall</div>
+          <div class="sheet-floor">
+            <div class="sheet-side left">Stage right · your right</div>
+            <div class="sheet-map">
+              <span class="sheet-row-label" style="top:1.2mm">Back row</span><span class="sheet-row-label" style="top:calc(38% + 1mm)">Middle row</span><span class="sheet-row-label" style="top:calc(70% + 1mm)">Front row</span>
+              ${ghosts}${spots}${people.length?"":`<div class="sheet-empty">Positions to be confirmed</div>`}
             </div>
-            <div class="sheet-front">Front of stage · Audience</div>
+            <div class="sheet-side">Stage left · your left</div>
           </div>
-          <div class="sheet-side-panel">
-            <table class="sheet-table"><thead><tr><th>#</th><th>Name</th><th>Role</th><th>Your spot on stage</th><th>Enter via</th></tr></thead><tbody>${rows}</tbody></table>
+          <div class="sheet-front">Front of stage · Audience</div>
+        </div>
+        <div class="sheet-bottom">
+          <div class="sheet-roster"><h3>Who stands where</h3>${rows}</div>
+          <div class="sheet-info">
             <div class="sheet-box"><h3>Costume</h3>${costume}</div>
             ${cue}
           </div>
