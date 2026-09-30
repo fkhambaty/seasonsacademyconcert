@@ -109,14 +109,52 @@
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
     @media print{.app-header,.stage-controls,.editor-actions,.noise,.cast-drawer,.cast-backdrop,.names-toggle,.cast-link{display:none!important}body{background:white;color:#111}.view{display:none!important}#timelineView{display:block!important}.timeline-shell{display:block;height:auto}.run-rail{display:none}.timeline-main{padding:20px}.schedule-row{break-inside:avoid;background:white;border-color:#bbb}.schedule:before{background:#bbb}.schedule-row p,.clock{color:#555!important}
       .schedule-row .cue{color:#333!important;border-left-color:#888}
-      /* Stage plan prints on ONE landscape sheet: notes column on the left, stage drawing filling the right. */
-      body.printing-stage{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff}body.printing-stage main{min-height:0}body.printing-stage #timelineView{display:none!important}body.printing-stage #stageView{display:block!important}
-      body.printing-stage .stage-shell{display:grid;grid-template-columns:62mm 1fr;gap:8mm;height:auto;align-items:start;page-break-inside:avoid}
-      body.printing-stage .stage-sidebar{border:0;border-right:1px solid #ddd;padding:0 6mm 0 0;background:none;overflow:visible;font-size:10px}body.printing-stage .stage-sidebar .back{display:none}body.printing-stage .stage-sidebar h1{font-size:22px;margin:3px 0 8px;line-height:1.1}body.printing-stage .event-kicker{font-size:10px}body.printing-stage .stage-meta{margin:0 0 10px;gap:6px}body.printing-stage .meta-box{padding:7px 9px;border-radius:8px}body.printing-stage .meta-box strong{font-size:15px}body.printing-stage .legend{padding-top:10px}body.printing-stage .legend h3,body.printing-stage .changeover h3{margin:0 0 6px;font-size:9px}body.printing-stage .legend-item{margin:4px 0;font-size:10px}body.printing-stage .changeover{margin-top:10px;padding-top:10px}body.printing-stage .next-up{margin-top:8px}body.printing-stage .rig-hint{display:none}body.printing-stage .cue-note,body.printing-stage .setup-note{margin-top:10px;padding:8px 10px;font-size:9.5px;line-height:1.45}
-      body.printing-stage .stage-sidebar *,body.printing-stage .stage-labels *{color:#111!important;border-color:#bbb}body.printing-stage .eyebrow,body.printing-stage .event-kicker,body.printing-stage .legend h3,body.printing-stage .changeover h3,body.printing-stage .cue-note b{color:#555!important}body.printing-stage .setup-note,body.printing-stage .cue-note{background:none;border-left-color:#888}body.printing-stage .chip{border-color:#bbb;font-size:9px;padding:3px 7px}body.printing-stage .chip.add{color:#1d7a43!important}body.printing-stage .chip.remove{color:#b3262e!important}
-      body.printing-stage .stage-main{height:auto;padding:0;background:none;display:flex;flex-direction:column;gap:6px}body.printing-stage .stage-labels{margin-bottom:2px}body.printing-stage .stage-labels span:last-child{visibility:hidden}body.printing-stage .stage-labels b{font-size:18px}
-      body.printing-stage .stage-frame{overflow:visible;page-break-inside:avoid;gap:6px}body.printing-stage .stage-map{max-height:none;min-height:0;flex:1 1 auto;aspect-ratio:1.3;background:#fff;border-color:#999;box-shadow:none;border-radius:8px 8px 2px 2px}body.printing-stage .stage-map:before{background:linear-gradient(90deg,transparent 49.85%,#ccc 50%,transparent 50.15%),repeating-linear-gradient(90deg,transparent 0 9.9%,#eee 10%),repeating-linear-gradient(0deg,transparent 0 24.8%,#eee 25%)}
-      body.printing-stage .performer{background:#fff;box-shadow:none;color:#111;width:52px;height:52px}body.printing-stage .performer.used{border-width:2.5px}body.printing-stage .performer.idle{opacity:.45;border-color:#999}body.printing-stage .performer small{color:#555}body.printing-stage .led-wall{background:#222;color:#fff;border-color:#000;animation:none;box-shadow:none;font-weight:700}body.printing-stage .empty-stage{color:#444}body.printing-stage .empty-stage>div{background:#fff;border-color:#bbb;box-shadow:none}body.printing-stage .empty-stage b{color:#111}body.printing-stage .zone{border-top-color:#ccc}body.printing-stage .zone span{color:#888}body.printing-stage .stage-lip{background:#333;box-shadow:none;height:3px}body.printing-stage .wing{border-color:#aaa;background:repeating-linear-gradient(45deg,#f0f0f0 0 6px,transparent 6px 12px);flex-basis:34px}body.printing-stage .wing-label{color:#555}body.printing-stage .wing-count{color:#111}body.printing-stage .house-band{background:#f2f2f2;color:#444;border-color:#bbb;padding:5px}}
+      body.printing-act{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff}
+      body.printing-act main,body.printing-act .toast{display:none!important}
+      body.printing-act #printSheets{display:block!important}
+    }
+    #printSheets{display:none}
+    .sheet{width:277mm;height:188mm;display:grid;grid-template-rows:auto 1fr auto;gap:4mm;color:#1b1826;font:10pt/1.35 "DM Sans",system-ui,sans-serif;break-after:page;page-break-after:always;overflow:hidden}
+    .sheet:last-child{break-after:auto;page-break-after:auto}
+    .sheet-head{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:5mm;padding-bottom:3mm;border-bottom:.6mm solid #1b1826}
+    .sheet-head img{height:15mm;width:auto}
+    .sheet-kicker{font-size:8pt;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#8a6420}
+    .sheet-head h1{font:600 21pt/1.05 "Playfair Display",Georgia,serif;margin:1mm 0 0;letter-spacing:-.01em}
+    .sheet-facts{display:flex;gap:2.5mm}
+    .sheet-fact{border:.3mm solid #cfc9bd;border-radius:2.5mm;padding:1.8mm 3.5mm;text-align:center;min-width:19mm}
+    .sheet-fact b{display:block;font-size:14pt;line-height:1.1}
+    .sheet-fact span{font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#5c5768}
+    .sheet-body{display:grid;grid-template-columns:136mm 1fr;gap:6mm;min-height:0}
+    .sheet-stage{display:grid;grid-template-rows:auto 1fr auto;gap:1.5mm;min-height:0}
+    .sheet-back,.sheet-front{text-align:center;font-size:7pt;font-weight:700;letter-spacing:.3em;text-transform:uppercase;border-radius:1.5mm;padding:1.4mm}
+    .sheet-back{background:#1b1826;color:#fff}
+    .sheet-front{background:#f1eee6;color:#1b1826;border:.3mm solid #cfc9bd}
+    .sheet-floor{display:grid;grid-template-columns:8mm 1fr 8mm;gap:1.5mm;min-height:0}
+    .sheet-side{writing-mode:vertical-rl;text-align:center;font-size:6.5pt;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#5c5768;border:.3mm dashed #b3afbd;border-radius:1.5mm;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(45deg,#f5f3ee 0 1.5mm,#fff 1.5mm 3mm)}
+    .sheet-side.left{transform:rotate(180deg)}
+    .sheet-map{position:relative;border:.4mm solid #8a8594;border-radius:2mm;background:linear-gradient(90deg,transparent 49.8%,#d9d4ca 50%,transparent 50.2%),linear-gradient(0deg,transparent 29.8%,#ece8df 30%,transparent 30.2%),linear-gradient(0deg,transparent 61.8%,#ece8df 62%,transparent 62.2%),#fff}
+    .sheet-row-label{position:absolute;left:1.5mm;font-size:5.5pt;letter-spacing:.2em;text-transform:uppercase;color:#a09aa9;font-weight:700}
+    .sheet-spot{position:absolute;transform:translate(-50%,-50%);width:14mm;height:14mm;border-radius:50%;border:.6mm solid var(--role);background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.05}
+    .sheet-spot b{position:absolute;top:-2.2mm;left:-2.2mm;width:5.8mm;height:5.8mm;border-radius:50%;background:var(--role);color:#fff;font-size:7.5pt;display:grid;place-items:center}
+    .sheet-spot strong{font-size:6.8pt;max-width:13mm;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .sheet-spot small{font-size:5.3pt;color:#5c5768;margin-top:.5mm;max-width:13mm;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .sheet-spot.unused{width:7mm;height:7mm;border:.3mm dashed #cfc9bd;background:transparent}
+    .sheet-empty{position:absolute;inset:0;display:grid;place-items:center;font:600 13pt "Playfair Display",Georgia,serif;color:#5c5768}
+    .sheet-side-panel{display:flex;flex-direction:column;gap:3mm;min-height:0}
+    .sheet-table{width:100%;border-collapse:collapse;font-size:8pt}
+    .sheet-table td:nth-child(n+3){white-space:nowrap}
+    .sheet-table th{text-align:left;font-size:6.2pt;letter-spacing:.12em;text-transform:uppercase;color:#5c5768;border-bottom:.4mm solid #1b1826;padding:0 1.2mm 1.2mm;white-space:nowrap}
+    .sheet-table td{padding:.9mm 1.2mm;border-bottom:.2mm solid #e4e0d8;vertical-align:middle}
+    .sheet-table tr:nth-child(even) td{background:#faf8f3}
+    .sheet-num{width:6mm;height:6mm;border-radius:50%;background:var(--role);color:#fff;font-weight:700;font-size:7.5pt;display:inline-grid;place-items:center}
+    .sheet-table .who{font-weight:700;line-height:1.15}
+    .sheet-table .where{color:#2a2636}
+    .sheet-box{border:.3mm solid #cfc9bd;border-radius:2.5mm;padding:2.5mm 3.5mm;background:#faf8f3}
+    .sheet-box h3{margin:0 0 1.2mm;font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;color:#8a6420}
+    .sheet-box p{margin:.6mm 0;font-size:8.5pt}
+    .sheet-box p b{display:inline-block;min-width:13mm}
+    .sheet-foot{display:flex;justify-content:space-between;gap:6mm;font-size:7.5pt;color:#5c5768;border-top:.3mm solid #e4e0d8;padding-top:2mm}
+    .sheet-foot b{color:#1b1826}
   </style>
 </head>
 <body>
@@ -182,7 +220,7 @@
             <div class="wing right"><span class="wing-label">STAGE LEFT WING · HOUSE RIGHT</span><span class="wing-count" id="wingRight">0<small>ENTER</small></span></div>
           </div>
           <div class="house-band">AUDIENCE</div>
-          <div class="stage-controls"><button id="prevBtn" aria-label="Previous act">←</button><span class="counter"><b id="currentCount">1</b> / <span id="eventCount">23</span></span><button id="nextBtn" aria-label="Next act">→</button><button id="resetLayoutBtn" title="Reset this layout">Reset layout</button><button id="printStageBtn" title="Print this stage plan">Print plan</button></div>
+          <div class="stage-controls"><button id="prevBtn" aria-label="Previous act">←</button><span class="counter"><b id="currentCount">1</b> / <span id="eventCount">23</span></span><button id="nextBtn" aria-label="Next act">→</button><button id="resetLayoutBtn" title="Reset this layout">Reset layout</button><button id="printStageBtn" title="Print a sheet for this act">Print this act</button><button id="printAllBtn" title="Print one sheet per act">Print all acts</button></div>
         </div>
       </div>
     </section>
@@ -220,6 +258,7 @@
     </div>
     <div class="cast-body" id="castBody"></div>
   </aside>
+  <div id="printSheets" aria-hidden="true"></div>
   <div class="toast" id="toast" role="status"></div>
 
   <script>
@@ -374,7 +413,10 @@
       return value;
     }
     function castFor(event){return event&&CAST[event.title]}
+    const CEREMONY_NAMES={"Welcome Speech — Sonal":{Speaker:["Sonal"]},"Ice Breaker — Hosts & Joseph":{Guitar:["Joseph"]},"Vote of Thanks — Joseph":{Speaker:["Joseph"]}};
     function nameFor(event,role,index){
+      const known=event&&CEREMONY_NAMES[event.title]?.[role]?.[index-1];
+      if(known)return known;
       const cast=castFor(event);
       if(!cast)return null;
       return cast.people.filter(([,inst])=>instrumentKey(inst)===instrumentKey(role))[index-1]?.[0]||null;
@@ -671,16 +713,87 @@
     document.getElementById("prevBtn").addEventListener("click",()=>moveStage(-1));
     document.getElementById("nextBtn").addEventListener("click",()=>moveStage(1));
     document.getElementById("resetLayoutBtn").addEventListener("click",()=>{const e=state.events.find(x=>x.id===currentId);e.layout={};saveState("Layout reset");renderStage()});
-    function printStagePlan(){
+    const ordinal=n=>n+(["th","st","nd","rd"][(n%100-20)%10]||["th","st","nd","rd"][n%100]||"th");
+    const rowOf=y=>y<38?0:y<70?1:2;
+    const ROW_NAMES=["Back row","Middle row","Front row"];
+    function sheetSpots(event){
+      const plan=stagePlan(event);
+      const people=[
+        ...plan.slots.filter(slot=>slot.performer).map(slot=>({...slot.performer,x:slot.x,y:slot.y})),
+        ...plan.free.map(p=>({...p}))
+      ].map(p=>({...p,row:rowOf(p.y),name:nameFor(event,p.role,p.index)}));
+      people.sort((a,b)=>a.row-b.row||a.x-b.x);
+      people.forEach((p,i)=>{
+        p.number=i+1;
+        const sameRow=people.filter(o=>o.row===p.row).sort((a,b)=>a.x-b.x);
+        const fromRight=sameRow.indexOf(p)+1,fromLeft=sameRow.length-fromRight+1;
+        const side=p.x<50?"stage right":"stage left";
+        p.where=Math.abs(p.x-50)<1?"Dead centre"
+          :Math.abs(p.x-50)<6?`Centre, ${side} side`
+          :sameRow.length===1?`Just ${side} of centre`
+          :p.x<50?`${ordinal(fromRight)} from stage right`:`${ordinal(fromLeft)} from stage left`;
+        p.enter=p.x<50?"Right wing":"Left wing";
+      });
+      return {people,unused:plan.slots.filter(slot=>!slot.performer)};
+    }
+    function actSheetHtml(event){
+      const timing=timings().find(t=>t.event.id===event.id);
+      const {people,unused}=sheetSpots(event),cast=castFor(event);
+      const color=role=>colors[slugRole(role)]||colors.Unassigned;
+      const spots=people.map(p=>`<div class="sheet-spot" style="left:${p.x}%;top:${p.y}%;--role:${color(p.role)}"><b>${p.number}</b><strong>${escapeHtml(p.name?p.name.split(" ")[0]:p.role)}</strong><small>${escapeHtml(p.name?p.role:`${p.role} ${p.index}`)}</small></div>`).join("");
+      const ghosts=unused.map(s=>`<div class="sheet-spot unused" style="left:${s.x}%;top:${s.y}%"></div>`).join("");
+      const rows=people.map(p=>`<tr><td><span class="sheet-num" style="--role:${color(p.role)}">${p.number}</span></td><td class="who">${escapeHtml(p.name||"Name to be confirmed")}</td><td>${escapeHtml(p.role)}</td><td class="where"><b>${ROW_NAMES[p.row]}</b> · ${p.where}</td><td>${p.enter}</td></tr>`).join("");
+      const costume=cast?.costume?costumeParts(cast.costume).map(([who,what])=>`<p><b>${who}</b>${escapeHtml(what)}</p>`).join(""):`<p>No costume listed for this act.</p>`;
+      const cue=event.notes||event.led?`<div class="sheet-box"><h3>Cue</h3>${event.notes?`<p>${escapeHtml(event.notes)}</p>`:""}${event.led?`<p><b>LED wall</b>${escapeHtml(event.led)}</p>`:""}</div>`:"";
+      return `<section class="sheet">
+        <header class="sheet-head">
+          <img src="logo.png" alt="">
+          <div><div class="sheet-kicker">${escapeHtml(state.title)} · ${event.number?`Act ${String(event.number).padStart(2,"0")}`:"Ceremony"}</div><h1>${escapeHtml(event.title)}</h1></div>
+          <div class="sheet-facts">
+            <div class="sheet-fact"><b>${formatClock(timing?.start||0)}</b><span>On stage</span></div>
+            <div class="sheet-fact"><b>${event.duration}m</b><span>Duration</span></div>
+            <div class="sheet-fact"><b>${people.length}</b><span>Performers</span></div>
+          </div>
+        </header>
+        <div class="sheet-body">
+          <div class="sheet-stage">
+            <div class="sheet-back">Back of stage · LED wall</div>
+            <div class="sheet-floor">
+              <div class="sheet-side left">Stage right · your right</div>
+              <div class="sheet-map">
+                <span class="sheet-row-label" style="top:1.5mm">Back row</span><span class="sheet-row-label" style="top:calc(38% + 1mm)">Middle row</span><span class="sheet-row-label" style="top:calc(70% + 1mm)">Front row</span>
+                ${ghosts}${spots}${people.length?"":`<div class="sheet-empty">Positions to be confirmed</div>`}
+              </div>
+              <div class="sheet-side">Stage left · your left</div>
+            </div>
+            <div class="sheet-front">Front of stage · Audience</div>
+          </div>
+          <div class="sheet-side-panel">
+            <table class="sheet-table"><thead><tr><th>#</th><th>Name</th><th>Role</th><th>Your spot on stage</th><th>Enter via</th></tr></thead><tbody>${rows}</tbody></table>
+            <div class="sheet-box"><h3>Costume</h3>${costume}</div>
+            ${cue}
+          </div>
+        </div>
+        <footer class="sheet-foot"><span>Find your <b>number</b> in the list, then the same number on the stage. The drawing is as the audience sees it: <b>stage right is your right</b> when you stand on stage facing the audience.</span><span>Seasons Music Academy</span></footer>
+      </section>`;
+    }
+    async function printSheets(events){
+      const holder=document.getElementById("printSheets");
+      holder.innerHTML=events.map(actSheetHtml).join("");
+      await Promise.all([...holder.querySelectorAll("img")].map(img=>img.decode().catch(()=>{})));
       const orientation=document.createElement("style");
-      orientation.textContent="@page{size:A4 landscape;margin:9mm}";
+      orientation.textContent="@page{size:A4 landscape;margin:10mm}";
       document.head.appendChild(orientation);
-      document.body.classList.add("printing-stage");
+      document.body.classList.add("printing-act");
       window.print();
-      document.body.classList.remove("printing-stage");
+      document.body.classList.remove("printing-act");
       orientation.remove();
     }
-    document.getElementById("printStageBtn").addEventListener("click",printStagePlan);
+    document.getElementById("printStageBtn").addEventListener("click",()=>{
+      const event=state.events.find(e=>e.id===currentId);
+      if(event)printSheets([event]);
+    });
+    document.getElementById("printAllBtn").addEventListener("click",()=>printSheets(performanceEvents().filter(e=>peopleCount(e)>0)));
     document.getElementById("fullscreenBtn").addEventListener("click",()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen());
     document.getElementById("addEventBtn").addEventListener("click",()=>{const e=item(null,"New performance",[["Unassigned",1]]);state.events.push(e);editingInstrumentsId=e.id;saveState();renderEditor()});
     document.getElementById("exportBtn").addEventListener("click",exportJson);
