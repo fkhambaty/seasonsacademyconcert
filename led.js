@@ -55,6 +55,7 @@ let ledWindow = null;
 let ledConnected = false;
 let ledAudioContext = null;
 let ledAmbient = null;
+let ledWasFullscreen = false;
 const ledChannel = "BroadcastChannel" in window ? new BroadcastChannel(LED_CHANNEL_NAME) : null;
 
 function ledSceneHtml(cue) {
@@ -135,7 +136,7 @@ window.ledRenderConsole = function renderLedConsole() {
     return all;
   }, {});
   root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>One operator clicks the cues in order. The audience sees only the separate output window—never these buttons or instructions.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn">1. Open Audience Screen</button></div></div>
-    <div class="led-how"><article><b>1</b><strong>Connect the LED</strong><span>Set the LED as a second/extended display, not a mirror.</span></article><article><b>2</b><strong>Open its window</strong><span>Click “Open Audience Screen”, then drag that new window onto the LED.</span></article><article><b>3</b><strong>Project full screen</strong><span>Inside the audience window, click “Project Full Screen + Enable Sound”.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. This exits full screen. Close the audience window when finished.</span></article></div>
+    <div class="led-how"><article><b>1</b><strong>Connect the LED</strong><span>Set the LED as a second/extended display, not a mirror.</span></article><article><b>2</b><strong>Open its window</strong><span>Click “Open Audience Screen”, then drag that new window onto the LED.</span></article><article><b>3</b><strong>Project full screen</strong><span>Inside the audience window, click “Project Full Screen + Enable Sound”.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. The audience window turns black and closes.</span></article></div>
     <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong></div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
     <div class="led-controls"><button type="button" id="ledPrevBtn">← Previous</button><button type="button" class="next" id="ledNextBtn">Next cue →</button><button type="button" id="ledReplayBtn">Replay current</button><button type="button" class="blackout" id="ledBlackoutBtn">Black screen</button></div>
     ${Object.entries(groups).map(([group,cues]) => ledGroupHtml(group,cues)).join("")}`;
@@ -227,6 +228,18 @@ document.getElementById("ledFullscreenBtn")?.addEventListener("click", async () 
   }
   document.getElementById("ledOutputHelp").hidden = true;
   setLedSound(LED_CUES[ledCurrentIndex].sound);
+});
+
+document.addEventListener("fullscreenchange", () => {
+  if (!document.body.classList.contains("led-output-only")) return;
+  if (document.fullscreenElement) {
+    ledWasFullscreen = true;
+    return;
+  }
+  if (!ledWasFullscreen) return;
+  stopLedSound();
+  document.getElementById("ledScreen").innerHTML = `<div class="led-blackout"></div>`;
+  window.close();
 });
 
 function receiveLedMessage(message) {
