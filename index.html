@@ -33,6 +33,7 @@
     .sc-line.fk .sc-say{border-left:3px solid var(--fk);padding-left:12px}.sc-line.up .sc-say{border-left:3px solid var(--up);padding-left:12px}.sc-line.both .sc-say{border-left:3px solid var(--ink);padding-left:12px}
     .sc-tag{display:inline-block;margin-left:8px;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:99px;vertical-align:2px;background:#6c5ce71a;color:#5a4bc7}
     .sc-line.title-line .sc-say{font-size:19px;font-weight:700}
+    .sc-phase{display:flex;align-items:center;gap:10px;margin:14px 0 4px;color:#5a4bc7;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.sc-phase:after{content:"";height:1px;flex:1;background:#6c5ce733}.sc-phase.core{color:#137f84}.sc-phase.core:after{background:#1a9ea333}
     .sc-cue{display:grid;grid-template-columns:92px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid #f0ece4;font-size:14px;line-height:1.5;color:#2a2636}.sc-cue:last-child{border-bottom:0}.sc-cue>i{font-style:normal;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;align-self:start;margin-top:3px;text-align:center;padding:4px 0;border-radius:6px}
     .sc-cue.wait>i{background:#1a9ea31a;color:#137f84}.sc-cue.do>i{background:#1b18260d;color:var(--muted)}.sc-cue.confirm>i{background:#d9434d14;color:var(--danger)}.sc-cue.confirm>div{color:var(--danger)}
     .sc-go{margin:12px 0;border:2px solid #d9434d;border-radius:14px;padding:14px 16px;background:#d9434d08}.sc-go b{display:block;color:var(--danger);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}.sc-go ol{margin:0;padding-left:20px;display:grid;gap:4px;font-size:14.5px}.sc-go strong{font-size:16px}
@@ -41,14 +42,14 @@
     .sc-warn{margin-top:10px;font-size:13px;color:var(--danger)}
     .sc-end{text-align:center;color:var(--muted);font-size:13px;padding:10px 0 0}
     .script-jumps{position:sticky;top:84px;z-index:10;display:grid;grid-template-columns:1fr auto;gap:8px;margin:18px 0 26px;padding:7px;border:1px solid var(--line);border-radius:15px;background:#f7f5f0f2;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 8px 24px #1b182612}
-    .script-jump-list{display:flex;gap:6px;overflow-x:auto}.script-jump-list::-webkit-scrollbar{display:none}
+    .script-jump-list{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
     .script-jumps button{flex:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:9px 12px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}.script-jumps button:hover{border-color:#b8892f80}.script-jumps button em{font-style:normal;color:var(--gold);margin-right:5px}.script-jumps .rescue-btn{border-color:#d9434d55;background:#d9434d0b;color:var(--danger)}
     .sc-seg{scroll-margin-top:160px}
     .sc-rescue{scroll-margin-top:160px;border:1px solid #d9434d66;border-radius:18px;background:#fff;margin-bottom:30px;overflow:hidden}
     .sc-rescue>summary{list-style:none;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:17px 20px;cursor:pointer;background:#d9434d08}.sc-rescue>summary::-webkit-details-marker{display:none}.sc-rescue>summary:before{content:"!";width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--danger);color:#fff;font-weight:900;font-size:20px}.sc-rescue>summary:after{content:"Open";color:var(--danger);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.sc-rescue[open]>summary:after{content:"Close"}.sc-rescue>summary b{display:block;font:600 22px "Playfair Display",Georgia,serif}.sc-rescue>summary span{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
     .rescue-body{padding:14px 20px 20px}.rescue-rule{margin:0 0 14px;padding:10px 12px;border-left:3px solid var(--danger);background:#d9434d08;font-size:13px;line-height:1.5}.rescue-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rescue-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:#faf8f3}.rescue-card h3{font:600 18px "Playfair Display",Georgia,serif;margin:0 0 3px}.rescue-card>p{color:var(--muted);font-size:12px;margin:0 0 10px}.rescue-card .sc-line{grid-template-columns:70px 1fr;padding:8px 0}.rescue-card .sc-say{font-size:14px;line-height:1.45}.rescue-card .sc-who{height:24px;font-size:10.5px}.rescue-card .sc-cue{grid-template-columns:70px 1fr;padding:8px 0;font-size:12.5px}.rescue-card .sc-cue>i{font-size:9px}
     .rescue-stop{grid-column:1/-1;border-color:#d9434d66;background:#d9434d08}.rescue-stop strong{color:var(--danger)}
-    .script-page.only-fk .sc-line.up,.script-page.only-up .sc-line.fk{opacity:.28}
+    .script-page.only-fk .sc-line.up,.script-page.only-up .sc-line.fk{display:none}
     @media(max-width:600px){.script-page{padding:26px 14px 120px}.script-jumps{top:66px;margin-left:-6px;margin-right:-6px}.script-jumps button{padding:9px 10px}.sc-head{padding:16px}.sc-steps{padding:6px 14px 14px}.sc-line,.sc-cue{grid-template-columns:1fr;gap:6px}.sc-who{justify-self:start;padding:0 12px}.sc-cue>i{justify-self:start;padding:3px 10px}.sc-say{font-size:16px}.sc-head h2{font-size:22px}.rescue-grid{grid-template-columns:1fr}.rescue-stop{grid-column:auto}.rescue-body{padding:12px}.sc-seg,.sc-rescue{scroll-margin-top:142px}}
     .toast{position:fixed;right:25px;bottom:25px;background:#1b1826;color:#f8f4eb;border-radius:10px;padding:12px 16px;font-weight:700;font-size:12px;transform:translateY(100px);opacity:0;transition:.3s;z-index:40}.toast.show{transform:none;opacity:1}
     @media(max-width:900px){
@@ -456,6 +457,21 @@
       const parts=[...text.matchAll(/(Girls|Boys)\s*:\s*([^]*?)(?=(?:Girls|Boys)\s*:|$)/gi)].map(m=>[m[1][0].toUpperCase()+m[1].slice(1).toLowerCase(),m[2].trim().replace(/^[,\s]+/,"").replace(/[.,\s]+$/,"")]);
       return parts.length?parts:[["Everyone",text]];
     }
+    const hostTransition=(from,next,steps)=>({
+      kicker:`After ${from}`,
+      title:`${from} ends → ${next}`,
+      meta:["Core: about 1 minute","Extensions: up to about 3 minutes"],
+      steps:[
+        {wait:"Wait for the final note, then let the applause breathe. Enter only when the stage manager signals."},
+        {do:"Walk to centre front, clapping. Keep the centre and back of the stage clear for the changeover."},
+        ...steps,
+        {phase:"Final readiness check + names",core:true},
+        {go:next},
+        {names:next},
+        {fk:`Ladies and gentlemen — **${next}!**`,title:true},
+        {do:"Walk off immediately through your usual wings. The band starts only after both hosts are clear."}
+      ]
+    });
     const SCRIPT=[
       {kicker:"Opening",title:"Hosts Welcome → call Sonal",meta:["Talk time about 2 min","Ends with: Sonal on stage"],steps:[
         {wait:"House lights dim and the intro music fades out. Stage manager says <b>“Hosts, go.”</b>"},
@@ -470,14 +486,12 @@
         {up:"Ek chhoti si request. Phones **silent** kar dijiye. Video zaroor banaiye, bas ringtone band rakhiye."},
         {fk:"Kyunki agar beech mein kisi ka ‘Tauba Tauba’ ringtone baj gaya, toh band sochega unka cue aa gaya.",joke:true},
         {up:"Aaj ki shaam ki shuruaat, ek pyaare se welcome ke saath. Please welcome — **Sonal!**"},
-        {confirm:"Before Friday: confirm how Sonal should be introduced (full name / title). Update this line."},
         {both:"Ek zordaar taali!"},
         {do:"Lead the clap, then exit. <b>FK → stage-right wing. Upasana → stage-left wing.</b>"},
         {wait:"Sonal gives the welcome speech while the lamp is lit. <b>Stay in the wings until Sonal calls you back.</b>"}
       ]},
       {kicker:"Ice breaker → Act 1",title:"Joseph’s guitar, then Tauba Tauba",meta:["Talk + play about 6 min","Ends with: Act 1 title"],steps:[
         {wait:"Sonal calls you back on stage."},
-        {confirm:"Before Friday: agree the exact words Sonal will use to call you back, so you both walk in on the same word."},
         {do:"Both enter from the same wings as before. Centre front."},
         {fk:"Thank you, Sonal! Diya jal gaya. Ab sirf ek cheez baaki hai."},
         {up:"Kya?"},
@@ -506,23 +520,334 @@
         {fk:"Ladies and gentlemen — **Tauba Tauba aur Urvashi Urvashi Mashup!**",title:true},
         {do:"<b>Walk off immediately.</b> FK → stage-right wing, Upasana → stage-left wing. The band starts once you are off, not before."}
       ]},
-      {kicker:"After Act 1 → Act 2",title:"Tauba Tauba ends, Bharat Humko begins",meta:["Talk time about 1½ min","No stage reset here","Ends with: Act 2 title"],steps:[
+      {kicker:"After Act 1 → Act 2",title:"Tauba Tauba, Urvashi Urvashi Mashup ends → Bharat Humko Jaan Se Pyara Hai",meta:["Core: about 1 minute","Extensions: up to about 3 minutes"],steps:[
         {wait:"<b>Wait for the last note and the applause.</b> If you are not sure the song has ended, wait until the band stands or bows."},
         {do:"Walk in from the same wings, clapping as you walk."},
         {fk:"Tauba tauba! Pehla hi gaana aur itni energy? Baaki shaam ka kya hoga!"},
         {up:"Ek baar aur — in aath ke liye zordaar taali!"},
-        {up:"FK, sach batao. Backstage tum Vicky Kaushal wala step try kar rahe the na? Maine dekha.",joke:true},
-        {fk:"Woh step nahi tha. Mera pair so gaya tha.",joke:true},
+        {up:"Tauba Tauba ke baad do tarah ke log hote hain — jo Vicky Kaushal wala step kar sakte hain… aur jo FK ki tarah karke seedha physiotherapist ko call karte hain."},
+        {fk:"Main step bilkul kar sakta hoon. Bas pehle orthopaedic sponsor confirm ho jaaye."},
         {do:"Act 1 band walks off, Act 2 players walk on. <b>Kush Jigar Shah plays in both acts.</b> Check with the stage manager whether he stays at his keyboard."},
-        {up:"Aur ek special mention. Kush kahin nahi ja rahe — Kush agle gaane mein bhi hain. Back to back!",cond:"Only if Kush stays on stage"},
-        {fk:"Kush, paani pee lo beta. Hum ruk jaayenge.",joke:true,cond:"Only if Kush stays on stage"},
+        {phase:"Core · use every time",core:true},
         {up:"Ab thoda mood badalte hain."},
-        {fk:"Abhi jo Urvashi suna, woh A.R. Rahman ka tha. Agla gaana bhi Rahman ka hai — unki **pehli film, Roja (1992)** se."},
+        {fk:"Abhi jo Urvashi suna, woh A.R. Rahman ka tha. Agla gaana bhi Rahman ka hai — film music composer ke roop mein unki **debut film, Roja (1992)** se."},
         {up:"Ek aisa gaana jo aaj bhi sunte hi seedha dil tak jaata hai."},
+        {phase:"Extension · if the band still needs time"},
+        {up:"Ek quick show of hands — kitne logon ne Roja dekhi hai? Haath upar."},
+        {fk:"Aur jinhone nahi dekhi, unke liye homework mil gaya. Relax — exam nahi hoga. Aaj audience ka kaam sirf sunna, enjoy karna aur performers ko encourage karna hai."},
+        {up:"Tauba Tauba se seedha Bharat Humko — yeh playlist shuffle par nahi hai."},
+        {fk:"Yeh Indian family function hai. Yahan dance ke turant baad deshbhakti bilkul allowed hai."},
         {go:"Bharat Humko Jaan Se Pyara Hai"},
         {names:"Bharat Humko Jaan Se Pyara Hai"},
         {fk:"Please welcome — **Bharat Humko Jaan Se Pyara Hai.**",title:true},
         {do:"<b>Walk off immediately.</b> Same wings. The band starts once you are off."}
+      ]},
+      hostTransition("Bharat Humko Jaan Se Pyara Hai","Drum Circle",[
+        {phase:"Core · use every time",core:true},
+        {up:"What a beautiful change of mood. Ek baar phir, un paanch performers ke liye dil se taali!"},
+        {fk:"Abhi humne ek aisi dhun suni jo dil ko seedha khada kar deti hai. Agla act dil ko nahi — poore auditorium ko hilaane wala hai."},
+        {up:"Stage par aa rahe hain **baarah drummers**. Haan, baarah. Ek drummer ghar mein practice kare toh neighbours notice karte hain…"},
+        {fk:"Baarah karein toh neighbours ticket khareed lete hain."},
+        {up:"Audience, rehearsal kar lete hain. Mere haath neeche — bilkul silence. Mere haath upar — ek saath do taali."},
+        {do:"Upasana conducts two claps twice. FK deliberately joins a fraction late the first time, then gets it right. Stop after the second clean attempt."},
+        {phase:"Extension 1 · visual audience game"},
+        {fk:"Ab hall ke do halves. Stage-right side pehle — sirf aap. Do taali!"},
+        {up:"Ab stage-left side. Do taali!"},
+        {fk:"Decision simple hai: jo side zyada loud thi, woh jeeti. Jo side haari… woh agle round mein aur loud hogi."},
+        {do:"Run one final full-hall clap. Do not repeat more than once."},
+        {phase:"Extension 2 · if setup is still moving"},
+        {up:"Drumming ki sabse achhi baat? Language ki zaroorat hi nahi. Beat sahi ho, toh teenager aur grandparent dono ka foot ek saath tap karta hai."},
+        {fk:"Mera foot bhi tap karta hai. Bas rhythm se uska kabhi-kabhi creative disagreement ho jaata hai."},
+        {up:"Toh energy sambhal ke rakhiye — ab jawab taali se nahi, drums se aayega."}
+      ]),
+      hostTransition("Drum Circle","Old Woman Shoe",[
+        {phase:"Core · use every time",core:true},
+        {fk:"That was not a performance. That was twelve heartbeats deciding to become one thunderstorm."},
+        {up:"Baarah drummers, ek rhythm — aur mujhe lagta hai auditorium ki chairs bhi beat par vibrate kar rahi thi."},
+        {fk:"Backstage team se request: agar koi drum missing mile, mere heartbeat se match karke dekh lena."},
+        {up:"Ab volume ko thunder se melody par laate hain. Agle act mein chaar young keyboard players hain."},
+        {fk:"Chaar performers jab saath play karte hain, challenge sirf apna part yaad rakhna nahi hota. Har player ko baaki teen ko bhi sunna hota hai — so that four keyboards feel like one musical conversation."},
+        {phase:"Extension 1 · show of hands"},
+        {up:"Quick show of hands — kitne parents ne bachpan mein keyboard, harmonium ya piano seekhne ki koshish ki thi?"},
+        {fk:"Aur kitne log sirf ek ungli se ‘Happy Birthday’ baja kar retire ho gaye? Honest hands please."},
+        {up:"Music seekhne ka magic yahi hai: pehle ek finger note dhoondhti hai; phir ek din dono haath milkar poori kahaani suna dete hain."},
+        {phase:"Extension 2 · playful reset"},
+        {fk:"Main keyboard par do cheezein confidently baja sakta hoon."},
+        {up:"Kaunsi?"},
+        {fk:"Power button… aur volume down. Academy ne mujhe abhi tak stage par isliye nahi bithaya."},
+        {up:"Sensible decision. Ab asli keyboard players ko bulaate hain."}
+      ]),
+      hostTransition("Old Woman Shoe","Mission Impossible",[
+        {phase:"Core · use every time",core:true},
+        {up:"Four keyboards, four focused performers — what a lovely performance!"},
+        {fk:"Ab agla setup dekhkar hi lag raha hai ki backstage crew ko ek mission diya gaya hai."},
+        {up:"Five guitars, five keyboards, drums and bass. Total twelve performers."},
+        {fk:"Mission ka pehla rule: wires ko dekho. Mission ka doosra rule: wires ke upar mat chalo."},
+        {up:"Aur teesra rule: FK ko koi secret gadget mat dena. Woh remote samajhkar house lights band kar dega."},
+        {phase:"Extension 1 · the five-count"},
+        {fk:"Is famous theme ka rhythm normal four-count mein nahi, **five-count** mein hai. Chaliye quietly try karte hain: one-two, one-two-three."},
+        {do:"FK marks 2 + 3 with his fingers. Audience copies twice; do not ask them to shout."},
+        {up:"Agar thoda uncomfortable laga, wahi point hai. Rhythm kabhi settle nahi hota — isliye chase shuru hone se pehle hi tension aa jaati hai."},
+        {phase:"Extension 2 · verified story"},
+        {fk:"Composer Lalo Schifrin ne original television theme 1966 mein likhi thi. Unke hisaab se main idea lagbhag ninety seconds mein aa gaya."},
+        {up:"Ninety seconds mein iconic tune. FK ko ninety seconds sirf phone ka password yaad karne mein lagte hain."},
+        {fk:"Security high honi chahiye. Mission Impossible hai, Password Easy nahi."}
+      ]),
+      hostTransition("Mission Impossible","We Are the Champions Mashup",[
+        {phase:"Core · use every time",core:true},
+        {fk:"Mission accomplished! Twelve performers aaye, theme crack ki, aur bina kisi wire ko explode kiye nikal bhi gaye."},
+        {up:"Ek baar phir, that incredible band!"},
+        {fk:"Agla act size mein bhi bada hai aur awaaz mein bhi — twelve voices and one keyboard."},
+        {up:"Is gaane ka chorus aisa hai jo ek singer se shuru hota hai aur poore stadium ka ho jaata hai."},
+        {fk:"Aaj stadium nahi hai… lekin enthusiasm bilkul stadium wala chahiye."},
+        {phase:"Extension 1 · audience wave"},
+        {up:"Practice without singing: jab main stage-right ki taraf point karun, aap hands up. Stage-left, aap hands up."},
+        {do:"Conduct one slow visual wave from one side of the hall to the other, then back. No shouting required."},
+        {fk:"Perfect. Ab pata chal gaya — choreography audience ko bhi aati hai, bas rehearsal free honi chahiye."},
+        {phase:"Extension 2 · build the room"},
+        {up:"Champions sirf trophy jeetne wale nahi hote. Aaj stage par aane se pehle nerves ko beat karna bhi victory hai."},
+        {fk:"Aur parents ke liye victory hai child, instrument, costume aur time — chaaron ko ek hi gaadi mein auditorium tak laana."},
+        {up:"That deserves its own medal."}
+      ]),
+      hostTransition("We Are the Champions Mashup","Raag Yaman",[
+        {phase:"Core · use every time",core:true},
+        {up:"Thirteen performers, one enormous sound. Give them another huge round of applause!"},
+        {fk:"Ab hum volume nahi, attention badhaayenge."},
+        {up:"Agla act flute par hai. Raag Yaman ko sunne ka best tareeka hai — phone neeche, shoulders relaxed, aur hall bilkul quiet."},
+        {fk:"Yeh competition nahi hai ki kaun sabse loud cheer karega. Is baar challenge hai: kaun sabse khoobsurat silence de sakta hai."},
+        {up:"Flute mein note sirf fingers se nahi banta; breath bhi uska hissa hai. Notice kariyega ki paanch players apni alag saanson ko ek smooth musical line mein kaise jodte hain."},
+        {do:"Lower your own voices. Wait until the room becomes quiet instead of repeatedly saying ‘silence please’."},
+        {phase:"Extension 1 · breathing reset"},
+        {up:"Sab ek slow breath in… aur out. Bas. Ab hall ready hai."},
+        {fk:"Teen ghante ke show mein das seconds ka silence bhi music ka hissa hota hai."},
+        {phase:"Extension 2 · simple listening cue"},
+        {up:"Performance mein ek cheez notice kariyega: paanch flutes alag breaths leti hain, lekin melody ko ek hi saans jaisa banana hota hai."},
+        {fk:"That is teamwork you can hear, even when nobody says a word."}
+      ]),
+      hostTransition("Raag Yaman","The Flute Song",[
+        {phase:"Core · use every time",core:true},
+        {fk:"That deserved a quiet second before the applause. Beautifully done."},
+        {up:"Raag Yaman ne hall ko shaant kiya; ab wahi calm energy ek different musical colour mein jaayegi."},
+        {fk:"Next up: guitar, keyboards, and a performer handling keyboard **and** vocals."},
+        {up:"Ek saath keys aur singing — main toh chai lekar room mein jaaun, chai ya room mein se ek bhool jaati hoon."},
+        {fk:"Multitasking ka real practical exam ab stage par hai."},
+        {phase:"Extension 1 · hands-only question"},
+        {up:"Show of hands: kaun melody pehle notice karta hai?"},
+        {fk:"Aur kaun beat? Dono haath upar hain toh congratulations — aap officially confused nahi, musically advanced hain."},
+        {phase:"Extension 2 · listening challenge"},
+        {up:"Agla piece sunte waqt ek instrument choose kariyega aur uski line ko beginning se end tak follow kijiye."},
+        {fk:"Performance ke baad dekhiye, kya aap usi instrument ke saath rahe — ya melody ne aapko kahin aur le gayi."}
+      ]),
+      hostTransition("The Flute Song","Saiyaara",[
+        {phase:"Core · use every time",core:true},
+        {up:"What a delicate, beautifully layered performance."},
+        {fk:"Ab stage par layers aur badhne wali hain: four guitars, five keyboards, drums and bass."},
+        {up:"Eleven performers. Matlab stage par almost ek complete cricket team — bas wicketkeeper ki jagah drummer."},
+        {fk:"Aur drummer se ball catch karwane ki koshish mat karna. Sticks already busy hain."},
+        {up:"Agla naam sunte hi mood automatically cinematic ho jaata hai."},
+        {phase:"Extension 1 · visual mood poll"},
+        {up:"Quick hands: romantic songs sunte waqt kaun lyrics follow karta hai?"},
+        {fk:"Aur kaun bas window ke bahar dekhkar imaginary music video bana leta hai? Even if window ke bahar parking lot ho."},
+        {up:"Honest audience. Very good."},
+        {phase:"Extension 2 · band-size build"},
+        {fk:"Eleven people ko ek song mein jagah dena sirf playing nahi, listening bhi hai."},
+        {up:"A great band knows kab sound banana hai — aur kab kisi aur ke sound ke liye space chhodna hai."},
+        {fk:"That balance is what we’re listening for next."}
+      ]),
+      hostTransition("Saiyaara","G Minute",[
+        {phase:"Core · use every time",core:true},
+        {fk:"Eleven performers and one sweeping sound — Saiyaara!"},
+        {up:"Ab guitars aur keyboards exit kar rahe hain, aur stage par aa rahi hain seven violins."},
+        {fk:"Violin case dekhne mein chhota lagta hai. Lekin parent se poochho — practice reminders ka weight alag hota hai."},
+        {up:"Aur violin ki special quality: ek clear note seedha dil tak pahunchta hai."},
+        {fk:"Seven violins saath hon, toh woh feeling aur bhi rich ho jaati hai."},
+        {phase:"Extension 1 · imaginary conductor"},
+        {up:"Audience, right hand mein imaginary bow pakdiye."},
+        {do:"Demonstrate one slow bow movement together. Keep it seated and silent."},
+        {fk:"Excellent. Seven seconds mein poora hall violinist. Certificate interval mein milega."},
+        {phase:"Extension 2 · listening cue"},
+        {up:"Seven violins ek hi melody play karein toh aim louder hona nahi — cleaner hona hai."},
+        {fk:"Watch their bows. Jab movement ek saath hota hai, sound bhi ek body ki tarah feel hota hai."}
+      ]),
+      hostTransition("G Minute","Ghar More Pardesiya & Moh Moh Ke Dhaage",[
+        {phase:"Core · use every time",core:true},
+        {up:"Seven bows, one graceful performance. Another warm round of applause!"},
+        {fk:"Ab instruments thoda peeche, aur human voice centre stage."},
+        {up:"Four Hindustani vocalists, and two songs that carry two different kinds of longing."},
+        {fk:"Ek mein grand homecoming ka rang; doosre mein rishton ka woh dhaaga jo dikhai nahi deta, par tootne bhi nahi deta."},
+        {up:"Instrument ko tune karke rakha ja sakta hai, lekin singer ko har phrase ke saath breath, pitch aur emotion usi moment mein balance karna padta hai. Live singing mein simplicity ke peeche bahut control hota hai."},
+        {phase:"Extension 1 · audience memory"},
+        {up:"Hands up if a song has ever reminded you of a person before you even remembered the lyrics."},
+        {fk:"Music ka shortcut kamaal ka hai. Password bhool sakte hain, lekin ten-year-old melody first note par unlock ho jaati hai."},
+        {phase:"Extension 2 · vocal appreciation"},
+        {up:"Voice ke saath koi key, string ya stick hide nahi kar sakti. Breath, pitch and emotion — sab seedha audience tak."},
+        {fk:"That makes singing look simple and feel very brave."}
+      ]),
+      hostTransition("Ghar More Pardesiya & Moh Moh Ke Dhaage","Challa — Jab Tak Hai Jaan",[
+        {phase:"Core · use every time",core:true},
+        {fk:"Four voices, and absolutely no place for emotion to hide. Beautiful."},
+        {up:"Ab us emotion ko road milne wali hai."},
+        {fk:"Is song mein ‘Challa’ ek restless wanderer ki feeling carry karta hai — someone moving, searching, and trying to find where he belongs."},
+        {up:"Aur aaj us safar ke saath drums, keyboard, vocals, guitars and bass bhi travel karenge."},
+        {fk:"Nine people ka road trip. Good news: stage par kisi ko petrol bharwana nahi padega."},
+        {phase:"Extension 1 · road-trip truth"},
+        {up:"Har road trip mein ek unofficial music director hota hai…"},
+        {fk:"…aur ek person jo har thirty seconds mein ‘next’ bolta hai. Please apne family member ki taraf point mat kariye. Show ke baad ghar bhi jaana hai."},
+        {phase:"Extension 2 · listening cue"},
+        {up:"Is performance mein folk feeling aur band energy dono hain."},
+        {fk:"Listen for the rhythm that keeps travelling even when the melody pauses."}
+      ]),
+      hostTransition("Challa — Jab Tak Hai Jaan","Chammak Challo Mashup",[
+        {phase:"Core · use every time",core:true},
+        {up:"That was Challa — soulful, open-road energy. One more round of applause!"},
+        {fk:"Ab road trip khatam. Dance floor shuru."},
+        {up:"Next act brings guitars, keyboards, vocals, drums and bass — ten performers in all."},
+        {fk:"Akon ne Chammak Challo ke Hindi words kuch hi ghanton mein pick up kiye the."},
+        {up:"FK ko ‘Chammak Challo’ clearly bolne mein teen rehearsals lage."},
+        {fk:"Main international pronunciation follow kar raha tha."},
+        {phase:"Extension 1 · seated dance challenge"},
+        {up:"Hall ke left aur right — seated dance challenge. Sirf shoulders and hands. No standing, no aisle traffic."},
+        {do:"Give each side five seconds, then call it a tie. Never declare one side genuinely worse."},
+        {fk:"Result: dono sides jeet gaye. Judges completely biased hain."},
+        {phase:"Extension 2 · wedding test"},
+        {up:"Yeh un gaanon mein se hai jo release ke baad Indian wedding syllabus ka permanent chapter ban gaya."},
+        {fk:"Aur exam har shaadi ke dance floor par hota hai."}
+      ]),
+      hostTransition("Chammak Challo Mashup","Eye of the Tiger, Gehra Hua Mashup",[
+        {phase:"Core · use every time",core:true},
+        {fk:"That was ten performers turning the stage into a dance floor!"},
+        {up:"Ab dance se training montage ki taraf."},
+        {fk:"Sylvester Stallone originally wanted Queen’s ‘Another One Bites the Dust’ for **Rocky III**. Rights nahi mile."},
+        {up:"So Survivor got the challenge: give the film a new pulse. The result was ‘Eye of the Tiger.’"},
+        {fk:"Matlab duniya ko ek iconic song mila because somebody said ‘no.’ Parents, next time bachcha ‘no’ sune — story abhi khatam nahi hui."},
+        {phase:"Extension 1 · Rocky pose"},
+        {up:"Everyone, seated Rocky pose — fists up, shoulders straight. Three seconds."},
+        {do:"Hold for three seconds, then release. No standing."},
+        {fk:"Excellent. Actual boxing strictly cancelled; auditorium deposit bachana hai."},
+        {phase:"Extension 2 · mashup idea"},
+        {up:"A mashup asks two very different songs to share one heartbeat."},
+        {fk:"Sometimes they become friends. Sometimes they argue. Aaj dekhte hain rock aur Bollywood intensity kya decide karte hain."}
+      ]),
+      hostTransition("Eye of the Tiger, Gehra Hua Mashup","Dil Diya Hai Jaan Bhi Denge — Karma",[
+        {phase:"Core · use every time",core:true},
+        {up:"What an unusual collision — rock power and Bollywood intensity!"},
+        {fk:"Eye of the Tiger ke baad energy high hai. Ab us energy ko pride and emotion mein turn karte hain."},
+        {up:"Four vocalists, keyboard and djembe are preparing a song generations know."},
+        {fk:"Is song ko introduce karne ke liye joke nahi chahiye. Bas respect chahiye."},
+        {up:"So phones steady, conversations pause, and let the words land."},
+        {fk:"Words sabko yaad ho sakte hain, lekin ensemble ka real work un words ko ek saath breathe karna aur message ko bina rush kiye audience tak pahunchana hai."},
+        {phase:"Extension 1 · visible respect"},
+        {up:"If this song is part of your childhood, simply raise one hand."},
+        {do:"Acknowledge the room silently; do not turn it into a competition."},
+        {fk:"That is the power of a song that travels through families."},
+        {phase:"Extension 2 · ensemble cue"},
+        {up:"Listen for how the djembe grounds the voices without overpowering them."},
+        {fk:"Six performers, but the message is much larger than the number on stage."}
+      ]),
+      hostTransition("Dil Diya Hai Jaan Bhi Denge — Karma","How Long — Charlie Puth",[
+        {phase:"Core · use every time",core:true},
+        {fk:"A powerful performance. Please give those six performers another heartfelt round of applause."},
+        {up:"Ab mood phir switch hoga — from a timeless Hindi anthem to modern pop."},
+        {fk:"Three guitars and drums. Four performers. No giant setup, nowhere to hide."},
+        {up:"Clean rhythm, tight timing, and a groove that has to stay locked from the first beat."},
+        {fk:"‘How Long’ title hai. Backstage crew ko mat poochhna — unka answer hamesha hota hai, ‘Bas do minute.’"},
+        {up:"Chhota band setup easy nahi hota. Sirf four performers hon, toh har entry clearly sunai deti hai. Notice kariyega how guitar rhythm and drums keep checking in with each other."},
+        {phase:"Extension 1 · universal backstage joke"},
+        {up:"Live-show dictionary mein ‘do minute’ ka meaning hota hai… anywhere between twenty seconds and next Tuesday."},
+        {fk:"Lekin hamari crew fast hai. Main yeh line sirf insurance ke liye bol raha hoon."},
+        {phase:"Extension 2 · listening challenge"},
+        {up:"Agli performance mein pehle ek instrument choose kijiye — guitar ya drums — and silently follow it from the opening beat."},
+        {fk:"See how often the one you chose checks in with the other."}
+      ]),
+      hostTransition("How Long — Charlie Puth","Final Countdown",[
+        {phase:"Core · use every time",core:true},
+        {up:"Four performers, sharp pop energy — beautifully done!"},
+        {fk:"Aur ab title hi bata raha hai: we are entering the final stretch."},
+        {up:"Joey Tempest ne iska famous keyboard riff college ke time banaya, phir us recording ko years tak sambhal kar rakha."},
+        {fk:"Band ne pehle socha, rock song ke liye yeh sound thoda strange hai."},
+        {up:"Good thing they kept it. Kabhi-kabhi drawer mein pada idea duniya ka loudest idea ban jaata hai."},
+        {phase:"Extension 1 · visual countdown"},
+        {fk:"Audience rehearsal: fingers se five-to-one countdown. Voice baad mein."},
+        {do:"Both hosts silently count down on fingers once."},
+        {up:"Ab ek baar full voice — five, four, three, two, one!"},
+        {do:"Run one spoken countdown only. Do not reveal the act until the STOP check clears."},
+        {phase:"Extension 2 · final-stretch preview"},
+        {fk:"Iske baad teachers ka act, phir seventeen-performer grand band, then felicitation."},
+        {up:"So abhi seats mat chhodiye. The biggest stage pictures of the evening are still ahead."}
+      ]),
+      hostTransition("Final Countdown","O Haseena",[
+        {phase:"Core · use every time",core:true},
+        {fk:"That riff waited years in a drawer. Tonight it definitely did not stay quiet."},
+        {up:"And now, students — this next introduction belongs to you."},
+        {fk:"Stage par aa rahe hain woh log jo rehearsal mein kehte hain, ‘Once more from the top.’"},
+        {up:"Aur student kehta hai, ‘Sir, top exactly kahaan se?’"},
+        {fk:"For the next act, the teachers are taking the stage. Upasana will introduce them in just a moment."},
+        {phase:"Extension 1 · students cheer for teachers"},
+        {up:"Students, teachers aapke liye clap karte aaye hain. Ab volume return karne ka time. On three — one, two, three!"},
+        {do:"Let students cheer once. Do not repeat; protect the setup cue."},
+        {fk:"Attendance mil gayi. Sab students present hain."},
+        {phase:"Extension 2 · retro setup"},
+        {up:"‘O Haseena Zulfonwali’ comes from **Teesri Manzil**, with music by R.D. Burman — Hindi cinema meeting rock-and-roll swagger."},
+        {fk:"Aaj teachers perform karenge. Kal class mein mistakes discuss nahi hongi — yeh mutual agreement hai."}
+      ]),
+      hostTransition("O Haseena","Ajeeb Daastaan",[
+        {phase:"Core · use every time",core:true},
+        {up:"Teachers on stage! Students, please remember: aaj aap marks de sakte hain — sirf applause mein."},
+        {fk:"And what a performance. That was retro style with real classroom authority."},
+        {up:"Ab evening ka largest musical assembly: seventeen performers."},
+        {fk:"Guitars, bass, six violins, keyboards and drums — one classic melody carried by a very big family of sound."},
+        {up:"‘Ajeeb Daastaan’ ek aisa song hai jise generations alag memories ke saath jaanti hain."},
+        {phase:"Extension 1 · how classics travel"},
+        {up:"Ho sakta hai yeh melody aap tak parent ya grandparent ke through pahunchi ho."},
+        {fk:"Classics algorithm se pehle families ke through travel karte the — aur unka ‘share’ button living room mein hota tha."},
+        {phase:"Extension 2 · scale of the act"},
+        {fk:"Seventeen people ka challenge volume nahi, space hai. Har instrument ko sunna bhi hai aur jagah bhi deni hai."},
+        {up:"Look at the full stage picture before the first note. This is what months of separate lessons look like when they finally meet."}
+      ]),
+      {kicker:"After final musical act",title:"Ajeeb Daastaan ends → Felicitation",meta:["Core: about 1 minute","Extensions: up to about 3 minutes"],steps:[
+        {wait:"Wait for the final note, then give this applause room to grow. Enter only after the performers bow and the stage manager signals."},
+        {do:"Walk to centre front, clapping. Let the full band begin exiting behind you."},
+        {phase:"Core · use every time",core:true},
+        {up:"Seventeen performers — and what a magnificent final musical picture!"},
+        {fk:"From the first keyboard to the last violin, that was not just one act. That was the whole idea of tonight: separate learners becoming one band."},
+        {up:"One more time, for **every performer** who stepped onto this stage tonight!"},
+        {do:"Lead sustained applause. Turn and include students exiting both wings."},
+        {fk:"Aaj kisi ne first note play kiya, kisi ne hundredth rehearsal ka result. Dono victories hain."},
+        {up:"Aur har performance ke peeche teachers, parents, technicians and backstage crew ka invisible performance bhi chalta raha."},
+        {phase:"Extension 1 · applause by groups"},
+        {fk:"Students ke liye taali ho gayi. Ab teachers ke liye!"},
+        {up:"Parents and families — practice sunne, reminders dene, costumes and instruments sambhalne ke liye!"},
+        {fk:"And our backstage and technical team — jinka best work wahi hota hai jo audience notice hi na kare."},
+        {phase:"Extension 2 · final reflection"},
+        {up:"Aaj perfection se zyada important courage tha. Stage par aana itself is a win."},
+        {fk:"Because confidence pehle nahi aata. Pehle aap stage par aate ho — confidence thoda late entry leta hai."},
+        {up:"And now it is time to honour that work."},
+        {confirm:"Stage manager must hand FK the final felicitation card. Read only the names and titles printed on that card."},
+        {fk:"Ladies and gentlemen, we now move to the **Felicitation Ceremony**."},
+        {do:"Invite the dignitaries exactly as written on the stage manager’s card. During felicitation, the LED wall runs student credits and rehearsal bloopers. Do not compete with the screen; speak only when a name must be called."}
+      ]},
+      {kicker:"After Felicitation",title:"Felicitation → Joseph’s Vote of Thanks",meta:["Core: about 1 minute","Extension available if Joseph is not ready"],steps:[
+        {wait:"Wait until the final felicitation photograph is complete and the stage manager signals."},
+        {phase:"Core · use every time",core:true},
+        {up:"Congratulations to every student. Take that applause home with you — you earned it."},
+        {fk:"Aur jo rehearsal bloopers screen par aaye… proof hai ki great performances ke peeche great outtakes bhi hote hain."},
+        {up:"The polished seven minutes you see on stage can carry weeks of wrong notes, repeated counts, and ‘once more from the top.’"},
+        {fk:"Which means a mistake in rehearsal is not failure. It is behind-the-scenes footage for felicitation."},
+        {phase:"Extension · if Joseph is still moving into place"},
+        {up:"Aaj bahut phones ne performances record ki hongi. Lekin best moments woh bhi hain jo camera miss kare aur family memory sambhaal le."},
+        {fk:"Aur kal video dekhte waqt agar recording stage ki jagah shoes ki nikle — no problem. Memory HD mein save ho chuki hai."},
+        {go:"Vote of Thanks — Joseph"},
+        {fk:"To thank everyone who made this evening possible, please welcome **Joseph** for the Vote of Thanks."},
+        {do:"Both hosts step off. Joseph takes centre stage."}
+      ]},
+      {kicker:"Finale",title:"Vote of Thanks → National Anthem",meta:["No jokes","The anthem is the final moment"],steps:[
+        {wait:"Wait until Joseph has clearly finished and stepped away from the microphone."},
+        {do:"Both hosts enter and stand centre front. Keep this section calm and brief."},
+        {up:"Thank you, Joseph."},
+        {fk:"And thank you to every student, teacher, parent, guest and crew member who made this showcase possible."},
+        {up:"As we conclude the evening, may I request everyone to please stand."},
+        {fk:"Please rise for the **National Anthem**."},
+        {do:"Both hosts step to their marked positions and face the flag or screen. No applause prompt, joke, announcement or sign-off after the anthem."}
       ]}
     ];
     const SCRIPT_RESCUES=[
@@ -549,7 +874,7 @@
       {title:"One mic stops working",note:"Keep the room calm; don't make the fault the show.",steps:[
         {do:"The host with the working mic continues. The other host stands beside them and does not mime or shout."},
         {up:"FK ka mic thoda rest le raha hai — unlike FK, mic ko break mil gaya.",joke:true},
-        {do:"Use that line only if FK's mic fails. If Upasana's mic fails, FK says: “Upasana ka mic mute hai; yeh mauka mujhe ghar par kabhi nahi milta.” Then move on.",joke:true}
+        {do:"Use that line only if FK's mic fails. If Upasana's mic fails, FK says: “Upasana ka mic thoda rest le raha hai. Jab tak woh wapas aaye, main teamwork mein extra shift sambhaal leta hoon.” Then move on."}
       ]},
       {title:"Delay goes beyond 90 seconds",note:"Do not keep improvising. Protect the show's dignity.",stop:true,steps:[
         {fk:"Ladies and gentlemen, hum ek brief technical pause le rahe hain. Please stay with us — we’ll be right back."},
@@ -572,17 +897,21 @@
         ${planned!==cast.people.length?`<div class="sc-warn">The stage plan has ${planned} people but the name list has ${cast.people.length}. Check with the teacher before the show.</div>`:""}</div>`;
     }
     function scriptGoHtml(title){
-      const count=CAST[title]?.people.length;
-      return `<div class="sc-go"><b>Stop — before the title</b><ol><li>Stage manager shows a <strong>thumbs-up</strong> (band is ready).</li><li>Count the people on stage: <strong>${count??"?"}</strong>.</li><li>Check this is <strong>${escapeHtml(title)}</strong>.</li></ol></div>`;
+      const event=state.events.find(e=>e.title===title);
+      const count=event?peopleCount(event):CAST[title]?.people.length;
+      const named=CAST[title]?.people.length;
+      if(event&&named!=null&&count!==named)return `<div class="sc-go"><b>Stop — data conflict</b><ol><li>Stage plan says <strong>${count}</strong> performers; name sheet says <strong>${named}</strong>.</li><li>Do not read names or announce this act until the teacher and stage manager confirm the missing role/name.</li><li>Then confirm this is <strong>${escapeHtml(title)}</strong>.</li></ol></div>`;
+      return `<div class="sc-go"><b>Stop — before names or title</b><ol><li>Stage manager shows a <strong>thumbs-up</strong> (band is ready).</li><li>Count the people on stage: <strong>${count??"?"}</strong>.</li><li>Check this is <strong>${escapeHtml(title)}</strong>.</li></ol></div>`;
     }
     function scriptStepHtml(step){
+      if(step.phase)return `<div class="sc-phase${step.core?" core":""}">${escapeHtml(step.phase)}</div>`;
       if(step.wait)return `<div class="sc-cue wait"><i>Wait</i><div>${step.wait}</div></div>`;
       if(step.do)return `<div class="sc-cue do"><i>Do</i><div>${step.do}</div></div>`;
       if(step.confirm)return `<div class="sc-cue confirm"><i>Confirm</i><div>${escapeHtml(step.confirm)}</div></div>`;
       if(step.go)return scriptGoHtml(step.go);
       if(step.names)return scriptNamesHtml(step.names);
       const who=["fk","up","both"].find(k=>step[k]);
-      const tags=(step.joke?`<span class="sc-tag">Joke · skip if running late</span>`:"")+(step.cond?`<span class="sc-tag">${escapeHtml(step.cond)}</span>`:"");
+      const tags=step.cond?`<span class="sc-tag">${escapeHtml(step.cond)}</span>`:"";
       return `<div class="sc-line ${who}${step.title?" title-line":""}"><span class="sc-who ${who}">${SCRIPT_WHO[who]}</span><div class="sc-say">${scriptText(step[who])}${tags}</div></div>`;
     }
     function scriptRescueHtml(){
@@ -605,17 +934,17 @@
       page.className=`script-page${scriptFocus==="all"?"":` only-${scriptFocus}`}`;
       page.innerHTML=`<div class="script-top"><div class="eyebrow">Hosts · FK &amp; Upasana</div><h1>Host script</h1><p>Every line has an owner. Read only your colour. Grey boxes are actions, not words to say out loud.</p></div>
         <div class="script-filter" role="group" aria-label="Highlight lines">${[["all","Both"],["fk","Only FK"],["up","Only Upasana"]].map(([k,l])=>`<button type="button" data-script-focus="${k}" class="${scriptFocus===k?"on":""}">${l}</button>`).join("")}</div>
-        <div class="script-legend"><span><i class="sc-who fk" style="width:36px;height:20px;font-size:10px">FK</i>FK speaks</span><span><i class="sc-who up" style="width:56px;height:20px;font-size:10px">Upasana</i>Upasana speaks</span><span><b style="color:#137f84">WAIT</b> don't speak yet</span><span><b>DO</b> action, not spoken</span><span><b style="color:var(--danger)">STOP box</b> check before the title</span></div>
+        <div class="script-legend"><span><i class="sc-who fk" style="width:36px;height:20px;font-size:10px">FK</i>FK speaks</span><span><i class="sc-who up" style="width:56px;height:20px;font-size:10px">Upasana</i>Upasana speaks</span><span><b style="color:#137f84">WAIT</b> don't speak yet</span><span><b>DO</b> action, not spoken</span><span><b style="color:var(--danger)">STOP box</b> check before names or title</span></div>
         <nav class="script-jumps" aria-label="Script section shortcuts"><div class="script-jump-list">${SCRIPT.map((seg,i)=>`<button type="button" data-script-jump="script-seg-${i}"><em>${i+1}</em>${escapeHtml(seg.kicker)}</button>`).join("")}</div><button type="button" class="rescue-btn" data-script-jump="scriptRescue">! Need time?</button></nav>
         <section class="sc-rules"><h2>Five rules for every act</h2><ol>
           <li><b>Read only your own colour.</b> FK is gold, Upasana is pink. If a line isn't yours, don't say it, even if your partner forgets.</li>
           <li><b>FK always says the act title. Upasana always reads the names.</b> The names come straight from the costume sheet. If a name isn't on this page, don't say it.</li>
-          <li><b>Never say a title until the red STOP box is cleared:</b> thumbs-up from the stage manager, and the right number of people on stage.</li>
+          <li><b>Never read names or say a title until the red STOP box is cleared:</b> thumbs-up from the stage manager, and the right number of people on stage.</li>
           <li><b>The title is always your last line.</b> Say it, then walk off. The band starts when you're off stage, never while you're talking.</li>
-          <li><b>After an act, wait for the last note and the applause</b> before walking on. Lines marked “Joke” are optional: skip them if the show is running late.</li></ol></section>
+          <li><b>After an act, wait for the last note and the applause</b> before walking on. Use the Core first; continue into Extensions only while the band still needs time.</li></ol></section>
         ${scriptRescueHtml()}
         ${SCRIPT.map((seg,i)=>`<article class="sc-seg" id="script-seg-${i}"><header class="sc-head"><div class="sc-num">${i+1}</div><div><div class="sc-kicker">${escapeHtml(seg.kicker)}</div><h2>${escapeHtml(seg.title)}</h2><div class="sc-meta">${seg.meta.map(m=>`<span>${escapeHtml(m)}</span>`).join("")}</div></div></header><div class="sc-steps">${seg.steps.map(scriptStepHtml).join("")}</div></article>`).join("")}
-        <p class="sc-end">Draft: first 3 segments. The rest of the show follows once these are approved.</p>`;
+        <p class="sc-end">Complete show script · Opening to National Anthem</p>`;
     }
     function costumeHtml(cast){
       return `<div class="costume-cards">${costumeParts(cast.costume).map(([who,what])=>`<div class="costume-card"><b>${who}</b><span>${escapeHtml(what)}</span></div>`).join("")}</div>`;
