@@ -40,8 +40,16 @@
     .sc-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.sc-groups h4{margin:0 0 4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}.sc-groups ol{margin:0;padding:0;list-style:none;display:grid;gap:3px}.sc-groups li{display:flex;gap:8px;font-size:16px;font-weight:700}.sc-groups li span{color:var(--muted);font-weight:600;min-width:20px;font-variant-numeric:tabular-nums}
     .sc-warn{margin-top:10px;font-size:13px;color:var(--danger)}
     .sc-end{text-align:center;color:var(--muted);font-size:13px;padding:10px 0 0}
+    .script-jumps{position:sticky;top:84px;z-index:10;display:grid;grid-template-columns:1fr auto;gap:8px;margin:18px 0 26px;padding:7px;border:1px solid var(--line);border-radius:15px;background:#f7f5f0f2;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 8px 24px #1b182612}
+    .script-jump-list{display:flex;gap:6px;overflow-x:auto}.script-jump-list::-webkit-scrollbar{display:none}
+    .script-jumps button{flex:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:9px 12px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}.script-jumps button:hover{border-color:#b8892f80}.script-jumps button em{font-style:normal;color:var(--gold);margin-right:5px}.script-jumps .rescue-btn{border-color:#d9434d55;background:#d9434d0b;color:var(--danger)}
+    .sc-seg{scroll-margin-top:160px}
+    .sc-rescue{scroll-margin-top:160px;border:1px solid #d9434d66;border-radius:18px;background:#fff;margin-bottom:30px;overflow:hidden}
+    .sc-rescue>summary{list-style:none;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:17px 20px;cursor:pointer;background:#d9434d08}.sc-rescue>summary::-webkit-details-marker{display:none}.sc-rescue>summary:before{content:"!";width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--danger);color:#fff;font-weight:900;font-size:20px}.sc-rescue>summary:after{content:"Open";color:var(--danger);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.sc-rescue[open]>summary:after{content:"Close"}.sc-rescue>summary b{display:block;font:600 22px "Playfair Display",Georgia,serif}.sc-rescue>summary span{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+    .rescue-body{padding:14px 20px 20px}.rescue-rule{margin:0 0 14px;padding:10px 12px;border-left:3px solid var(--danger);background:#d9434d08;font-size:13px;line-height:1.5}.rescue-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rescue-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:#faf8f3}.rescue-card h3{font:600 18px "Playfair Display",Georgia,serif;margin:0 0 3px}.rescue-card>p{color:var(--muted);font-size:12px;margin:0 0 10px}.rescue-card .sc-line{grid-template-columns:70px 1fr;padding:8px 0}.rescue-card .sc-say{font-size:14px;line-height:1.45}.rescue-card .sc-who{height:24px;font-size:10.5px}.rescue-card .sc-cue{grid-template-columns:70px 1fr;padding:8px 0;font-size:12.5px}.rescue-card .sc-cue>i{font-size:9px}
+    .rescue-stop{grid-column:1/-1;border-color:#d9434d66;background:#d9434d08}.rescue-stop strong{color:var(--danger)}
     .script-page.only-fk .sc-line.up,.script-page.only-up .sc-line.fk{opacity:.28}
-    @media(max-width:600px){.script-page{padding:26px 14px 120px}.sc-head{padding:16px}.sc-steps{padding:6px 14px 14px}.sc-line,.sc-cue{grid-template-columns:1fr;gap:6px}.sc-who{justify-self:start;padding:0 12px}.sc-cue>i{justify-self:start;padding:3px 10px}.sc-say{font-size:16px}.sc-head h2{font-size:22px}}
+    @media(max-width:600px){.script-page{padding:26px 14px 120px}.script-jumps{top:66px;margin-left:-6px;margin-right:-6px}.script-jumps button{padding:9px 10px}.sc-head{padding:16px}.sc-steps{padding:6px 14px 14px}.sc-line,.sc-cue{grid-template-columns:1fr;gap:6px}.sc-who{justify-self:start;padding:0 12px}.sc-cue>i{justify-self:start;padding:3px 10px}.sc-say{font-size:16px}.sc-head h2{font-size:22px}.rescue-grid{grid-template-columns:1fr}.rescue-stop{grid-column:auto}.rescue-body{padding:12px}.sc-seg,.sc-rescue{scroll-margin-top:142px}}
     .toast{position:fixed;right:25px;bottom:25px;background:#1b1826;color:#f8f4eb;border-radius:10px;padding:12px 16px;font-weight:700;font-size:12px;transform:translateY(100px);opacity:0;transition:.3s;z-index:40}.toast.show{transform:none;opacity:1}
     @media(max-width:900px){
       .app-header{height:60px;gap:10px;padding:0 14px;background:#f7f5f0;-webkit-backdrop-filter:none;backdrop-filter:none}
@@ -517,6 +525,37 @@
         {do:"<b>Walk off immediately.</b> Same wings. The band starts once you are off."}
       ]}
     ];
+    const SCRIPT_RESCUES=[
+      {title:"Band needs 30–60 seconds",note:"Use one pair of lines, then check the stage manager again.",steps:[
+        {up:"Tab tak ek quick show of hands — aaj kitne parents khud kabhi stage par perform kar chuke hain? Haath upar!"},
+        {fk:"Achha! Aur kitne logon ne sirf bathroom concert kiya hai? Main aapki category mein hoon.",joke:true},
+        {do:"Let the room react. Look to the stage manager. If there is no thumbs-up, use the second pair below."},
+        {fk:"Aaj kaun pehli baar Seasons ka show dekh raha hai? Haath upar!"},
+        {up:"Welcome! Aaj ke baad aapko samajh aa jayega ki rehearsals ke baad ghar mein itni khamoshi kyun hoti hai.",joke:true}
+      ]},
+      {title:"Technical problem",note:"Acknowledge it once. Never blame a person or piece of equipment.",steps:[
+        {fk:"Live show hai — kabhi-kabhi technology bhi thoda spotlight maang leti hai."},
+        {up:"Hamari team usse mana rahi hai. Aap bas apni taaliyan ready rakhiye — hum ek chhota sa moment le rahe hain."},
+        {do:"Wait for the stage manager. Do not tap the microphone, diagnose the fault, or promise a time."}
+      ]},
+      {title:"Different band appears",note:"Do not guess its name. Do not read any names yet.",steps:[
+        {up:"Lagta hai backstage ne order mein ek surprise rakha hai."},
+        {fk:"Hum title tabhi bolenge jab stage bilkul ready ho. Ek chhota sa pause."},
+        {do:"Ask the stage manager silently which act this is. Jump to that act's section only after confirmation."}
+      ]},
+      {title:"Music starts early",note:"The music wins. Never talk over a student.",steps:[
+        {do:"Stop speaking immediately. Smile, gesture towards the performers and walk off by the nearest clear wing. Skip every remaining line, including names."}
+      ]},
+      {title:"One mic stops working",note:"Keep the room calm; don't make the fault the show.",steps:[
+        {do:"The host with the working mic continues. The other host stands beside them and does not mime or shout."},
+        {up:"FK ka mic thoda rest le raha hai — unlike FK, mic ko break mil gaya.",joke:true},
+        {do:"Use that line only if FK's mic fails. If Upasana's mic fails, FK says: “Upasana ka mic mute hai; yeh mauka mujhe ghar par kabhi nahi milta.” Then move on.",joke:true}
+      ]},
+      {title:"Delay goes beyond 90 seconds",note:"Do not keep improvising. Protect the show's dignity.",stop:true,steps:[
+        {fk:"Ladies and gentlemen, hum ek brief technical pause le rahe hain. Please stay with us — we’ll be right back."},
+        {do:"Both hosts leave the stage. House music starts. Return only when the stage manager confirms the next act, performer count and title."}
+      ]}
+    ];
     const SCRIPT_WHO={fk:"FK",up:"Upasana",both:"Both"};
     let scriptFocus=localStorage.getItem("seasons-script-focus")||"all";
     const scriptText=text=>escapeHtml(text).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
@@ -546,19 +585,36 @@
       const tags=(step.joke?`<span class="sc-tag">Joke · skip if running late</span>`:"")+(step.cond?`<span class="sc-tag">${escapeHtml(step.cond)}</span>`:"");
       return `<div class="sc-line ${who}${step.title?" title-line":""}"><span class="sc-who ${who}">${SCRIPT_WHO[who]}</span><div class="sc-say">${scriptText(step[who])}${tags}</div></div>`;
     }
+    function scriptRescueHtml(){
+      return `<details class="sc-rescue" id="scriptRescue"><summary><div><b>Need time? Live rescue</b><span>Open only when the planned flow breaks</span></div></summary>
+        <div class="rescue-body"><p class="rescue-rule"><b>First rule:</b> one host speaks while the other watches the stage manager. The title and names stay unsaid until the next act is confirmed.</p>
+          <div class="rescue-grid">${SCRIPT_RESCUES.map(item=>`<section class="rescue-card${item.stop?" rescue-stop":""}"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.note)}</p>${item.steps.map(scriptStepHtml).join("")}</section>`).join("")}</div>
+        </div></details>`;
+    }
+    function jumpScriptTo(id){
+      const target=document.getElementById(id);
+      if(!target)return;
+      if(target.tagName==="DETAILS")target.open=true;
+      const previous=document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior="auto";
+      target.scrollIntoView({block:"start"});
+      document.documentElement.style.scrollBehavior=previous;
+    }
     function renderScript(){
       const page=document.getElementById("scriptPage");
       page.className=`script-page${scriptFocus==="all"?"":` only-${scriptFocus}`}`;
       page.innerHTML=`<div class="script-top"><div class="eyebrow">Hosts · FK &amp; Upasana</div><h1>Host script</h1><p>Every line has an owner. Read only your colour. Grey boxes are actions, not words to say out loud.</p></div>
         <div class="script-filter" role="group" aria-label="Highlight lines">${[["all","Both"],["fk","Only FK"],["up","Only Upasana"]].map(([k,l])=>`<button type="button" data-script-focus="${k}" class="${scriptFocus===k?"on":""}">${l}</button>`).join("")}</div>
         <div class="script-legend"><span><i class="sc-who fk" style="width:36px;height:20px;font-size:10px">FK</i>FK speaks</span><span><i class="sc-who up" style="width:56px;height:20px;font-size:10px">Upasana</i>Upasana speaks</span><span><b style="color:#137f84">WAIT</b> don't speak yet</span><span><b>DO</b> action, not spoken</span><span><b style="color:var(--danger)">STOP box</b> check before the title</span></div>
+        <nav class="script-jumps" aria-label="Script section shortcuts"><div class="script-jump-list">${SCRIPT.map((seg,i)=>`<button type="button" data-script-jump="script-seg-${i}"><em>${i+1}</em>${escapeHtml(seg.kicker)}</button>`).join("")}</div><button type="button" class="rescue-btn" data-script-jump="scriptRescue">! Need time?</button></nav>
         <section class="sc-rules"><h2>Five rules for every act</h2><ol>
           <li><b>Read only your own colour.</b> FK is gold, Upasana is pink. If a line isn't yours, don't say it, even if your partner forgets.</li>
           <li><b>FK always says the act title. Upasana always reads the names.</b> The names come straight from the costume sheet. If a name isn't on this page, don't say it.</li>
           <li><b>Never say a title until the red STOP box is cleared:</b> thumbs-up from the stage manager, and the right number of people on stage.</li>
           <li><b>The title is always your last line.</b> Say it, then walk off. The band starts when you're off stage, never while you're talking.</li>
           <li><b>After an act, wait for the last note and the applause</b> before walking on. Lines marked “Joke” are optional: skip them if the show is running late.</li></ol></section>
-        ${SCRIPT.map((seg,i)=>`<article class="sc-seg"><header class="sc-head"><div class="sc-num">${i+1}</div><div><div class="sc-kicker">${escapeHtml(seg.kicker)}</div><h2>${escapeHtml(seg.title)}</h2><div class="sc-meta">${seg.meta.map(m=>`<span>${escapeHtml(m)}</span>`).join("")}</div></div></header><div class="sc-steps">${seg.steps.map(scriptStepHtml).join("")}</div></article>`).join("")}
+        ${scriptRescueHtml()}
+        ${SCRIPT.map((seg,i)=>`<article class="sc-seg" id="script-seg-${i}"><header class="sc-head"><div class="sc-num">${i+1}</div><div><div class="sc-kicker">${escapeHtml(seg.kicker)}</div><h2>${escapeHtml(seg.title)}</h2><div class="sc-meta">${seg.meta.map(m=>`<span>${escapeHtml(m)}</span>`).join("")}</div></div></header><div class="sc-steps">${seg.steps.map(scriptStepHtml).join("")}</div></article>`).join("")}
         <p class="sc-end">Draft: first 3 segments. The rest of the show follows once these are approved.</p>`;
     }
     function costumeHtml(cast){
@@ -928,11 +984,16 @@
       toast("If a web address shows on the paper, untick “Headers and footers” in the print dialog");
     }
     document.getElementById("scriptPage").addEventListener("click",e=>{
-      const button=e.target.closest("[data-script-focus]");
-      if(!button)return;
-      scriptFocus=button.dataset.scriptFocus;
-      localStorage.setItem("seasons-script-focus",scriptFocus);
-      renderScript();
+      const focusButton=e.target.closest("[data-script-focus]");
+      if(focusButton){
+        scriptFocus=focusButton.dataset.scriptFocus;
+        localStorage.setItem("seasons-script-focus",scriptFocus);
+        renderScript();
+        return;
+      }
+      const jumpButton=e.target.closest("[data-script-jump]");
+      if(!jumpButton)return;
+      jumpScriptTo(jumpButton.dataset.scriptJump);
     });
     document.getElementById("printStageBtn").addEventListener("click",()=>{
       const event=state.events.find(e=>e.id===currentId);
@@ -956,6 +1017,15 @@
     document.getElementById("resetRigBtn").addEventListener("click",()=>{state.rig.overrides={};saveState("Rig positions reset");toast("Rig positions reset")});
     document.addEventListener("keydown",e=>{
       if(document.body.classList.contains("cast-open")){if(e.key==="Escape")closeCast();return}
+      if(document.getElementById("scriptView").classList.contains("active")&&!["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName)&&!e.metaKey&&!e.ctrlKey&&!e.altKey){
+        const index=Number(e.key)-1;
+        if(index>=0&&index<SCRIPT.length){e.preventDefault();jumpScriptTo(`script-seg-${index}`);return}
+        if(e.key.toLowerCase()==="r"){
+          e.preventDefault();
+          jumpScriptTo("scriptRescue");
+          return;
+        }
+      }
       if(!document.getElementById("stageView").classList.contains("active")||["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName))return;
       if(e.key==="ArrowRight"||e.key===" ")moveStage(1);
       if(e.key==="ArrowLeft")moveStage(-1);
