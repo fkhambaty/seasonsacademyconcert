@@ -8,27 +8,27 @@ const LED_CUES = [
   {id:"names-tauba",group:"Act 1",title:"Names · Tauba / Urvashi",trigger:"Click when Upasana begins reading names",scene:"names",act:"Tauba Tauba, Urvashi Urvashi Mashup"},
   {id:"sinhagad",group:"Act 2",title:"Sinhagad from the bus window",trigger:"Upasana: “Khidki se bahar dekhiye”",scene:"fort",overline:"Katraj · Sinhagad in view",headline:"Gad aala, pan Sinha gela",subline:"Kondhana became Sinhagad · The fort of the lion",distance:"440 km to Goa"},
   {id:"names-bharat",group:"Act 2",title:"Names · Bharat Humko",trigger:"Click when Upasana begins reading names",scene:"names",act:"Bharat Humko Jaan Se Pyara Hai"},
-  {id:"tunnel",group:"Act 3",title:"Khambatki tunnel",trigger:"Upasana: “Tunnel aa gaya”",scene:"tunnel",overline:"Khambatki Ghat",headline:"Tunnel!",subline:"Ready for the echo?",distance:"410 km to Goa"},
-  {id:"rain",group:"Act 3",title:"Ghat rainstorm",trigger:"Upasana begins the audience rainstorm",scene:"rain",overline:"Outside the tunnel",headline:"Ghat ki baarish",subline:"Rub · Snap · Clap · Thunder",sound:"rain"},
+  {id:"tunnel",group:"Act 3",title:"Khambatki tunnel",trigger:"Upasana: “Tunnel aa gaya”",scene:"tunnel",overline:"Khambatki Ghat",headline:"The tunnel",subline:"Through the Western Ghats",distance:"410 km to Goa"},
+  {id:"rain",group:"Act 3",title:"Ghat rainstorm",trigger:"Upasana begins the audience rainstorm",scene:"rain",overline:"Outside the tunnel",headline:"Ghat ki baarish",subline:"Monsoon on the mountain",sound:"rain"},
   {id:"names-drum",group:"Act 3",title:"Names · Drum Circle",trigger:"Click when Upasana begins reading names",scene:"names",act:"Drum Circle"},
   {id:"satara",group:"Act 4",title:"Satara and Kaas plateau",trigger:"FK: “Satara aa gaya!”",scene:"flowers",overline:"Satara",headline:"Kaas Plateau",subline:"A carpet of wildflowers · UNESCO World Heritage",distance:"360 km to Goa"},
   {id:"names-oldwoman",group:"Act 4",title:"Names · Old Woman Shoe",trigger:"Click when Upasana begins reading names",scene:"names",act:"Old Woman Shoe"},
   {id:"truck",group:"Act 5",title:"Truck ahead",trigger:"FK: “Aage ek truck hai”",scene:"truck",overline:"NH48",headline:"",subline:""},
-  {id:"mission",group:"Act 5",title:"Overtake mission",trigger:"The hall starts humming the theme",scene:"road",overline:"Mission",headline:"Overtake",subline:"Lean right when FK says NOW",distance:"330 km to Goa"},
+  {id:"mission",group:"Act 5",title:"Overtake mission",trigger:"The hall starts humming the theme",scene:"road",overline:"NH48",headline:"The open highway",subline:"Pune behind us",distance:"330 km to Goa"},
   {id:"names-mission",group:"Act 5",title:"Names · Mission Impossible",trigger:"Click when Upasana begins reading names",scene:"names",act:"Mission Impossible"},
   {id:"karad",group:"Act 6",title:"Karad champion story",trigger:"FK: “Bus guzar rahi hai Karad se”",scene:"champion",overline:"Karad · 1952",headline:"Khashaba Jadhav",subline:"Independent India’s first individual Olympic medallist",distance:"300 km to Goa"},
   {id:"names-champions",group:"Act 6",title:"Names · We Are the Champions",trigger:"Click when Upasana begins reading names",scene:"names",act:"We Are the Champions Mashup"},
   {id:"kolhapur",group:"Act 7",title:"Kolhapur at evening",trigger:"FK: “Kolhapur aa gaya!”",scene:"sunset",overline:"Kolhapur",headline:"Misal · Music · Chappals",subline:"The sun sets. Raag Yaman begins.",distance:"240 km to Goa"},
   {id:"names-yaman",group:"Act 7",title:"Names · Raag Yaman",trigger:"Click when Upasana begins reading names",scene:"names",act:"Raag Yaman"},
-  {id:"dhaba",group:"Act 8",title:"Dhaba chai break",trigger:"FK: “Dhaba stop!”",scene:"dhaba",overline:"Highway break",headline:"Sirf das minute!",subline:"Chai · Vada pav · Headcount",distance:"220 km to Goa"},
+  {id:"dhaba",group:"Act 8",title:"Dhaba chai break",trigger:"FK: “Dhaba stop!”",scene:"dhaba",overline:"Highway break",headline:"Dhaba",subline:"Chai and vada pav",distance:"220 km to Goa"},
   {id:"names-flute",group:"Act 8",title:"Names · The Flute Song",trigger:"Click when Upasana begins reading names",scene:"names",act:"The Flute Song"},
-  {id:"night",group:"Act 9",title:"Night drive and antakshari",trigger:"Upasana: “Raat ki bus ho…”",scene:"stars",overline:"Night drive",headline:"Antakshari",subline:"Baithe baithe kya karein…",distance:"180 km to Goa"},
+  {id:"night",group:"Act 9",title:"Night drive and antakshari",trigger:"Upasana: “Raat ki bus ho…”",scene:"stars",overline:"Night drive",headline:"Under the stars",subline:"The road goes quiet",distance:"180 km to Goa"},
   {id:"names-saiyaara",group:"Act 9",title:"Names · Saiyaara",trigger:"Click when Upasana begins reading names",scene:"names",act:"Saiyaara"},
-  {id:"midnight",group:"Act 11",title:"The bus sleeps",trigger:"FK puts a finger to his lips",scene:"stars",overline:"2:00 AM",headline:"Shhh…",subline:"The bus is asleep",distance:"130 km to Goa"},
+  {id:"midnight",group:"Act 11",title:"The bus sleeps",trigger:"FK puts a finger to his lips",scene:"stars",overline:"2:00 AM",headline:"Midnight",subline:"The bus is asleep",distance:"130 km to Goa"},
   {id:"names-gminute",group:"Act 11",title:"Names · G Minute",trigger:"Click when Upasana begins reading names",scene:"names",act:"G Minute"},
-  {id:"amboli",group:"Act 12",title:"Amboli dawn and fog",trigger:"FK: “Hum pahunche hain Amboli ghat”",scene:"rain",overline:"Amboli Ghat · Dawn",headline:"Clouds on the road",subline:"Listen. Four voices will show the way.",distance:"90 km to Goa",sound:"rain"},
+  {id:"amboli",group:"Act 12",title:"Amboli dawn and fog",trigger:"FK: “Hum pahunche hain Amboli ghat”",scene:"rain",overline:"Amboli Ghat · Dawn",headline:"Clouds on the road",subline:"Fog over the ghats",distance:"90 km to Goa",sound:"rain"},
   {id:"names-ghar",group:"Act 12",title:"Names · Ghar More / Moh Moh",trigger:"Click when Upasana begins reading names",scene:"names",act:"Ghar More Pardesiya & Moh Moh Ke Dhaage"},
-  {id:"hairpins",group:"Act 13",title:"Amboli hairpin bends",trigger:"Upasana explains LEFT and RIGHT",scene:"road",overline:"Amboli Ghat",headline:"Hairpin bends",subline:"LEFT · RIGHT · Hold on!",distance:"70 km to Goa"},
+  {id:"hairpins",group:"Act 13",title:"Amboli hairpin bends",trigger:"Upasana explains LEFT and RIGHT",scene:"road",overline:"Amboli Ghat",headline:"Hairpin bends",subline:"The road folds through the hills",distance:"70 km to Goa"},
   {id:"names-challa",group:"Act 13",title:"Names · Challa",trigger:"Click when Upasana begins reading names",scene:"names",act:"Challa — Jab Tak Hai Jaan"},
   {id:"border",group:"Act 14",title:"Welcome to Goa",trigger:"FK answers “Zero!”",scene:"beach",overline:"State border",headline:"Welcome to Goa!",subline:"The hotel is still 40 km away"},
   {id:"names-chammak",group:"Act 14",title:"Names · Chammak Challo",trigger:"Click when Upasana begins reading names",scene:"names",act:"Chammak Challo Mashup"},
@@ -38,7 +38,7 @@ const LED_CUES = [
   {id:"names-dil",group:"Act 16",title:"Names · Dil Diya Hai",trigger:"Click when Upasana begins reading names",scene:"names",act:"Dil Diya Hai Jaan Bhi Denge — Karma"},
   {id:"susegad",group:"Act 17",title:"Goa time · Susegad",trigger:"FK: “Goa mein time alag chalta hai”",scene:"beach",overline:"Goa time",headline:"Susegad",subline:"Slow down · Breathe · Enjoy the moment",distance:"5 km to Goa"},
   {id:"names-howlong",group:"Act 17",title:"Names · How Long",trigger:"Click when Upasana begins reading names",scene:"names",act:"How Long — Charlie Puth"},
-  {id:"sunset",group:"Act 18",title:"Beach sunset countdown",trigger:"Upasana starts the countdown",scene:"sunset",overline:"The beach",headline:"Final Countdown",subline:"10 · 9 · 8 · 7…"},
+  {id:"sunset",group:"Act 18",title:"Beach sunset countdown",trigger:"Upasana starts the countdown",scene:"sunset",overline:"The beach",headline:"Sunset",subline:"The sun meets the sea"},
   {id:"names-final",group:"Act 18",title:"Names · Final Countdown",trigger:"Click when Upasana begins reading names",scene:"names",act:"Final Countdown"},
   {id:"shack",group:"Act 19",title:"Beach shack live band",trigger:"Upasana: “Raat ho gayi. Beach shack…”",scene:"beach",overline:"Beach shack",headline:"Live band night",subline:"Tonight’s performers · The teachers"},
   {id:"names-haseena",group:"Act 19",title:"Names · O Haseena",trigger:"Click when Upasana begins reading names",scene:"names",act:"O Haseena"},
@@ -47,7 +47,7 @@ const LED_CUES = [
   {id:"destination",group:"Ceremony",title:"Journey complete",trigger:"As Ajeeb Daastaan applause ends",scene:"beach",overline:"Journey complete",headline:"470 kilometres of music",subline:"Thank you, performers · teachers · families · crew"},
   {id:"felicitation",group:"Ceremony",title:"Felicitation",trigger:"FK announces the Felicitation Ceremony",scene:"intro",overline:"Seasons Music Academy",headline:"Felicitation Ceremony",subline:"Celebrating courage, practice and progress"},
   {id:"thanks",group:"Ceremony",title:"Vote of Thanks",trigger:"Joseph walks to centre stage",scene:"intro",overline:"With gratitude",headline:"Vote of Thanks",subline:"Joseph Sunil"},
-  {id:"anthem",group:"Ceremony",title:"National Anthem",trigger:"FK asks everyone to rise",scene:"tricolor",overline:"Please rise for the",headline:"National Anthem",subline:"No animation change or announcement after this cue"}
+  {id:"anthem",group:"Ceremony",title:"National Anthem",trigger:"FK asks everyone to rise",scene:"tricolor",overline:"",headline:"National Anthem",subline:"",sound:"anthem"}
 ];
 
 let ledCurrentIndex = Math.max(0, LED_CUES.findIndex(cue => cue.id === localStorage.getItem(LED_STATE_KEY)));
@@ -173,6 +173,7 @@ function stopLedProjection() {
   const output = document.getElementById("ledOutput");
   if (!document.body.classList.contains("led-output-only") && output) output.hidden = true;
   stopLedSound();
+  stopLedBed();
   ledConnected = false;
   window.ledRenderConsole?.();
 }
@@ -308,9 +309,54 @@ function playLedRain() {
   ledAmbient = {source};
 }
 
+let ledBed = null;
+function ensureLedBed() {
+  if (ledBed || !ledAudioContext || ledAudioContext.state !== "running") return;
+  const seconds = 16;
+  const rate = ledAudioContext.sampleRate;
+  const buffer = ledAudioContext.createBuffer(1, Math.floor(rate * seconds), rate);
+  const data = buffer.getChannelData(0);
+  const melody = [392, 440, 493.88, 440, 392, 349.23, 329.63, 349.23];
+  melody.forEach((freq, index) => {
+    const start = Math.floor(index * seconds / melody.length * rate);
+    const length = Math.floor(rate * 1.6);
+    for (let sample = 0; sample < length && start + sample < data.length; sample += 1) {
+      const time = sample / rate;
+      const envelope = Math.sin(Math.min(Math.PI, sample / length * Math.PI)) * Math.exp(-time * 0.9);
+      data[start + sample] += Math.sin(2 * Math.PI * freq * time) * envelope * 0.18;
+      data[start + sample] += Math.sin(2 * Math.PI * freq / 2 * time) * envelope * 0.1;
+    }
+  });
+  for (let sample = 0; sample < data.length; sample += 1) {
+    const time = sample / rate;
+    data[sample] += Math.sin(2 * Math.PI * 130.81 * time) * 0.05;
+    data[sample] += Math.sin(2 * Math.PI * 196 * time) * 0.035;
+  }
+  const source = ledAudioContext.createBufferSource();
+  const filter = ledAudioContext.createBiquadFilter();
+  const gain = ledAudioContext.createGain();
+  source.buffer = buffer;
+  source.loop = true;
+  filter.type = "lowpass";
+  filter.frequency.value = 1400;
+  gain.gain.value = 0.16;
+  source.connect(filter).connect(gain).connect(ledAudioContext.destination);
+  source.start();
+  ledBed = {source};
+}
+function stopLedBed() {
+  if (!ledBed) return;
+  try { ledBed.source.stop(); } catch (error) { console.warn(error); }
+  ledBed = null;
+}
 function setLedSound(sound) {
   stopLedSound();
   if (!ledAudioContext || ledAudioContext.state !== "running") return;
+  if (sound === "anthem") {
+    stopLedBed();
+    return;
+  }
+  ensureLedBed();
   if (sound === "rain") playLedRain();
   if (sound === "fanfare") playLedFanfare();
 }
@@ -350,6 +396,7 @@ function restoreLedConsole() {
     document.body.classList.remove("led-projecting");
     document.getElementById("ledOutput").hidden = true;
     stopLedSound();
+    stopLedBed();
     window.ledRenderConsole?.();
     return;
   }
@@ -360,6 +407,7 @@ function restoreLedConsole() {
   }
   if (!ledWasFullscreen) return;
   stopLedSound();
+  stopLedBed();
   renderLedOutput(LED_CUES.find(cue => cue.id === "holding"));
   window.close();
 }
@@ -386,6 +434,7 @@ function receiveLedMessage(message) {
   }
   if (message.type === "stop" && document.body.classList.contains("led-output-only")) {
     stopLedSound();
+    stopLedBed();
     renderLedOutput(LED_CUES.find(cue => cue.id === "holding"));
     setTimeout(() => window.close(), 120);
   }
