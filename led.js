@@ -126,20 +126,29 @@ function selectLedCue(index, announce = true) {
   const cue = LED_CUES[ledCurrentIndex];
   localStorage.setItem(LED_STATE_KEY, cue.id);
   if (announce) ledSend({type:"cue", id:cue.id});
-  if (document.body.classList.contains("led-output-only")) renderLedOutput(cue);
+  if (document.body.classList.contains("led-output-only") || document.body.classList.contains("led-projecting")) renderLedOutput(cue);
   window.ledRenderConsole?.();
 }
 
-function openLedWindow() {
-  const url = new URL(location.href);
-  url.search = "?led-output=1";
-  url.hash = "";
-  ledWindow = window.open(url, "seasons-led-output", "popup,width=1280,height=720");
-  if (!ledWindow) {
-    toast("Popup blocked — allow popups, then click Open Audience Screen again");
-    return;
-  }
-  ledWindow.focus();
+let ledScreenDetails = null;
+let ledScreens = null;
+function prepareLedScreen() {
+  if (ledScreenDetails || !("getScreenDetails" in window)) return;
+  ledScreenDetails = window.getScreenDetails().then(details => { ledScreens = details; return details; }).catch(() => null);
+}
+function projectSelectedCue() {
+  prepareLedScreen();
+  const cue = LED_CUES[ledCurrentIndex];
+  localStorage.setItem(LED_STATE_KEY, cue.id);
+  const output = document.getElementById("ledOutput");
+  document.body.classList.add("led-projecting");
+  output.hidden = false;
+  document.getElementById("ledOutputHelp").hidden = true;
+  renderLedOutput(cue);
+  const other = ledScreens?.screens?.find(screen => !screen.isPrimary);
+  output.requestFullscreen(other ? {screen: other} : undefined).catch(() => output.requestFullscreen().catch(error => console.warn("Fullscreen was blocked", error)));
+  startLedSound();
+  toast(`Projecting ${cue.title}`);
 }
 
 function holdLed() {
@@ -148,6 +157,11 @@ function holdLed() {
 
 function stopLedProjection() {
   ledSend({type:"stop"});
+  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  document.body.classList.remove("led-projecting");
+  const output = document.getElementById("ledOutput");
+  if (!document.body.classList.contains("led-output-only") && output) output.hidden = true;
+  stopLedSound();
   ledConnected = false;
   window.ledRenderConsole?.();
 }
@@ -160,6 +174,7 @@ function ledGroupHtml(group, cues) {
 }
 
 window.ledRenderConsole = function renderLedConsole() {
+  prepareLedScreen();
   const root = document.getElementById("ledConsole");
   if (!root) return;
   const current = LED_CUES[ledCurrentIndex];
@@ -167,8 +182,8 @@ window.ledRenderConsole = function renderLedConsole() {
     (all[cue.group] ||= []).push(cue);
     return all;
   }, {});
-  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>One operator clicks the cues in order. The audience sees only the separate output window—never these buttons or instructions.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Open / Project</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
-    <div class="led-how"><article><b>1</b><strong>Connect the LED</strong><span>Set the LED as a second/extended display, not a mirror.</span></article><article><b>2</b><strong>Open its window</strong><span>Click “Open Audience Screen”, then drag that new window onto the LED.</span></article><article><b>3</b><strong>Project full screen</strong><span>Inside the audience window, click the button or press <kbd>P</kbd>.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. A safe illustrated screen appears, then the window closes.</span></article></div>
+  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>Select the cue, then press <b>P</b> once. That picture goes straight onto the LED. Arrows change it from here.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
+    <div class="led-how"><article><b>1</b><strong>Open this tab on the LED</strong><span>Or allow Chrome’s screen permission so P can use the second display.</span></article><article><b>2</b><strong>Select the cue</strong><span>Click the act that is happening now. Its card gets a gold border.</span></article><article><b>3</b><strong>Press P once</strong><span>That picture fills the screen immediately. No second window or click.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. The cue list comes back.</span></article></div>
     <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong></div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
     <div class="led-controls"><button type="button" id="ledPrevBtn">← Previous</button><button type="button" class="next" id="ledNextBtn">Next cue →</button><button type="button" id="ledReplayBtn"><kbd>R</kbd> Replay</button><button type="button" id="ledHoldBtn"><kbd>H</kbd> Safe holding image</button></div>
     ${Object.entries(groups).map(([group,cues]) => ledGroupHtml(group,cues)).join("")}`;
@@ -182,7 +197,7 @@ function initLedConsoleEvents() {
       cue.scrollIntoView({block:"center",behavior:"smooth"});
       return;
     }
-    if (event.target.closest("#ledOpenBtn")) openLedWindow();
+    if (event.target.closest("#ledOpenBtn")) projectSelectedCue();
     if (event.target.closest("#ledStopBtn")) stopLedProjection();
     if (event.target.closest("#ledPrevBtn")) selectLedCue(ledCurrentIndex - 1);
     if (event.target.closest("#ledNextBtn")) selectLedCue(ledCurrentIndex + 1);
@@ -240,30 +255,48 @@ function setLedSound(sound) {
   if (sound === "fanfare") playLedFanfare();
 }
 
-function initLedOutput() {
-  const outputMode = new URLSearchParams(location.search).get("led-output") === "1";
-  if (!outputMode) return;
-  document.body.classList.add("led-output-only");
-  document.getElementById("ledOutput").hidden = false;
-  const saved = LED_CUES.find(cue => cue.id === localStorage.getItem(LED_STATE_KEY)) || LED_CUES[0];
-  ledCurrentIndex = LED_CUES.indexOf(saved);
-  renderLedOutput(saved);
-  ledSend({type:"ready"});
+async function startLedSound() {
+  try {
+    ledAudioContext ||= new AudioContext();
+    await ledAudioContext.resume();
+  } catch (error) {
+    console.warn("Sound could not start", error);
+  }
+  setLedSound(LED_CUES[ledCurrentIndex].sound);
 }
-
-document.getElementById("ledFullscreenBtn")?.addEventListener("click", async () => {
-  ledAudioContext ||= new AudioContext();
-  await ledAudioContext.resume();
+async function projectLedNow() {
+  document.getElementById("ledOutputHelp").hidden = true;
+  await startLedSound();
   try {
     if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
   } catch (error) {
     console.warn("Fullscreen was blocked", error);
   }
+}
+
+function initLedOutput() {
+  const outputMode = new URLSearchParams(location.search).get("led-output") === "1";
+  if (!outputMode) return;
+  document.body.classList.add("led-output-only");
+  document.getElementById("ledOutput").hidden = false;
   document.getElementById("ledOutputHelp").hidden = true;
-  setLedSound(LED_CUES[ledCurrentIndex].sound);
-});
+  const saved = LED_CUES.find(cue => cue.id === localStorage.getItem(LED_STATE_KEY)) || LED_CUES[0];
+  ledCurrentIndex = LED_CUES.indexOf(saved);
+  renderLedOutput(saved);
+  projectLedNow();
+  ledSend({type:"ready"});
+}
+
+document.getElementById("ledFullscreenBtn")?.addEventListener("click", projectLedNow);
 
 document.addEventListener("fullscreenchange", () => {
+  if (document.body.classList.contains("led-projecting") && !document.fullscreenElement) {
+    document.body.classList.remove("led-projecting");
+    document.getElementById("ledOutput").hidden = true;
+    stopLedSound();
+    window.ledRenderConsole?.();
+    return;
+  }
   if (!document.body.classList.contains("led-output-only")) return;
   if (document.fullscreenElement) {
     ledWasFullscreen = true;
@@ -281,6 +314,7 @@ function receiveLedMessage(message) {
     window.ledRenderConsole?.();
     ledSend({type:"cue", id:LED_CUES[ledCurrentIndex].id});
   }
+  if (message.type === "project" && document.body.classList.contains("led-output-only")) projectLedNow();
   if (message.type === "cue") {
     const cue = LED_CUES.find(item => item.id === message.id);
     if (cue && document.body.classList.contains("led-output-only")) {
@@ -338,7 +372,10 @@ document.addEventListener("keydown", event => {
     event.preventDefault();
     selectLedCue(ledCurrentIndex - 1);
   }
-  if (event.key.toLowerCase() === "p") openLedWindow();
+  if (event.key.toLowerCase() === "p") {
+    event.preventDefault();
+    projectSelectedCue();
+  }
   if (event.key.toLowerCase() === "r") selectLedCue(ledCurrentIndex);
   if (event.key.toLowerCase() === "h") holdLed();
   if (event.key === "Escape") stopLedProjection();
@@ -350,4 +387,7 @@ window.addEventListener("beforeunload", () => {
 
 initLedConsoleEvents();
 initLedOutput();
-if (document.getElementById("ledView")?.classList.contains("active")) window.ledRenderConsole();
+if (document.getElementById("ledView")?.classList.contains("active")) {
+  prepareLedScreen();
+  window.ledRenderConsole();
+}
