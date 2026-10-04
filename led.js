@@ -59,11 +59,37 @@ let ledWasFullscreen = false;
 const ledChannel = "BroadcastChannel" in window ? new BroadcastChannel(LED_CHANNEL_NAME) : null;
 
 function ledSceneHtml(cue) {
+  const imageForAct = cue.act && [
+    "G Minute",
+    "Ghar More Pardesiya & Moh Moh Ke Dhaage",
+    "Challa — Jab Tak Hai Jaan"
+  ].includes(cue.act) ? "led-monsoon-ghat.jpg" : cue.act && [
+    "Chammak Challo Mashup",
+    "Eye of the Tiger, Gehra Hua Mashup",
+    "Dil Diya Hai Jaan Bhi Denge — Karma",
+    "How Long — Charlie Puth",
+    "Final Countdown",
+    "O Haseena",
+    "Ajeeb Daastaan"
+  ].includes(cue.act) ? "led-goa-coast.jpg" : "led-bus-journey.jpg";
   if (cue.scene === "names") {
     const cast = CAST[cue.act];
     const columns = cast.people.length > 12 ? 4 : cast.people.length > 7 ? 3 : 2;
-    return `<div class="led-scene led-names-scene"><div class="led-names-head"><div class="overline">Now boarding · ${cast.people.length} performers</div><h1>${escapeHtml(cue.act)}</h1></div><div class="led-name-grid" style="--name-cols:${columns}">${cast.people.map(([name, instrument], index) => `<div class="led-name"><b>${index + 1}</b><div><strong>${escapeHtml(name)}</strong><span>${escapeHtml(instrument)}</span></div></div>`).join("")}</div></div>`;
+    return `<div class="led-scene led-names-scene"><div class="led-scene-art" style="background-image:url('${imageForAct}')"></div><div class="led-names-head"><div class="overline">Now boarding · ${cast.people.length} performers</div><h1>${escapeHtml(cue.act)}</h1></div><div class="led-name-grid" style="--name-cols:${columns}">${cast.people.map(([name, instrument], index) => `<div class="led-name"><b>${index + 1}</b><div><strong>${escapeHtml(name)}</strong><span>${escapeHtml(instrument)}</span></div></div>`).join("")}</div></div>`;
   }
+  const image = {
+    road:"led-bus-journey.jpg",
+    tunnel:"led-monsoon-ghat.jpg",
+    rain:"led-monsoon-ghat.jpg",
+    truck:"led-indian-truck.jpg",
+    stars:"led-goa-coast.jpg",
+    sunset:"led-goa-coast.jpg",
+    beach:"led-goa-coast.jpg",
+    fort:"led-goa-coast.jpg",
+    flowers:"led-bus-journey.jpg",
+    champion:"led-bus-journey.jpg",
+    dhaba:"led-bus-journey.jpg"
+  }[cue.scene];
   const decoration = {
     intro: `<div class="led-scene led-logo-scene"><div class="led-scene-copy"><img class="led-mark" src="logo-mark.png" alt=""><div class="overline">${escapeHtml(cue.overline)}</div><h1>${escapeHtml(cue.headline)}</h1><p>${escapeHtml(cue.subline)}</p></div></div>`,
     road: `<div class="led-road"></div><div class="led-bus"></div>`,
@@ -80,7 +106,7 @@ function ledSceneHtml(cue) {
     dhaba: `<div class="led-road"></div><div class="led-bus"></div>`
   }[cue.scene] || "";
   if (cue.scene === "intro") return decoration;
-  return `<div class="led-scene led-${cue.scene}-scene">${decoration}<div class="led-scene-copy"><div class="overline">${escapeHtml(cue.overline || "")}</div>${cue.headline ? `<h1>${escapeHtml(cue.headline)}</h1>` : ""}${cue.subline ? `<p>${escapeHtml(cue.subline)}</p>` : ""}${cue.distance ? `<span class="distance">${escapeHtml(cue.distance)}</span>` : ""}</div></div>`;
+  return `<div class="led-scene led-${cue.scene}-scene">${image ? `<div class="led-scene-art" style="background-image:url('${image}')"></div>` : ""}${decoration}<div class="led-scene-copy"><div class="overline">${escapeHtml(cue.overline || "")}</div>${cue.headline ? `<h1>${escapeHtml(cue.headline)}</h1>` : ""}${cue.subline ? `<p>${escapeHtml(cue.subline)}</p>` : ""}${cue.distance ? `<span class="distance">${escapeHtml(cue.distance)}</span>` : ""}</div></div>`;
 }
 
 function renderLedOutput(cue) {
@@ -116,8 +142,14 @@ function openLedWindow() {
   ledWindow.focus();
 }
 
-function blackoutLed() {
-  ledSend({type:"blackout"});
+function holdLed() {
+  ledSend({type:"holding"});
+}
+
+function stopLedProjection() {
+  ledSend({type:"stop"});
+  ledConnected = false;
+  window.ledRenderConsole?.();
 }
 
 function ledGroupHtml(group, cues) {
@@ -135,10 +167,10 @@ window.ledRenderConsole = function renderLedConsole() {
     (all[cue.group] ||= []).push(cue);
     return all;
   }, {});
-  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>One operator clicks the cues in order. The audience sees only the separate output window—never these buttons or instructions.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn">1. Open Audience Screen</button></div></div>
-    <div class="led-how"><article><b>1</b><strong>Connect the LED</strong><span>Set the LED as a second/extended display, not a mirror.</span></article><article><b>2</b><strong>Open its window</strong><span>Click “Open Audience Screen”, then drag that new window onto the LED.</span></article><article><b>3</b><strong>Project full screen</strong><span>Inside the audience window, click “Project Full Screen + Enable Sound”.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. The audience window turns black and closes.</span></article></div>
+  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>One operator clicks the cues in order. The audience sees only the separate output window—never these buttons or instructions.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Open / Project</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
+    <div class="led-how"><article><b>1</b><strong>Connect the LED</strong><span>Set the LED as a second/extended display, not a mirror.</span></article><article><b>2</b><strong>Open its window</strong><span>Click “Open Audience Screen”, then drag that new window onto the LED.</span></article><article><b>3</b><strong>Project full screen</strong><span>Inside the audience window, click the button or press <kbd>P</kbd>.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. A safe illustrated screen appears, then the window closes.</span></article></div>
     <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong></div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
-    <div class="led-controls"><button type="button" id="ledPrevBtn">← Previous</button><button type="button" class="next" id="ledNextBtn">Next cue →</button><button type="button" id="ledReplayBtn">Replay current</button><button type="button" class="blackout" id="ledBlackoutBtn">Black screen</button></div>
+    <div class="led-controls"><button type="button" id="ledPrevBtn">← Previous</button><button type="button" class="next" id="ledNextBtn">Next cue →</button><button type="button" id="ledReplayBtn"><kbd>R</kbd> Replay</button><button type="button" id="ledHoldBtn"><kbd>H</kbd> Safe holding image</button></div>
     ${Object.entries(groups).map(([group,cues]) => ledGroupHtml(group,cues)).join("")}`;
 };
 
@@ -151,10 +183,11 @@ function initLedConsoleEvents() {
       return;
     }
     if (event.target.closest("#ledOpenBtn")) openLedWindow();
+    if (event.target.closest("#ledStopBtn")) stopLedProjection();
     if (event.target.closest("#ledPrevBtn")) selectLedCue(ledCurrentIndex - 1);
     if (event.target.closest("#ledNextBtn")) selectLedCue(ledCurrentIndex + 1);
     if (event.target.closest("#ledReplayBtn")) selectLedCue(ledCurrentIndex);
-    if (event.target.closest("#ledBlackoutBtn")) blackoutLed();
+    if (event.target.closest("#ledHoldBtn")) holdLed();
   });
 }
 
@@ -238,7 +271,7 @@ document.addEventListener("fullscreenchange", () => {
   }
   if (!ledWasFullscreen) return;
   stopLedSound();
-  document.getElementById("ledScreen").innerHTML = `<div class="led-blackout"></div>`;
+  renderLedOutput(LED_CUES.find(cue => cue.id === "holding"));
   window.close();
 });
 
@@ -255,9 +288,18 @@ function receiveLedMessage(message) {
       renderLedOutput(cue);
     }
   }
-  if (message.type === "blackout" && document.body.classList.contains("led-output-only")) {
+  if (message.type === "holding" && document.body.classList.contains("led-output-only")) {
     stopLedSound();
-    document.getElementById("ledScreen").innerHTML = `<div class="led-blackout"></div>`;
+    renderLedOutput(LED_CUES.find(cue => cue.id === "holding"));
+  }
+  if (message.type === "stop" && document.body.classList.contains("led-output-only")) {
+    stopLedSound();
+    renderLedOutput(LED_CUES.find(cue => cue.id === "holding"));
+    setTimeout(() => window.close(), 120);
+  }
+  if (message.type === "stopped") {
+    ledConnected = false;
+    window.ledRenderConsole?.();
   }
 }
 
@@ -266,13 +308,44 @@ window.addEventListener("storage", event => {
   if (event.key === "seasons-led-message" && event.newValue) receiveLedMessage(JSON.parse(event.newValue));
 });
 document.addEventListener("keydown", event => {
+  if (document.body.classList.contains("led-output-only")) {
+    if (event.key.toLowerCase() === "p") document.getElementById("ledFullscreenBtn")?.click();
+    if (event.key === "ArrowRight" || event.key === " ") {
+      event.preventDefault();
+      selectLedCue(ledCurrentIndex + 1);
+    }
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      selectLedCue(ledCurrentIndex - 1);
+    }
+    if (event.key.toLowerCase() === "r") selectLedCue(ledCurrentIndex);
+    if (event.key.toLowerCase() === "h") {
+      holdLed();
+      renderLedOutput(LED_CUES.find(cue => cue.id === "holding"));
+    }
+    if (event.key === "Escape" && !document.fullscreenElement) {
+      renderLedOutput(LED_CUES.find(cue => cue.id === "holding"));
+      window.close();
+    }
+    return;
+  }
   if (!document.getElementById("ledView")?.classList.contains("active") || ["INPUT","TEXTAREA","SELECT"].includes(event.target.tagName)) return;
   if (event.key === "ArrowRight" || event.key === " ") {
     event.preventDefault();
     selectLedCue(ledCurrentIndex + 1);
   }
-  if (event.key === "ArrowLeft") selectLedCue(ledCurrentIndex - 1);
-  if (event.key.toLowerCase() === "b") blackoutLed();
+  if (event.key === "ArrowLeft") {
+    event.preventDefault();
+    selectLedCue(ledCurrentIndex - 1);
+  }
+  if (event.key.toLowerCase() === "p") openLedWindow();
+  if (event.key.toLowerCase() === "r") selectLedCue(ledCurrentIndex);
+  if (event.key.toLowerCase() === "h") holdLed();
+  if (event.key === "Escape") stopLedProjection();
+});
+
+window.addEventListener("beforeunload", () => {
+  if (document.body.classList.contains("led-output-only")) ledSend({type:"stopped"});
 });
 
 initLedConsoleEvents();
