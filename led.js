@@ -131,13 +131,25 @@ function selectLedCue(index, announce = true) {
 }
 
 let ledScreenDetails = null;
-let ledScreens = null;
 function prepareLedScreen() {
   if (ledScreenDetails || !("getScreenDetails" in window)) return;
-  ledScreenDetails = window.getScreenDetails().then(details => { ledScreens = details; return details; }).catch(() => null);
+  ledScreenDetails = window.getScreenDetails().catch(() => null);
+}
+function fullscreenElement() {
+  return document.fullscreenElement || document.webkitFullscreenElement || null;
+}
+function enterFullscreen() {
+  const target = document.documentElement;
+  const request = target.requestFullscreen || target.webkitRequestFullscreen;
+  if (!request || fullscreenElement()) return;
+  try {
+    const pending = request.call(target);
+    if (pending?.catch) pending.catch(error => console.warn("Fullscreen was blocked", error));
+  } catch (error) {
+    console.warn("Fullscreen was blocked", error);
+  }
 }
 function projectSelectedCue() {
-  prepareLedScreen();
   const cue = LED_CUES[ledCurrentIndex];
   localStorage.setItem(LED_STATE_KEY, cue.id);
   const output = document.getElementById("ledOutput");
@@ -145,8 +157,7 @@ function projectSelectedCue() {
   output.hidden = false;
   document.getElementById("ledOutputHelp").hidden = true;
   renderLedOutput(cue);
-  const other = ledScreens?.screens?.find(screen => !screen.isPrimary);
-  output.requestFullscreen(other ? {screen: other} : undefined).catch(() => output.requestFullscreen().catch(error => console.warn("Fullscreen was blocked", error)));
+  enterFullscreen();
   startLedSound();
   toast(`Projecting ${cue.title}`);
 }
@@ -157,7 +168,7 @@ function holdLed() {
 
 function stopLedProjection() {
   ledSend({type:"stop"});
-  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  if (fullscreenElement()) (document.exitFullscreen || document.webkitExitFullscreen)?.call(document)?.catch?.(() => {});
   document.body.classList.remove("led-projecting");
   const output = document.getElementById("ledOutput");
   if (!document.body.classList.contains("led-output-only") && output) output.hidden = true;
@@ -206,27 +217,76 @@ function initLedConsoleEvents() {
   });
 }
 
+let ledVoices = [];
 function stopLedSound() {
-  if (!ledAmbient) return;
-  ledAmbient.source.stop();
-  ledAmbient = null;
+  if (ledAmbient) {
+    ledAmbient.source.stop();
+    ledAmbient = null;
+  }
+  ledVoices.forEach(node => { try { node.stop(); } catch (error) { console.warn(error); } });
+  ledVoices = [];
 }
-
+function ledVoice({type="sawtooth", freq, start, dur, peak, attack, cutoff, vibrato=0}) {
+  const context = ledAudioContext;
+  const osc = context.createOscillator();
+  const gain = context.createGain();
+  const filter = context.createBiquadFilter();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, start);
+  if (vibrato) {
+    const lfo = context.createOscillator();
+    const lfoGain = context.createGain();
+    lfo.frequency.value = vibrato;
+    lfoGain.gain.value = freq * 0.007;
+    lfo.connect(lfoGain).connect(osc.frequency);
+    lfo.start(start);
+    lfo.stop(start + dur + 0.05);
+    ledVoices.push(lfo);
+  }
+  filter.type = "lowpass";
+  filter.Q.value = 3;
+  filter.frequency.setValueAtTime(Math.max(80, cutoff * 0.25), start);
+  filter.frequency.exponentialRampToValueAtTime(cutoff, start + Math.max(attack, 0.03));
+  gain.gain.setValueAtTime(0.0001, start);
+  gain.gain.exponentialRampToValueAtTime(peak, start + attack);
+  gain.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+  osc.connect(filter).connect(gain).connect(context.destination);
+  osc.start(start);
+  osc.stop(start + dur + 0.05);
+  ledVoices.push(osc);
+}
 function playLedFanfare() {
   if (!ledAudioContext) return;
   const now = ledAudioContext.currentTime;
-  [130.81,196,261.63,329.63,392].forEach((frequency, index) => {
-    const oscillator = ledAudioContext.createOscillator();
-    const gain = ledAudioContext.createGain();
-    oscillator.type = index < 2 ? "triangle" : "sine";
-    oscillator.frequency.value = frequency;
-    gain.gain.setValueAtTime(0, now);
-    gain.gain.linearRampToValueAtTime(.06, now + .2 + index * .08);
-    gain.gain.exponentialRampToValueAtTime(.001, now + 4.4);
-    oscillator.connect(gain).connect(ledAudioContext.destination);
-    oscillator.start(now + index * .08);
-    oscillator.stop(now + 4.5);
+  [0, 0.62, 1.24, 3.05, 5.35].forEach(time => {
+    ledVoice({type:"sine", freq:62, start:now + time, dur:0.55, peak:0.42, attack:0.008, cutoff:160, vibrato:0});
+    ledVoice({type:"triangle", freq:124, start:now + time, dur:0.28, peak:0.12, attack:0.008, cutoff:280, vibrato:0});
   });
+  [98, 130.81, 164.81, 196, 246.94, 329.63].forEach(freq => {
+    ledVoice({type:"sawtooth", freq, start:now + 0.15, dur:8.6, peak:0.022, attack:1.1, cutoff:780, vibrato:4.2});
+    ledVoice({type:"triangle", freq:freq * 1.003, start:now + 0.15, dur:8.6, peak:0.018, attack:1.4, cutoff:1400, vibrato:5});
+  });
+  [[0.25,220,0.48],[0.72,277.18,0.48],[1.2,329.63,0.78],[2.05,440,0.9],[2.95,349.23,0.38],[3.38,415.3,0.4],[3.82,523.25,1.15],[5.1,659.25,0.42],[5.55,587.33,0.38],[5.98,523.25,2.5]].forEach(([time, freq, dur]) => {
+    ledVoice({type:"sawtooth", freq, start:now + time, dur, peak:0.065, attack:0.045, cutoff:2100, vibrato:5.5});
+    ledVoice({type:"square", freq:freq / 2, start:now + time, dur, peak:0.035, attack:0.06, cutoff:850, vibrato:4.5});
+  });
+  const seconds = 3;
+  const buffer = ledAudioContext.createBuffer(1, ledAudioContext.sampleRate * seconds, ledAudioContext.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let index = 0; index < data.length; index += 1) data[index] = (Math.random() * 2 - 1) * Math.exp(-index / (ledAudioContext.sampleRate * 0.55));
+  const source = ledAudioContext.createBufferSource();
+  const filter = ledAudioContext.createBiquadFilter();
+  const gain = ledAudioContext.createGain();
+  source.buffer = buffer;
+  filter.type = "highpass";
+  filter.frequency.value = 4500;
+  gain.gain.setValueAtTime(0.0001, now + 5.7);
+  gain.gain.exponentialRampToValueAtTime(0.16, now + 5.85);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 8.5);
+  source.connect(filter).connect(gain).connect(ledAudioContext.destination);
+  source.start(now + 5.7);
+  source.stop(now + 8.6);
+  ledVoices.push(source);
 }
 
 function playLedRain() {
@@ -266,12 +326,8 @@ async function startLedSound() {
 }
 async function projectLedNow() {
   document.getElementById("ledOutputHelp").hidden = true;
+  enterFullscreen();
   await startLedSound();
-  try {
-    if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
-  } catch (error) {
-    console.warn("Fullscreen was blocked", error);
-  }
 }
 
 function initLedOutput() {
@@ -289,8 +345,8 @@ function initLedOutput() {
 
 document.getElementById("ledFullscreenBtn")?.addEventListener("click", projectLedNow);
 
-document.addEventListener("fullscreenchange", () => {
-  if (document.body.classList.contains("led-projecting") && !document.fullscreenElement) {
+function restoreLedConsole() {
+  if (document.body.classList.contains("led-projecting") && !fullscreenElement()) {
     document.body.classList.remove("led-projecting");
     document.getElementById("ledOutput").hidden = true;
     stopLedSound();
@@ -298,7 +354,7 @@ document.addEventListener("fullscreenchange", () => {
     return;
   }
   if (!document.body.classList.contains("led-output-only")) return;
-  if (document.fullscreenElement) {
+  if (fullscreenElement()) {
     ledWasFullscreen = true;
     return;
   }
@@ -306,7 +362,9 @@ document.addEventListener("fullscreenchange", () => {
   stopLedSound();
   renderLedOutput(LED_CUES.find(cue => cue.id === "holding"));
   window.close();
-});
+}
+document.addEventListener("fullscreenchange", restoreLedConsole);
+document.addEventListener("webkitfullscreenchange", restoreLedConsole);
 
 function receiveLedMessage(message) {
   if (message.type === "ready") {
