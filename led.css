@@ -126,3 +126,5 @@
 @keyframes ledStripe{to{background-position:40px 0}}
 @keyframes ledFlag{50%{background-position:100% 0}}
 @keyframes ledEq{50%{transform:scaleY(.45)}}
+
+#ledOutput{touch-action:pan-y;overscroll-behavior-x:none;-webkit-user-select:none;user-select:none}

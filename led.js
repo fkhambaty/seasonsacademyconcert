@@ -484,6 +484,46 @@ ledChannel?.addEventListener("message", event => receiveLedMessage(event.data));
 window.addEventListener("storage", event => {
   if (event.key === "seasons-led-message" && event.newValue) receiveLedMessage(JSON.parse(event.newValue));
 });
+
+let ledSwipeStart = null;
+function ledProjectionIsOpen() {
+  return document.body.classList.contains("led-output-only") ||
+    document.body.classList.contains("led-projecting");
+}
+function initLedSwipe() {
+  const output = document.getElementById("ledOutput");
+  if (!output) return;
+  output.addEventListener("touchstart", event => {
+    if (!ledProjectionIsOpen() || event.touches.length !== 1) return;
+    const touch = event.touches[0];
+    ledSwipeStart = { x: touch.clientX, y: touch.clientY, at: performance.now() };
+  }, { passive: true });
+  output.addEventListener("touchmove", event => {
+    if (!ledSwipeStart || event.touches.length !== 1) return;
+    const touch = event.touches[0];
+    const dx = touch.clientX - ledSwipeStart.x;
+    const dy = touch.clientY - ledSwipeStart.y;
+    if (Math.abs(dx) > 18 && Math.abs(dx) > Math.abs(dy) * 1.25) event.preventDefault();
+  }, { passive: false });
+  output.addEventListener("touchend", event => {
+    if (!ledSwipeStart || event.changedTouches.length !== 1) {
+      ledSwipeStart = null;
+      return;
+    }
+    const touch = event.changedTouches[0];
+    const dx = touch.clientX - ledSwipeStart.x;
+    const dy = touch.clientY - ledSwipeStart.y;
+    const elapsed = performance.now() - ledSwipeStart.at;
+    const threshold = Math.max(55, Math.min(innerWidth * .12, 110));
+    ledSwipeStart = null;
+    if (elapsed > 1200 || Math.abs(dx) < threshold || Math.abs(dx) < Math.abs(dy) * 1.25) return;
+    selectLedCue(ledCurrentIndex + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+  output.addEventListener("touchcancel", () => {
+    ledSwipeStart = null;
+  }, { passive: true });
+}
+
 document.addEventListener("keydown", event => {
   if (document.body.classList.contains("led-output-only")) {
     if (event.key.toLowerCase() === "p") document.getElementById("ledFullscreenBtn")?.click();
@@ -529,6 +569,7 @@ window.addEventListener("beforeunload", () => {
 });
 
 initLedConsoleEvents();
+initLedSwipe();
 initLedOutput();
 if (document.getElementById("ledView")?.classList.contains("active")) {
   prepareLedScreen();
