@@ -1,0 +1,10 @@
+---
+description: Commit and push website changes when the work is finished
+alwaysApply: true
+---
+
+# Push site changes
+
+When a task changes this website and the work is finished, commit the relevant files and push them to the tracked remote. Do not wait to be asked again.
+
+Leave out secrets. Do not update git config, skip hooks, force-push, or amend unless the user explicitly asks.

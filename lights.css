@@ -67,7 +67,7 @@
 .dev-brand.dim{fill:#7d7f88;font-size:10px;letter-spacing:.1em;font-weight:700}
 .dev-label{fill:#9c9ea8;font:700 10px "DM Sans",system-ui,sans-serif;letter-spacing:.16em}
 .dev-small{fill:#9c9ea8;font:700 11px "DM Sans",system-ui,sans-serif}
-.dev-val{fill:#f5c542;font:800 11px "DM Sans",system-ui,sans-serif}
+.dev-val,.dev-cap-num{fill:#1b1826;font:800 10px "DM Sans",system-ui,sans-serif}
 .dev-btn{cursor:pointer;outline:none}
 .dev-btn rect{fill:#2b2d34;stroke:#3d4049;stroke-width:1.5;transition:fill .15s}
 .dev-btn text{fill:#e6e4dd;font:800 11px "DM Sans",system-ui,sans-serif;pointer-events:none}
@@ -75,14 +75,12 @@
 .dev-btn.danger rect{fill:#5a1e24;stroke:#8a2a33}
 .dev-btn.live rect{fill:#1f7a4a;stroke:#46d68a}
 .dev-btn.danger.live rect{fill:#d9434d;stroke:#ff8a8a}
-.dev-btn.hl rect,.dev-fader.hl .cap{stroke:#f5c542;stroke-width:3.5;animation:lxPulse 1.1s ease-in-out infinite}
+.dev-btn.hl rect,.dev-fader.hl .cap{stroke:#f5c542;stroke-width:4}
 .dev-fader .track{fill:#0b0b0e;stroke:#30323a}
 .dev-fader .cap{fill:#d6d3ca;stroke:#7d7a72;stroke-width:1.5}
 .dev-lcd{fill:#0f2b1c;stroke:#2c5a40;stroke-width:2}
 .dev-lcd-text{fill:#7dffb3;font:800 19px ui-monospace,Menlo,monospace;letter-spacing:.06em}
 .dev-lcd-text.small{font-size:12px;fill:#5fd896}
-@keyframes lxPulse{0%,100%{stroke-opacity:1}50%{stroke-opacity:.25}}
-
 .lx-steps{display:grid;gap:14px}
 .lx-steps>section{padding:16px}
 .lx-steps h3,.lx-program summary{font:600 19px "Playfair Display",Georgia,serif;margin:0 0 10px;display:flex;align-items:center;gap:10px}
@@ -119,4 +117,20 @@
   .lx-bank{min-width:210px}
   .lx-why-grid{grid-template-columns:1fr}
   .lx-how{grid-template-columns:1fr}
+}
+
+.lx-led-mini{width:430px;height:196px;position:relative;overflow:hidden}
+.lx-led-mini .led-perform-art{position:absolute;inset:0}
+.lx-copy{margin-top:18px}
+.lx-copy h3{font:600 26px "Playfair Display",Georgia,serif;margin:0 0 12px;display:flex;align-items:center;gap:10px}
+.lx-move{display:grid;grid-template-columns:minmax(240px,340px) minmax(0,1fr);gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;margin-bottom:12px;box-shadow:0 14px 40px #1b18260a}
+.lx-move-copy{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.lx-move-copy i{font:600 15px/28px "Playfair Display",Georgia,serif;font-style:normal;width:28px;height:28px;border-radius:9px;background:var(--ink);color:#fff;text-align:center}
+.lx-move-copy b{display:block;font-size:16px;margin-bottom:4px}
+.lx-move-copy p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
+.lx-move-copy p b{display:inline;font-size:inherit;background:#b8892f1a;padding:0 4px;border-radius:4px}
+.lx-move-board .lx-device-svg{display:block;width:100%;height:auto}
+.dev-btn{cursor:default}
+@media (max-width:860px){
+  .lx-move{grid-template-columns:1fr}
 }

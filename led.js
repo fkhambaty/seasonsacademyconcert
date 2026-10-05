@@ -6,44 +6,63 @@ const LED_CUES = [
   {id:"boarding",group:"Opening",title:"The auditorium becomes a bus",trigger:"Upasana: “Aaj shaam yeh hall… ek bus hai”",scene:"road",overline:"Now boarding",headline:"Seasons Express",subline:"Pune → Goa · Live music all the way",distance:"470 km to Goa"},
   {id:"driver",group:"Opening",title:"Joseph starts the bus",trigger:"FK calls for the driver",scene:"road",overline:"Driver on board",headline:"Engine chalu!",subline:"Next stop · Katraj"},
   {id:"names-tauba",group:"Act 1",title:"Names · Tauba / Urvashi",trigger:"Click when Upasana begins reading names",scene:"names",act:"Tauba Tauba, Urvashi Urvashi Mashup"},
+  {id:"play-tauba",group:"Act 1",title:"Song · Tauba / Urvashi",trigger:"Click when the first musical note starts",scene:"perform",look:"dance",headline:"Tauba Tauba",subline:"Urvashi Urvashi"},
   {id:"sinhagad",group:"Act 2",title:"Sinhagad from the bus window",trigger:"Upasana: “Khidki se bahar dekhiye”",scene:"fort",overline:"Katraj · Sinhagad in view",headline:"Gad aala, pan Sinha gela",subline:"Kondhana became Sinhagad · The fort of the lion",distance:"440 km to Goa"},
   {id:"names-bharat",group:"Act 2",title:"Names · Bharat Humko",trigger:"Click when Upasana begins reading names",scene:"names",act:"Bharat Humko Jaan Se Pyara Hai"},
+  {id:"play-bharat",group:"Act 2",title:"Song · Bharat Humko",trigger:"Click when the first musical note starts",scene:"perform",look:"tricolor",headline:"Bharat Humko",subline:"Jaan Se Pyara Hai"},
   {id:"tunnel",group:"Act 3",title:"Khambatki tunnel",trigger:"Upasana: “Tunnel aa gaya”",scene:"tunnel",overline:"Khambatki Ghat",headline:"The tunnel",subline:"Through the Western Ghats",distance:"410 km to Goa"},
   {id:"rain",group:"Act 3",title:"Ghat rainstorm",trigger:"Upasana begins the audience rainstorm",scene:"rain",overline:"Outside the tunnel",headline:"Ghat ki baarish",subline:"Monsoon on the mountain",sound:"rain"},
   {id:"names-drum",group:"Act 3",title:"Names · Drum Circle",trigger:"Click when Upasana begins reading names",scene:"names",act:"Drum Circle"},
+  {id:"play-drum",group:"Act 3",title:"Song · Drum Circle",trigger:"Click when the first drum strike starts",scene:"perform",look:"drums",headline:"Drum Circle",subline:"Feel the circle"},
   {id:"satara",group:"Act 4",title:"Satara and Kaas plateau",trigger:"FK: “Satara aa gaya!”",scene:"flowers",overline:"Satara",headline:"Kaas Plateau",subline:"A carpet of wildflowers · UNESCO World Heritage",distance:"360 km to Goa"},
   {id:"names-oldwoman",group:"Act 4",title:"Names · Old Woman Shoe",trigger:"Click when Upasana begins reading names",scene:"names",act:"Old Woman Shoe"},
+  {id:"play-oldwoman",group:"Act 4",title:"Song · Old Woman Shoe",trigger:"Click when the first musical note starts",scene:"perform",look:"story",headline:"Old Woman Shoe",subline:"A sunny story"},
   {id:"truck",group:"Act 5",title:"Truck ahead",trigger:"FK: “Aage ek truck hai”",scene:"truck",overline:"NH48",headline:"",subline:""},
   {id:"mission",group:"Act 5",title:"Overtake mission",trigger:"The hall starts humming the theme",scene:"road",overline:"NH48",headline:"The open highway",subline:"Pune behind us",distance:"330 km to Goa"},
   {id:"names-mission",group:"Act 5",title:"Names · Mission Impossible",trigger:"Click when Upasana begins reading names",scene:"names",act:"Mission Impossible"},
+  {id:"play-mission",group:"Act 5",title:"Song · Mission Impossible",trigger:"Click when the theme begins",scene:"perform",look:"spy",headline:"Mission Impossible",subline:""},
   {id:"karad",group:"Act 6",title:"Karad champion story",trigger:"FK: “Bus guzar rahi hai Karad se”",scene:"champion",overline:"Karad · 1952",headline:"Khashaba Jadhav",subline:"Independent India’s first individual Olympic medallist",distance:"300 km to Goa"},
   {id:"names-champions",group:"Act 6",title:"Names · We Are the Champions",trigger:"Click when Upasana begins reading names",scene:"names",act:"We Are the Champions Mashup"},
+  {id:"play-champions",group:"Act 6",title:"Song · We Are the Champions",trigger:"Click when the first vocal note starts",scene:"perform",look:"stadium",headline:"We Are the Champions",subline:""},
   {id:"kolhapur",group:"Act 7",title:"Kolhapur at evening",trigger:"FK: “Kolhapur aa gaya!”",scene:"sunset",overline:"Kolhapur",headline:"Misal · Music · Chappals",subline:"The sun sets. Raag Yaman begins.",distance:"240 km to Goa"},
   {id:"names-yaman",group:"Act 7",title:"Names · Raag Yaman",trigger:"Click when Upasana begins reading names",scene:"names",act:"Raag Yaman"},
+  {id:"play-yaman",group:"Act 7",title:"Song · Raag Yaman",trigger:"Click when the first flute note starts",scene:"perform",look:"raga",headline:"Raag Yaman",subline:""},
   {id:"dhaba",group:"Act 8",title:"Dhaba chai break",trigger:"FK: “Dhaba stop!”",scene:"dhaba",overline:"Highway break",headline:"Dhaba",subline:"Chai and vada pav",distance:"220 km to Goa"},
   {id:"names-flute",group:"Act 8",title:"Names · The Flute Song",trigger:"Click when Upasana begins reading names",scene:"names",act:"The Flute Song"},
+  {id:"play-flute",group:"Act 8",title:"Song · The Flute Song",trigger:"Click when the first musical note starts",scene:"perform",look:"flute",headline:"The Flute Song",subline:""},
   {id:"night",group:"Act 9",title:"Night drive and antakshari",trigger:"Upasana: “Raat ki bus ho…”",scene:"stars",overline:"Night drive",headline:"Under the stars",subline:"The road goes quiet",distance:"180 km to Goa"},
   {id:"names-saiyaara",group:"Act 9",title:"Names · Saiyaara",trigger:"Click when Upasana begins reading names",scene:"names",act:"Saiyaara"},
+  {id:"play-saiyaara",group:"Act 9",title:"Song · Saiyaara",trigger:"Click when the first musical note starts",scene:"perform",look:"moon",headline:"Saiyaara",subline:""},
   {id:"midnight",group:"Act 11",title:"The bus sleeps",trigger:"FK puts a finger to his lips",scene:"stars",overline:"2:00 AM",headline:"Midnight",subline:"The bus is asleep",distance:"130 km to Goa"},
   {id:"names-gminute",group:"Act 11",title:"Names · G Minute",trigger:"Click when Upasana begins reading names",scene:"names",act:"G Minute"},
+  {id:"play-gminute",group:"Act 11",title:"Song · G Minute",trigger:"Click when the first violin note starts",scene:"perform",look:"strings",headline:"G Minute",subline:""},
   {id:"amboli",group:"Act 12",title:"Amboli dawn and fog",trigger:"FK: “Hum pahunche hain Amboli ghat”",scene:"rain",overline:"Amboli Ghat · Dawn",headline:"Clouds on the road",subline:"Fog over the ghats",distance:"90 km to Goa",sound:"rain"},
   {id:"names-ghar",group:"Act 12",title:"Names · Ghar More / Moh Moh",trigger:"Click when Upasana begins reading names",scene:"names",act:"Ghar More Pardesiya & Moh Moh Ke Dhaage"},
+  {id:"play-ghar",group:"Act 12",title:"Song · Ghar More / Moh Moh",trigger:"Click when the first vocal note starts",scene:"perform",look:"home",headline:"Ghar More Pardesiya",subline:"Moh Moh Ke Dhaage"},
   {id:"hairpins",group:"Act 13",title:"Amboli hairpin bends",trigger:"Upasana explains LEFT and RIGHT",scene:"road",overline:"Amboli Ghat",headline:"Hairpin bends",subline:"The road folds through the hills",distance:"70 km to Goa"},
   {id:"names-challa",group:"Act 13",title:"Names · Challa",trigger:"Click when Upasana begins reading names",scene:"names",act:"Challa — Jab Tak Hai Jaan"},
+  {id:"play-challa",group:"Act 13",title:"Song · Challa",trigger:"Click when the first guitar note starts",scene:"perform",look:"highway",headline:"Challa",subline:"Jab Tak Hai Jaan"},
   {id:"border",group:"Act 14",title:"Welcome to Goa",trigger:"FK answers “Zero!”",scene:"beach",overline:"State border",headline:"Welcome to Goa!",subline:"The hotel is still 40 km away"},
   {id:"names-chammak",group:"Act 14",title:"Names · Chammak Challo",trigger:"Click when Upasana begins reading names",scene:"names",act:"Chammak Challo Mashup"},
+  {id:"play-chammak",group:"Act 14",title:"Song · Chammak Challo",trigger:"Click when the first musical note starts",scene:"perform",look:"disco",headline:"Chammak Challo",subline:""},
   {id:"chapora",group:"Act 15",title:"Chapora fort",trigger:"Upasana: “Hotel se pehle ek stop”",scene:"fort",overline:"Chapora Fort",headline:"Dil Chahta Hai",subline:"One climb. One sunset. One iconic photograph.",distance:"25 km to Goa"},
   {id:"names-eye",group:"Act 15",title:"Names · Eye of the Tiger",trigger:"Click when Upasana begins reading names",scene:"names",act:"Eye of the Tiger, Gehra Hua Mashup"},
+  {id:"play-eye",group:"Act 15",title:"Song · Eye of the Tiger",trigger:"Click when the first guitar note starts",scene:"perform",look:"tiger",headline:"Eye of the Tiger",subline:""},
   {id:"liberation",group:"Act 16",title:"Goa Liberation story",trigger:"FK: “1947 mein Bharat azaad hua…”",scene:"tricolor",overline:"Goa Liberation Day",headline:"19 December 1961",subline:"Goa joined a free India"},
   {id:"names-dil",group:"Act 16",title:"Names · Dil Diya Hai",trigger:"Click when Upasana begins reading names",scene:"names",act:"Dil Diya Hai Jaan Bhi Denge — Karma"},
+  {id:"play-dil",group:"Act 16",title:"Song · Dil Diya Hai",trigger:"Click when the first vocal note starts",scene:"perform",look:"flag",headline:"Dil Diya Hai",subline:"Jaan Bhi Denge"},
   {id:"susegad",group:"Act 17",title:"Goa time · Susegad",trigger:"FK: “Goa mein time alag chalta hai”",scene:"beach",overline:"Goa time",headline:"Susegad",subline:"Slow down · Breathe · Enjoy the moment",distance:"5 km to Goa"},
   {id:"names-howlong",group:"Act 17",title:"Names · How Long",trigger:"Click when Upasana begins reading names",scene:"names",act:"How Long — Charlie Puth"},
+  {id:"play-howlong",group:"Act 17",title:"Song · How Long",trigger:"Click when the first drum count starts",scene:"perform",look:"neon",headline:"How Long",subline:""},
   {id:"sunset",group:"Act 18",title:"Beach sunset countdown",trigger:"Upasana starts the countdown",scene:"sunset",overline:"The beach",headline:"Sunset",subline:"The sun meets the sea"},
   {id:"names-final",group:"Act 18",title:"Names · Final Countdown",trigger:"Click when Upasana begins reading names",scene:"names",act:"Final Countdown"},
+  {id:"play-final",group:"Act 18",title:"Song · Final Countdown",trigger:"Click when the opening keyboard note starts",scene:"perform",look:"countdown",headline:"The Final Countdown",subline:""},
   {id:"shack",group:"Act 19",title:"Beach shack live band",trigger:"Upasana: “Raat ho gayi. Beach shack…”",scene:"beach",overline:"Beach shack",headline:"Live band night",subline:"Tonight’s performers · The teachers"},
   {id:"names-haseena",group:"Act 19",title:"Names · O Haseena",trigger:"Click when Upasana begins reading names",scene:"names",act:"O Haseena"},
+  {id:"play-haseena",group:"Act 19",title:"Song · O Haseena",trigger:"Click when the first guitar note starts",scene:"perform",look:"retro",headline:"O Haseena",subline:""},
   {id:"lastnight",group:"Act 20",title:"Goa’s last night",trigger:"Hosts say “Pahunch gaye!”",scene:"stars",overline:"Pune → Goa",headline:"We made it!",subline:"One bus · One stage · One musical family"},
   {id:"names-ajeeb",group:"Act 20",title:"Names · Ajeeb Daastaan",trigger:"Click when Upasana begins reading names",scene:"names",act:"Ajeeb Daastaan"},
+  {id:"play-ajeeb",group:"Act 20",title:"Song · Ajeeb Daastaan",trigger:"Click when the first musical note starts",scene:"perform",look:"finale",headline:"Ajeeb Daastaan",subline:""},
   {id:"destination",group:"Ceremony",title:"Journey complete",trigger:"As Ajeeb Daastaan applause ends",scene:"beach",overline:"Journey complete",headline:"470 kilometres of music",subline:"Thank you, performers · teachers · families · crew"},
   {id:"felicitation",group:"Ceremony",title:"Felicitation",trigger:"FK announces the Felicitation Ceremony",scene:"intro",overline:"Seasons Music Academy",headline:"Felicitation Ceremony",subline:"Celebrating courage, practice and progress"},
   {id:"thanks",group:"Ceremony",title:"Vote of Thanks",trigger:"Joseph walks to centre stage",scene:"intro",overline:"With gratitude",headline:"Vote of Thanks",subline:"Joseph Sunil"},
@@ -58,7 +77,14 @@ let ledAmbient = null;
 let ledWasFullscreen = false;
 const ledChannel = "BroadcastChannel" in window ? new BroadcastChannel(LED_CHANNEL_NAME) : null;
 
+function performArt() {
+  return `<div class="led-perform-art" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></div>`;
+}
+
 function ledSceneHtml(cue) {
+  if (cue.scene === "perform") {
+    return `<div class="led-scene led-perform look-${cue.look}">${performArt()}<div class="led-scene-copy"><div class="overline">Now playing</div><h1>${escapeHtml(cue.headline)}</h1>${cue.subline ? `<p>${escapeHtml(cue.subline)}</p>` : ""}</div></div>`;
+  }
   const imageForAct = cue.act && [
     "G Minute",
     "Ghar More Pardesiya & Moh Moh Ke Dhaage",
@@ -178,10 +204,20 @@ function stopLedProjection() {
   window.ledRenderConsole?.();
 }
 
+function ledAudienceLine(cue) {
+  if (cue.scene === "names") return `performer names for ${cue.act}`;
+  if (cue.scene === "perform") return `moving picture for ${cue.headline}`;
+  return cue.headline || cue.title;
+}
+
 function ledGroupHtml(group, cues) {
-  return `<section class="led-section"><h2>${escapeHtml(group)}</h2><p>Follow the buttons from left to right. The green line tells you the exact spoken trigger.</p><div class="led-cue-grid">${cues.map(cue => {
+  const hint = group.startsWith("Act ")
+    ? "Left to right. The pale cards are for while someone is talking. The dark Song card is the moving picture. Press it when the music starts."
+    : "Follow the buttons from left to right. The green line tells you the exact spoken trigger.";
+  return `<section class="led-section"><h2>${escapeHtml(group)}</h2><p>${hint}</p><div class="led-cue-grid">${cues.map(cue => {
     const index = LED_CUES.indexOf(cue);
-    return `<button type="button" class="led-cue${index === ledCurrentIndex ? " on" : ""}" data-led-index="${index}"><b>${index + 1}</b><strong>${escapeHtml(cue.title)}</strong><span>Audience sees: ${escapeHtml(cue.scene === "names" ? `performer names for ${cue.act}` : cue.headline || cue.title)}</span><em>Click when: ${escapeHtml(cue.trigger)}</em></button>`;
+    const preview = cue.scene === "perform" ? `<span class="led-mini-look look-${cue.look}" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></span>` : "";
+    return `<button type="button" class="led-cue${cue.scene === "perform" ? " is-song" : ""}${index === ledCurrentIndex ? " on" : ""}" data-led-index="${index}"><b>${index + 1}</b><strong>${escapeHtml(cue.title)}</strong><span>Audience sees: ${escapeHtml(ledAudienceLine(cue))}</span><em>Click when: ${escapeHtml(cue.trigger)}</em>${preview}</button>`;
   }).join("")}</div></section>`;
 }
 
@@ -194,8 +230,8 @@ window.ledRenderConsole = function renderLedConsole() {
     (all[cue.group] ||= []).push(cue);
     return all;
   }, {});
-  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>Select the cue, then press <b>P</b> once. That picture goes straight onto the LED. Arrows change it from here.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
-    <div class="led-how"><article><b>1</b><strong>Open this tab on the LED</strong><span>Or allow Chrome’s screen permission so P can use the second display.</span></article><article><b>2</b><strong>Select the cue</strong><span>Click the act that is happening now. Its card gets a gold border.</span></article><article><b>3</b><strong>Press P once</strong><span>That picture fills the screen immediately. No second window or click.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. The cue list comes back.</span></article></div>
+  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>While someone is talking, keep the journey picture. When the band starts, press the dark <b>Song</b> button. That moving picture matches the music. Then press <b>P</b> once.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
+    <div class="led-how"><article><b>1</b><strong>Open this tab on the LED</strong><span>Or allow Chrome’s screen permission so P can use the second display.</span></article><article><b>2</b><strong>Select the cue</strong><span>Pale cards are for talking. The dark Song card is the moving picture for the music.</span></article><article><b>3</b><strong>Press P once</strong><span>That picture fills the screen immediately. No second window or click.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. The cue list comes back.</span></article></div>
     <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong></div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
     <div class="led-controls"><button type="button" id="ledPrevBtn">← Previous</button><button type="button" class="next" id="ledNextBtn">Next cue →</button><button type="button" id="ledReplayBtn"><kbd>R</kbd> Replay</button><button type="button" id="ledHoldBtn"><kbd>H</kbd> Safe holding image</button></div>
     ${Object.entries(groups).map(([group,cues]) => ledGroupHtml(group,cues)).join("")}`;
