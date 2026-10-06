@@ -192,7 +192,7 @@ function parLight(ch) {
   return { color: `rgb(${rr | 0},${gg | 0},${bb | 0})`, level };
 }
 
-function peopleCount(bank) {
+function crowdSize(bank) {
   const cast = typeof CAST !== "undefined" ? CAST[bank.label] : null;
   return Math.max(3, Math.min(17, cast?.people?.length || 6));
 }
@@ -281,7 +281,7 @@ function stageSimSvg(bank, scene, blackout) {
       ${hitsFloor ? goboMark(tx, ty, color, c.gobo, (level * .9).toFixed(2)) : ""}`;
   }).join("");
 
-  const n = peopleCount(bank);
+  const n = crowdSize(bank);
   const rimColor = back[0].level >= back[1].level ? back[0].color : back[1].color;
   const bodyFill = mixHex("#17151d", faceColor, faceLevel * .38 + centre.level * .18 + sideLevel * .08);
   const rim = backLevel > .05 ? rimColor : "#2a2733";
