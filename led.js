@@ -22,14 +22,23 @@ const LED_ACTS = [
   ["haseena","O Haseena","retro",120,"O Haseena","","first guitar note",19],
   ["ajeeb","Ajeeb Daastaan","finale",84,"Ajeeb Daastaan","","first musical note",20]
 ];
+// Background loop (in loops/) that plays behind each song until the operator moves on.
+const LED_LOOPS = {
+  tauba:"disco-ball", bharat:"rainbow-galaxy", drum:"red-lights-tunnel", oldwoman:"rainbow-galaxy",
+  mission:"purple-warp", champions:"red-lights-tunnel", yaman:"rainbow-galaxy", flute:"rainbow-galaxy",
+  saiyaara:"neon-pentagon", gminute:"rainbow-galaxy", ghar:"rainbow-galaxy", challa:"purple-warp",
+  chammak:"disco-ball", eye:"red-lines", dil:"red-lights-tunnel", howlong:"neon-pentagon",
+  final:"purple-warp", haseena:"disco-ball", ajeeb:"neon-pentagon"
+};
+const ledLoopSrc = id => `loops/${LED_LOOPS[id] || "purple-warp"}.mp4`;
 const LED_CUES = [
   {id:"intro",group:"Before doors open",title:"Cinematic Seasons opening",trigger:"Play 2–3 minutes before the hosts enter",scene:"intro",overline:"Seasons Music Academy presents",headline:"The Showcase",subline:"Pune to Goa · One unforgettable musical journey",sound:"fanfare"},
   {id:"holding",group:"Before doors open",title:"Welcome holding screen",trigger:"After the opening; keep until house lights dim",scene:"stars",overline:"Welcome aboard",headline:"Seasons Express",subline:"The musical journey begins shortly"},
   ...LED_ACTS.flatMap(([id, act, look, bpm, headline, subline, firstNote, number]) => {
     const group = `Act ${number} · ${headline}`;
     return [
-      {id:`names-${id}`,group,title:`Names · ${headline}`,trigger:"Upasana begins reading names",scene:"names",act},
-      {id:`play-${id}`,group,title:`Song · ${headline}`,trigger:`The ${firstNote} starts`,scene:"perform",act,look,bpm,headline,subline}
+      {id:`names-${id}`,group,title:`Names · ${headline}`,trigger:"Upasana begins reading names",scene:"names",act,loop:ledLoopSrc(id)},
+      {id:`play-${id}`,group,title:`Song · ${headline}`,trigger:`The ${firstNote} starts`,scene:"perform",act,look,bpm,headline,subline,loop:ledLoopSrc(id)}
     ];
   })
 ];
@@ -74,9 +83,7 @@ function playbillNames(people, columns, size) {
 }
 
 function performHtml(cue) {
-  const cast = CAST[cue.act];
-  const {columns, size} = nameLayout(cast.people.length);
-  return `<div class="led-scene led-perform look-${cue.look}" style="--beat:${Math.round(60000 / cue.bpm)}ms">${stageWorldHtml({film:`beatbox/${cue.id.replace("play-", "")}.mp4`})}${playbillHead()}<div class="playbill-title"><small>Now playing</small><h1>${escapeHtml(cue.headline)}</h1>${cue.subline ? `<p>${escapeHtml(cue.subline)}</p>` : ""}</div>${playbillNames(cast.people, columns, size)}</div>`;
+  return `<div class="led-scene led-perform led-loop-scene"><video class="led-loop" src="${cue.loop}" autoplay muted loop playsinline preload="auto"></video><div class="led-loop-shade"></div><header class="loop-brand"><img src="logo-mark.png" alt=""><span>Seasons Music Academy</span></header><div class="loop-title"><small>Now playing</small><strong>${escapeHtml(cue.headline)}</strong>${cue.subline ? `<span>${escapeHtml(cue.subline)}</span>` : ""}</div></div>`;
 }
 
 function ledSceneHtml(cue) {
@@ -85,7 +92,7 @@ function ledSceneHtml(cue) {
     const cast = CAST[cue.act];
     const meta = actLook(cue.act);
     const {columns, size} = nameLayout(cast.people.length);
-    return `<div class="led-scene led-names-scene look-${meta.look}" style="--beat:${Math.round(60000 / meta.bpm)}ms">${stageWorldHtml()}${playbillHead()}<div class="playbill-title"><small>Now boarding · ${cast.people.length} performers</small><h1>${escapeHtml(meta.headline)}</h1>${meta.subline ? `<p>${escapeHtml(meta.subline)}</p>` : ""}</div>${playbillNames(cast.people, columns, size)}</div>`;
+    return `<div class="led-scene led-names-scene look-${meta.look}" style="--beat:${Math.round(60000 / meta.bpm)}ms">${stageWorldHtml()}${playbillHead()}<div class="playbill-title"><small>Now boarding · ${cast.people.length} performers</small><h1>${escapeHtml(meta.headline)}</h1>${meta.subline ? `<p>${escapeHtml(meta.subline)}</p>` : ""}</div>${playbillNames(cast.people, columns, size)}<video class="led-loop-preload" src="${cue.loop}" muted preload="auto" aria-hidden="true"></video></div>`;
   }
   if (cue.scene === "intro") {
     return `<div class="led-scene led-logo-scene"><div class="led-scene-copy"><img class="led-mark" src="logo-mark.png" alt=""><div class="overline">${escapeHtml(cue.overline)}</div><h1>${escapeHtml(cue.headline)}</h1><p>${escapeHtml(cue.subline)}</p></div></div>`;
@@ -97,28 +104,7 @@ function renderLedOutput(cue) {
   const screen = document.getElementById("ledScreen");
   if (!screen) return;
   screen.innerHTML = ledSceneHtml(cue);
-  applyLedTempo();
   setLedSound(cue);
-}
-
-let ledTempo = null;
-let ledTaps = [];
-function applyLedTempo() {
-  const scene = document.querySelector("#ledScreen .led-perform");
-  if (scene && ledTempo?.id === LED_CUES[ledCurrentIndex].id) scene.style.setProperty("--beat", `${ledTempo.ms}ms`);
-}
-function tapLedTempo() {
-  const cue = LED_CUES[ledCurrentIndex];
-  if (cue.scene !== "perform") return;
-  const now = performance.now();
-  if (ledTaps.length && now - ledTaps[ledTaps.length - 1] > 2000) ledTaps = [];
-  ledTaps = [...ledTaps, now].slice(-6);
-  if (ledTaps.length < 3) return;
-  const ms = Math.round((ledTaps[ledTaps.length - 1] - ledTaps[0]) / (ledTaps.length - 1));
-  ledTempo = {id:cue.id, ms};
-  ledSend({type:"tempo", ...ledTempo});
-  applyLedTempo();
-  window.ledRenderConsole?.();
 }
 
 function ledSend(message) {
@@ -185,7 +171,7 @@ function stopLedProjection() {
 
 function ledAudienceLine(cue) {
   if (cue.scene === "names") return `performer names for ${cue.act}`;
-  if (cue.scene === "perform") return `theatre lights in this song’s colours, with every name for ${cue.headline}`;
+  if (cue.scene === "perform") return `looping music video with the Seasons logo, for ${cue.headline}`;
   return cue.headline || cue.title;
 }
 
@@ -209,10 +195,10 @@ window.ledRenderConsole = function renderLedConsole() {
     (all[cue.group] ||= []).push(cue);
     return all;
   }, {});
-  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>Each song has just two buttons. While Upasana reads the names, show the <b>Names</b> card. When the band starts, press the dark <b>Song</b> card. The wall becomes a stage: velvet curtains, followspots in that song’s colours, and footlights that flare on the beat. Press <b>P</b> once to project. Tap <b>T</b> with the drummer and the lights follow the live band.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
+  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>Each song has just two buttons. While Upasana reads the names, show the <b>Names</b> card. When the band starts, press the dark <b>Song</b> card. The wall fills with a looping music video, with the Seasons Music Academy logo at the top. It keeps looping until you press Next. Press <b>P</b> once to project. Videos stream from the website, so keep the laptop online.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
     <div class="led-how"><article><b>1</b><strong>Open this tab on the LED</strong><span>Or allow Chrome’s screen permission so P can use the second display.</span></article><article><b>2</b><strong>Select the cue</strong><span>Pale card for the names. Dark card for the song. Nothing else to press during host talk.</span></article><article><b>3</b><strong>Press P once</strong><span>That picture fills the screen immediately. No second window or click.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. The cue list comes back.</span></article></div>
-    <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong>${current.scene === "perform" ? `<small>Beat · ${ledTempo?.id === current.id ? `${Math.round(60000 / ledTempo.ms)} BPM, tapped live` : `${current.bpm} BPM, the song’s usual speed`}</small>` : ""}</div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
-    <div class="led-controls"><button type="button" id="ledPrevBtn">← Previous</button><button type="button" class="next" id="ledNextBtn">Next cue →</button><button type="button" id="ledReplayBtn"><kbd>R</kbd> Replay</button><button type="button" id="ledHoldBtn"><kbd>H</kbd> Safe holding image</button><button type="button" id="ledTapBtn"${current.scene === "perform" ? "" : " disabled"}><kbd>T</kbd> Tap the beat</button></div>
+    <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong>${current.loop ? `<small>Song video · ${escapeHtml(current.loop.replace("loops/", ""))}</small>` : ""}</div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
+    <div class="led-controls"><button type="button" id="ledPrevBtn">← Previous</button><button type="button" class="next" id="ledNextBtn">Next cue →</button><button type="button" id="ledReplayBtn"><kbd>R</kbd> Replay</button><button type="button" id="ledHoldBtn"><kbd>H</kbd> Safe holding image</button></div>
     ${Object.entries(groups).map(([group,cues]) => ledGroupHtml(group,cues)).join("")}`;
 };
 
@@ -230,7 +216,6 @@ function initLedConsoleEvents() {
     if (event.target.closest("#ledNextBtn")) selectLedCue(ledCurrentIndex + 1);
     if (event.target.closest("#ledReplayBtn")) selectLedCue(ledCurrentIndex);
     if (event.target.closest("#ledHoldBtn")) holdLed();
-    if (event.target.closest("#ledTapBtn")) tapLedTempo();
   });
 }
 
@@ -420,10 +405,6 @@ function receiveLedMessage(message) {
       renderLedOutput(cue);
     }
   }
-  if (message.type === "tempo") {
-    ledTempo = {id:message.id, ms:message.ms};
-    applyLedTempo();
-  }
   if (message.type === "holding" && document.body.classList.contains("led-output-only")) {
     stopLedSound();
     renderLedOutput(LED_CUES.find(cue => cue.id === "holding"));
@@ -496,7 +477,6 @@ document.addEventListener("keydown", event => {
       selectLedCue(ledCurrentIndex - 1);
     }
     if (event.key.toLowerCase() === "r") selectLedCue(ledCurrentIndex);
-    if (event.key.toLowerCase() === "t") tapLedTempo();
     if (event.key.toLowerCase() === "h") {
       holdLed();
       renderLedOutput(LED_CUES.find(cue => cue.id === "holding"));
@@ -521,7 +501,6 @@ document.addEventListener("keydown", event => {
     projectSelectedCue();
   }
   if (event.key.toLowerCase() === "r") selectLedCue(ledCurrentIndex);
-  if (event.key.toLowerCase() === "t") tapLedTempo();
   if (event.key.toLowerCase() === "h") holdLed();
   if (event.key === "Escape") stopLedProjection();
 });
