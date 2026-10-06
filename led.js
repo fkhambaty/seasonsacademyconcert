@@ -41,58 +41,51 @@ let ledAudioContext = null;
 let ledWasFullscreen = false;
 const ledChannel = "BroadcastChannel" in window ? new BroadcastChannel(LED_CHANNEL_NAME) : null;
 
-function performArt() {
-  return `<div class="led-perform-art" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></div>`;
+function actLook(act) {
+  const row = LED_ACTS.find(item => item[1] === act);
+  if (!row) return {look:"finale", headline:act, subline:"", bpm:84};
+  return {look:row[2], headline:row[4], subline:row[5], bpm:row[3]};
 }
 
-function beatboxerHtml() {
-  return `<div class="bb-stage" aria-hidden="true"><span class="bb-flash"></span><svg class="bb-figure" viewBox="0 0 300 400">
-    <path class="bb-body" d="M30 400 C34 318 82 286 150 286 C218 286 266 318 270 400 Z"/>
-    <path class="bb-phones" d="M104 286 C104 250 196 250 196 286" fill="none"/>
-    <rect class="bb-body" x="132" y="236" width="36" height="56" rx="14"/>
-    <g class="bb-head"><circle class="bb-body" cx="150" cy="188" r="58"/><path class="bb-cap" d="M90 178 C92 120 208 120 210 178 Z"/><path class="bb-cap" d="M84 176 L216 176 L224 186 L76 186 Z"/></g>
-    <g class="bb-arm"><path class="bb-limb" d="M246 318 C268 270 232 240 186 232" fill="none"/><circle class="bb-body" cx="182" cy="230" r="17"/><rect class="bb-mic" x="150" y="206" width="20" height="48" rx="8" transform="rotate(-62 160 230)"/><circle class="bb-mesh" cx="148" cy="222" r="15"/></g>
-  </svg><span class="bb-ring"></span><span class="bb-ring"></span><span class="bb-ring"></span></div>`;
+function nameLayout(count) {
+  if (count <= 4) return {columns:2, size:4.5};
+  if (count <= 6) return {columns:3, size:3.7};
+  if (count <= 9) return {columns:3, size:3.05};
+  if (count <= 12) return {columns:4, size:2.45};
+  return {columns:4, size:2.05};
+}
+
+function stageWorldHtml({film = "", photo = ""} = {}) {
+  const motes = Array.from({length:18}, (_, index) => {
+    const left = (index * 37 + 8) % 90;
+    return `<span style="left:${left}%;animation-duration:${8 + (index % 7)}s;animation-delay:-${(index * 0.6) % 8}s;width:${2 + (index % 3)}px;height:${2 + (index % 3)}px"></span>`;
+  }).join("");
+  const filmTag = film ? `<video class="stage-film" src="${film}" autoplay muted loop playsinline onerror="this.remove()"></video>` : "";
+  const photoTag = photo ? `<div class="stage-photo" style="background-image:url('${photo}')"></div>` : "";
+  return `<div class="stage-world" aria-hidden="true">${filmTag}${photoTag}<div class="spot spot-a"><span></span></div><div class="spot spot-b"><span></span></div><div class="spot spot-c"><span></span></div><div class="stage-haze"></div><div class="stage-bloom"></div><div class="motes">${motes}</div><div class="curtain curtain-l"></div><div class="curtain curtain-r"></div><div class="footlights"></div></div>`;
+}
+
+function playbillHead() {
+  return `<header class="playbill"><img src="logo-mark.png" alt=""><span>Seasons Music Academy</span></header>`;
+}
+
+function playbillNames(people, columns, size) {
+  return `<div class="playbill-names" style="--cols:${columns};--name-size:${size}vw">${people.map(([name, instrument]) => `<div class="playbill-name"><strong>${escapeHtml(name)}</strong><em>${escapeHtml(instrument)}</em></div>`).join("")}</div>`;
 }
 
 function performHtml(cue) {
   const cast = CAST[cue.act];
-  const count = cast.people.length;
-  const columns = count <= 4 ? 2 : count <= 9 ? 3 : 4;
-  const size = count <= 4 ? 4.4 : count <= 6 ? 3.8 : count <= 9 ? 3.2 : count <= 12 ? 2.8 : 2.35;
-  const bars = Array.from({length:24}, (_, index) => `<span style="--k:${index}"></span>`).join("");
-  return `<div class="led-scene led-perform look-${cue.look}" style="--beat:${Math.round(60000 / cue.bpm)}ms">
-    ${performArt()}
-    <video class="bb-video" src="beatbox/${cue.id.replace("play-", "")}.mp4" autoplay muted loop playsinline onerror="this.remove()"></video>
-    ${beatboxerHtml()}
-    <div class="bb-eq" aria-hidden="true">${bars}</div>
-    <header class="perf-brand"><img src="logo-mark.png" alt=""><span>Seasons Music Academy</span></header>
-    <div class="perf-copy">
-      <div class="perf-title"><small>Now playing</small><h1>${escapeHtml(cue.headline)}${cue.subline ? ` <em>· ${escapeHtml(cue.subline)}</em>` : ""}</h1></div>
-      <div class="perf-names" style="--cols:${columns};--name-size:${size}vw">${cast.people.map(([name, instrument]) => `<div class="perf-name"><strong>${escapeHtml(name)}</strong><span>${escapeHtml(instrument)}</span></div>`).join("")}</div>
-    </div>
-  </div>`;
+  const {columns, size} = nameLayout(cast.people.length);
+  return `<div class="led-scene led-perform look-${cue.look}" style="--beat:${Math.round(60000 / cue.bpm)}ms">${stageWorldHtml({film:`beatbox/${cue.id.replace("play-", "")}.mp4`})}${playbillHead()}<div class="playbill-title"><small>Now playing</small><h1>${escapeHtml(cue.headline)}</h1>${cue.subline ? `<p>${escapeHtml(cue.subline)}</p>` : ""}</div>${playbillNames(cast.people, columns, size)}</div>`;
 }
 
 function ledSceneHtml(cue) {
   if (cue.scene === "perform") return performHtml(cue);
-  const imageForAct = cue.act && [
-    "G Minute",
-    "Ghar More Pardesiya & Moh Moh Ke Dhaage",
-    "Challa — Jab Tak Hai Jaan"
-  ].includes(cue.act) ? "led-monsoon-ghat.jpg" : cue.act && [
-    "Chammak Challo Mashup",
-    "Eye of the Tiger, Gehra Hua Mashup",
-    "Dil Diya Hai Jaan Bhi Denge — Karma",
-    "How Long — Charlie Puth",
-    "Final Countdown",
-    "O Haseena",
-    "Ajeeb Daastaan"
-  ].includes(cue.act) ? "led-goa-coast.jpg" : "led-bus-journey.jpg";
   if (cue.scene === "names") {
     const cast = CAST[cue.act];
-    const columns = cast.people.length > 12 ? 4 : cast.people.length > 7 ? 3 : 2;
-    return `<div class="led-scene led-names-scene"><div class="led-scene-art" style="background-image:url('${imageForAct}')"></div><div class="led-names-head"><div class="overline">Now boarding · ${cast.people.length} performers</div><h1>${escapeHtml(cue.act)}</h1></div><div class="led-name-grid" style="--name-cols:${columns}">${cast.people.map(([name, instrument], index) => `<div class="led-name"><b>${index + 1}</b><div><strong>${escapeHtml(name)}</strong><span>${escapeHtml(instrument)}</span></div></div>`).join("")}</div></div>`;
+    const meta = actLook(cue.act);
+    const {columns, size} = nameLayout(cast.people.length);
+    return `<div class="led-scene led-names-scene look-${meta.look}" style="--beat:${Math.round(60000 / meta.bpm)}ms">${stageWorldHtml()}${playbillHead()}<div class="playbill-title"><small>Now boarding · ${cast.people.length} performers</small><h1>${escapeHtml(meta.headline)}</h1>${meta.subline ? `<p>${escapeHtml(meta.subline)}</p>` : ""}</div>${playbillNames(cast.people, columns, size)}</div>`;
   }
   if (cue.scene === "intro") {
     return `<div class="led-scene led-logo-scene"><div class="led-scene-copy"><img class="led-mark" src="logo-mark.png" alt=""><div class="overline">${escapeHtml(cue.overline)}</div><h1>${escapeHtml(cue.headline)}</h1><p>${escapeHtml(cue.subline)}</p></div></div>`;
@@ -192,7 +185,7 @@ function stopLedProjection() {
 
 function ledAudienceLine(cue) {
   if (cue.scene === "names") return `performer names for ${cue.act}`;
-  if (cue.scene === "perform") return `beatboxer dancing at ${cue.bpm} BPM, with every name for ${cue.headline}`;
+  if (cue.scene === "perform") return `theatre lights in this song’s colours, with every name for ${cue.headline}`;
   return cue.headline || cue.title;
 }
 
@@ -216,7 +209,7 @@ window.ledRenderConsole = function renderLedConsole() {
     (all[cue.group] ||= []).push(cue);
     return all;
   }, {});
-  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>Each song has just two buttons. While Upasana reads the names, show the <b>Names</b> card. When the band starts, press the dark <b>Song</b> card. A beatboxer dances to that song’s beat behind the names. Press <b>P</b> once to project. Tap <b>T</b> with the drummer and the beatboxer follows the live band.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
+  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>Each song has just two buttons. While Upasana reads the names, show the <b>Names</b> card. When the band starts, press the dark <b>Song</b> card. The wall becomes a stage: velvet curtains, followspots in that song’s colours, and footlights that flare on the beat. Press <b>P</b> once to project. Tap <b>T</b> with the drummer and the lights follow the live band.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
     <div class="led-how"><article><b>1</b><strong>Open this tab on the LED</strong><span>Or allow Chrome’s screen permission so P can use the second display.</span></article><article><b>2</b><strong>Select the cue</strong><span>Pale card for the names. Dark card for the song. Nothing else to press during host talk.</span></article><article><b>3</b><strong>Press P once</strong><span>That picture fills the screen immediately. No second window or click.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. The cue list comes back.</span></article></div>
     <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong>${current.scene === "perform" ? `<small>Beat · ${ledTempo?.id === current.id ? `${Math.round(60000 / ledTempo.ms)} BPM, tapped live` : `${current.bpm} BPM, the song’s usual speed`}</small>` : ""}</div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
     <div class="led-controls"><button type="button" id="ledPrevBtn">← Previous</button><button type="button" class="next" id="ledNextBtn">Next cue →</button><button type="button" id="ledReplayBtn"><kbd>R</kbd> Replay</button><button type="button" id="ledHoldBtn"><kbd>H</kbd> Safe holding image</button><button type="button" id="ledTapBtn"${current.scene === "perform" ? "" : " disabled"}><kbd>T</kbd> Tap the beat</button></div>
