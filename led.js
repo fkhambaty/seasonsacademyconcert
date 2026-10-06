@@ -28,11 +28,11 @@ const LED_LOOPS = {
   mission:"purple-warp", champions:"champions-fireworks", yaman:"yaman-gold", flute:"flute-creek",
   saiyaara:"saiyaara-moon", gminute:"gminute-aurora", ghar:"ghar-sunset", challa:"challa-highway",
   chammak:"chammak-sparkle", eye:"eye-sparks", dil:"dil-sunset", howlong:"howlong-city",
-  final:"final-nebula", haseena:"haseena-gold", ajeeb:"ajeeb-stars"
+  final:"final-sky", haseena:"haseena-gold", ajeeb:"ajeeb-stars"
 };
 const ledLoopSrc = id => `loops/${LED_LOOPS[id] || "purple-warp"}.mp4`;
 const LED_CUES = [
-  {id:"intro",group:"Before doors open",title:"Cinematic Seasons opening",trigger:"Play 2–3 minutes before the hosts enter",scene:"intro",overline:"Seasons Music Academy presents",headline:"The Showcase",subline:"Pune to Goa · One unforgettable musical journey",sound:"fanfare"},
+  {id:"intro",group:"Before doors open",title:"Cinematic Seasons opening",trigger:"Play 2–3 minutes before the hosts enter. Turn the volume up",scene:"intro",overline:"Seasons Music Academy presents",headline:"The Showcase",subline:"Pune to Goa · One unforgettable musical journey",loop:"loops/opening.mp4",music:"loops/opening.mp3"},
   {id:"holding",group:"Before doors open",title:"Welcome holding screen",trigger:"After the opening; keep until house lights dim",scene:"stars",overline:"Welcome aboard",headline:"Seasons Express",subline:"The musical journey begins shortly"},
   ...LED_ACTS.flatMap(([id, act, look, bpm, headline, subline, firstNote, number]) => {
     const group = `Act ${number} · ${headline}`;
@@ -41,6 +41,8 @@ const LED_CUES = [
       {id:`play-${id}`,group,title:`Song · ${headline}`,trigger:`The ${firstNote} starts`,scene:"perform",act,look,bpm,headline,subline,loop:ledLoopSrc(id)}
     ];
   }),
+  {id:"felicitation",group:"Finale",title:"Felicitation",trigger:"The hosts start calling the guests up",scene:"perform",headline:"Felicitation",subline:"With gratitude",loop:"loops/felicitation-stars.mp4"},
+  {id:"thanks",group:"Finale",title:"Vote of Thanks",trigger:"Joseph steps up to the microphone",scene:"perform",headline:"Vote of Thanks",subline:"Joseph",loop:"loops/thanks-sunset.mp4"},
   {id:"anthem",group:"Finale",title:"National Anthem",trigger:"The hosts say: please rise for the National Anthem",scene:"anthem",loop:"loops/indian-flag.mp4"}
 ];
 
@@ -76,7 +78,7 @@ function stageWorldHtml({film = "", photo = ""} = {}) {
 }
 
 function playbillHead() {
-  return `<header class="playbill"><img src="logo-mark.png" alt=""><span>Seasons Music Academy</span></header>`;
+  return `<header class="playbill"><img src="logo-mark.svg" alt=""><span>Seasons Music Academy</span></header>`;
 }
 
 function playbillNames(people, columns, size) {
@@ -84,20 +86,21 @@ function playbillNames(people, columns, size) {
 }
 
 function performHtml(cue) {
-  return `<div class="led-scene led-perform led-loop-scene"><video class="led-loop" src="${cue.loop}" autoplay muted loop playsinline preload="auto"></video><div class="led-loop-shade"></div><header class="loop-brand"><img src="logo-mark.png" alt=""><span>Seasons Music Academy</span></header><div class="loop-title"><small>Now playing</small><strong>${escapeHtml(cue.headline)}</strong>${cue.subline ? `<span>${escapeHtml(cue.subline)}</span>` : ""}</div></div>`;
+  return `<div class="led-scene led-perform led-loop-scene"><video class="led-loop" src="${cue.loop}" autoplay muted loop playsinline preload="auto"></video><div class="led-loop-shade"></div><header class="loop-brand"><img src="logo-mark.svg" alt=""><span>Seasons Music Academy</span></header><div class="loop-title"><small>Now playing</small><strong>${escapeHtml(cue.headline)}</strong>${cue.subline ? `<span>${escapeHtml(cue.subline)}</span>` : ""}</div></div>`;
 }
 
+function introHtml(cue) {
+  return `<div class="led-scene led-logo-scene led-opening"><video class="led-loop" src="${cue.loop}" autoplay muted loop playsinline preload="auto"></video><div class="led-loop-shade opening-shade"></div><div class="led-scene-copy"><img class="led-mark" src="logo-mark.svg" alt=""><div class="overline">${escapeHtml(cue.overline)}</div><h1>${escapeHtml(cue.headline)}</h1><p>${escapeHtml(cue.subline)}</p></div></div>`;
+}
 function ledSceneHtml(cue) {
   if (cue.scene === "anthem") return `<div class="led-scene led-perform led-loop-scene led-anthem"><video class="led-loop" src="${cue.loop}" autoplay muted loop playsinline preload="auto"></video></div>`;
+  if (cue.scene === "intro") return introHtml(cue);
   if (cue.scene === "perform") return performHtml(cue);
   if (cue.scene === "names") {
     const cast = CAST[cue.act];
     const meta = actLook(cue.act);
     const {columns, size} = nameLayout(cast.people.length);
     return `<div class="led-scene led-names-scene look-${meta.look}" style="--beat:${Math.round(60000 / meta.bpm)}ms">${stageWorldHtml()}${playbillHead()}<div class="playbill-title"><small>Now boarding · ${cast.people.length} performers</small><h1>${escapeHtml(meta.headline)}</h1>${meta.subline ? `<p>${escapeHtml(meta.subline)}</p>` : ""}</div>${playbillNames(cast.people, columns, size)}<video class="led-loop-preload" src="${cue.loop}" muted preload="auto" aria-hidden="true"></video></div>`;
-  }
-  if (cue.scene === "intro") {
-    return `<div class="led-scene led-logo-scene"><div class="led-scene-copy"><img class="led-mark" src="logo-mark.png" alt=""><div class="overline">${escapeHtml(cue.overline)}</div><h1>${escapeHtml(cue.headline)}</h1><p>${escapeHtml(cue.subline)}</p></div></div>`;
   }
   return `<div class="led-scene led-stars-scene"><div class="led-scene-art" style="background-image:url('led-goa-coast.jpg')"></div><div class="led-stars"></div><div class="led-scene-copy"><div class="overline">${escapeHtml(cue.overline)}</div><h1>${escapeHtml(cue.headline)}</h1><p>${escapeHtml(cue.subline)}</p></div></div>`;
 }
@@ -182,8 +185,8 @@ function ledGroupHtml(group, cues) {
   const hint = group.startsWith("Act ")
     ? "Two buttons only. Pale card first, while Upasana reads the names. Dark Song card when the band plays the first note."
     : group === "Finale"
-      ? "Press this when everyone is asked to stand. The screen shows only the Indian flag. Leave it up until the anthem is over."
-      : "Play the opening first. Keep the holding screen up until the hosts walk on.";
+      ? "Three buttons, in this order. Felicitation while the guests are called up. Vote of Thanks when Joseph speaks. National Anthem when everyone stands — that one is only the flag."
+      : "Play the opening first and turn the volume up. That picture has music. Then keep the holding screen until the hosts walk on.";
   return `<section class="led-section"><h2>${escapeHtml(group)}</h2><p>${hint}</p><div class="led-cue-grid">${cues.map(cue => {
     const index = LED_CUES.indexOf(cue);
     const preview = cue.scene === "perform" ? `<span class="led-mini-look look-${cue.look}" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></span>` : "";
@@ -200,7 +203,7 @@ window.ledRenderConsole = function renderLedConsole() {
     (all[cue.group] ||= []).push(cue);
     return all;
   }, {});
-  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>Each song has just two buttons. While Upasana reads the names, show the <b>Names</b> card. When the band starts, press the dark <b>Song</b> card. The wall fills with a looping music video, with the Seasons Music Academy logo at the top. Each song has its own video, and it keeps looping until you press Next. After Ajeeb Daastaan, press <b>National Anthem</b>. That screen is only the Indian flag, with no logo. Press <b>P</b> once to project. Videos stream from the website, so keep the laptop online.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
+  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>Each song has just two buttons. While Upasana reads the names, show the <b>Names</b> card. When the band starts, press the dark <b>Song</b> card. The wall fills with a looping music video, with the Seasons Music Academy logo at the top. Each song has its own video, and it keeps looping until you press Next. The opening picture plays music, so turn the laptop volume up before the doors open. After Ajeeb Daastaan come Felicitation, then Vote of Thanks, then <b>National Anthem</b>. The anthem is only the Indian flag, with no logo. Press <b>P</b> once to project. Videos stream from the website, so keep the laptop online.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
     <div class="led-how"><article><b>1</b><strong>Open this tab on the LED</strong><span>Or allow Chrome’s screen permission so P can use the second display.</span></article><article><b>2</b><strong>Select the cue</strong><span>Pale card for the names. Dark card for the song. Nothing else to press during host talk.</span></article><article><b>3</b><strong>Press P once</strong><span>That picture fills the screen immediately. No second window or click.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. The cue list comes back.</span></article></div>
     <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong>${current.loop ? `<small>Song video · ${escapeHtml(current.loop.replace("loops/", ""))}</small>` : ""}</div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
     <div class="led-controls"><button type="button" id="ledPrevBtn">← Previous</button><button type="button" class="next" id="ledNextBtn">Next cue →</button><button type="button" id="ledReplayBtn"><kbd>R</kbd> Replay</button><button type="button" id="ledHoldBtn"><kbd>H</kbd> Safe holding image</button></div>
@@ -225,9 +228,26 @@ function initLedConsoleEvents() {
 }
 
 let ledVoices = [];
+let ledMusic = null;
+function stopLedMusic() {
+  if (!ledMusic) return;
+  ledMusic.pause();
+  ledMusic.removeAttribute("src");
+  ledMusic.load();
+  ledMusic = null;
+}
+function playLedMusic(src) {
+  stopLedMusic();
+  ledMusic = new Audio(src);
+  ledMusic.loop = true;
+  ledMusic.volume = 1;
+  const pending = ledMusic.play();
+  if (pending?.catch) pending.catch(error => console.warn("Opening music could not start", error));
+}
 function stopLedSound() {
   ledVoices.forEach(node => { try { node.stop(); } catch (error) { console.warn(error); } });
   ledVoices = [];
+  stopLedMusic();
 }
 function ledVoice({type="sawtooth", freq, start, dur, peak, attack, cutoff, vibrato=0}) {
   const context = ledAudioContext;
@@ -334,13 +354,9 @@ function stopLedBed() {
 }
 function setLedSound(cue) {
   stopLedSound();
+  stopLedBed();
   if (!ledAudioContext || ledAudioContext.state !== "running") return;
-  if (cue.scene === "names" || cue.scene === "perform") {
-    stopLedBed();
-    return;
-  }
-  ensureLedBed();
-  if (cue.sound === "fanfare") playLedFanfare();
+  if (cue.music) playLedMusic(cue.music);
 }
 
 async function startLedSound() {

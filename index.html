@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f7f5f0">
   <title>Seasons Academy — Show Flow</title>
-  <link rel="stylesheet" href="led.css?v=11">
+  <link rel="stylesheet" href="led.css?v=12">
   <link rel="stylesheet" href="lights.css?v=3">
   <style>
     :root{--ink:#1b1826;--muted:#5c5768;--night:#f7f5f0;--panel:#ffffff;--line:#e4e0d8;--gold:#b8892f;--pink:#d83a7f;--cyan:#1a9ea3;--danger:#d9434d;--stage:#ffffff;--shadow:0 24px 60px #1b182618}
@@ -278,7 +278,7 @@
   <div class="noise"></div>
   <header class="app-header">
     <a class="brand" href="#overview" aria-label="Seasons Academy overview">
-      <img class="brand-mark" src="logo-mark.png" alt=""><span class="brand-copy"><b>Seasons Academy</b><span>Showcase run sheet &amp; stage plans</span></span>
+      <img class="brand-mark" src="logo-mark.svg" alt=""><span class="brand-copy"><b>Seasons Academy</b><span>Showcase run sheet &amp; stage plans</span></span>
     </a>
     <nav class="nav" aria-label="Main navigation">
       <a href="#overview" data-route="overview">Overview</a><a href="#timeline" data-route="timeline">Timeline</a><a href="#stage" data-route="stage">Stage map</a><a href="#script" data-route="script">Script</a><a href="#led" data-route="led">LED</a><a href="#lights" data-route="lights">Lights</a><a href="#volunteers" data-route="volunteers">Volunteers</a><a class="edit-link" href="#edit" data-route="edit">Edit show</a>
@@ -394,7 +394,7 @@
   <div id="ledOutput" hidden>
     <div class="led-screen" id="ledScreen"></div>
     <div class="led-output-help" id="ledOutputHelp">
-      <div><img src="logo-mark.png" alt=""><h1>Press P on the LED tab</h1><p>Select a cue there and press <kbd>P</kbd> once. This window should already be showing that picture. If the browser blocked full screen, press <kbd>P</kbd> here.</p><button type="button" id="ledFullscreenBtn">Fill this screen</button></div>
+      <div><img src="logo-mark.svg" alt=""><h1>Press P on the LED tab</h1><p>Select a cue there and press <kbd>P</kbd> once. This window should already be showing that picture. If the browser blocked full screen, press <kbd>P</kbd> here.</p><button type="button" id="ledFullscreenBtn">Fill this screen</button></div>
     </div>
   </div>
 
@@ -438,7 +438,7 @@
           item(18,"Final Countdown",[["Guitar",5],["Keyboard",3],["Drums",1],["Bass Guitar",1],["Vocals",1]]),
           item(19,"O Haseena",[["Guitar",1],["Bass Guitar",1],["Vocals",2],["Keyboard",1],["Drums",1]]),
           item(20,"Ajeeb Daastaan",[["Guitar",5],["Bass Guitar",1],["Violin",5],["Keyboard",3],["Tambourine",1],["Drums",1]]),
-          item(21,"Felicitation",[["Speaker",1]],7,"ceremony",{led:"STUDENT CREDITS + BLOOPERS",notes:"While felicitation is on, the LED wall runs the student credits roll with bloopers shot during rehearsals."}),
+          item(21,"Felicitation",[["Speaker",1]],7,"ceremony",{led:"FELICITATION VIDEO",notes:"The LED wall plays the felicitation video until Joseph’s vote of thanks."}),
           item(22,"Vote of Thanks — Joseph",[["Speaker",1]],7,"ceremony"),
           item(23,"National Anthem",[],7,"ceremony",{led:"ALL RISE FOR THE NATIONAL ANTHEM",notes:"All rise for the National Anthem."})
         ]
@@ -1402,13 +1402,13 @@
         {up:"Aur ab samay hai us mehnat ko sammaan dene ka."},
         {confirm:"Stage manager must hand FK the final felicitation card. Read only the names and titles printed on that card."},
         {fk:"Ladies and gentlemen, we now move to the **Felicitation Ceremony**."},
-        {do:"Invite the dignitaries exactly as written on the stage manager’s card. During felicitation, the LED wall runs student credits and rehearsal bloopers. Do not compete with the screen; speak only when a name must be called."}
+        {do:"Invite the dignitaries exactly as written on the stage manager’s card. During felicitation, the LED wall plays the felicitation video. Do not compete with the screen; speak only when a name must be called."}
       ]},
       {kicker:"After Felicitation",title:"Felicitation → Joseph’s Vote of Thanks",meta:["Core: about 1 minute","Extension available if Joseph is not ready"],steps:[
         {wait:"Wait until the final felicitation photograph is complete and the stage manager signals."},
         {phase:"Core · use every time",core:true},
         {up:"Congratulations to every student. Yeh taali ghar le jaana — aapne kamaayi hai."},
-        {fk:"Aur jo rehearsal bloopers screen par aaye — woh proof hain ki har great performance ke peeche great outtakes bhi hote hain."},
+        {fk:"Aur jo galat notes rehearsal mein aaye — woh proof hain ki har great performance ke peeche great outtakes bhi hote hain."},
         {up:"Stage ke saat polished minute ke peeche hafton ke galat notes, “ek baar aur shuru se,” aur dobara counting hoti hai."},
         {fk:"Matlab rehearsal ki galti, galti nahi hai. Woh behind-the-scenes footage hai."},
         {up:"Aur har safar ke end mein passengers ek kaam zaroor karte hain — driver ko thank you bolte hain."},
@@ -1982,7 +1982,7 @@
     if(!location.hash) location.replace("#overview");
     else openFromHash();
   </script>
-  <script src="led.js?v=11"></script>
+  <script src="led.js?v=12"></script>
   <script src="lights.js?v=5"></script>
 </body>
 </html>

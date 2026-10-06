@@ -204,6 +204,12 @@
 .loop-title strong{font:italic 600 clamp(20px,2vw,40px)/1.05 "Playfair Display",Georgia,serif;color:#fff8ee}
 .loop-title span{font:italic 500 clamp(15px,1.3vw,26px)/1.1 "Playfair Display",Georgia,serif;color:#f6e7c4}
 .led-loop-preload{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.led-opening:before{display:none}
+.led-opening .led-loop{z-index:0}
+.led-opening .opening-shade{background:radial-gradient(ellipse at 50% 42%,#000a,#0004 46%,#0008)}
+.led-opening .led-mark{width:min(38vw,520px);height:auto}
+.loop-brand img{height:clamp(72px,14vh,180px)}
+.playbill img,.loop-brand img,.led-mark,.brand-mark{shape-rendering:geometricPrecision}
 @keyframes spotSweep{to{transform:rotate(8deg)}}
 @keyframes spotHit{0%{opacity:.9;filter:blur(4px)}100%{opacity:.28;filter:blur(16px)}}
 @keyframes hazeDrift{to{transform:translateY(-4%) scale(1.06);opacity:.65}}
