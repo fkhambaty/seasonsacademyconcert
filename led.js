@@ -86,7 +86,11 @@ function playbillNames(people, columns, size) {
 }
 
 function performHtml(cue) {
-  return `<div class="led-scene led-perform led-loop-scene"><video class="led-loop" src="${cue.loop}" autoplay muted loop playsinline preload="auto"></video><div class="led-loop-shade"></div><header class="loop-brand"><img src="logo-mark.svg" alt=""><span>Seasons Music Academy</span></header><div class="loop-title"><small>Now playing</small><strong>${escapeHtml(cue.headline)}</strong>${cue.subline ? `<span>${escapeHtml(cue.subline)}</span>` : ""}</div></div>`;
+  const lit = cue.id === "play-yaman";
+  const brand = lit
+    ? `<header class="loop-brand loop-brand-lit"><img src="logo-mark.svg" alt=""><span>Seasons Music<br>Academy</span></header>`
+    : `<header class="loop-brand"><img src="logo-mark.svg" alt=""><span>Seasons Music Academy</span></header>`;
+  return `<div class="led-scene led-perform led-loop-scene"><video class="led-loop" src="${cue.loop}" autoplay muted loop playsinline preload="auto"></video><div class="led-loop-shade"></div>${brand}<div class="loop-title"><small>Now playing</small><strong>${escapeHtml(cue.headline)}</strong>${cue.subline ? `<span>${escapeHtml(cue.subline)}</span>` : ""}</div></div>`;
 }
 
 function introHtml() {

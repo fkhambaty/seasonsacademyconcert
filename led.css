@@ -200,6 +200,12 @@
 .loop-brand{position:absolute;z-index:3;left:50%;top:46%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:1.4vh;margin:0;color:#f3d48a;letter-spacing:.46em;text-transform:uppercase;font-weight:700;font-size:clamp(18px,2.2vw,42px);text-shadow:0 2px 18px #000,0 0 3px #000}
 .loop-brand:before{content:"";position:absolute;z-index:-1;left:50%;top:48%;width:min(86vw,980px);height:58vh;transform:translate(-50%,-50%);background:radial-gradient(ellipse at center,#000c 0%,#0008 38%,transparent 72%);pointer-events:none}
 .loop-brand img{height:clamp(120px,22vh,280px);filter:drop-shadow(0 14px 28px #000)}
+.loop-brand-lit{letter-spacing:0}
+.loop-brand-lit:before{top:44%;width:min(64vw,720px);height:64vh;background:radial-gradient(ellipse at 50% 36%,#fffaf2f2 0%,#ffe7b8b8 14%,#f3d48a33 36%,transparent 66%);filter:blur(8px);animation:brandGlow 5.6s ease-in-out infinite alternate}
+.loop-brand-lit:after{content:"";position:absolute;z-index:-1;left:50%;top:68%;width:min(46vw,560px);height:16vh;transform:translate(-50%,-50%);background:radial-gradient(ellipse at center,#1c1208 0%,#1c120866 46%,transparent 74%);pointer-events:none}
+.loop-brand-lit img{filter:drop-shadow(0 0 14px #fff6e4) drop-shadow(0 0 36px #f3d48acc) drop-shadow(0 16px 24px #0006)}
+.loop-brand-lit span{display:block;text-align:center;letter-spacing:.38em;padding-left:.38em;color:#fff8ea;text-shadow:0 0 18px #fff1cc,0 2px 12px #000c,0 0 2px #000}
+@keyframes brandGlow{from{opacity:.76;transform:translate(-50%,-50%) scale(.96)}to{opacity:1;transform:translate(-50%,-50%) scale(1.06)}}
 .loop-title{position:absolute;z-index:3;left:0;right:0;bottom:4vh;display:flex;align-items:baseline;justify-content:center;flex-wrap:wrap;gap:.4vh 1.1vw;margin:0;text-shadow:0 3px 18px #000,0 0 3px #000}
 .loop-title small{width:100%;text-align:center;font-size:clamp(9px,.7vw,14px);letter-spacing:.46em;text-transform:uppercase;color:#f3d48a;font-weight:700}
 .loop-title strong{font:italic 600 clamp(20px,2vw,40px)/1.05 "Playfair Display",Georgia,serif;color:#fff8ee}
