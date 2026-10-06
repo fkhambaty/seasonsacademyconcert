@@ -26,7 +26,7 @@ const LED_ACTS = [
 const LED_LOOPS = {
   tauba:"tauba-colors", bharat:"bharat-hills", drum:"red-lights-tunnel", oldwoman:"oldwoman-sun",
   mission:"purple-warp", champions:"champions-fireworks", yaman:"yaman-gold", flute:"flute-creek",
-  saiyaara:"saiyaara-moon", gminute:"gminute-aurora", ghar:"ghar-sunset", challa:"challa-highway",
+  saiyaara:"saiyaara-love", gminute:"gminute-aurora", ghar:"ghar-sunset", challa:"challa-highway",
   chammak:"chammak-sparkle", eye:"eye-sparks", dil:"dil-sunset", howlong:"howlong-city",
   final:"final-sky", haseena:"haseena-gold", ajeeb:"ajeeb-stars"
 };
@@ -90,7 +90,7 @@ function performHtml(cue) {
 }
 
 function introHtml() {
-  return `<div class="led-scene led-opening-film"><canvas class="opening-sky" aria-hidden="true"></canvas><div class="opening-quarters"><figure class="season-quarter summer"><img src="seasons/summer.jpg" alt=""><b>Summer</b></figure><figure class="season-quarter monsoon"><img src="seasons/monsoon.jpg" alt=""><b>Monsoon</b></figure><figure class="season-quarter winter"><img src="seasons/winter.jpg" alt=""><b>Winter</b></figure><figure class="season-quarter autumn"><img src="seasons/autumn.jpg" alt=""><b>Autumn</b></figure></div><canvas class="opening-globe" aria-hidden="true"></canvas><div class="opening-lockup"><div class="opening-crest-wrap"><div class="opening-halo"><img class="opening-crest" src="logo-mark.svg" alt=""></div><div class="opening-wordmark"><b>Seasons</b><i class="opening-rule"></i><span>Music Academy</span></div></div><div class="opening-titles"><p class="opening-musicale">Musicale 2026</p><p class="opening-annual">Annual Music Concert</p></div></div></div>`;
+  return `<div class="led-scene led-opening-film"><canvas class="opening-sky" aria-hidden="true"></canvas><div class="opening-quarters"><figure class="season-quarter summer"><img src="seasons/summer.jpg" alt=""></figure><figure class="season-quarter monsoon"><img src="seasons/monsoon.jpg" alt=""></figure><figure class="season-quarter winter"><img src="seasons/winter.jpg" alt=""></figure><figure class="season-quarter autumn"><img src="seasons/autumn.jpg" alt=""></figure></div><canvas class="opening-globe" aria-hidden="true"></canvas><div class="opening-lockup"><div class="opening-crest-wrap"><div class="opening-halo"><img class="opening-crest" src="logo-mark.svg" alt=""></div><div class="opening-wordmark"><b>Seasons</b><i class="opening-rule"></i><span>Music Academy</span></div></div><div class="opening-titles"><p class="opening-musicale">Musicale 2026</p><p class="opening-annual">Annual Music Concert</p></div></div></div>`;
 }
 function ledSceneHtml(cue) {
   if (cue.scene === "anthem") return `<div class="led-scene led-perform led-loop-scene led-anthem"><video class="led-loop" src="${cue.loop}" autoplay muted loop playsinline preload="auto"></video></div>`;
@@ -177,7 +177,7 @@ function stopLedProjection() {
 }
 
 function ledAudienceLine(cue) {
-  if (cue.scene === "intro") return "summer, monsoon, autumn and winter come together into a turning globe. The name appears with the music, then it stays until you press Next";
+  if (cue.scene === "intro") return "four pictures grow in from the corners and become a turning globe. The name appears with the music, then it stays until you press Next";
   if (cue.scene === "names") return `performer names for ${cue.act}`;
   if (cue.scene === "anthem") return "only the Indian flag, full screen, until the anthem ends";
   if (cue.scene === "perform") return `looping music video with the Seasons logo, for ${cue.headline}`;
@@ -206,7 +206,7 @@ window.ledRenderConsole = function renderLedConsole() {
     (all[cue.group] ||= []).push(cue);
     return all;
   }, {});
-  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>Each song has just two buttons. While Upasana reads the names, show the <b>Names</b> card. When the band starts, press the dark <b>Song</b> card. The wall fills with a looping music video, with the Seasons Music Academy logo at the top. Each song has its own video, and it keeps looping until you press Next. The opening picture plays music, so turn the laptop volume up before the doors open. After Ajeeb Daastaan come Felicitation, then Vote of Thanks, then <b>National Anthem</b>. The anthem is only the Indian flag, with no logo. Press <b>P</b> once to project. Videos stream from the website, so keep the laptop online.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
+  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>Each song has just two buttons. While Upasana reads the names, show the <b>Names</b> card. When the band starts, press the dark <b>Song</b> card. The wall fills with a looping music video, with the Seasons Music Academy logo in the centre. Each song has its own video, and it keeps looping until you press Next. The opening picture plays music, so turn the laptop volume up before the doors open. After Ajeeb Daastaan come Felicitation, then Vote of Thanks, then <b>National Anthem</b>. The anthem is only the Indian flag, with no logo. Press <b>P</b> once to project. Videos stream from the website, so keep the laptop online.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
     <div class="led-how"><article><b>1</b><strong>Open this tab on the LED</strong><span>Or allow Chrome’s screen permission so P can use the second display.</span></article><article><b>2</b><strong>Select the cue</strong><span>Pale card for the names. Dark card for the song. Nothing else to press during host talk.</span></article><article><b>3</b><strong>Press P once</strong><span>That picture fills the screen immediately. No second window or click.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. The cue list comes back.</span></article></div>
     <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong>${current.music ? `<small>Opening music · ${escapeHtml(current.music.replace("loops/", ""))}</small>` : current.loop ? `<small>Song video · ${escapeHtml(current.loop.replace("loops/", ""))}</small>` : ""}</div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
     <div class="led-controls"><button type="button" id="ledPrevBtn">← Previous</button><button type="button" class="next" id="ledNextBtn">Next cue →</button><button type="button" id="ledReplayBtn"><kbd>R</kbd> Replay</button><button type="button" id="ledHoldBtn"><kbd>H</kbd> Safe holding image</button></div>

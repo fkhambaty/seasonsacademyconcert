@@ -197,9 +197,10 @@
 .led-loop-scene{padding:0;background:#000;justify-content:space-between}
 .led-loop{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
 .led-loop-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#000b 0,#0000 22%,#0000 76%,#000c 100%)}
-.loop-brand{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:1vh;margin-top:3.4vh;color:#f3d48a;letter-spacing:.42em;text-transform:uppercase;font-weight:700;font-size:clamp(13px,1.35vw,26px);text-shadow:0 2px 18px #000,0 0 3px #000}
-.loop-brand img{height:clamp(52px,10vh,120px);filter:drop-shadow(0 10px 24px #000)}
-.loop-title{position:relative;z-index:2;display:flex;align-items:baseline;justify-content:center;flex-wrap:wrap;gap:.4vh 1.1vw;margin-bottom:4vh;text-shadow:0 3px 18px #000,0 0 3px #000}
+.loop-brand{position:absolute;z-index:3;left:50%;top:46%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:1.4vh;margin:0;color:#f3d48a;letter-spacing:.46em;text-transform:uppercase;font-weight:700;font-size:clamp(18px,2.2vw,42px);text-shadow:0 2px 18px #000,0 0 3px #000}
+.loop-brand:before{content:"";position:absolute;z-index:-1;left:50%;top:48%;width:min(86vw,980px);height:58vh;transform:translate(-50%,-50%);background:radial-gradient(ellipse at center,#000c 0%,#0008 38%,transparent 72%);pointer-events:none}
+.loop-brand img{height:clamp(120px,22vh,280px);filter:drop-shadow(0 14px 28px #000)}
+.loop-title{position:absolute;z-index:3;left:0;right:0;bottom:4vh;display:flex;align-items:baseline;justify-content:center;flex-wrap:wrap;gap:.4vh 1.1vw;margin:0;text-shadow:0 3px 18px #000,0 0 3px #000}
 .loop-title small{width:100%;text-align:center;font-size:clamp(9px,.7vw,14px);letter-spacing:.46em;text-transform:uppercase;color:#f3d48a;font-weight:700}
 .loop-title strong{font:italic 600 clamp(20px,2vw,40px)/1.05 "Playfair Display",Georgia,serif;color:#fff8ee}
 .loop-title span{font:italic 500 clamp(15px,1.3vw,26px)/1.1 "Playfair Display",Georgia,serif;color:#f6e7c4}
@@ -208,7 +209,6 @@
 .led-opening .led-loop{z-index:0}
 .led-opening .opening-shade{background:radial-gradient(ellipse at 50% 42%,#000a,#0004 46%,#0008)}
 .led-opening .led-mark{width:min(38vw,520px);height:auto}
-.loop-brand img{height:clamp(72px,14vh,180px)}
 .playbill img,.loop-brand img,.led-mark,.brand-mark{shape-rendering:geometricPrecision}
 @keyframes spotSweep{to{transform:rotate(8deg)}}
 @keyframes spotHit{0%{opacity:.9;filter:blur(4px)}100%{opacity:.28;filter:blur(16px)}}
@@ -222,9 +222,6 @@
 .opening-quarters{position:absolute;inset:0;z-index:2;pointer-events:none}
 .season-quarter{position:absolute;width:50%;height:50%;margin:0;overflow:hidden;opacity:0}
 .season-quarter img{width:100%;height:100%;object-fit:cover;display:block}
-.season-quarter:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 46%,#0007,transparent 46%)}
-.season-quarter b{position:absolute;left:50%;top:46%;z-index:1;transform:translate(-50%,-50%);font:600 clamp(22px,2.8vw,58px)/1 "Playfair Display",Georgia,serif;letter-spacing:.24em;text-transform:uppercase;color:#fff8ee;text-shadow:0 4px 22px #000,0 0 6px #000}
-.season-quarter b:after{content:"";display:block;width:1.8em;height:1px;margin:.4em auto 0;background:#f3d48a}
 .season-quarter.summer{left:0;top:0;transform-origin:0 0}
 .season-quarter.monsoon{left:50%;top:0;transform-origin:100% 0}
 .season-quarter.winter{left:0;top:50%;transform-origin:0 100%}

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f7f5f0">
   <title>Seasons Academy — Show Flow</title>
-  <link rel="stylesheet" href="led.css?v=14">
+  <link rel="stylesheet" href="led.css?v=15">
   <link rel="stylesheet" href="lights.css?v=3">
   <style>
     :root{--ink:#1b1826;--muted:#5c5768;--night:#f7f5f0;--panel:#ffffff;--line:#e4e0d8;--gold:#b8892f;--pink:#d83a7f;--cyan:#1a9ea3;--danger:#d9434d;--stage:#ffffff;--shadow:0 24px 60px #1b182618}
@@ -338,9 +338,9 @@
           <div class="stage-labels"><span>BACKSTAGE / UPSTAGE</span><b>Stage plan</b><button class="names-toggle" id="namesToggle" type="button" aria-pressed="false"><i></i>Names</button></div>
           <div class="scroll-hint" aria-hidden="true"><span>&larr;</span> Swipe sideways to see the whole stage <span>&rarr;</span></div>
           <div class="stage-frame">
-            <div class="wing left"><span class="wing-label">STAGE RIGHT WING · HOUSE LEFT</span><span class="wing-count" id="wingLeft">0<small>ENTER</small></span></div>
+            <div class="wing left"><span class="wing-label">STAGE RIGHT · HOUSE LEFT</span></div>
             <div class="stage-map" id="stageMap"></div>
-            <div class="wing right"><span class="wing-label">STAGE LEFT WING · HOUSE RIGHT</span><span class="wing-count" id="wingRight">0<small>ENTER</small></span></div>
+            <div class="wing right"><span class="wing-label">STAGE LEFT · HOUSE RIGHT</span></div>
           </div>
           <div class="house-band">AUDIENCE</div>
           <div class="stage-controls"><button id="prevBtn" aria-label="Previous act">←</button><span class="counter"><b id="currentCount">1</b> / <span id="eventCount">23</span></span><button id="nextBtn" aria-label="Next act">→</button><button id="resetLayoutBtn" title="Reset this layout">Reset layout</button><button id="printStageBtn" title="Print a sheet for this act">Print this act</button><button id="printAllBtn" title="Print one sheet per act">Print all acts</button></div>
@@ -1706,12 +1706,6 @@
         return `<span class="chip ${of.some(s=>s.performer)?"add":""}">${of.filter(s=>s.performer).length}/${of.length} ${of[0]?.label||kind}</span>`;
       }).join("");
       document.getElementById("rigStatus").innerHTML=usage;
-      updateWings([...plan.slots.filter(s=>s.performer),...plan.free]);
-    }
-    function updateWings(positions){
-      const left=positions.filter(p=>p.x<50).length;
-      document.getElementById("wingLeft").innerHTML=`${left}<small>ENTER</small>`;
-      document.getElementById("wingRight").innerHTML=`${positions.length-left}<small>ENTER</small>`;
     }
     function attachDrag(el,map,commit){
       el.addEventListener("pointerdown",down=>{
@@ -1838,7 +1832,6 @@
           :Math.abs(p.x-50)<6?`Centre, ${side} side`
           :sameRow.length===1?`Just ${side} of centre`
           :p.x<50?`${ordinal(fromRight)} from stage right`:`${ordinal(fromLeft)} from stage left`;
-        p.enter=p.x<50?"Right wing":"Left wing";
       });
       return {people,unused:plan.slots.filter(slot=>!slot.performer)};
     }
@@ -1847,7 +1840,7 @@
       const color=role=>colors[slugRole(role)]||colors.Unassigned;
       const spots=people.map(p=>`<div class="sheet-spot" style="left:${p.x}%;top:${p.y}%;--role:${color(p.role)}"><b>${p.number}</b><strong>${escapeHtml(p.name?p.name.split(" ")[0]:p.role)}</strong><small>${escapeHtml(p.name?p.role:`${p.role} ${p.index}`)}</small></div>`).join("");
       const ghosts=unused.map(s=>`<div class="sheet-spot unused" style="left:${s.x}%;top:${s.y}%"></div>`).join("");
-      const rows=people.map(p=>`<div class="sheet-person"><span class="sheet-num" style="--role:${color(p.role)}">${p.number}</span><div><div class="who"><b>${escapeHtml(p.name||"Name to be confirmed")}</b> <span>· ${escapeHtml(p.role)}</span></div><div class="loc"><b>${ROW_NAMES[p.row]}</b> · ${p.where} · via ${p.enter.toLowerCase()}</div></div></div>`).join("");
+      const rows=people.map(p=>`<div class="sheet-person"><span class="sheet-num" style="--role:${color(p.role)}">${p.number}</span><div><div class="who"><b>${escapeHtml(p.name||"Name to be confirmed")}</b> <span>· ${escapeHtml(p.role)}</span></div><div class="loc"><b>${ROW_NAMES[p.row]}</b> · ${p.where}</div></div></div>`).join("");
       const costume=cast?.costume?costumeParts(cast.costume).map(([who,what])=>`<p><b>${who}</b>${escapeHtml(what)}</p>`).join(""):`<p>No costume listed for this act.</p>`;
       const cue=event.notes||event.led?`<div class="sheet-box cue"><h3>Cue</h3>${event.notes?`<p>${escapeHtml(event.notes)}</p>`:""}${event.led?`<p><b>LED wall</b>${escapeHtml(event.led)}</p>`:""}</div>`:"";
       const cols=people.length>8?3:people.length>4?2:1,info=cue&&people.length<=4?"150mm":"62mm";
@@ -1982,8 +1975,8 @@
     if(!location.hash) location.replace("#overview");
     else openFromHash();
   </script>
-  <script src="opening.js?v=3"></script>
-  <script src="led.js?v=14"></script>
+  <script src="opening.js?v=4"></script>
+  <script src="led.js?v=15"></script>
   <script src="lights.js?v=5"></script>
 </body>
 </html>
