@@ -228,7 +228,7 @@
     .gate{position:fixed;inset:0;z-index:80;display:none;place-items:center;padding:24px;background:radial-gradient(circle at 50% 30%,#b8892f24 0,#f7f5f0 42%)}
     html.locked .gate{display:grid}
     html.locked .app-header,html.locked main,html.locked .cast-backdrop,html.locked .cast-drawer,html.locked .toast,html.locked #ledOutput{display:none!important}
-    html.role-volunteer .nav{display:none!important}
+    html.role-volunteer .nav,html.role-volunteer #lockBtn{display:none!important}
     html.role-volunteer .brand{pointer-events:none}
     .gate-card{width:min(420px,100%);background:#fff;border:1px solid var(--line);border-radius:28px;padding:28px 24px 22px;text-align:center;box-shadow:0 24px 60px #1b182618}
     .gate-card img{height:78px;width:auto;margin-bottom:8px}
@@ -255,14 +255,11 @@
   </style>
   <script>
     try{
-      var gateSaved=sessionStorage.getItem("seasons-gate-v1");
-      var gateHash=location.hash.slice(1);
-      var gatePersonal=/^volunteers\/([a-z0-9-]+)$/.exec(gateHash);
-      if(!gateSaved) document.documentElement.classList.add("locked");
-      else if(gateSaved.indexOf("volunteer:")===0){
-        document.documentElement.classList.add("role-volunteer");
-        if(!gatePersonal||gatePersonal[1]!==gateSaved.slice(10)) document.documentElement.classList.add("locked");
-      }
+      var gateSaved=sessionStorage.getItem("seasons-gate-v1")||"";
+      var gatePersonal=/^volunteers\/[a-z0-9-]+$/.test(location.hash.slice(1));
+      if(gateSaved==="admin"){ /* the show passcode is already entered */ }
+      else if(gatePersonal) document.documentElement.classList.add("role-volunteer");
+      else document.documentElement.classList.add("locked");
     }catch(error){ document.documentElement.classList.add("locked"); }
   </script>
 </head>
@@ -520,13 +517,10 @@
       {id:"noyanika-mom",name:"Noyanika’s mom",role:"Parent",kids:["Noyanika Amit Chaudhari"]}
     ];
     const VOL_LEAVE_BEFORE = 25, VOL_ARRIVE_BEFORE = 15, VOL_PRESHOW_LEAVE = -15, VOL_PRESHOW_ARRIVE = -5;
-    const GATE_KEY = "seasons-gate-v1", ADMIN_CODE = "12345", VOLUNTEER_CODE = "9999";
+    const GATE_KEY = "seasons-gate-v1", ADMIN_CODE = "12345";
     let volLetter = VOLUNTEERS[0].id;
     function readAccess(){
-      const saved = sessionStorage.getItem(GATE_KEY) || "";
-      if(saved==="admin") return {role:"admin"};
-      if(saved.startsWith("volunteer:")) return {role:"volunteer", id:saved.slice("volunteer:".length)};
-      return {role:null};
+      return sessionStorage.getItem(GATE_KEY)==="admin" ? {role:"admin"} : {role:null};
     }
     function volunteerUrl(id){ return `${location.origin}${location.pathname}#volunteers/${id}`; }
     function copyText(text, message){
@@ -663,9 +657,9 @@
       const count = id => jobs[id].reduce((sum,job)=>sum+job.people.length,0);
       page.innerHTML = `<div class="eyebrow">Balcony to backstage</div>
         <h1>Volunteers</h1>
-        <p class="vol-lede">One helper for each whole band. They take the band down to the backstage door, then bring that same band back to the balcony. They follow the event names. The clock is only a guide. Copy a link and send it. They type 9999 and see only their own bands.</p>
+        <p class="vol-lede">One helper for each whole band. They take the band down to the backstage door, then bring that same band back to the balcony. They follow the event names. The clock is only a guide. Copy a link and send it. The link opens only that helper’s bands.</p>
         <div class="vol-steps">
-          <div><b>1. Copy a link</b><span>One link per helper. The passcode is 9999.</span></div>
+          <div><b>1. Copy a link</b><span>One link per helper. Opening it shows only their bands.</span></div>
           <div><b>2. They see only their page</b><span>No script, no lights, and no other helper’s bands.</span></div>
           <div><b>3. Down, then back</b><span>The bold event is the cue. Acts 1 and 2 leave before Hosts Welcome.</span></div>
         </div>
@@ -691,18 +685,12 @@
       if(next==="volunteers")renderVolunteers();
       if(next==="edit")renderEditor();
     }
-    function showGate(mode, id){
+    function showGate(){
       document.documentElement.classList.add("locked");
       document.documentElement.classList.remove("role-volunteer");
-      const person = VOLUNTEERS.find(v=>v.id===id);
-      document.getElementById("gateTitle").textContent = person ? person.name : "Seasons Academy";
-      document.getElementById("gateLede").textContent = person
-        ? "This page is only yours. Type your volunteer passcode."
-        : "Type the show passcode to open the run sheet, script, lights and everything else.";
+      document.getElementById("gateTitle").textContent = "Seasons Academy";
+      document.getElementById("gateLede").textContent = "Type the show passcode to open the run sheet, script, lights and everything else.";
       document.getElementById("gateError").textContent = "";
-      const gate = document.getElementById("gate");
-      gate.dataset.mode = mode;
-      gate.dataset.volunteer = person ? person.id : "";
       const input = document.getElementById("gateCode");
       input.value = "";
       setTimeout(()=>input.focus(), 30);
@@ -716,23 +704,14 @@
       const personal = hash.match(/^volunteers\/([a-z0-9-]+)$/);
       const access = readAccess();
       const known = personal && VOLUNTEERS.some(v=>v.id===personal[1]);
-      if(access.role==="volunteer"){
-        if(!VOLUNTEERS.some(v=>v.id===access.id)){
-          sessionStorage.removeItem(GATE_KEY);
-          showGate("site");
-          return;
-        }
-        if(!personal || personal[1]!==access.id){
-          location.replace(`#volunteers/${access.id}`);
-          return;
-        }
-        unlockSite("volunteer");
-        volLetter = access.id;
-        navigate("volunteers");
-        return;
-      }
       if(access.role!=="admin"){
-        showGate(known ? "volunteer" : "site", known ? personal[1] : "");
+        if(known){
+          unlockSite("volunteer");
+          volLetter = personal[1];
+          navigate("volunteers");
+          return;
+        }
+        showGate();
         return;
       }
       unlockSite("admin");
@@ -1889,19 +1868,13 @@
     document.getElementById("gate").addEventListener("submit", event=>{
       event.preventDefault();
       const code = document.getElementById("gateCode").value.trim();
-      const gate = document.getElementById("gate");
       const error = document.getElementById("gateError");
       if(code===ADMIN_CODE){
         sessionStorage.setItem(GATE_KEY, "admin");
         openFromHash();
         return;
       }
-      if(code===VOLUNTEER_CODE && gate.dataset.mode==="volunteer" && gate.dataset.volunteer){
-        sessionStorage.setItem(GATE_KEY, `volunteer:${gate.dataset.volunteer}`);
-        openFromHash();
-        return;
-      }
-      error.textContent = code===VOLUNTEER_CODE ? "That passcode only opens a personal volunteer link." : "That passcode is not right.";
+      error.textContent = "That passcode is not right.";
       document.getElementById("gateCode").value = "";
       const card = document.getElementById("gateCard");
       card.classList.remove("shake");
@@ -1915,13 +1888,13 @@
     document.getElementById("volunteersView").addEventListener("click", event=>{
       const copyAll = event.target.closest("[data-copy-all-volunteers]");
       if(copyAll){
-        const text = VOLUNTEERS.map(v=>`${v.name} (${v.role})\n${volunteerUrl(v.id)}\nPasscode: 9999`).join("\n\n");
+        const text = VOLUNTEERS.map(v=>`${v.name} (${v.role})\n${volunteerUrl(v.id)}`).join("\n\n");
         copyText(text, "All 9 links copied");
         return;
       }
       const copy = event.target.closest("[data-copy-volunteer]");
       if(copy){
-        copyText(`${volunteerUrl(copy.dataset.copyVolunteer)}\nPasscode: 9999`, "Link copied");
+        copyText(volunteerUrl(copy.dataset.copyVolunteer), "Link copied");
         return;
       }
       const button = event.target.closest("[data-volunteer]");
