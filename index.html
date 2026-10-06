@@ -192,9 +192,10 @@
     .vol-steps div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}
     .vol-steps b{display:block;font:600 18px "Playfair Display",Georgia,serif;margin-bottom:4px}
     .vol-steps span{display:block;color:var(--muted);font-size:13.5px;line-height:1.4}
-    .vol-pick{display:grid;grid-template-columns:repeat(10,1fr);gap:8px;margin:0 0 18px}
-    .vol-pick button{border:1px solid var(--line);background:#fff;border-radius:16px;padding:12px 0 10px;cursor:pointer}
-    .vol-pick button b{display:block;font:600 28px/1 "Playfair Display",Georgia,serif}
+    .vol-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin:0 0 18px}
+    .vol-pick button{border:1px solid var(--line);background:#fff;border-radius:16px;padding:12px 10px 10px;cursor:pointer;text-align:left}
+    .vol-pick button b{display:block;font:600 18px/1.15 "Playfair Display",Georgia,serif}
+    .vol-free{margin:0 0 14px;padding:10px 14px;border-radius:12px;background:#1a9ea314;color:#137f84;font-size:14.5px}
     .vol-pick button small{display:block;margin-top:5px;color:var(--muted);font-size:11px}
     .vol-pick button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
     .vol-pick button.on small{color:#ffffffb0}
@@ -210,7 +211,7 @@
     .vol-names li span{color:var(--gold);font:600 16px "Playfair Display",Georgia,serif}
     .vol-names li em{font-style:normal;color:var(--muted);font-weight:600;font-size:13px}
     .vol-empty{color:var(--muted)}
-    @media(max-width:800px){.vol-steps{grid-template-columns:1fr}.vol-pick{grid-template-columns:repeat(5,1fr)}.vol-names li{grid-template-columns:28px 1fr}.vol-names li em{grid-column:2}}
+    @media(max-width:800px){.vol-steps{grid-template-columns:1fr}.vol-pick{grid-template-columns:1fr 1fr}.vol-names li{grid-template-columns:28px 1fr}.vol-names li em{grid-column:2}}
   </style>
 </head>
 <body>
@@ -243,7 +244,7 @@
           <a class="home-btn" href="#script"><span class="home-icon">✎</span><b>Script</b><small>Every line for FK and Upasana</small></a>
           <a class="home-btn" href="#led"><span class="home-icon">▣</span><b>LED</b><small>Cues for the audience screen</small></a>
           <a class="home-btn" href="#lights"><span class="home-icon">✦</span><b>Lights</b><small>Console rehearsal and every act’s lighting look</small></a>
-          <a class="home-btn" href="#volunteers"><span class="home-icon">☺</span><b>Volunteers</b><small>Who walks each band from the balcony</small></a>
+          <a class="home-btn" href="#volunteers"><span class="home-icon">☺</span><b>Volunteers</b><small>Who brings each band from the balcony</small></a>
         </div>
       </div>
     </section>
@@ -443,8 +444,19 @@
       const el=document.getElementById("toast");el.textContent=message;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2200);
     }
     function renderLedConsole(){window.ledRenderConsole?.()}
-    const VOLUNTEER_LETTERS = ["A","B","C","D","E","F","G","H","I","J"];
-    let volLetter = "A";
+    const VOLUNTEERS = [
+      {id:"sonali",name:"Sonali",role:"Gayatri’s mom",kids:["K.Gayatri"]},
+      {id:"shruti",name:"Shruti",role:"Navya’s mom",kids:["Navya Alung"]},
+      {id:"aayansh-mom",name:"Aayansh’s mom",role:"Parent",kids:["Ayansh Aniket Zarkar","Ayansh Agrawal"]},
+      {id:"sheelpy",name:"Sheelpy",role:"Aahana’s mom",kids:["Aahana Sen"]},
+      {id:"aadhya-dad",name:"Aadhya’s dad",role:"Parent",kids:["Aadhya Trivedi"]},
+      {id:"aadhya-friend",name:"Aadhya’s dad’s friend",role:"Comes with Aadhya’s dad",kids:["Aadhya Trivedi"]},
+      {id:"richard",name:"Richard",role:"Also performs",kids:["Richard D'souza"],performs:true},
+      {id:"millee",name:"Millee",role:"Also performs",kids:["Milee Ninad Mahadik"],performs:true},
+      {id:"noyanika-mom",name:"Noyanika’s mom",role:"Parent",kids:["Noyanika Amit Chaudhari"]}
+    ];
+    const VOL_LEAVE_BEFORE = 25, VOL_ARRIVE_BEFORE = 15, VOL_PRESHOW_LEAVE = -15, VOL_PRESHOW_ARRIVE = -5;
+    let volLetter = VOLUNTEERS[0].id;
     function volunteerChunks(list, size){
       const groups = [];
       for(let i=0;i<list.length;i+=size) groups.push(list.slice(i,i+size));
@@ -455,46 +467,65 @@
       const [hour, minute] = formatClock(minutes).split(":").map(Number);
       return `${hour%12||12}:${String(minute).padStart(2,"0")} ${hour<12?"AM":"PM"}`;
     }
+    function volunteerOnStageAt(timed, minute){
+      if(minute<0) return "before the show starts";
+      const slot = timed.find(item=>item.start<=minute && minute<item.end && !item.parallel) || timed.find(item=>item.start<=minute && minute<item.end);
+      if(!slot) return "the show";
+      if(slot.event.type==="filler"){
+        const before = timed.filter(item=>item.event.type!=="filler" && item.start<slot.start).at(-1);
+        return before?`the stage reset after ${before.event.title}`:"the stage reset";
+      }
+      return slot.event.title;
+    }
     function volunteerPlan(){
-      const jobs = Object.fromEntries(VOLUNTEER_LETTERS.map(letter=>[letter,[]]));
+      const jobs = Object.fromEntries(VOLUNTEERS.map(v=>[v.id,[]]));
       const timed = timings();
       const bands = timed.filter(({event})=>event.type==="performance" && CAST[event.title]);
-      let previous = new Set();
-      const load = letter => jobs[letter].reduce((sum, job)=>sum+job.people.length, 0);
+      const blocked = Object.fromEntries(VOLUNTEERS.map(v=>[v.id, bands
+        .filter(slot=>CAST[slot.event.title].people.some(([name])=>v.kids.includes(name)))
+        .map(slot=>({from:slot.start-(v.performs?VOL_LEAVE_BEFORE:3), to:slot.end+2, title:slot.event.title}))]));
+      const overlaps = (a, b) => a.from < b.to && b.from < a.to;
+      const load = id => jobs[id].reduce((sum, job)=>sum+job.people.length, 0);
+      const warnings = [];
       bands.forEach(slot=>{
-        const used = new Set();
+        let leave = slot.start-VOL_LEAVE_BEFORE, arrive = slot.start-VOL_ARRIVE_BEFORE;
+        if(leave<5){ leave = VOL_PRESHOW_LEAVE; arrive = VOL_PRESHOW_ARRIVE; }
+        const walk = {from:leave, to:arrive+2};
         volunteerChunks(CAST[slot.event.title].people, 5).forEach(group=>{
-          const fresh = VOLUNTEER_LETTERS.filter(letter=>!used.has(letter) && !previous.has(letter));
-          const pool = (fresh.length?fresh:VOLUNTEER_LETTERS.filter(letter=>!used.has(letter)))
-            .sort((a,b)=>load(a)-load(b) || a.localeCompare(b));
-          const letter = pool[0];
-          used.add(letter);
-          const earlier = timed.filter(item=>item.event.type!=="filler" && item.start<slot.start).at(-1);
-          jobs[letter].push({event:slot.event, start:slot.start, before:earlier?.event.title||"the doors open", people:group});
+          const free = VOLUNTEERS.filter(v=>
+            !blocked[v.id].some(window=>overlaps(window, walk)) &&
+            !jobs[v.id].some(job=>overlaps(job.walk, walk)));
+          const pool = free.length ? free : VOLUNTEERS.filter(v=>!blocked[v.id].some(window=>overlaps(window, walk)));
+          const pick = [...pool].sort((a,b)=>load(a.id)-load(b.id) || VOLUNTEERS.indexOf(a)-VOLUNTEERS.indexOf(b))[0];
+          if(!free.length) warnings.push(`${slot.event.title}: ${pick.name} has two walks at the same time`);
+          jobs[pick.id].push({event:slot.event, start:slot.start, leave, arrive, walk, during:volunteerOnStageAt(timed, leave), people:group});
         });
-        previous = used;
       });
-      return jobs;
+      return {jobs, blocked, warnings};
     }
     function renderVolunteers(){
       const page = document.getElementById("volunteersPage");
       if(!page) return;
-      const jobs = volunteerPlan();
-      const mine = jobs[volLetter]||[];
+      const {jobs, blocked, warnings} = volunteerPlan();
+      const me = VOLUNTEERS.find(v=>v.id===volLetter) || VOLUNTEERS[0];
+      const mine = jobs[me.id]||[];
       const students = mine.reduce((sum, job)=>sum+job.people.length, 0);
+      const freeTimes = blocked[me.id];
       page.innerHTML = `<div class="eyebrow">Balcony to backstage</div>
         <h1>Volunteers</h1>
-        <p class="vol-lede">Ten helpers. Your letter is your name for now. You only move the band. Speeches, the lamp, the icebreaker, felicitation and the national anthem stay put. Your students are sitting in the balcony.</p>
+        <p class="vol-lede">Nine helpers. You only move band students. Each band is picked up about 25 minutes before it plays, and Acts 1 and 2 are collected before the show starts. Nobody walks students while their own child is on stage.</p>
         <div class="vol-steps">
-          <div><b>1. Tap your letter</b><span>A to J. Real names will replace these letters later.</span></div>
-          <div><b>2. Wait for the cue</b><span>Stand up when the item before your band begins.</span></div>
-          <div><b>3. Walk your names</b><span>Only the names on your card. Balcony, then the backstage door.</span></div>
+          <div><b>1. Tap your name</b><span>Your card shows only your students.</span></div>
+          <div><b>2. Leave the balcony at the time shown</b><span>Collect every name on your card first.</span></div>
+          <div><b>3. Hand them over backstage</b><span>Be at the backstage door by the time shown, then go back to your seat.</span></div>
         </div>
-        <div class="vol-pick" role="tablist">${VOLUNTEER_LETTERS.map(letter=>`<button type="button" data-volunteer="${letter}" class="${letter===volLetter?"on":""}"><b>${letter}</b><small>${jobs[letter].reduce((sum,job)=>sum+job.people.length,0)} students</small></button>`).join("")}</div>
-        <div class="vol-head"><div><h2>Volunteer ${volLetter}</h2><p>${mine.length?`${students} students · ${mine.length} ${mine.length===1?"walk":"walks"}`:"No band to walk"}</p></div></div>
-        ${mine.length?mine.map(job=>`<article class="vol-job"><header><div class="eyebrow">${job.event.number?`Act ${job.event.number}`:"Band"} · backstage before ${volunteerClock(job.start)}</div><h3>${escapeHtml(job.event.title)}</h3></header>
-          <p class="vol-when">Stand up when <b>${escapeHtml(job.before)}</b> begins. Walk only these ${job.people.length} from the balcony to the backstage door.</p>
-          <ol class="vol-names">${job.people.map(([name,instrument],index)=>`<li><span>${index+1}</span>${escapeHtml(name)}<em>${escapeHtml(instrument)}</em></li>`).join("")}</ol></article>`).join(""):`<p class="vol-empty">This letter has no students. Tap another letter.</p>`}`;
+        ${warnings.length?`<p class="vol-empty">${warnings.map(escapeHtml).join("<br>")}</p>`:""}
+        <div class="vol-pick" role="tablist">${VOLUNTEERS.map(v=>`<button type="button" data-volunteer="${v.id}" class="${v.id===me.id?"on":""}"><b>${escapeHtml(v.name)}</b><small>${jobs[v.id].reduce((sum,job)=>sum+job.people.length,0)} students · ${jobs[v.id].length} walks</small></button>`).join("")}</div>
+        <div class="vol-head"><div><h2>${escapeHtml(me.name)}</h2><p>${escapeHtml(me.role)} · ${mine.length?`${students} students · ${mine.length} ${mine.length===1?"walk":"walks"}`:"No band to walk"}</p></div></div>
+        ${freeTimes.length?`<p class="vol-free">${me.performs?"No walks while you get ready for, or play in":"Free to watch"}: <b>${freeTimes.map(window=>escapeHtml(window.title)).join("</b>, <b>")}</b>.</p>`:""}
+        ${mine.length?mine.map(job=>`<article class="vol-job"><header><div class="eyebrow">${job.event.number?`Act ${job.event.number}`:"Band"} · plays at ${volunteerClock(job.start)}</div><h3>${escapeHtml(job.event.title)}</h3></header>
+          <p class="vol-when">Leave the balcony at <b>${volunteerClock(job.leave)}</b>${job.leave<0?"":` (during <b>${escapeHtml(job.during)}</b>)`}. Be at the backstage door by <b>${volunteerClock(job.arrive)}</b>. Bring only these ${job.people.length}.</p>
+          <ol class="vol-names">${job.people.map(([name,instrument],index)=>`<li><span>${index+1}</span>${escapeHtml(name)}<em>${escapeHtml(instrument)}</em></li>`).join("")}</ol></article>`).join(""):`<p class="vol-empty">No walks for this helper.</p>`}`;
     }
     function navigate(route){
       const valid=["overview","timeline","stage","script","led","lights","volunteers","edit"],next=valid.includes(route)?route:"overview";
