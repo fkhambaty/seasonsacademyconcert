@@ -192,13 +192,10 @@
     .vol-steps div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}
     .vol-steps b{display:block;font:600 18px "Playfair Display",Georgia,serif;margin-bottom:4px}
     .vol-steps span{display:block;color:var(--muted);font-size:13.5px;line-height:1.4}
-    .vol-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin:0 0 18px}
-    .vol-pick button{border:1px solid var(--line);background:#fff;border-radius:16px;padding:12px 10px 10px;cursor:pointer;text-align:left}
-    .vol-pick button b{display:block;font:600 18px/1.15 "Playfair Display",Georgia,serif}
+    .vol-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:8px;margin:0 0 18px}
+    .vol-pick b{display:block;font:600 18px/1.15 "Playfair Display",Georgia,serif}
     .vol-free{margin:0 0 14px;padding:10px 14px;border-radius:12px;background:#1a9ea314;color:#137f84;font-size:14.5px}
-    .vol-pick button small{display:block;margin-top:5px;color:var(--muted);font-size:11px}
-    .vol-pick button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-    .vol-pick button.on small{color:#ffffffb0}
+    .vol-card small{display:block;margin-top:5px;color:var(--muted);font-size:11px}
     .vol-head{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:12px}
     .vol-head h2{font:600 32px/1 "Playfair Display",Georgia,serif;margin:0}
     .vol-head p{margin:4px 0 0;color:var(--muted)}
@@ -211,10 +208,57 @@
     .vol-names li span{color:var(--gold);font:600 16px "Playfair Display",Georgia,serif}
     .vol-names li em{font-style:normal;color:var(--muted);font-weight:600;font-size:13px}
     .vol-empty{color:var(--muted)}
+    .vol-share{margin:0 0 22px}
+    .vol-share p{margin:0 0 12px;color:var(--muted)}
+    .vol-card{border:1px solid var(--line);background:#fff;border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+    .vol-card button[data-volunteer]{border:0;background:transparent;padding:12px 12px 8px;cursor:pointer;text-align:left}
+    .vol-card button[data-copy-volunteer]{border:0;border-top:1px solid var(--line);background:#faf8f3;color:#8a6420;font-size:12.5px;font-weight:800;padding:8px 12px;cursor:pointer;text-align:left}
+    .vol-card.on{background:var(--ink);border-color:var(--ink);color:#fff}
+    .vol-card.on small{color:#ffffffb0}
+    .vol-card.on button[data-copy-volunteer]{background:#ffffff14;color:#f3d48a;border-top-color:#ffffff22}
+    .vol-copy-all{margin-top:10px}
+    .gate{position:fixed;inset:0;z-index:80;display:none;place-items:center;padding:24px;background:radial-gradient(circle at 50% 30%,#b8892f24 0,#f7f5f0 42%)}
+    html.locked .gate{display:grid}
+    html.locked .app-header,html.locked main,html.locked .cast-backdrop,html.locked .cast-drawer,html.locked .toast,html.locked #ledOutput{display:none!important}
+    html.role-volunteer .nav{display:none!important}
+    html.role-volunteer .brand{pointer-events:none}
+    .gate-card{width:min(420px,100%);background:#fff;border:1px solid var(--line);border-radius:28px;padding:28px 24px 22px;text-align:center;box-shadow:0 24px 60px #1b182618}
+    .gate-card img{height:78px;width:auto;margin-bottom:8px}
+    .gate-card h1{font:600 40px/1 "Playfair Display",Georgia,serif;letter-spacing:-.03em;margin:8px 0 8px}
+    .gate-card p{margin:0 auto 18px;max-width:320px;color:var(--muted)}
+    .gate-card input{width:100%;border:1px solid var(--line);border-radius:14px;padding:14px 12px;text-align:center;font-size:28px;letter-spacing:.42em;background:#fff}
+    .gate-card input:focus{outline:2px solid #b8892f66;border-color:var(--gold)}
+    .gate-card .primary{width:100%;margin-top:12px}
+    .gate-error{min-height:1.3em;margin:10px 0 0!important;color:var(--danger);font-weight:700;font-size:14px}
+    @keyframes gateShake{25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
+    .gate-card.shake{animation:gateShake .35s}
     @media(max-width:800px){.vol-steps{grid-template-columns:1fr}.vol-pick{grid-template-columns:1fr 1fr}.vol-names li{grid-template-columns:28px 1fr}.vol-names li em{grid-column:2}}
   </style>
+  <script>
+    try{
+      var gateSaved=sessionStorage.getItem("seasons-gate-v1");
+      var gateHash=location.hash.slice(1);
+      var gatePersonal=/^volunteers\/([a-z0-9-]+)$/.exec(gateHash);
+      if(!gateSaved) document.documentElement.classList.add("locked");
+      else if(gateSaved.indexOf("volunteer:")===0){
+        document.documentElement.classList.add("role-volunteer");
+        if(!gatePersonal||gatePersonal[1]!==gateSaved.slice(10)) document.documentElement.classList.add("locked");
+      }
+    }catch(error){ document.documentElement.classList.add("locked"); }
+  </script>
 </head>
 <body>
+  <div class="gate" id="gate">
+    <form class="gate-card" id="gateCard">
+      <img src="logo.png" alt="Seasons Music Academy">
+      <div class="eyebrow">Friday · 9 October · 3:45 PM</div>
+      <h1 id="gateTitle">Seasons Academy</h1>
+      <p id="gateLede">Type the show passcode to open the run sheet, script, lights and everything else.</p>
+      <input id="gateCode" type="password" inputmode="numeric" maxlength="5" autocomplete="off" aria-label="Passcode" placeholder="•••••">
+      <button class="primary" type="submit">Open</button>
+      <p class="gate-error" id="gateError" role="alert"></p>
+    </form>
+  </div>
   <div class="noise"></div>
   <header class="app-header">
     <a class="brand" href="#overview" aria-label="Seasons Academy overview">
@@ -223,6 +267,7 @@
     <nav class="nav" aria-label="Main navigation">
       <a href="#overview" data-route="overview">Overview</a><a href="#timeline" data-route="timeline">Timeline</a><a href="#stage" data-route="stage">Stage map</a><a href="#script" data-route="script">Script</a><a href="#led" data-route="led">LED</a><a href="#lights" data-route="lights">Lights</a><a href="#volunteers" data-route="volunteers">Volunteers</a><a class="edit-link" href="#edit" data-route="edit">Edit show</a>
     </nav>
+    <button class="icon-btn" id="lockBtn" type="button" aria-label="Lock this page" title="Lock">🔒</button>
     <button class="icon-btn" id="fullscreenBtn" aria-label="Enter fullscreen" title="Fullscreen">⛶</button>
   </header>
 
@@ -244,7 +289,7 @@
           <a class="home-btn" href="#script"><span class="home-icon">✎</span><b>Script</b><small>Every line for FK and Upasana</small></a>
           <a class="home-btn" href="#led"><span class="home-icon">▣</span><b>LED</b><small>Cues for the audience screen</small></a>
           <a class="home-btn" href="#lights"><span class="home-icon">✦</span><b>Lights</b><small>Console rehearsal and every act’s lighting look</small></a>
-          <a class="home-btn" href="#volunteers"><span class="home-icon">☺</span><b>Volunteers</b><small>Who brings each band from the balcony</small></a>
+          <a class="home-btn" href="#volunteers"><span class="home-icon">☺</span><b>Volunteers</b><small>One helper for each whole band</small></a>
         </div>
       </div>
     </section>
@@ -456,12 +501,31 @@
       {id:"noyanika-mom",name:"Noyanika’s mom",role:"Parent",kids:["Noyanika Amit Chaudhari"]}
     ];
     const VOL_LEAVE_BEFORE = 25, VOL_ARRIVE_BEFORE = 15, VOL_PRESHOW_LEAVE = -15, VOL_PRESHOW_ARRIVE = -5;
+    const GATE_KEY = "seasons-gate-v1", ADMIN_CODE = "12345", VOLUNTEER_CODE = "9999";
     let volLetter = VOLUNTEERS[0].id;
-    function volunteerChunks(list, size){
-      const groups = [];
-      for(let i=0;i<list.length;i+=size) groups.push(list.slice(i,i+size));
-      if(groups.length>1 && groups.at(-1).length===1 && groups.at(-2).length<size) groups.at(-2).push(groups.pop()[0]);
-      return groups;
+    function readAccess(){
+      const saved = sessionStorage.getItem(GATE_KEY) || "";
+      if(saved==="admin") return {role:"admin"};
+      if(saved.startsWith("volunteer:")) return {role:"volunteer", id:saved.slice("volunteer:".length)};
+      return {role:null};
+    }
+    function volunteerUrl(id){ return `${location.origin}${location.pathname}#volunteers/${id}`; }
+    function copyText(text, message){
+      const done = () => toast(message);
+      const fallback = () => {
+        const input = document.createElement("textarea");
+        input.value = text;
+        input.setAttribute("readonly", "");
+        input.style.position = "fixed";
+        input.style.left = "-9999px";
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand("copy");
+        input.remove();
+        done();
+      };
+      if(navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(done).catch(fallback);
+      else fallback();
     }
     function volunteerClock(minutes){
       const [hour, minute] = formatClock(minutes).split(":").map(Number);
@@ -487,45 +551,70 @@
       const overlaps = (a, b) => a.from < b.to && b.from < a.to;
       const load = id => jobs[id].reduce((sum, job)=>sum+job.people.length, 0);
       const warnings = [];
-      bands.forEach(slot=>{
+      [...bands].sort((a,b)=>CAST[b.event.title].people.length-CAST[a.event.title].people.length || a.start-b.start).forEach(slot=>{
         let leave = slot.start-VOL_LEAVE_BEFORE, arrive = slot.start-VOL_ARRIVE_BEFORE;
         if(leave<5){ leave = VOL_PRESHOW_LEAVE; arrive = VOL_PRESHOW_ARRIVE; }
-        const walk = {from:leave, to:arrive+2};
-        volunteerChunks(CAST[slot.event.title].people, 5).forEach(group=>{
-          const free = VOLUNTEERS.filter(v=>
-            !blocked[v.id].some(window=>overlaps(window, walk)) &&
-            !jobs[v.id].some(job=>overlaps(job.walk, walk)));
-          const pool = free.length ? free : VOLUNTEERS.filter(v=>!blocked[v.id].some(window=>overlaps(window, walk)));
-          const pick = [...pool].sort((a,b)=>load(a.id)-load(b.id) || VOLUNTEERS.indexOf(a)-VOLUNTEERS.indexOf(b))[0];
-          if(!free.length) warnings.push(`${slot.event.title}: ${pick.name} has two walks at the same time`);
-          jobs[pick.id].push({event:slot.event, start:slot.start, leave, arrive, walk, during:volunteerOnStageAt(timed, leave), people:group});
-        });
+        const walk = {from:leave, to:arrive+10};
+        const people = CAST[slot.event.title].people;
+        const free = VOLUNTEERS.filter(v=>
+          !people.some(([name])=>v.kids.includes(name)) &&
+          !blocked[v.id].some(window=>overlaps(window, walk)) &&
+          !jobs[v.id].some(job=>overlaps(job.walk, walk)));
+        const pick = [...free].sort((a,b)=>load(a.id)-load(b.id) || jobs[a.id].length-jobs[b.id].length || VOLUNTEERS.indexOf(a)-VOLUNTEERS.indexOf(b))[0];
+        if(!pick){ warnings.push(`${slot.event.title} has no free helper`); return; }
+        jobs[pick.id].push({event:slot.event, start:slot.start, leave, arrive, walk, during:volunteerOnStageAt(timed, leave), people});
       });
+      Object.values(jobs).forEach(list=>list.sort((a,b)=>a.start-b.start));
       return {jobs, blocked, warnings};
+    }
+    function volunteerJobHtml(job){
+      return `<article class="vol-job"><header><div class="eyebrow">${job.event.number?`Act ${job.event.number}`:"Band"} · plays at ${volunteerClock(job.start)}</div><h3>${escapeHtml(job.event.title)}</h3></header>
+        <p class="vol-when">Leave the balcony at <b>${volunteerClock(job.leave)}</b>${job.leave<0?"":` (during <b>${escapeHtml(job.during)}</b>)`}. Be at the backstage door by <b>${volunteerClock(job.arrive)}</b>. Bring this whole band — all ${job.people.length} students.</p>
+        <ol class="vol-names">${job.people.map(([name,instrument],index)=>`<li><span>${index+1}</span>${escapeHtml(name)}<em>${escapeHtml(instrument)}</em></li>`).join("")}</ol></article>`;
     }
     function renderVolunteers(){
       const page = document.getElementById("volunteersPage");
       if(!page) return;
+      const personal = document.documentElement.classList.contains("role-volunteer");
       const {jobs, blocked, warnings} = volunteerPlan();
       const me = VOLUNTEERS.find(v=>v.id===volLetter) || VOLUNTEERS[0];
       const mine = jobs[me.id]||[];
       const students = mine.reduce((sum, job)=>sum+job.people.length, 0);
       const freeTimes = blocked[me.id];
+      const bandsWord = mine.length===1?"band":"bands";
+      const freeLine = freeTimes.length?`<p class="vol-free">${me.performs?"No walks while you get ready for, or play in":"Free to watch"}: <b>${freeTimes.map(window=>escapeHtml(window.title)).join("</b>, <b>")}</b>.</p>`:"";
+      const cards = mine.length?mine.map(volunteerJobHtml).join(""):`<p class="vol-empty">No bands for this helper.</p>`;
+      if(personal){
+        document.title = `${me.name} — your bands`;
+        page.innerHTML = `<div class="eyebrow">Your bands only</div>
+          <h1>${escapeHtml(me.name)}</h1>
+          <p class="vol-lede">${me.role==="Parent"?"":`${escapeHtml(me.role)}. `}You have ${mine.length} ${bandsWord} and ${students} students. Each card is one whole band. Bring every name. A band is never split.</p>
+          <div class="vol-steps">
+            <div><b>1. Read the clock</b><span>Leave the balcony at the time on the card.</span></div>
+            <div><b>2. Collect the whole band</b><span>Every name on that card comes with you.</span></div>
+            <div><b>3. Hand them over</b><span>Be at the backstage door by the time shown, then sit down again.</span></div>
+          </div>
+          ${freeLine}
+          <div class="vol-head"><div><h2>${mine.length} ${bandsWord}</h2><p>${students} students</p></div></div>
+          ${cards}`;
+        return;
+      }
+      document.title = "Seasons Academy — Show Flow";
+      const count = id => jobs[id].reduce((sum,job)=>sum+job.people.length,0);
       page.innerHTML = `<div class="eyebrow">Balcony to backstage</div>
         <h1>Volunteers</h1>
-        <p class="vol-lede">Nine helpers. You only move band students. Each band is picked up about 25 minutes before it plays, and Acts 1 and 2 are collected before the show starts. Nobody walks students while their own child is on stage.</p>
+        <p class="vol-lede">One helper for each whole band. Copy a link and send it. They type 9999 and see only their own bands. Your show passcode already opened everything, so you do not need 9999.</p>
         <div class="vol-steps">
-          <div><b>1. Tap your name</b><span>Your card shows only your students.</span></div>
-          <div><b>2. Leave the balcony at the time shown</b><span>Collect every name on your card first.</span></div>
-          <div><b>3. Hand them over backstage</b><span>Be at the backstage door by the time shown, then go back to your seat.</span></div>
+          <div><b>1. Copy a link</b><span>One link per helper. The passcode is 9999.</span></div>
+          <div><b>2. They see only their page</b><span>No script, no lights, and no other helper’s bands.</span></div>
+          <div><b>3. One band, one helper</b><span>A band is never split. Acts 1 and 2 leave at 3:30 PM.</span></div>
         </div>
         ${warnings.length?`<p class="vol-empty">${warnings.map(escapeHtml).join("<br>")}</p>`:""}
-        <div class="vol-pick" role="tablist">${VOLUNTEERS.map(v=>`<button type="button" data-volunteer="${v.id}" class="${v.id===me.id?"on":""}"><b>${escapeHtml(v.name)}</b><small>${jobs[v.id].reduce((sum,job)=>sum+job.people.length,0)} students · ${jobs[v.id].length} walks</small></button>`).join("")}</div>
-        <div class="vol-head"><div><h2>${escapeHtml(me.name)}</h2><p>${escapeHtml(me.role)} · ${mine.length?`${students} students · ${mine.length} ${mine.length===1?"walk":"walks"}`:"No band to walk"}</p></div></div>
-        ${freeTimes.length?`<p class="vol-free">${me.performs?"No walks while you get ready for, or play in":"Free to watch"}: <b>${freeTimes.map(window=>escapeHtml(window.title)).join("</b>, <b>")}</b>.</p>`:""}
-        ${mine.length?mine.map(job=>`<article class="vol-job"><header><div class="eyebrow">${job.event.number?`Act ${job.event.number}`:"Band"} · plays at ${volunteerClock(job.start)}</div><h3>${escapeHtml(job.event.title)}</h3></header>
-          <p class="vol-when">Leave the balcony at <b>${volunteerClock(job.leave)}</b>${job.leave<0?"":` (during <b>${escapeHtml(job.during)}</b>)`}. Be at the backstage door by <b>${volunteerClock(job.arrive)}</b>. Bring only these ${job.people.length}.</p>
-          <ol class="vol-names">${job.people.map(([name,instrument],index)=>`<li><span>${index+1}</span>${escapeHtml(name)}<em>${escapeHtml(instrument)}</em></li>`).join("")}</ol></article>`).join(""):`<p class="vol-empty">No walks for this helper.</p>`}`;
+        <div class="vol-share"><div class="vol-pick">${VOLUNTEERS.map(v=>`<div class="vol-card ${v.id===me.id?"on":""}"><button type="button" data-volunteer="${v.id}"><b>${escapeHtml(v.name)}</b><small>${jobs[v.id].length} ${jobs[v.id].length===1?"band":"bands"} · ${count(v.id)} students</small></button><button type="button" data-copy-volunteer="${v.id}">Copy link</button></div>`).join("")}</div>
+          <button type="button" class="form-btn vol-copy-all" data-copy-all-volunteers>Copy all 9 links</button></div>
+        <div class="vol-head"><div><h2>${escapeHtml(me.name)}</h2><p>This is the page ${escapeHtml(me.name)} sees${me.role==="Parent"?"":` · ${escapeHtml(me.role)}`} · ${students} students · ${mine.length} ${bandsWord}</p></div></div>
+        ${freeLine}
+        ${cards}`;
     }
     function navigate(route){
       const valid=["overview","timeline","stage","script","led","lights","volunteers","edit"],next=valid.includes(route)?route:"overview";
@@ -540,6 +629,60 @@
       if(next==="lights")window.lightsRenderConsole?.();
       if(next==="volunteers")renderVolunteers();
       if(next==="edit")renderEditor();
+    }
+    function showGate(mode, id){
+      document.documentElement.classList.add("locked");
+      document.documentElement.classList.remove("role-volunteer");
+      const person = VOLUNTEERS.find(v=>v.id===id);
+      document.getElementById("gateTitle").textContent = person ? person.name : "Seasons Academy";
+      document.getElementById("gateLede").textContent = person
+        ? "This page is only yours. Type your volunteer passcode."
+        : "Type the show passcode to open the run sheet, script, lights and everything else.";
+      document.getElementById("gateError").textContent = "";
+      const gate = document.getElementById("gate");
+      gate.dataset.mode = mode;
+      gate.dataset.volunteer = person ? person.id : "";
+      const input = document.getElementById("gateCode");
+      input.value = "";
+      setTimeout(()=>input.focus(), 30);
+    }
+    function unlockSite(role){
+      document.documentElement.classList.remove("locked");
+      document.documentElement.classList.toggle("role-volunteer", role==="volunteer");
+    }
+    function openFromHash(){
+      const hash = location.hash.slice(1);
+      const personal = hash.match(/^volunteers\/([a-z0-9-]+)$/);
+      const access = readAccess();
+      const known = personal && VOLUNTEERS.some(v=>v.id===personal[1]);
+      if(access.role==="volunteer"){
+        if(!VOLUNTEERS.some(v=>v.id===access.id)){
+          sessionStorage.removeItem(GATE_KEY);
+          showGate("site");
+          return;
+        }
+        if(!personal || personal[1]!==access.id){
+          location.replace(`#volunteers/${access.id}`);
+          return;
+        }
+        unlockSite("volunteer");
+        volLetter = access.id;
+        navigate("volunteers");
+        return;
+      }
+      if(access.role!=="admin"){
+        showGate(known ? "volunteer" : "site", known ? personal[1] : "");
+        return;
+      }
+      unlockSite("admin");
+      if(personal){
+        if(!known){ location.replace("#volunteers"); return; }
+        volLetter = personal[1];
+        navigate("volunteers");
+        return;
+      }
+      const valid=["overview","timeline","stage","script","led","lights","volunteers","edit"];
+      navigate(valid.includes(hash)?hash:"overview");
     }
 
     const SHOW_START = new Date("2026-10-09T15:45:00+05:30");
@@ -1590,7 +1733,7 @@
       localStorage.setItem("seasons-show-names",showNames?"on":"off");
       if(document.getElementById("stageView").classList.contains("active"))renderStage();
     });
-    window.addEventListener("hashchange",()=>navigate(location.hash.slice(1)));
+    window.addEventListener("hashchange", openFromHash);
     document.getElementById("prevBtn").addEventListener("click",()=>moveStage(-1));
     document.getElementById("nextBtn").addEventListener("click",()=>moveStage(1));
     document.getElementById("resetLayoutBtn").addEventListener("click",()=>{const e=state.events.find(x=>x.id===currentId);e.layout={};saveState("Layout reset");renderStage()});
@@ -1682,11 +1825,47 @@
       if(!jumpButton)return;
       jumpScriptTo(jumpButton.dataset.scriptJump);
     });
-    document.getElementById("volunteersView").addEventListener("click",event=>{
-      const button=event.target.closest("[data-volunteer]");
-      if(!button)return;
-      volLetter=button.dataset.volunteer;
-      renderVolunteers();
+    document.getElementById("gate").addEventListener("submit", event=>{
+      event.preventDefault();
+      const code = document.getElementById("gateCode").value.trim();
+      const gate = document.getElementById("gate");
+      const error = document.getElementById("gateError");
+      if(code===ADMIN_CODE){
+        sessionStorage.setItem(GATE_KEY, "admin");
+        openFromHash();
+        return;
+      }
+      if(code===VOLUNTEER_CODE && gate.dataset.mode==="volunteer" && gate.dataset.volunteer){
+        sessionStorage.setItem(GATE_KEY, `volunteer:${gate.dataset.volunteer}`);
+        openFromHash();
+        return;
+      }
+      error.textContent = code===VOLUNTEER_CODE ? "That passcode only opens a personal volunteer link." : "That passcode is not right.";
+      document.getElementById("gateCode").value = "";
+      const card = document.getElementById("gateCard");
+      card.classList.remove("shake");
+      void card.offsetWidth;
+      card.classList.add("shake");
+    });
+    document.getElementById("lockBtn").addEventListener("click", ()=>{
+      sessionStorage.removeItem(GATE_KEY);
+      openFromHash();
+    });
+    document.getElementById("volunteersView").addEventListener("click", event=>{
+      const copyAll = event.target.closest("[data-copy-all-volunteers]");
+      if(copyAll){
+        const text = VOLUNTEERS.map(v=>`${v.name} (${v.role})\n${volunteerUrl(v.id)}\nPasscode: 9999`).join("\n\n");
+        copyText(text, "All 9 links copied");
+        return;
+      }
+      const copy = event.target.closest("[data-copy-volunteer]");
+      if(copy){
+        copyText(`${volunteerUrl(copy.dataset.copyVolunteer)}\nPasscode: 9999`, "Link copied");
+        return;
+      }
+      const button = event.target.closest("[data-volunteer]");
+      if(!button || document.documentElement.classList.contains("role-volunteer")) return;
+      location.hash = `volunteers/${button.dataset.volunteer}`;
     });
     document.getElementById("printStageBtn").addEventListener("click",()=>{
       const event=state.events.find(e=>e.id===currentId);
@@ -1724,7 +1903,8 @@
       if(e.key==="ArrowLeft")moveStage(-1);
       if(e.key.toLowerCase()==="f")document.getElementById("fullscreenBtn").click();
     });
-    if(!location.hash)location.hash="overview";else navigate(location.hash.slice(1));
+    if(!location.hash) location.replace("#overview");
+    else openFromHash();
   </script>
   <script src="led.js?v=7"></script>
   <script src="lights.js?v=3"></script>
