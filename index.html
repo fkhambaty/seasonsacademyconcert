@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f7f5f0">
   <title>Seasons Academy — Show Flow</title>
-  <link rel="stylesheet" href="led.css?v=7">
+  <link rel="stylesheet" href="led.css?v=8">
   <link rel="stylesheet" href="lights.css?v=3">
   <style>
     :root{--ink:#1b1826;--muted:#5c5768;--night:#f7f5f0;--panel:#ffffff;--line:#e4e0d8;--gold:#b8892f;--pink:#d83a7f;--cyan:#1a9ea3;--danger:#d9434d;--stage:#ffffff;--shadow:0 24px 60px #1b182618}
@@ -400,7 +400,7 @@
 
   <script>
     const STORAGE_KEY = "seasons-academy-show-v9";
-    const CAST = {"Old Woman Shoe":{"costume":"Girls : White top/shirt, Black short skirt, Black stockings, Black balarinas. Boys: White shirt, Black pant, Black socks, Black shoe, Black bow tie and suspender.","people":[["Myra Pokhrel","Keyboard"],["Parthvee Jain","Keyboard"],["Ayansh Aniket Zarkar","Keyboard"],["Adelyn Grace","Keyboard"]]},"Ajeeb Daastaan":{"costume":"","people":[["Eva Camillio Fernandes","Acoustic Guitar"],["Ridhaan Kavthekar","Acoustic Guitar"],["Natasha Chatterjee","Acoustic Guitar"],["Arnik Sharma","Acoustic Guitar"],["Vivaan Patel","Acoustic Guitar"],["Manoj Bhardwaj","Acoustic Guitar"],["Vinay Sir","Bass Guitar"],["Dilip Nitanta Ranade","Violin"],["Shreya Karthik","Violin"],["Ishanvi Batra","Violin"],["Harish Acharya","Violin"],["Aadhya Trivedi","Violin"],["Sankar Samia Sir","Violin"],["Eliana Vineet Sasane","Keyboard"],["Milee Ninad Mahadik","Keyboard"],["Ritu Rijhwani","Keyboard"],["Myraa Vivian Pillai","Drums"]]},"Bharat Humko Jaan Se Pyara Hai":{"costume":"Girls : White long kurti , blue sleeveless denim jacket and blue jean, white balarinas / sneakers. Boys : White long kurta ,Blue denim jacket and blue jean, white sneakers.","people":[["Srihitha Potnuru","Keyboard"],["Diya Tuteja","Keyboard"],["Kush Jigar Shah","Keyboard"],["Virat Jauhari","Keyboard"],["Harland Sir","Djambe"]]},"Challa — Jab Tak Hai Jaan":{"costume":"Girls : White long kurti , blue sleeveless denim jacket and blue jean, white balarinas / sneakers. Boys : White long kurta ,Blue denim jacket and blue jean, white sneakers.","people":[["Immanuel Lojo","Drums"],["K.Gayatri","Keyboard"],["Harland Sir","Vocals"],["Vihaani Roy","Acoustic Guitar"],["Arshaan K Dastoor","Acoustic Guitar"],["Siddhiksha Chaudhary","Acoustic Guitar"],["Pratibha Rathore","Acoustic Guitar"],["Navya Alung","Acoustic Guitar"],["Vinay Sir","Bass Guitar"]]},"Chammak Challo Mashup":{"costume":"Boys: White shirt, black Bow tie, Black formal pant, Black satin belt, Black formal shoe.","people":[["Shaurya Mohit Sharma","Electric guitar"],["Sharwin Mani","Electric guitar"],["Aayush Jahagirdar","Electric guitar"],["Viraj Phillips","Electric guitar"],["Amaaya Nair","Electric guitar"],["Aarush Sandip Kawade","Keyboard"],["Ariyan Bhattacharya","Keyboard"],["Amish Singh","Vocals"],["Vivaan Jitendra Virbhani","Drums"],["Vinay Sir","Bass Guitar"]]},"Drum Circle":{"costume":"Girls : Black T-shirt, Blue shorts, Black stockings, Black Boots, Red Bandanas and accessories. Boys : Black T-shirt, Blue Jeans, Sneakers, Red Bandanas and accessories.","people":[["Immanuel Lojo","Drums"],["Myra Gomes","Drums"],["Myraa Vivian Pillai","Drums"],["Kaivalya Shastry","Drums"],["Aryan Halkude","Drums"],["Vivaan Jitendra Virbhani","Drums"],["Reyansh Sinha","Drums"],["Shatakshi Shankar","Drums"],["Benita Fernandes","Drums"],["Nevaeh Sharma","Drums"],["Harshvardhan S Kendre","Drums"],["Nathania Joseph","Drums"]]},"Dil Diya Hai Jaan Bhi Denge — Karma":{"costume":"Girls : White long kurti , white pyjamas, Tricolour stole or dupatta. Boys : White long kurta , white pyjamas, Tricolour stole/dupatta.","people":[["Mustafa Sabuwala","Vocals"],["Jyotsanaa Lokhandde","Vocals"],["Simmi Arora","Vocals"],["Sujata Pasupathi","Vocals"],["Virat Jauhari","Keyboard"],["Harland Sir","Djambe"]]},"Eye of the Tiger, Gehra Hua Mashup":{"costume":"","people":[["Nathania Joseph","Drums"],["Veda Shrivastava","Electric guitar"],["Ishita Kothari","Electric guitar"],["Kinaera Sharma","Electric guitar"],["Richard D'souza","Electric guitar"],["Abhijeet Chowdhaury","Bass Guitar"],["Arjun Kelkar","Keyboard"]]},"Final Countdown":{"costume":"","people":[["Arnab Banerjee","Electric guitar"],["Nakul Chandrakant Chandak","Acoustic Guitar"],["Sarah MohmedIrfan Memon","Electric guitar"],["Leonora Mendis","Electric guitar"],["Aarya Pratap","Electric guitar"],["Nivita Baliga","Keyboard"],["Ayaan Solanki","Keyboard"],["Aviana Lalwani","Keyboard"],["Linisha Srivastava","Keyboard"],["Reyansh Sinha","Drums"],["Vinay Sir","Bass Guitar"],["Sabastian Sir","Vocals"]]},"G Minute":{"costume":"Girls : Satin gown and Balarinas/heels. Boys : , Black Pants, Black bow tie, Black socks and black shoes","people":[["Dilip Nitanta Ranade","Violin"],["Shreya Karthik","Violin"],["Ishanvi Batra","Violin"],["Harish Acharya","Violin"],["Aadhya Trivedi","Violin"],["Natasha Nainani","Violin"],["Sankar Samia Sir","Violin"]]},"Ghar More Pardesiya & Moh Moh Ke Dhaage":{"costume":"Gold Lehenga/ Salwar, Gold sandals","people":[["Trishaa Nikhil Shirude","Hindustani Vocals"],["Sanjeevini Chandramani Jarje","Hindustani Vocals"],["Savya Dubey","Hindustani Vocals"],["Preeti Bhandare","Hindustani Vocals"]]},"How Long — Charlie Puth":{"costume":"Girls : Maroon Satin shirts, Black trousers, chunky jewellery and black formal shoe. Boys : Maroon Satin shirts, Black trousers and black formal shoe.","people":[["Keshav Coimbatore Balachandar","Electric guitar"],["Vibhav Coimbatore Balachandar","Electric guitar"],["Maghizini Viswanathan","Electric guitar"],["Nathania Joseph","Drums"]]},"Mission Impossible":{"costume":"","people":[["Kartikeyan Jha","Electric guitar"],["Immanuel Lojo","Electric guitar"],["Rishi Chitresh Bhatia","Electric guitar"],["Avni Bhatia","Electric guitar"],["Agastya Anil Yadav","Electric guitar"],["Avyukth Ujwal","Keyboard"],["Sudiksha Moolani","Keyboard"],["Inaya Kapadiya","Keyboard"],["Dakshi Devi","Keyboard"],["Abigail Vairagar","Keyboard"],["Siddhartha Basuroy","Drums"],["Vinay Sir","Bass Guitar"]]},"O Haseena":{"costume":"","people":[["Joseph Sunil Sir","Electric guitar"],["Vinay Sir","Bass Guitar"],["Sabastian Sir","Vocals"],["Harland Sir","Keyboard"],["Nicholas Sir","Drums"],["Ashish Sir","Vocals"]]},"Raag Yaman":{"costume":"Girls: Navy Blue kurti, White Pyjama, white jooti Boys: Blue kurta, White Pyjama, kolapuri chappal/shoe","people":[["Ayansh Agrawal","Flute"],["Manoj Bhardwaj","Flute"],["Eva Alung","Flute"],["Pranchal","Flute"],["Ashish Sir","Flute"]]},"Saiyaara":{"costume":"","people":[["Aarush Sandip Kawade","Electric guitar"],["Ranvir Samrat Taware","Electric guitar"],["Avir Parinit Tathed","Electric guitar"],["Zoya Sajid Memon","Electric guitar"],["Sanjeevini Chandramani Jarje","Keyboard"],["Reyansh Bhatia","Keyboard"],["Rishika Singh","Keyboard"],["Shanaya Sanoj","Keyboard"],["Mireya Joseph","Keyboard"],["Myra Gomes","Drums"],["Ridhaan Kavthekar","Bass Guitar"]]},"Tauba Tauba, Urvashi Urvashi Mashup":{"costume":"Girls : Maroon Satin shirts, Black trousers, chunky jewellery and black formal shoe. Boys : Maroon Satin shirts, Black trousers and black formal shoe.","people":[["Eliana Vineet Sasane","Keyboard"],["Adarsh Satheesh","Keyboard"],["Milee Ninad Mahadik","Keyboard"],["Harshvardhan S Kendre","Drums"],["Maghizini Viswanathan","Acoustic Guitar"],["Vibhav Coimbatore Balachandar","Acoustic Guitar"],["Amaaya Nair","Acoustic Guitar"],["Kush Jigar Shah","Bass Guitar"]]},"The Flute Song":{"costume":"Girls : White top/shirt, Black short skirt, Black stockings, Black balarinas. Boys: White shirt, Black pant, Black socks, Black shoe, Black bow tie and suspender.","people":[["Ivan Raghava","Acoustic Guitar"],["Mahira Chandak","Keyboard"],["Kiana Mendis","Keyboard & Vocals"],["Devansh Wadhwa","Keyboard"],["Sesha Datta Abhiram Babbepalli","Keyboard"],["Aarush Rahul Zarpure","Keyboard"],["Aavya Brid","Keyboard"]]},"We Are the Champions Mashup":{"costume":"Black Dresses/Gown, Gold belt & Hair Bow, Black Balarinas, White pearl earing, Bracelet and neck piece.","people":[["Akriti Hemant Gaikwad","Western Vocals"],["Arika Hemant Gaikwad","Western Vocals"],["Mireya Joseph","Western Vocals"],["Lubaina Godhrawala","Western Vocals"],["Arohi Abhay Mundra","Western Vocals"],["Aahana Sen","Western Vocals"],["Aishni Ratadiya","Western Vocals"],["Naysa","Western Vocals"],["Diya Tuteja","Western Vocals"],["Ria Nikhil Naik","Western Vocals"],["Prisha Mathur","Western Vocals"],["Noyanika Amit Chaudhari","Western Vocals"],["Harland Sir","Keyboard"]]}};
+    const CAST = {"Old Woman in a Shoe":{"costume":"Girls : White top/shirt, Black short skirt, Black stockings, Black balarinas. Boys: White shirt, Black pant, Black socks, Black shoe, Black bow tie and suspender.","people":[["Myra Pokhrel","Keyboard"],["Parthvee Jain","Keyboard"],["Ayansh Aniket Zarkar","Keyboard"],["Adelyn Grace","Keyboard"]]},"Ajeeb Daastaan":{"costume":"","people":[["Eva Camillio Fernandes","Acoustic Guitar"],["Ridhaan Kavthekar","Acoustic Guitar"],["Natasha Chatterjee","Acoustic Guitar"],["Arnik Sharma","Acoustic Guitar"],["Vivaan Patel","Acoustic Guitar"],["Manoj Bhardwaj","Acoustic Guitar"],["Vinay Sir","Bass Guitar"],["Dilip Nitanta Ranade","Violin"],["Shreya Karthik","Violin"],["Ishanvi Batra","Violin"],["Harish Acharya","Violin"],["Aadhya Trivedi","Violin"],["Sankar Samia Sir","Violin"],["Eliana Vineet Sasane","Keyboard"],["Milee Ninad Mahadik","Keyboard"],["Ritu Rijhwani","Keyboard"],["Myraa Vivian Pillai","Drums"]]},"Bharat Humko Jaan Se Pyara Hai":{"costume":"Girls : White long kurti , blue sleeveless denim jacket and blue jean, white balarinas / sneakers. Boys : White long kurta ,Blue denim jacket and blue jean, white sneakers.","people":[["Srihitha Potnuru","Keyboard"],["Diya Tuteja","Keyboard"],["Kush Jigar Shah","Keyboard"],["Virat Jauhari","Keyboard"],["Harland Sir","Djambe"]]},"Challa — Jab Tak Hai Jaan":{"costume":"Girls : White long kurti , blue sleeveless denim jacket and blue jean, white balarinas / sneakers. Boys : White long kurta ,Blue denim jacket and blue jean, white sneakers.","people":[["Immanuel Lojo","Drums"],["K.Gayatri","Keyboard"],["Harland Sir","Vocals"],["Vihaani Roy","Acoustic Guitar"],["Arshaan K Dastoor","Acoustic Guitar"],["Siddhiksha Chaudhary","Acoustic Guitar"],["Pratibha Rathore","Acoustic Guitar"],["Navya Alung","Acoustic Guitar"],["Vinay Sir","Bass Guitar"]]},"Chammak Challo Mashup":{"costume":"Boys: White shirt, black Bow tie, Black formal pant, Black satin belt, Black formal shoe.","people":[["Shaurya Mohit Sharma","Electric guitar"],["Sharwin Mani","Electric guitar"],["Aayush Jahagirdar","Electric guitar"],["Viraj Phillips","Electric guitar"],["Amaaya Nair","Electric guitar"],["Aarush Sandip Kawade","Keyboard"],["Ariyan Bhattacharya","Keyboard"],["Amish Singh","Vocals"],["Vivaan Jitendra Virbhani","Drums"],["Vinay Sir","Bass Guitar"]]},"Drum Circle":{"costume":"Girls : Black T-shirt, Blue shorts, Black stockings, Black Boots, Red Bandanas and accessories. Boys : Black T-shirt, Blue Jeans, Sneakers, Red Bandanas and accessories.","people":[["Immanuel Lojo","Drums"],["Myra Gomes","Drums"],["Myraa Vivian Pillai","Drums"],["Kaivalya Shastry","Drums"],["Aryan Halkude","Drums"],["Vivaan Jitendra Virbhani","Drums"],["Reyansh Sinha","Drums"],["Shatakshi Shankar","Drums"],["Benita Fernandes","Drums"],["Nevaeh Sharma","Drums"],["Harshvardhan S Kendre","Drums"],["Nathania Joseph","Drums"]]},"Dil Diya Hai Jaan Bhi Denge — Karma":{"costume":"Girls : White long kurti , white pyjamas, Tricolour stole or dupatta. Boys : White long kurta , white pyjamas, Tricolour stole/dupatta.","people":[["Mustafa Sabuwala","Vocals"],["Jyotsanaa Lokhandde","Vocals"],["Simmi Arora","Vocals"],["Sujata Pasupathi","Vocals"],["Virat Jauhari","Keyboard"],["Harland Sir","Djambe"]]},"Eye of the Tiger, Gehra Hua Mashup":{"costume":"","people":[["Nathania Joseph","Drums"],["Veda Shrivastava","Electric guitar"],["Ishita Kothari","Electric guitar"],["Kinaera Sharma","Electric guitar"],["Richard D'souza","Electric guitar"],["Abhijeet Chowdhaury","Bass Guitar"],["Arjun Kelkar","Keyboard"]]},"Final Countdown":{"costume":"","people":[["Arnab Banerjee","Electric guitar"],["Nakul Chandrakant Chandak","Acoustic Guitar"],["Sarah MohmedIrfan Memon","Electric guitar"],["Leonora Mendis","Electric guitar"],["Aarya Pratap","Electric guitar"],["Nivita Baliga","Keyboard"],["Ayaan Solanki","Keyboard"],["Aviana Lalwani","Keyboard"],["Linisha Srivastava","Keyboard"],["Reyansh Sinha","Drums"],["Vinay Sir","Bass Guitar"],["Sabastian Sir","Vocals"]]},"G Minute":{"costume":"Girls : Satin gown and Balarinas/heels. Boys : , Black Pants, Black bow tie, Black socks and black shoes","people":[["Dilip Nitanta Ranade","Violin"],["Shreya Karthik","Violin"],["Ishanvi Batra","Violin"],["Harish Acharya","Violin"],["Aadhya Trivedi","Violin"],["Natasha Nainani","Violin"],["Sankar Samia Sir","Violin"]]},"Ghar More Pardesiya & Moh Moh Ke Dhaage":{"costume":"Gold Lehenga/ Salwar, Gold sandals","people":[["Trishaa Nikhil Shirude","Hindustani Vocals"],["Sanjeevini Chandramani Jarje","Hindustani Vocals"],["Savya Dubey","Hindustani Vocals"],["Preeti Bhandare","Hindustani Vocals"]]},"How Long — Charlie Puth":{"costume":"Girls : Maroon Satin shirts, Black trousers, chunky jewellery and black formal shoe. Boys : Maroon Satin shirts, Black trousers and black formal shoe.","people":[["Keshav Coimbatore Balachandar","Electric guitar"],["Vibhav Coimbatore Balachandar","Electric guitar"],["Maghizini Viswanathan","Electric guitar"],["Nathania Joseph","Drums"]]},"Mission Impossible":{"costume":"","people":[["Kartikeyan Jha","Electric guitar"],["Immanuel Lojo","Electric guitar"],["Rishi Chitresh Bhatia","Electric guitar"],["Avni Bhatia","Electric guitar"],["Agastya Anil Yadav","Electric guitar"],["Avyukth Ujwal","Keyboard"],["Sudiksha Moolani","Keyboard"],["Inaya Kapadiya","Keyboard"],["Dakshi Devi","Keyboard"],["Abigail Vairagar","Keyboard"],["Siddhartha Basuroy","Drums"],["Vinay Sir","Bass Guitar"]]},"O Haseena":{"costume":"","people":[["Joseph Sunil Sir","Electric guitar"],["Vinay Sir","Bass Guitar"],["Sabastian Sir","Vocals"],["Harland Sir","Keyboard"],["Nicholas Sir","Drums"],["Ashish Sir","Vocals"]]},"Raag Yaman":{"costume":"Girls: Navy Blue kurti, White Pyjama, white jooti Boys: Blue kurta, White Pyjama, kolapuri chappal/shoe","people":[["Ayansh Agrawal","Flute"],["Manoj Bhardwaj","Flute"],["Eva Alung","Flute"],["Pranchal","Flute"],["Ashish Sir","Flute"]]},"Saiyaara":{"costume":"","people":[["Aarush Sandip Kawade","Electric guitar"],["Ranvir Samrat Taware","Electric guitar"],["Avir Parinit Tathed","Electric guitar"],["Zoya Sajid Memon","Electric guitar"],["Sanjeevini Chandramani Jarje","Keyboard"],["Reyansh Bhatia","Keyboard"],["Rishika Singh","Keyboard"],["Shanaya Sanoj","Keyboard"],["Mireya Joseph","Keyboard"],["Myra Gomes","Drums"],["Ridhaan Kavthekar","Bass Guitar"]]},"Tauba Tauba, Urvashi Urvashi Mashup":{"costume":"Girls : Maroon Satin shirts, Black trousers, chunky jewellery and black formal shoe. Boys : Maroon Satin shirts, Black trousers and black formal shoe.","people":[["Eliana Vineet Sasane","Keyboard"],["Adarsh Satheesh","Keyboard"],["Milee Ninad Mahadik","Keyboard"],["Harshvardhan S Kendre","Drums"],["Maghizini Viswanathan","Acoustic Guitar"],["Vibhav Coimbatore Balachandar","Acoustic Guitar"],["Amaaya Nair","Acoustic Guitar"],["Kush Jigar Shah","Bass Guitar"]]},"The Flute Song":{"costume":"Girls : White top/shirt, Black short skirt, Black stockings, Black balarinas. Boys: White shirt, Black pant, Black socks, Black shoe, Black bow tie and suspender.","people":[["Ivan Raghava","Acoustic Guitar"],["Mahira Chandak","Keyboard"],["Kiana Mendis","Keyboard & Vocals"],["Devansh Wadhwa","Keyboard"],["Sesha Datta Abhiram Babbepalli","Keyboard"],["Aarush Rahul Zarpure","Keyboard"],["Aavya Brid","Keyboard"]]},"We Are the Champions Mashup":{"costume":"Black Dresses/Gown, Gold belt & Hair Bow, Black Balarinas, White pearl earing, Bracelet and neck piece.","people":[["Akriti Hemant Gaikwad","Western Vocals"],["Arika Hemant Gaikwad","Western Vocals"],["Mireya Joseph","Western Vocals"],["Lubaina Godhrawala","Western Vocals"],["Arohi Abhay Mundra","Western Vocals"],["Aahana Sen","Western Vocals"],["Aishni Ratadiya","Western Vocals"],["Naysa","Western Vocals"],["Diya Tuteja","Western Vocals"],["Ria Nikhil Naik","Western Vocals"],["Prisha Mathur","Western Vocals"],["Noyanika Amit Chaudhari","Western Vocals"],["Harland Sir","Keyboard"]]}};
     const DEFAULT_RIG = {drumSide:"right",keyboardsPerSide:3,guitarSlots:5,overrides:{}};
     const colors = {
       "Drums":"#e0357f","Keyboard":"#6c5ce7","Guitar":"#f2712e",
@@ -410,18 +410,19 @@
     const item = (number,title,instruments,duration=7,type="performance",extra={}) => ({id:crypto.randomUUID(),number,title,duration,type,instruments,layout:{},...extra});
     const filler = () => item(null,"Filler / Stage reset",[],7,"filler");
     const hostsCentre = () => ({"Host-1":{x:45,y:84},"Host-2":{x:55,y:84}});
+    const sonalLeft = () => ({"Speaker-1":{x:20,y:82}});
     function createDefaults(){
       return {
         title:"Seasons Academy Showcase",date:"",startTime:"15:45",rig:{...DEFAULT_RIG},
         events:[
           item(null,"Hosts Welcome",[["Host",2]],3,"ceremony",{layout:hostsCentre(),notes:"Both hosts at centre stage. They greet the audience, then immediately call Sonal on stage for the welcome speech."}),
-          item(null,"Welcome Speech — Sonal",[["Speaker",1]],7,"ceremony",{group:"opening",notes:"Sonal delivers the welcome speech and calls the respective guests up to light the lamp. Speech and lamp lighting run in sync."}),
+          item(null,"Welcome Speech — Sonal",[["Speaker",1]],7,"ceremony",{group:"opening",layout:sonalLeft(),notes:"Sonal stands on the left side of the stage (the audience’s left), not at centre. She delivers the welcome speech and calls the respective guests up to light the lamp. Speech and lamp lighting run in sync."}),
           item(null,"Lighting the Lamp",[],7,"ceremony",{group:"opening",notes:"Guests called by Sonal light the lamp while she continues the speech. Lamp position and who lights it are still to be confirmed — no stage positions marked yet."}),
           item(null,"Ice Breaker — Hosts & Joseph",[["Host",2],["Guitar",1]],6,"ceremony",{layout:hostsCentre(),centerFirst:true,notes:"Sonal calls the hosts back; both stand at centre stage. Hosts demand to see the owner of Seasons Academy — Joseph enters and takes the guitar position nearest centre. He plays a complicated guitar piece; hosts try to clap along, can't match his expertise, stop him and ask for a simple tune. Hosts clap along, then get the whole audience clapping in the same rhythm."}),
           item(1,"Tauba Tauba, Urvashi Urvashi Mashup",[["Keyboard",3],["Drums",1],["Guitar",3],["Bass Guitar",1]]),
           item(2,"Bharat Humko Jaan Se Pyara Hai",[["Keyboard",4],["Djembe",1]]),filler(),
           item(3,"Drum Circle",[["Drums",12]]),filler(),
-          item(4,"Old Woman Shoe",[["Keyboard",4]]),
+          item(4,"Old Woman in a Shoe",[["Keyboard",4]]),
           item(5,"Mission Impossible",[["Guitar",5],["Keyboard",5],["Drums",1],["Bass Guitar",1]]),filler(),
           item(6,"We Are the Champions Mashup",[["Western Vocals",12],["Keyboard",1]]),
           item(7,"Raag Yaman",[["Flute",5]]),
@@ -451,9 +452,27 @@
     function loadState(){
       try{
         const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));
-        if(saved?.events?.length) return withRig(saved);
+        if(saved?.events?.length) return migrateShow(withRig(saved));
       }catch(error){ console.warn("Could not load saved show",error); }
       return createDefaults();
+    }
+    function migrateShow(show){
+      const done = new Set(show.migrations||[]);
+      if(!done.has("sonal-left-v1")){
+        const speech = show.events.find(e=>e.title==="Welcome Speech — Sonal");
+        if(speech){
+          speech.layout = {...speech.layout, ...sonalLeft()};
+          speech.notes = createDefaults().events.find(e=>e.title==="Welcome Speech — Sonal").notes;
+        }
+        done.add("sonal-left-v1");
+      }
+      if(!done.has("old-woman-in-a-shoe-v1")){
+        show.events.forEach(e=>{ if(e.title==="Old Woman Shoe") e.title="Old Woman in a Shoe"; });
+        done.add("old-woman-in-a-shoe-v1");
+      }
+      show.migrations = [...done];
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(show));
+      return show;
     }
     function withRig(show){return {...show,rig:{...DEFAULT_RIG,...show.rig,overrides:{...show.rig?.overrides}}}}
     function saveState(message="Saved locally"){
@@ -826,7 +845,7 @@
         {do:"Hall, much louder: “POM POM!”"},
         {fk:"Haan. Ab lag raha hai Swargate."},
         {phase:"Departure"},
-        {up:"Ek request — phones silent. Video zaroor banaiye, bas ringtone nahi. Is bus mein ek hi music chalega — live."},
+        {up:"Ek request — phones silent, aur aaj video ya recording allowed nahi hai. Aaj aankhon se dekhiye, dil mein record kariye. Is bus mein ek hi music chalega — live."},
         {fk:"Aur har achhi yatra ki shuruaat ek diye se hoti hai."},
         {up:"Bus nikalne se pehle — roshni aur shubhkaamnaon ke saath. Please welcome — **Sonal!**"},
         {both:"Ek zordaar taali!"},
@@ -836,7 +855,7 @@
       {kicker:"Ice breaker → Act 1",title:"Joseph starts the bus, then Tauba Tauba",meta:["Bus stop: leaving Pune","Talk + play about 6 min","Ends with: Act 1 title"],steps:[
         {wait:"Sonal calls you back on stage."},
         {do:"Both enter from the same wings as before. Centre front."},
-        {fk:"Thank you, Sonal! Diya jal gaya. Passengers taiyaar. Conductor taiyaar. Bas ek cheez missing hai."},
+        {fk:"Thank you, Sonal! Passengers taiyaar. Conductor taiyaar. Bas ek cheez missing hai."},
         {up:"Kya?"},
         {fk:"Driver!"},
         {up:"Bina driver ke bus? Jinki yeh academy hai, jinki yeh poori bus hai — unhe hum akele nahi bulaayenge. Poora hall bulaayega. Teen tak ginenge, aur sab zor se — **JO-SEPH!**"},
@@ -916,13 +935,13 @@
         {up:"Pehchaan loge unhe?"},
         {fk:"Haan — wahi jo saath baithe hain aur har paanch minute mein poochte hain, “kuch khaayega?”"}
       ]),
-      hostTransition("Drum Circle","Old Woman Shoe","Satara",[
+      hostTransition("Drum Circle","Old Woman in a Shoe","Satara",[
         {phase:"Core · use every time",core:true},
         {fk:"Tunnel se bahar aa gaye — aur kaan abhi bhi wahi hain!"},
         {up:"Baarah drummers — taali!"},
         {do:"Arm towards the hall: “GOA KITNA DOOR?”"},
         {fk:"Teen sau saath. Aur Satara aa gaya!"},
-        {up:"Satara matlab do cheezein. Ek — **Kaas pathar**. Yahi season hai. September-October mein poora pathar rang-birange phoolon se bhar jaata hai. UNESCO World Heritage ka hissa."},
+        {up:"Satara matlab do cheezein. Ek — **Kaas pathaar**. Yahi season hai. September-October mein poora pathaar rang-birange phoolon se bhar jaata hai. UNESCO World Heritage ka hissa."},
         {fk:"Aur do — kandi pedhe."},
         {up:"FK, tum phoolon wali baat sun bhi rahe the?"},
         {fk:"Bhookhe pet phool kaun dekhta hai?"},
@@ -930,11 +949,11 @@
         {fk:"Aur unka gaana — ek nursery rhyme. “There was an old woman who lived in a shoe…”"},
         {up:"“…she had so many children, she didn’t know what to do.”"},
         {fk:"(looking out at the whole hall) Itne saare bachche, ek joota. Main samajh sakta hoon woh kaisa feel karti thi. Main is bus ka conductor hoon."},
-        {up:"Agle act ke parents — phone nikaaliye, camera on kariye, aur **storage check** kariye."},
-        {fk:"Kyunki beech gaane mein “Storage Full” aaya, toh yeh bachcha shaadi ke din tak yaad dilaayega."},
-        {up:"Ready? Phone upar karke dikhaiye!"},
-        {do:"Wait for phones to go up across the hall."},
-        {fk:"Arre waah — Coldplay concert lag raha hai."},
+        {up:"Agle act ke parents — aaj camera nahi hai, toh aapka kaam aur bhi important hai."},
+        {fk:"Stage pe aate hi aapka bachcha sabse pehle aapko dhoondhega. Toh jab woh dikhe — haath hilaake batana, “main yahan hoon!”"},
+        {up:"Practice karte hain! Parents — haath upar, wave kariye!"},
+        {do:"Wait for hands to wave across the hall."},
+        {fk:"Arre waah — Coldplay concert lag raha hai. Bas bina phone ke."},
         {phase:"Extension 1 · the first vote"},
         {fk:"Waise Satara se ek aur performer chadh sakta hai. Conductor bhi ek gaana gaa de?"},
         {up:"Yeh passengers decide karenge. Passengers — conductor gaana gaaye?"},
@@ -942,10 +961,13 @@
         {fk:"Itna ek-mat toh society ki meeting mein kabhi nahi hota."},
         {up:"Democracy jeet gayi. Yeh vote aage bhi hoga, FK."},
         {phase:"Extension 2 · an old address"},
-        {up:"Yeh rhyme lagbhag 240 saal purani hai."},
-        {fk:"240 saal se aunty joote mein reh rahi hai. Aur Pune mein aaj bhi itne mein 1BHK nahi milta."}
+        {up:"Yeh rhyme lagbhag 240 saal purani hai. Aur 240 saal mein ek cheez bilkul nahi badli."},
+        {fk:"Kya?"},
+        {up:"Jahan bahut saare bachche hon, wahan subah school ke time ek moza hamesha gayab hota hai. Parents — haath upar, jinke ghar mein yeh roz hota hai!"},
+        {do:"Hands go up across the hall."},
+        {fk:"Poora hall! Matlab woh aunty joote mein nahi rehti. Woh Pune ke har ghar mein rehti hai."}
       ]),
-      hostTransition("Old Woman Shoe","Mission Impossible","NH48 highway — the truck",[
+      hostTransition("Old Woman in a Shoe","Mission Impossible","NH48 highway — the truck",[
         {phase:"Core · use every time",core:true},
         {up:"Chaar sabse chhote passengers — sabse badi taali!"},
         {do:"Arm towards the hall: “GOA KITNA DOOR?”"},
@@ -970,9 +992,11 @@
         {fk:"“Buri nazar wale, tera muh kaala.”"},
         {up:"“Dekho magar pyaar se.”"},
         {fk:"Aur mera favourite — “Jagah milne par side diya jaayega.” Woh jagah aaj tak kisi ko nahi mili."},
-        {phase:"Extension 2 · the five-beat secret"},
-        {fk:"Ab samjha. Shuru mein driver sahab ke saath meri taali isliye galat thi. Main paanch beat mein soch raha tha."},
-        {up:"FK, tum tab teen mein bhi nahi the."}
+        {phase:"Extension 2 · the real secret agent"},
+        {up:"Waise asli Mission Impossible agent har ghar mein hota hai."},
+        {fk:"Kaun?"},
+        {up:"Mummy. Fridge se aakhri rasmalai kisne khaayi — bina CCTV ke, do minute mein pata laga leti hai."},
+        {fk:"Aur poochhti bhi nahi. Bas ek baar dekhti hai — aur hum khud confess kar dete hain."}
       ]),
       hostTransition("Mission Impossible","We Are the Champions Mashup","Karad",[
         {phase:"Core · use every time",core:true},
@@ -1372,8 +1396,8 @@
         {up:"Aur har safar ke end mein passengers ek kaam zaroor karte hain — driver ko thank you bolte hain."},
         {fk:"Lekin aaj ulta hoga. Aaj driver sahab khud sabko thank you bolenge."},
         {phase:"Extension · if Joseph is still moving into place"},
-        {up:"Aaj bahut phones ne performances record ki hongi. Lekin kuch best moments camera miss kar deta hai — aur family ki yaadein sambhaal leti hain."},
-        {fk:"Aur kal video dekhte waqt agar recording stage ki jagah aapke joote ki nikle — no problem. Yaadein HD mein save ho chuki hain."},
+        {up:"Aaj koi camera nahi chala. Lekin sabse achhe moments camera waise bhi miss kar deta hai — family ki yaadein sambhaal leti hain."},
+        {fk:"Aaj ki recording kisi phone mein nahi milegi. Woh seedha dil ke memory card mein save hui hai — aur woh kabhi full nahi hota."},
         {go:"Vote of Thanks — Joseph"},
         {fk:"Is shaam ko mumkin banane wale sabko shukriya kehne ke liye — please welcome **Joseph** for the Vote of Thanks."},
         {do:"Both hosts step off. Joseph takes centre stage."}
@@ -1940,7 +1964,7 @@
     if(!location.hash) location.replace("#overview");
     else openFromHash();
   </script>
-  <script src="led.js?v=7"></script>
-  <script src="lights.js?v=3"></script>
+  <script src="led.js?v=8"></script>
+  <script src="lights.js?v=4"></script>
 </body>
 </html>

@@ -56,7 +56,7 @@ const ACT_LIGHTS = [
     kid: "Red fire behind, orange from the bar above, and one round pool in the middle like a campfire.",
     song: [FACE(60), P([5, 6], 100, "#c1121f"), P([7, 8], 100, "#ff8c00"), P([12], 70, "#ff9d2e"), ...FAN(110, 200, "Red", "Breakup", 80)],
     accent: [P([11], 70, "#ffb347", 40), ...FAN(90, 210, "Amber", "Breakup", 100)] },
-  { title: "Old Woman Shoe", theme: "Sunny storybook", look: "story", shape: "rows",
+  { title: "Old Woman in a Shoe", theme: "Sunny storybook", look: "story", shape: "rows",
     trigger: "the first musical note", accentWhen: "the second verse",
     kid: "Bright like a picture book: sunny yellow behind, sky blue from the bar above, and a soft pink circle.",
     song: [FACE(85), P([5, 6], 70, "#ffd23f"), P([7, 8], 60, "#4cc9f0"), P([12], 40, "#ff9fb2", 30)],
