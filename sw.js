@@ -7,7 +7,7 @@ const SHELL = [
   "./led.css?v=18",
   "./lights.css?v=3",
   "./opening.js?v=4",
-  "./led.js?v=21",
+  "./led.js?v=22",
   "./lights.js?v=5",
   "./logo.png",
   "./logo-mark.svg",

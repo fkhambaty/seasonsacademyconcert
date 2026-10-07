@@ -556,8 +556,8 @@
       {id:"sonali",name:"Sonali Nagwekar",role:"Balcony to backstage",kids:["K.Gayatri"]},
       {id:"millee",name:"Milee Ninad Mahadik",role:"Balcony to backstage · also performs",kids:["Milee Ninad Mahadik"],performs:true},
       {id:"prajakta",name:"Dr. Prajakta",role:"Balcony to backstage",kids:[]},
-      {id:"aadhya-dad",name:"Dibesh (Aadya's Dad)",role:"Balcony to backstage",kids:["Aadhya Trivedi"]},
-      {id:"aadhya-friend",name:"Dibesh's friend",role:"Balcony to backstage",kids:["Aadhya Trivedi"]},
+      {id:"fatema",name:"Fatema Bandukwala",role:"Balcony to backstage",kids:[]},
+      {id:"sonal",name:"Sonal Shirude",role:"Balcony to backstage",kids:["Trishaa Nikhil Shirude"],holds:["Welcome Speech — Sonal","Lighting the Lamp","Ice Breaker — Hosts & Joseph"]},
       {id:"richard",name:"Richard D'souza",role:"Balcony to backstage · also performs",kids:["Richard D'souza"],performs:true},
       {id:"sheelpy",name:"Sheelpy Sen",role:"Balcony to backstage",kids:["Aahana Sen"]},
       {id:"pratibha",name:"Pratibha Rathore",role:"Balcony to backstage · also performs",kids:["Pratibha Rathore"],performs:true}
@@ -598,9 +598,12 @@
       const timed = timings();
       const bands = timed.filter(({event})=>event.type==="performance" && CAST[event.title]);
       const real = timed.filter(item=>item.event.type!=="filler");
-      const blocked = Object.fromEntries(VOLUNTEERS.map(v=>[v.id, bands
-        .filter(slot=>CAST[slot.event.title].people.some(([name])=>v.kids.includes(name)))
-        .map(slot=>({from:slot.start-(v.performs?VOL_LEAVE_BEFORE:3), to:slot.end+2, title:slot.event.title}))]));
+      const blocked = Object.fromEntries(VOLUNTEERS.map(v=>[v.id, [
+        ...bands.filter(slot=>CAST[slot.event.title].people.some(([name])=>v.kids.includes(name)))
+          .map(slot=>({from:slot.start-(v.performs?VOL_LEAVE_BEFORE:3), to:slot.end+2, title:slot.event.title})),
+        ...timed.filter(slot=>(v.holds||[]).includes(slot.event.title))
+          .map(slot=>({from:slot.start, to:slot.end, title:slot.event.title}))
+      ]]));
       const overlaps = (a, b) => a.from < b.to && b.from < a.to;
       const clashes = (job, other) => overlaps(job.walk, other.walk) || overlaps(job.back, other.walk) || overlaps(job.walk, other.back) || overlaps(job.back, other.back);
       const load = id => jobs[id].reduce((sum, job)=>sum+job.people.length, 0);
@@ -698,7 +701,12 @@
       const students = mine.reduce((sum, job)=>sum+job.people.length, 0);
       const freeTimes = blocked[me.id];
       const bandsWord = mine.length===1?"band":"bands";
-      const freeLine = freeTimes.length?`<p class="vol-free">${me.performs?"No walks while you get ready for, or play in":"Free to watch"}: <b>${freeTimes.map(window=>escapeHtml(window.title)).join("</b>, <b>")}</b>.</p>`:"";
+      const onStage = freeTimes.filter(window=>(me.holds||[]).includes(window.title));
+      const watching = freeTimes.filter(window=>!(me.holds||[]).includes(window.title));
+      const freeLine = [
+        onStage.length?`<p class="vol-free">You are on stage for: <b>${onStage.map(window=>escapeHtml(window.title)).join("</b>, <b>")}</b>. No walks then.</p>`:"",
+        watching.length?`<p class="vol-free">${me.performs?"No walks while you get ready for, or play in":"Free to watch"}: <b>${watching.map(window=>escapeHtml(window.title)).join("</b>, <b>")}</b>.</p>`:""
+      ].join("");
       const rule = `<p class="vol-rule"><b>Only one band waits outside the door.</b> Stay outside. Do not go in. If you meet another band, let them pass and keep walking. Listen for the song name. Do not watch the clock.</p>`;
       const desk = me.walks===false;
       const cards = desk?`<p class="vol-empty">${escapeHtml(me.name)} looks after entry passes at the door. This volunteer does not walk a band down or back.</p>`:mine.length?mine.map((job,index)=>volunteerJobHtml(job,index+1,mine.length)).join(""):`<p class="vol-empty">No bands for this volunteer.</p>`;
@@ -2110,7 +2118,7 @@
     else openFromHash();
   </script>
   <script src="opening.js?v=4"></script>
-  <script src="led.js?v=21"></script>
+  <script src="led.js?v=22"></script>
   <script src="lights.js?v=5"></script>
   <script>
     function warmShowCache(){
