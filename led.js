@@ -59,6 +59,7 @@ const LED_CREDITS = [
   {kind:"group", title:"Comperes", names:["Fakhruddin Khambaty","Upasana Sharma","Sonal Shirude"]},
   {kind:"group", title:"Volunteers", names:["Richa Sharma","Sonal Shirude","Fatema Bandukwala","Shruti Alung","Suman Agrawal","Sonali Nagwekar","Milee Ninad Mahadik","Dr. Prajakta","Dibesh (Aadya's Dad)","Dibesh's friend","Richard D'souza","Sheelpy Sen","Pratibha Rathore","Kush Shah"]},
   {kind:"group", title:"Camera, Sound & LED Wall", names:["Stephen & Team","Prakash & Team"]},
+  {kind:"group", title:"LED Slides", names:["Richa Sharma"]},
   {kind:"kicker", text:"With our sincere gratitude to"},
   {kind:"group", title:"Our Sponsor & Food Stall Partner", names:["Snug Cafe"]},
   {kind:"group", title:"Our Parents & Families", note:"For your unwavering support and encouragement", names:["Vijaya","J.John Bosco","Nalina John Bosco","Nirmala Martin","Varun Martin","Francis Simon"]},
