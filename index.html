@@ -50,9 +50,9 @@
     .sc-rescue{scroll-margin-top:160px;border:1px solid #d9434d66;border-radius:18px;background:#fff;margin-bottom:30px;overflow:hidden}
     .sc-rescue>summary{list-style:none;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:17px 20px;cursor:pointer;background:#d9434d08}.sc-rescue>summary::-webkit-details-marker{display:none}.sc-rescue>summary:before{content:"!";width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--danger);color:#fff;font-weight:900;font-size:20px}.sc-rescue>summary:after{content:"Open";color:var(--danger);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.sc-rescue[open]>summary:after{content:"Close"}.sc-rescue>summary b{display:block;font:600 22px "Playfair Display",Georgia,serif}.sc-rescue>summary span{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
     .rescue-body{padding:14px 20px 20px}.rescue-rule{margin:0 0 14px;padding:10px 12px;border-left:3px solid var(--danger);background:#d9434d08;font-size:13px;line-height:1.5}.rescue-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rescue-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:#faf8f3}.rescue-card h3{font:600 18px "Playfair Display",Georgia,serif;margin:0 0 3px}.rescue-card>p{color:var(--muted);font-size:12px;margin:0 0 10px}.rescue-card .sc-line{grid-template-columns:70px 1fr;padding:8px 0}.rescue-card .sc-say{font-size:14px;line-height:1.45}.rescue-card .sc-who{height:24px;font-size:10.5px}.rescue-card .sc-cue{grid-template-columns:70px 1fr;padding:8px 0;font-size:12.5px}.rescue-card .sc-cue>i{font-size:9px}
-    .rescue-stop{grid-column:1/-1;border-color:#d9434d66;background:#d9434d08}.rescue-stop strong{color:var(--danger)}
+    .rescue-stop{grid-column:1/-1;border-color:#d9434d66;background:#d9434d08}.rescue-stop strong{color:var(--danger)}.rescue-wide{grid-column:1/-1;border-color:#b8892f66;background:#fffaf0}.rescue-games-head{font:600 21px "Playfair Display",Georgia,serif;margin:24px 0 12px;padding-top:18px;border-top:1px solid var(--line)}.rescue-games-head span{display:block;font:400 12.5px/1.45 "DM Sans",sans-serif;color:var(--muted);margin-top:3px}
     .script-page.only-fk .sc-line.up,.script-page.only-up .sc-line.fk{display:none}
-    @media(max-width:600px){.script-page{padding:26px 14px 120px}.script-jumps{top:66px;margin-left:-6px;margin-right:-6px}.script-jumps button{padding:9px 10px}.sc-head{padding:16px}.sc-steps{padding:6px 14px 14px}.sc-line,.sc-cue{grid-template-columns:1fr;gap:6px}.sc-who{justify-self:start;padding:0 12px}.sc-cue>i{justify-self:start;padding:3px 10px}.sc-say{font-size:16px}.sc-head h2{font-size:22px}.rescue-grid{grid-template-columns:1fr}.rescue-stop{grid-column:auto}.rescue-body{padding:12px}.sc-seg,.sc-rescue{scroll-margin-top:142px}}
+    @media(max-width:600px){.script-page{padding:26px 14px 120px}.script-jumps{top:66px;margin-left:-6px;margin-right:-6px}.script-jumps button{padding:9px 10px}.sc-head{padding:16px}.sc-steps{padding:6px 14px 14px}.sc-line,.sc-cue{grid-template-columns:1fr;gap:6px}.sc-who{justify-self:start;padding:0 12px}.sc-cue>i{justify-self:start;padding:3px 10px}.sc-say{font-size:16px}.sc-head h2{font-size:22px}.rescue-grid{grid-template-columns:1fr}.rescue-stop,.rescue-wide{grid-column:auto}.rescue-body{padding:12px}.sc-seg,.sc-rescue{scroll-margin-top:142px}}
     .toast{position:fixed;right:25px;bottom:25px;background:#1b1826;color:#f8f4eb;border-radius:10px;padding:12px 16px;font-weight:700;font-size:12px;transform:translateY(100px);opacity:0;transition:.3s;z-index:40}.toast.show{transform:none;opacity:1}
     @media(max-width:900px){
       .app-header{height:60px;gap:10px;padding:0 14px;background:#f7f5f0;-webkit-backdrop-filter:none;backdrop-filter:none}
@@ -1490,6 +1490,59 @@
         {up:"Ab tak jitne performers aaye — sabke liye — toll bhariye!"},
         {do:"Lead a long, loud applause. It buys 15–20 seconds and the room never feels like it is waiting."}
       ]},
+      {game:true,title:"Start here · Split the hall into two teams",wide:true,note:"Do this once, the first time you need a hands game. Every hands game below uses these two teams.",steps:[
+        {do:"Stand centre stage. Point at a half of the hall with your whole arm. Never say “left” or “right” — your left is their right. The team you point at is the team that speaks."},
+        {fk:"Chaliye, bus mein thoda khel ho jaaye! Yeh side — aaj se aap ho **Team Sur**!"},
+        {up:"Aur yeh side — aap ho **Team Taal**!"},
+        {fk:"Rule ekdum simple. Jis team ki taraf mera haath uthega, sirf woh team bolegi. **Dono haath upar** — poora hall! Aur **mutthi band** — sab ekdum chup."},
+        {do:"Test it once. Hand to Team Sur — they shout “Sur!”. Hand to Team Taal — “Taal!”. Both hands — everyone shouts “Seasons!”. Close your fist — silence. Now pick any game below."}
+      ]},
+      {game:true,title:"Sur, Taal, Seasons",note:"The warm-up. 20–40 seconds. Speed it up until the hall laughs.",steps:[
+        {fk:"Team Sur bolegi “Sur”, Team Taal bolegi “Taal”, aur dono haath — “Seasons!” Dekhte hain kaun sota hai."},
+        {do:"Go slow: Sur… Taal… Sur… Taal. Then faster. Then fake it — start lifting one hand and stop halfway. Laugh with whoever shouted by mistake."},
+        {up:"Arre, Team Taal ne toh bina signal ke gaadi chala di!"},
+        {do:"Finish with both hands held high and long: the whole hall shouts “Seasons Music Academy!” Then close your fist and lead applause."}
+      ]},
+      {game:true,title:"Bus horn",note:"Fits our bus journey. 20–30 seconds.",steps:[
+        {fk:"Hamari bus ka horn kharab ho gaya hai. Aaj horn aap bajaoge!"},
+        {up:"Team Sur ka horn — “**Pom pom!**” Team Taal ka horn — “**Peep peep!**” Aur dono haath upar — poora hall bolega “**Chalo Goa!**”"},
+        {do:"FK drives with an invisible steering wheel. Point to one team, then the other — slow, then like a traffic jam. Turn the wheel hard: both hands up for “Chalo Goa!”. Fist to stop."},
+        {fk:"Driver sahab ko sun gaya. Bus ready hai!"}
+      ]},
+      {game:true,title:"Sa Re Ga Ma",note:"A music-school game. Upasana gives the note first so everyone sings together. 30 seconds.",steps:[
+        {up:"Hum music academy mein hain, toh thoda riyaaz ho jaaye! Team Sur gaayegi “**Sa Re Ga**”…"},
+        {fk:"…Team Taal gaayegi “**Ma Pa Dha**”…"},
+        {up:"…aur dono haath upar — poora hall — “**Ni Sa!**”"},
+        {do:"Upasana sings each part once so the hall hears the tune. FK points: Sur team, Taal team, both hands. Do it twice, the second time louder."},
+        {fk:"Ustaad ji, aaj ki class mein sab paas!"}
+      ]},
+      {game:true,title:"Picture abhi baaki hai",note:"Perfect line while we wait. 20 seconds.",steps:[
+        {fk:"Ek famous dialogue hai jo aaj bilkul sahi baith raha hai. Team Sur bolegi “**Picture abhi**…”"},
+        {up:"Team Taal bolegi “…**baaki hai**…”"},
+        {fk:"Aur dono haath upar — poora hall — “**…mere dost!**”"},
+        {do:"Point Sur, then Taal, then both hands. Do it three times, each time louder."},
+        {up:"Bilkul. Aur agla scene bas shuru hone wala hai."}
+      ]},
+      {game:true,title:"How’s the josh?",note:"The loudest one. Save it for when you need energy back. 20 seconds.",steps:[
+        {fk:"Team Sur! **How’s the josh?**"},
+        {do:"Point at Team Sur. They shout “High, sir!” Point at Team Taal — FK asks again — they shout louder."},
+        {up:"Arre, dono team mein muqabla ho gaya!"},
+        {fk:"Poora hall — dono haath upar — **How’s the josh?**"},
+        {do:"Both hands up. The whole hall shouts “High, sir!” Fist to stop. Lead applause."}
+      ]},
+      {game:true,title:"Volume knob",note:"Your hand is the volume. Stretches as long as you need. 30–60 seconds.",steps:[
+        {up:"Aaj ki raat FK ke haath mein remote hai. Haath neeche — dheere. Haath upar — zor se."},
+        {fk:"Team Sur bolegi “**Musicale!**” Team Taal bolegi “**2026!**”"},
+        {do:"Hold one hand low towards a team — they whisper the word. Raise it slowly — they get louder. Drop it — whisper again. Swap teams. Then both hands, rising all the way up: the whole hall shouts “Musicale 2026!” Fist to stop."},
+        {up:"Remote mujhe do — FK, aapka battery khatam ho gaya!"}
+      ]},
+      {game:true,wide:true,title:"Monsoon rain",note:"A sound game with no words — just hands and feet. Ties to the four seasons. 40–60 seconds.",steps:[
+        {up:"Aaj chaar mausam ek saath aaye hain. Chaliye, is hall mein baarish laate hain!"},
+        {fk:"Team Sur — hathelian ragdo, jaise hawa chal rahi ho. Team Taal — chutki bajao, jaise boondein gir rahi hon."},
+        {up:"Dono haath upar — sab apne ghutno pe thapki do — tez baarish! Aur dono haath zor se neeche — pair patko — bijli!"},
+        {do:"Build it up: point Sur (wind), add Taal (drops), both hands (heavy rain), both hands slam down (thunder, feet). Then go back down: rain, drops, wind — and close your fist. Silence."},
+        {fk:"Baarish ruk gayi. Ab sur barsenge!"}
+      ]},
       {title:"Technical problem",note:"Acknowledge it once. Never blame a person or piece of equipment.",steps:[
         {fk:"Chhota sa puncture. Hamari pit crew kaam pe hai."},
         {up:"Formula One mein tyre do second mein badalta hai. Hum Formula One nahi hain — lekin hum unse zyada sundar hain."},
@@ -1550,8 +1603,13 @@
     function scriptRescueHtml(){
       return `<details class="sc-rescue" id="scriptRescue"><summary><div><b>Need time? Live rescue</b><span>Open only when the planned flow breaks</span></div></summary>
         <div class="rescue-body"><p class="rescue-rule"><b>First rule:</b> one host speaks while the other watches the stage manager. The title and names stay unsaid until the next act is confirmed.</p>
-          <div class="rescue-grid">${SCRIPT_RESCUES.map(item=>`<section class="rescue-card${item.stop?" rescue-stop":""}"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.note)}</p>${item.steps.map(scriptStepHtml).join("")}</section>`).join("")}</div>
+          <div class="rescue-grid">${SCRIPT_RESCUES.filter(item=>!item.game).map(rescueCardHtml).join("")}</div>
+          <h3 class="rescue-games-head">Audience hands games <span>Raise a hand towards a team and only that team speaks. Use any game when the band needs more time.</span></h3>
+          <div class="rescue-grid">${SCRIPT_RESCUES.filter(item=>item.game).map(rescueCardHtml).join("")}</div>
         </div></details>`;
+    }
+    function rescueCardHtml(item){
+      return `<section class="rescue-card${item.stop?" rescue-stop":""}${item.wide?" rescue-wide":""}"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.note)}</p>${item.steps.map(scriptStepHtml).join("")}</section>`;
     }
     function jumpScriptTo(id){
       const target=document.getElementById(id);
