@@ -655,7 +655,7 @@
       slots.forEach(slot=>{
         const pick = [...walkers].filter(v=>freeFor(v, slot))
           .sort((a,b)=>load(a.id)-load(b.id) || jobs[a.id].length-jobs[b.id].length || VOLUNTEERS.indexOf(a)-VOLUNTEERS.indexOf(b))[0];
-        if(!pick){ warnings.push(`${slot.event.title} has no free helper`); return; }
+        if(!pick){ warnings.push(`${slot.event.title} has no free volunteer`); return; }
         jobs[pick.id].push(slot);
       });
       for(let round=0; round<40; round++){
@@ -701,7 +701,7 @@
       const freeLine = freeTimes.length?`<p class="vol-free">${me.performs?"No walks while you get ready for, or play in":"Free to watch"}: <b>${freeTimes.map(window=>escapeHtml(window.title)).join("</b>, <b>")}</b>.</p>`:"";
       const rule = `<p class="vol-rule"><b>Only one band waits outside the door.</b> Stay outside. Do not go in. If you meet another band, let them pass and keep walking. Listen for the song name. Do not watch the clock.</p>`;
       const desk = me.walks===false;
-      const cards = desk?`<p class="vol-empty">${escapeHtml(me.name)} looks after entry passes at the door. This helper does not walk a band down or back.</p>`:mine.length?mine.map((job,index)=>volunteerJobHtml(job,index+1,mine.length)).join(""):`<p class="vol-empty">No bands for this helper.</p>`;
+      const cards = desk?`<p class="vol-empty">${escapeHtml(me.name)} looks after entry passes at the door. This volunteer does not walk a band down or back.</p>`:mine.length?mine.map((job,index)=>volunteerJobHtml(job,index+1,mine.length)).join(""):`<p class="vol-empty">No bands for this volunteer.</p>`;
       if(personal){
         document.title = `${me.name} — your bands`;
         if(desk){
@@ -727,7 +727,7 @@
       const count = id => jobs[id].reduce((sum,job)=>sum+job.people.length,0);
       page.innerHTML = `<div class="eyebrow">Balcony to backstage</div>
         <h1>Volunteers</h1>
-        <p class="vol-lede">One helper walks one whole band. While that band plays, the next band is already waiting outside. The band after that comes down as the finished band walks back up. Send each helper their own link.</p>
+        <p class="vol-lede">One volunteer walks one whole band. While that band plays, the next band is already waiting outside. The band after that comes down as the finished band walks back up. Send each volunteer their own link.</p>
         <div class="vol-steps">
           <div><b>1. Go down</b><span>Leave the balcony when the card says. Take every name on the card.</span></div>
           <div><b>2. Wait outside</b><span>Stay outside the door until the hosts call their song.</span></div>
