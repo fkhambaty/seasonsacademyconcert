@@ -44,7 +44,7 @@ const LED_CUES = [
   {id:"felicitation",group:"Finale",title:"Felicitation",trigger:"The hosts start calling the guests up",scene:"perform",headline:"Felicitation",subline:"With gratitude",loop:"loops/felicitation-stars.mp4"},
   {id:"thanks",group:"Finale",title:"Vote of Thanks",trigger:"Joseph steps up to the microphone",scene:"perform",headline:"Vote of Thanks",subline:"Joseph",loop:"loops/thanks-sunset.mp4"},
   {id:"anthem",group:"Finale",title:"National Anthem",trigger:"The hosts say: please rise for the National Anthem",scene:"anthem",loop:"loops/indian-flag.mp4"},
-  {id:"credits",group:"Finale",title:"End credits",trigger:"The National Anthem has finished",scene:"credits"}
+  {id:"credits",group:"Finale",title:"End credits",trigger:"The National Anthem has finished. Leave the volume up",scene:"credits",music:"loops/credits-goodbye.mp3"}
 ];
 
 const LED_CREDITS = [
@@ -55,14 +55,14 @@ const LED_CREDITS = [
   {kind:"group", title:"Our Dedicated Music Faculty", note:"For their guidance, patience and constant encouragement", names:["Sourudra.S.Samai","Harland Braver","Nicholas Umrethi","Sabastian Don Bosco Moktan","Ashish Mehrotra","Bhoomi Shah","Vinay Rao"]},
   {kind:"group", title:"Our Wonderful Students", note:"For filling the stage with music, confidence and joy", names:["Aadhya Trivedi","Aahana Sen","Aarush Rahul Zarpure","Aarush Sandip Kawade","Aarya Pratap","Aavya Brid","Aayush Jahagirdar","Abigail Vairagar","Adarsh Satheesh","Adelyn Grace","Agastya Anil Yadav","Aishni Ratadiya","Akriti Hemant Gaikwad","Amaaya Nair","Amish Singh","Arika Hemant Gaikwad","Ariyan Bhattacharya","Arjun Kelkar","Arnab Banerjee","Arnik Sharma","Arohi Abhay Mundra","Aryan Halkude","Avir Parinit Tathed","Avni Bhatia","Avyukth Ujwal","Ayaan Solanki","Ayansh Agrawal","Ayansh Aniket Zarkar","Dakshi Devi","Devansh Wadhwa","Dilip Nitanta Ranade","Diya Tuteja","Eliana Vineet Sasane","Eva Alung","Eva Camillio Fernandes","Harish Acharya","Harshvardhan S Kendre","Immanuel Lojo","Inaya Kapadiya","Ishanvi Batra","Ishita Kothari","Ivan Raghava","Jyotsanaa Lokhandde","K.Gayatri","Kaivalya Shastry","Kartikeyan Jha","Keshav Coimbatore Balachandar","Kiana Mendis","Kinaera Sharma","Kush Jigar Shah","Leonora Mendis","Linisha Srivastava","Lubaina Godhrawala","Maghizini Viswanathan","Mahira Chandak","Milee Ninad Mahadik","Mireya Joseph","Mustafa Sabuwala","Myra Gomes","Myra Pokhrel","Myraa Vivian Pillai","Nakul Chandrakant Chandak","Natasha Chatterjee","Natasha Nainani","Nathania Joseph","Navya Alung","Nevaeh Sharma","Nivita Baliga","Noyanika Amit Chaudhari","Parthvee Jain","Pranchal","Pratibha Rathore","Preeti Bhandare","Prisha Mathur","Reyansh Bhatia","Reyansh Sinha","Ria Nikhil Naik","Richard D'souza","Ridhaan Kavthekar","Rishi Chitresh Bhatia","Rishika Singh","Ritu Rijhwani","Sameer Wasnik","Sanjeevini Chandramani Jarje","Sarah MohmedIrfan Memon","Savya Dubey","Sesha Datta Abhiram Babbepalli","Shanaya Sanoj","Sharwin Mani","Shaurya Mohit Sharma","Shreya Karthik","Siddhartha Basuroy","Siddhiksha Chaudhary","Simmi Arora","Srihitha Potnuru","Sudiksha Moolani","Sujata Pasupathi","Trishaa Nikhil Shirude","Veda Shrivastava","Vibhav Coimbatore Balachandar","Vihaani Roy","Viraj Phillips","Virat Jauhari","Vivaan Jitendra Virbhani","Vivaan Patel","Zoya Sajid Memon"]},
   {kind:"group", title:"All Parents", note:"For your unwavering support and encouragement", names:[]},
-  {kind:"group", title:"Event Screenplay & Direction", names:["Fakhruddin Khambatty"]},
-  {kind:"group", title:"Comperes", names:["Fakhruddin Khambatty","Upasana Sharma","Sonal Shirude"]},
+  {kind:"group", title:"Event Screenplay & Direction", names:["Fakhruddin Khambaty"]},
+  {kind:"group", title:"Comperes", names:["Fakhruddin Khambaty","Upasana Sharma","Sonal Shirude"]},
   {kind:"group", title:"Volunteers", names:["Richa Sharma","Sonal Shirude","Fatema Bandukwala","Shruti Alung","Suman Agrawal","Sonali Nagwekar","Milee Ninad Mahadik","Dr. Prajakta","Dibesh (Aadya's Dad)","Dibesh's friend","Richard D'souza","Sheelpy Sen","Pratibha Rathore","Kush Shah"]},
   {kind:"group", title:"Camera, Sound & LED Wall", names:["Stephen & Team","Prakash & Team"]},
   {kind:"kicker", text:"With our sincere gratitude to"},
   {kind:"group", title:"Our Sponsor & Food Stall Partner", names:["Snug Cafe"]},
   {kind:"group", title:"Our Parents & Families", note:"For your unwavering support and encouragement", names:["Vijaya","J.John Bosco","Nalina John Bosco","Nirmala Martin","Varun Martin","Francis Simon"]},
-  {kind:"group", title:"Our Friends & Well-Wishers", note:"For being a part of this special evening", names:["Upasana Sharma","Sailesh Sharma","Fakhruddin Khambatty","Fatema Bandukwala","Richa Sharma","Mohit Sharma","Sonal Shirude","Nikhil Shirude"]},
+  {kind:"group", title:"Our Friends & Well-Wishers", note:"For being a part of this special evening", names:["Upasana Sharma","Sailesh Sharma","Fakhruddin Khambaty","Fatema Bandukwala","Richa Sharma","Mohit Sharma","Sonal Shirude","Nikhil Shirude"]},
   {kind:"group", title:"Special Thanks", note:"To everyone who contributed behind the scenes to make Musicale 2026 a memorable celebration.", names:[]},
   {kind:"kicker", text:"Music  ·  Memories  ·  Moments"},
   {kind:"finale"}
@@ -256,7 +256,7 @@ function ledAudienceLine(cue) {
   if (cue.scene === "intro") return "four pictures grow in from the corners and become a turning globe. The name appears with the music, then it stays until you press Next";
   if (cue.scene === "names") return `performer names for ${cue.act}`;
   if (cue.scene === "anthem") return "only the Indian flag, full screen, until the anthem ends";
-  if (cue.scene === "credits") return "the thank-you names roll up the screen, then the last card stays until you press Next";
+  if (cue.scene === "credits") return "the thank-you names roll up with the goodbye music, then the last card stays until you press Next";
   if (cue.scene === "perform") return `looping music video with the Seasons logo, for ${cue.headline}`;
   return cue.headline || cue.title;
 }
@@ -265,7 +265,7 @@ function ledGroupHtml(group, cues) {
   const hint = group.startsWith("Act ")
     ? "Two buttons only. Pale card first, while Upasana reads the names. Dark Song card when the band plays the first note."
     : group === "Finale"
-      ? "Four buttons, in this order. Felicitation while the guests are called up. Vote of Thanks when Joseph speaks. National Anthem when everyone stands — that one is only the flag. End credits when the anthem has finished — the names roll up, then the last card stays."
+      ? "Four buttons, in this order. Felicitation while the guests are called up. Vote of Thanks when Joseph speaks. National Anthem when everyone stands — that one is only the flag. End credits when the anthem has finished — the names roll up with the goodbye music, then the last card stays. Leave the volume up."
       : "Play the opening first and turn the volume up. That picture has music. Then keep the holding screen until the hosts walk on.";
   return `<section class="led-section"><h2>${escapeHtml(group)}</h2><p>${hint}</p><div class="led-cue-grid">${cues.map(cue => {
     const index = LED_CUES.indexOf(cue);
@@ -283,7 +283,7 @@ window.ledRenderConsole = function renderLedConsole() {
     (all[cue.group] ||= []).push(cue);
     return all;
   }, {});
-  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>Each song has just two buttons. While Upasana reads the names, show the <b>Names</b> card. When the band starts, press the dark <b>Song</b> card. The wall fills with a looping music video, with the Seasons Music Academy logo in the centre. Each song has its own video, and it keeps looping until you press Next. The opening picture plays music, so turn the laptop volume up before the doors open. After Ajeeb Daastaan come Felicitation, then Vote of Thanks, then <b>National Anthem</b>, then <b>End credits</b>. The anthem is only the Indian flag, with no logo. The credits roll the names, then stay on the last card until you press Next. Press <b>P</b> once to project. Videos stream from the website, so keep the laptop online.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
+  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>Each song has just two buttons. While Upasana reads the names, show the <b>Names</b> card. When the band starts, press the dark <b>Song</b> card. The wall fills with a looping music video, with the Seasons Music Academy logo in the centre. Each song has its own video, and it keeps looping until you press Next. The opening picture plays music, so turn the laptop volume up before the doors open. After Ajeeb Daastaan come Felicitation, then Vote of Thanks, then <b>National Anthem</b>, then <b>End credits</b>. The anthem is only the Indian flag, with no logo. The credits roll the names with a goodbye song, then stay on the last card until you press Next. Leave the laptop volume up for that song. Press <b>P</b> once to project. Videos stream from the website, so keep the laptop online.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
     <div class="led-how"><article><b>1</b><strong>Open this tab on the LED</strong><span>Or allow Chrome’s screen permission so P can use the second display.</span></article><article><b>2</b><strong>Select the cue</strong><span>Pale card for the names. Dark card for the song. Nothing else to press during host talk.</span></article><article><b>3</b><strong>Press P once</strong><span>That picture fills the screen immediately. No second window or click.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. The cue list comes back.</span></article></div>
     <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong>${current.music ? `<small>Opening music · ${escapeHtml(current.music.replace("loops/", ""))}</small>` : current.loop ? `<small>Song video · ${escapeHtml(current.loop.replace("loops/", ""))}</small>` : ""}</div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
     <div class="led-controls"><button type="button" id="ledPrevBtn">← Previous</button><button type="button" class="next" id="ledNextBtn">Next cue →</button><button type="button" id="ledReplayBtn"><kbd>R</kbd> Replay</button><button type="button" id="ledHoldBtn"><kbd>H</kbd> Safe holding image</button></div>
@@ -316,14 +316,14 @@ function stopLedMusic() {
   ledMusic.load();
   ledMusic = null;
 }
-function playLedMusic(src) {
+function playLedMusic(src, loop = true) {
   stopLedMusic();
   ledMusic = new Audio(src);
-  ledMusic.loop = true;
+  ledMusic.loop = loop;
   ledMusic.volume = 1;
   const pending = ledMusic.play();
-  if (pending?.catch) pending.catch(error => console.warn("Opening music could not start", error));
-  window.SeasonsOpening?.attach(ledMusic);
+  if (pending?.catch) pending.catch(error => console.warn("Cue music could not start", error));
+  if (loop) window.SeasonsOpening?.attach(ledMusic);
 }
 function stopLedSound() {
   ledVoices.forEach(node => { try { node.stop(); } catch (error) { console.warn(error); } });
@@ -437,7 +437,7 @@ function setLedSound(cue) {
   stopLedSound();
   stopLedBed();
   if (!ledAudioContext || ledAudioContext.state !== "running") return;
-  if (cue.music) playLedMusic(cue.music);
+  if (cue.music) playLedMusic(cue.music, cue.scene !== "credits");
 }
 
 async function startLedSound() {
