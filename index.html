@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f7f5f0">
   <title>Seasons Academy — Show Flow</title>
-  <link rel="stylesheet" href="led.css?v=16">
+  <link rel="stylesheet" href="led.css?v=18">
   <link rel="stylesheet" href="lights.css?v=3">
   <style>
     :root{--ink:#1b1826;--muted:#5c5768;--night:#f7f5f0;--panel:#ffffff;--line:#e4e0d8;--gold:#b8892f;--pink:#d83a7f;--cyan:#1a9ea3;--danger:#d9434d;--stage:#ffffff;--shadow:0 24px 60px #1b182618}
@@ -192,7 +192,7 @@
     .vol-steps div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}
     .vol-steps b{display:block;font:600 18px "Playfair Display",Georgia,serif;margin-bottom:4px}
     .vol-steps span{display:block;color:var(--muted);font-size:13.5px;line-height:1.4}
-    .vol-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:8px;margin:0 0 18px}
+    .vol-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin:0 0 18px}
     .vol-pick b{display:block;font:600 18px/1.15 "Playfair Display",Georgia,serif}
     .vol-free{margin:0 0 14px;padding:10px 14px;border-radius:12px;background:#1a9ea314;color:#137f84;font-size:14.5px}
     .vol-card small{display:block;margin-top:5px;color:var(--muted);font-size:11px}
@@ -535,15 +535,15 @@
     }
     function renderLedConsole(){window.ledRenderConsole?.()}
     const VOLUNTEERS = [
-      {id:"sonali",name:"Sonali",role:"Gayatri’s mom",kids:["K.Gayatri"]},
-      {id:"shruti",name:"Shruti",role:"Navya’s mom",kids:["Navya Alung"]},
-      {id:"aayansh-mom",name:"Aayansh’s mom",role:"Parent",kids:["Ayansh Aniket Zarkar","Ayansh Agrawal"]},
-      {id:"sheelpy",name:"Sheelpy",role:"Aahana’s mom",kids:["Aahana Sen"]},
-      {id:"aadhya-dad",name:"Aadhya’s dad",role:"Parent",kids:["Aadhya Trivedi"]},
-      {id:"aadhya-friend",name:"Aadhya’s dad’s friend",role:"Comes with Aadhya’s dad",kids:["Aadhya Trivedi"]},
-      {id:"richard",name:"Richard",role:"Also performs",kids:["Richard D'souza"],performs:true},
-      {id:"millee",name:"Millee",role:"Also performs",kids:["Milee Ninad Mahadik"],performs:true},
-      {id:"noyanika-mom",name:"Noyanika’s mom",role:"Parent",kids:["Noyanika Amit Chaudhari"]}
+      {id:"suman",name:"Suman Agrawal",role:"Entry passes",walks:false,kids:[]},
+      {id:"sonali",name:"Sonali Nagwekar",role:"Balcony to backstage",kids:["K.Gayatri"]},
+      {id:"millee",name:"Milee Ninad Mahadik",role:"Balcony to backstage · also performs",kids:["Milee Ninad Mahadik"],performs:true},
+      {id:"prajakta",name:"Dr. Prajakta",role:"Balcony to backstage",kids:[]},
+      {id:"aadhya-dad",name:"Dibesh (Aadya's Dad)",role:"Balcony to backstage",kids:["Aadhya Trivedi"]},
+      {id:"aadhya-friend",name:"Dibesh's friend",role:"Balcony to backstage",kids:["Aadhya Trivedi"]},
+      {id:"richard",name:"Richard D'souza",role:"Balcony to backstage · also performs",kids:["Richard D'souza"],performs:true},
+      {id:"sheelpy",name:"Sheelpy Sen",role:"Balcony to backstage",kids:["Aahana Sen"]},
+      {id:"pratibha",name:"Pratibha Rathore",role:"Balcony to backstage · also performs",kids:["Pratibha Rathore"],performs:true}
     ];
     const VOL_LEAVE_BEFORE = 25, VOL_ARRIVE_BEFORE = 15, VOL_PRESHOW_LEAVE = -15, VOL_PRESHOW_ARRIVE = -5;
     const GATE_KEY = "seasons-gate-v1", ADMIN_CODE = "12345";
@@ -584,7 +584,8 @@
       const overlaps = (a, b) => a.from < b.to && b.from < a.to;
       const clashes = (job, other) => overlaps(job.walk, other.walk) || overlaps(job.back, other.walk) || overlaps(job.walk, other.back) || overlaps(job.back, other.back);
       const load = id => jobs[id].reduce((sum, job)=>sum+job.people.length, 0);
-      const maxLoad = () => Math.max(...VOLUNTEERS.map(v=>load(v.id)));
+      const walkers = VOLUNTEERS.filter(v=>v.walks!==false);
+      const maxLoad = () => Math.max(...walkers.map(v=>load(v.id)));
       const leaveCue = leave => {
         if(leave<5) return {title:"Hosts Welcome", how:"before"};
         const on = real.find(item=>item.start<=leave && leave<item.end);
@@ -612,16 +613,16 @@
         };
       });
       slots.forEach(slot=>{
-        const pick = [...VOLUNTEERS].filter(v=>freeFor(v, slot))
+        const pick = [...walkers].filter(v=>freeFor(v, slot))
           .sort((a,b)=>load(a.id)-load(b.id) || jobs[a.id].length-jobs[b.id].length || VOLUNTEERS.indexOf(a)-VOLUNTEERS.indexOf(b))[0];
         if(!pick){ warnings.push(`${slot.event.title} has no free helper`); return; }
         jobs[pick.id].push(slot);
       });
       for(let round=0; round<40; round++){
         let moved=false;
-        for(const heavy of [...VOLUNTEERS].sort((a,b)=>load(b.id)-load(a.id))){
+        for(const heavy of [...walkers].sort((a,b)=>load(b.id)-load(a.id))){
           for(const slot of [...jobs[heavy.id]].sort((a,b)=>a.people.length-b.people.length)){
-            for(const light of [...VOLUNTEERS].filter(v=>v.id!==heavy.id).sort((a,b)=>load(a.id)-load(b.id))){
+            for(const light of [...walkers].filter(v=>v.id!==heavy.id).sort((a,b)=>load(a.id)-load(b.id))){
               if(Math.max(load(heavy.id)-slot.people.length, load(light.id)+slot.people.length) >= maxLoad()) continue;
               jobs[heavy.id] = jobs[heavy.id].filter(job=>job!==slot);
               if(freeFor(light, slot)){ jobs[light.id].push(slot); moved=true; break; }
@@ -665,12 +666,20 @@
       const bandsWord = mine.length===1?"band":"bands";
       const freeLine = freeTimes.length?`<p class="vol-free">${me.performs?"No walks while you get ready for, or play in":"Free to watch"}: <b>${freeTimes.map(window=>escapeHtml(window.title)).join("</b>, <b>")}</b>.</p>`:"";
       const rule = `<p class="vol-rule"><b>Follow the event, not the clock.</b> The times are only a rough guide. If the show runs early or late, do what the event name says.</p>`;
-      const cards = mine.length?mine.map(volunteerJobHtml).join(""):`<p class="vol-empty">No bands for this helper.</p>`;
+      const desk = me.walks===false;
+      const cards = desk?`<p class="vol-empty">${escapeHtml(me.name)} looks after entry passes at the door. This helper does not walk a band down or back.</p>`:mine.length?mine.map(volunteerJobHtml).join(""):`<p class="vol-empty">No bands for this helper.</p>`;
       if(personal){
         document.title = `${me.name} — your bands`;
+        if(desk){
+          page.innerHTML = `<div class="eyebrow">Your job only</div>
+            <h1>${escapeHtml(me.name)}</h1>
+            <p class="vol-lede">You look after entry passes. You do not take a band from the balcony to the backstage door.</p>
+            ${cards}`;
+          return;
+        }
         page.innerHTML = `<div class="eyebrow">Your bands only</div>
           <h1>${escapeHtml(me.name)}</h1>
-          <p class="vol-lede">${me.role==="Parent"?"":`${escapeHtml(me.role)}. `}You have ${mine.length} ${bandsWord} and ${students} students. Take each whole band down to the backstage door, then bring that same band back to the balcony.</p>
+          <p class="vol-lede">${escapeHtml(me.role)}. You have ${mine.length} ${bandsWord} and ${students} students. Take each whole band down to the backstage door, then bring that same band back to the balcony.</p>
           <div class="vol-steps">
             <div><b>1. Listen for the event</b><span>The bold name is your cue. The clock is only a guide.</span></div>
             <div><b>2. Take them down</b><span>Every name on the card goes to the backstage door.</span></div>
@@ -694,9 +703,9 @@
         </div>
         ${rule}
         ${warnings.length?`<p class="vol-empty">${warnings.map(escapeHtml).join("<br>")}</p>`:""}
-        <div class="vol-share"><div class="vol-pick">${VOLUNTEERS.map(v=>`<div class="vol-card ${v.id===me.id?"on":""}"><button type="button" data-volunteer="${v.id}"><b>${escapeHtml(v.name)}</b><small>${jobs[v.id].length} ${jobs[v.id].length===1?"band":"bands"} · ${count(v.id)} students</small></button><button type="button" data-copy-volunteer="${v.id}">Copy link</button></div>`).join("")}</div>
-          <button type="button" class="form-btn vol-copy-all" data-copy-all-volunteers>Copy all 9 links</button></div>
-        <div class="vol-head"><div><h2>${escapeHtml(me.name)}</h2><p>This is the page ${escapeHtml(me.name)} sees${me.role==="Parent"?"":` · ${escapeHtml(me.role)}`} · ${students} students · ${mine.length} ${bandsWord}</p></div></div>
+        <div class="vol-share"><div class="vol-pick">${VOLUNTEERS.map(v=>`<div class="vol-card ${v.id===me.id?"on":""}"><button type="button" data-volunteer="${v.id}"><b>${escapeHtml(v.name)}</b><small>${v.walks===false?escapeHtml(v.role):`${jobs[v.id].length} ${jobs[v.id].length===1?"band":"bands"} · ${count(v.id)} students`}</small></button><button type="button" data-copy-volunteer="${v.id}">Copy link</button></div>`).join("")}</div>
+          <button type="button" class="form-btn vol-copy-all" data-copy-all-volunteers>Copy all ${VOLUNTEERS.length} links</button></div>
+        <div class="vol-head"><div><h2>${escapeHtml(me.name)}</h2><p>This is the page ${escapeHtml(me.name)} sees · ${escapeHtml(me.role)}${desk?"":` · ${students} students · ${mine.length} ${bandsWord}`}</p></div></div>
         ${freeLine}
         ${cards}`;
     }
@@ -1420,14 +1429,14 @@
         {fk:"Is shaam ko mumkin banane wale sabko shukriya kehne ke liye — please welcome **Joseph** for the Vote of Thanks."},
         {do:"Both hosts step off. Joseph takes centre stage."}
       ]},
-      {kicker:"Finale",title:"Vote of Thanks → National Anthem",meta:["No jokes","The anthem is the final moment"],steps:[
+      {kicker:"Finale",title:"Vote of Thanks → National Anthem",meta:["No jokes","The anthem is the last thing anyone says"],steps:[
         {wait:"Wait until Joseph has clearly finished and stepped away from the microphone."},
         {do:"Both hosts enter and stand centre front. Keep this section calm and brief."},
         {up:"Thank you, Joseph."},
         {fk:"And thank you to every student, teacher, parent, guest and crew member who made this showcase possible."},
         {up:"As we conclude the evening, may I request everyone to please stand."},
         {fk:"Please rise for the **National Anthem**."},
-        {do:"Both hosts step to their marked positions and face the flag or screen. No applause prompt, joke, announcement or sign-off after the anthem."}
+        {do:"Both hosts step to their marked positions and face the flag or screen. No applause prompt, joke, announcement or sign-off after the anthem. When the anthem ends, the screen rolls the end credits by itself. Stay still and let the names move."}
       ]}
     ];
     const SCRIPT_RESCUES=[
@@ -1924,7 +1933,7 @@
       const copyAll = event.target.closest("[data-copy-all-volunteers]");
       if(copyAll){
         const text = VOLUNTEERS.map(v=>`${v.name} (${v.role})\n${volunteerUrl(v.id)}`).join("\n\n");
-        copyText(text, "All 9 links copied");
+        copyText(text, `All ${VOLUNTEERS.length} links copied`);
         return;
       }
       const copy = event.target.closest("[data-copy-volunteer]");
@@ -1976,7 +1985,7 @@
     else openFromHash();
   </script>
   <script src="opening.js?v=4"></script>
-  <script src="led.js?v=17"></script>
+  <script src="led.js?v=18"></script>
   <script src="lights.js?v=5"></script>
 </body>
 </html>

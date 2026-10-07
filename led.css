@@ -244,3 +244,28 @@
 .opening-titles{position:absolute;left:50%;bottom:8vh;width:min(92vw,980px);transform:translateX(-50%);text-align:center}
 .opening-musicale{margin:0;font:italic 600 clamp(36px,4.6vw,84px)/1 "Playfair Display",Georgia,serif;color:#fff8ee;text-shadow:0 10px 28px #000;opacity:0}
 .opening-annual{margin:1.1vh 0 0;font:700 clamp(13px,1.35vw,24px)/1 "DM Sans",system-ui,sans-serif;letter-spacing:.42em;text-transform:uppercase;color:#f3d48a;text-shadow:0 6px 18px #000;opacity:0}
+.led-credits{display:block;overflow:hidden;background:#07060c}
+.credits-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 46%,#5a3e18 0%,#1a1424 38%,#07060c 70%);pointer-events:none}
+.led-credits:before,.led-credits:after{content:"";position:absolute;left:0;right:0;height:16vh;z-index:3;pointer-events:none}
+.led-credits:before{top:0;background:linear-gradient(#07060c,#07060c00)}
+.led-credits:after{bottom:0;background:linear-gradient(#07060c00,#07060c)}
+.credits-roll{position:absolute;left:0;right:0;top:0;z-index:1;text-align:center;color:#fff8ee;will-change:transform}
+.credits-open,.credits-finale{padding:8vh 6vw 10vh}
+.credits-open img,.credits-finale img{height:clamp(92px,16vh,180px);filter:drop-shadow(0 0 18px #fff3) drop-shadow(0 12px 24px #000)}
+.credits-open p,.credits-finale p{margin:2.2vh 0 0;font:700 clamp(13px,1.3vw,22px)/1.3 "DM Sans",system-ui,sans-serif;letter-spacing:.34em;text-transform:uppercase;color:#f3d48a}
+.credits-open h1,.credits-finale h2{margin:.6vh 0 0;font:600 clamp(42px,6vw,104px)/1 "Playfair Display",Georgia,serif;letter-spacing:.04em;text-shadow:0 8px 28px #000}
+.credits-open strong,.credits-finale strong{display:block;margin:1.6vh 0 0;font:700 clamp(14px,1.45vw,26px)/1.3 "DM Sans",system-ui,sans-serif;letter-spacing:.28em;text-transform:uppercase;color:#f3d48a}
+.credits-open span,.credits-finale span{display:block;margin:2.4vh auto 0;max-width:18em;font:500 clamp(20px,2vw,34px)/1.35 "DM Sans",system-ui,sans-serif;color:#fff6e4}
+.credits-kicker{margin:7vh auto 3vh;font:700 clamp(14px,1.5vw,26px)/1.3 "DM Sans",system-ui,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:#f3d48a}
+.credits-kicker:before,.credits-group h2:before{content:"";display:block;width:72px;height:1px;margin:0 auto 2vh;background:linear-gradient(90deg,transparent,#f3d48a,transparent)}
+.credits-role{margin:0 auto 4.5vh}
+.credits-role small{display:block;font:700 clamp(13px,1.2vw,20px)/1.3 "DM Sans",system-ui,sans-serif;letter-spacing:.28em;text-transform:uppercase;color:#f3d48a}
+.credits-role b{display:block;margin-top:.7vh;font:600 clamp(32px,3.6vw,64px)/1.15 "Playfair Display",Georgia,serif}
+.credits-group{margin:0 auto 6vh;padding:0 4vw}
+.credits-group h2{margin:5vh 0 1vh;font:600 clamp(28px,3.2vw,56px)/1.15 "Playfair Display",Georgia,serif}
+.credits-group p{margin:0 auto 2.2vh;max-width:40em;font:500 clamp(16px,1.5vw,26px)/1.4 "DM Sans",system-ui,sans-serif;color:#f6e7c4}
+.credits-names{display:grid;grid-template-columns:1fr 1fr;gap:.55vh 4vw;width:min(92vw,1280px);margin:0 auto}
+.credits-names span{font:600 clamp(22px,2.15vw,40px)/1.35 "DM Sans",system-ui,sans-serif;text-shadow:0 2px 14px #000}
+.credits-names span:last-child:nth-child(odd){grid-column:1 / -1}
+.credits-finale b{display:block;margin-top:3vh;font:600 clamp(26px,3vw,52px)/1.2 "Playfair Display",Georgia,serif;letter-spacing:0;text-transform:none;color:#fff8ee}
+.credits-finale{padding-bottom:18vh}
