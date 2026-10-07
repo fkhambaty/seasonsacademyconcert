@@ -226,6 +226,8 @@
     .vol-card.on small{color:#ffffffb0}
     .vol-card.on button[data-copy-volunteer]{background:#ffffff14;color:#f3d48a;border-top-color:#ffffff22}
     .vol-copy-all{margin-top:10px}
+    .vol-saved,.led-save{margin:0 0 14px;padding:10px 14px;border-radius:12px;background:#f4fbfb;border:1px solid #1a9ea333;color:#137f84;font-size:13.5px;line-height:1.45}
+    .led-save{margin:0;border-radius:0;border-width:0 0 1px}
     .vol-show,.vol-back{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:999px;background:var(--ink);color:#fff;font-weight:700}
     .vol-show{margin:0 0 16px}
     .vol-back{margin:0 0 18px}
@@ -365,7 +367,7 @@
 
     <section class="view" id="scriptView"><div class="script-page" id="scriptPage"></div></section>
 
-    <section class="view" id="ledView"><div class="led-console" id="ledConsole"></div></section>
+    <section class="view" id="ledView"><p class="led-save" data-save-note="media" hidden></p><div class="led-console" id="ledConsole"></div></section>
 
     <section class="view" id="lightsView"><div id="lightsConsole"></div></section>
 
@@ -706,6 +708,7 @@
           page.innerHTML = `<div class="eyebrow">Your job only</div>
             <h1>${escapeHtml(me.name)}</h1>
             <p class="vol-lede">You look after entry passes. You do not take a band from the balcony to the backstage door.</p>
+            <p class="vol-saved" data-save-note="shell">${escapeHtml(window.showShellNote || "Saving this page on your phone…")}</p>
             <a class="vol-show" href="#timeline">See the running order</a>
             ${cards}`;
           return;
@@ -713,6 +716,7 @@
         page.innerHTML = `<div class="eyebrow">Your trips only</div>
           <h1>${escapeHtml(me.name)}</h1>
           <p class="vol-lede">You have ${mine.length} ${mine.length===1?"trip":"trips"}. Do them in order. Finish one band before you start the next.</p>
+          <p class="vol-saved" data-save-note="shell">${escapeHtml(window.showShellNote || "Saving this page on your phone…")}</p>
           <a class="vol-show" href="#timeline">See the running order</a>
           ${rule}
           ${freeLine}
@@ -2036,6 +2040,7 @@
       if(code===ADMIN_CODE){
         sessionStorage.setItem(GATE_KEY, "admin");
         openFromHash();
+        warmShowCache();
         return;
       }
       error.textContent = "That passcode is not right.";
@@ -2105,7 +2110,51 @@
     else openFromHash();
   </script>
   <script src="opening.js?v=4"></script>
-  <script src="led.js?v=19"></script>
+  <script src="led.js?v=20"></script>
   <script src="lights.js?v=5"></script>
+  <script>
+    function warmShowCache(){
+      if(warmShowCache.started){
+        const worker = navigator.serviceWorker && navigator.serviceWorker.controller;
+        if(worker && sessionStorage.getItem("seasons-gate-v1")==="admin") worker.postMessage({type:"media"});
+        return;
+      }
+      warmShowCache.started = true;
+      const notes = kind => document.querySelectorAll(`[data-save-note="${kind}"]`);
+      const say = (kind, text) => notes(kind).forEach(node => {
+        node.hidden = false;
+        node.dataset.saved = "1";
+        node.textContent = text;
+      });
+      if(!("serviceWorker" in navigator)){
+        say("shell", "This phone could not save the page. Keep the wifi on.");
+        return;
+      }
+      const admin = sessionStorage.getItem("seasons-gate-v1") === "admin";
+      const send = () => {
+        const worker = navigator.serviceWorker.controller;
+        if(!worker) return;
+        worker.postMessage({type:"shell"});
+        if(admin) worker.postMessage({type:"media"});
+      };
+      navigator.serviceWorker.addEventListener("message", event => {
+        const data = event.data || {};
+        if(data.kind === "shell" && data.ready){
+          window.showShellNote = "Saved on this phone. It still opens if the wifi stops.";
+          say("shell", window.showShellNote);
+        }
+        if(data.kind === "media"){
+          if(data.ready) say("media", "Song videos are saved on this laptop. The wall still plays if the wifi stops.");
+          else if(data.failed) say("media", `Saving the song videos on this laptop… ${data.done} of ${data.total}. Some did not save yet. Leave this page open while the wifi works.`);
+          else say("media", `Saving the song videos on this laptop… ${data.done} of ${data.total}. Leave this page open until it finishes.`);
+        }
+      });
+      navigator.serviceWorker.addEventListener("controllerchange", send);
+      navigator.serviceWorker.register("sw.js").then(() => {
+        if(navigator.serviceWorker.controller) send();
+      }).catch(() => say("shell", "This phone could not save the page. Keep the wifi on."));
+    }
+    warmShowCache();
+  </script>
 </body>
 </html>
