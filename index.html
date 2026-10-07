@@ -203,14 +203,15 @@
     .vol-job header{padding:16px 18px;background:#faf8f3;border-bottom:1px solid var(--line)}
     .vol-job h3{font:600 26px/1.15 "Playfair Display",Georgia,serif;margin:3px 0 0;overflow-wrap:anywhere}
     .vol-rule{margin:0 0 14px;padding:12px 14px;border-radius:14px;background:#b8892f14;font-size:15.5px;line-height:1.45}
-    .vol-trip{padding:14px 16px}
-    .vol-trip.go{background:#b8892f10}
-    .vol-trip.back{background:#1a9ea30e;border-top:1px solid var(--line)}
-    .vol-trip .tag{display:block;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
-    .vol-trip.go .tag{color:#8a6420}
-    .vol-trip.back .tag{color:#137f84}
-    .vol-trip p{margin:0;font-size:16.5px;line-height:1.45;overflow-wrap:anywhere}
-    .vol-trip small{display:block;margin-top:6px;color:var(--muted);font-size:13px;line-height:1.4}
+    .vol-moves{list-style:none;margin:0;padding:0}
+    .vol-moves li{padding:14px 16px;border-top:1px solid var(--line)}
+    .vol-moves>li>b{display:block;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#8a6420}
+    .vol-moves p b,.vol-moves small b{font-weight:800}
+    .vol-moves .wait{background:#1a9ea30e}
+    .vol-moves .wait>b{color:#137f84}
+    .vol-moves p{margin:4px 0 0;font-size:18px;line-height:1.35}
+    .vol-moves small{display:block;margin-top:4px;color:var(--muted);font-size:14.5px;line-height:1.4}
+    .vol-who{margin:0;padding:12px 16px 0;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
     .vol-names{list-style:none;margin:0;padding:6px 18px 14px}
     .vol-names li{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:9px 0;border-bottom:1px solid #f0ece4;font-size:16.5px;font-weight:700;overflow-wrap:anywhere}
     .vol-names li span{color:var(--gold);font:600 16px "Playfair Display",Georgia,serif}
@@ -249,7 +250,7 @@
       .vol-pick{grid-template-columns:1fr 1fr}
       .vol-names li{grid-template-columns:28px minmax(0,1fr)}
       .vol-names li em{grid-column:2}
-      .vol-job header,.vol-trip{padding-left:14px;padding-right:14px}
+      .vol-job header,.vol-moves li{padding-left:14px;padding-right:14px}
     }
     @media(max-width:380px){.vol-pick{grid-template-columns:1fr}.vol-job h3{font-size:22px}}
   </style>
@@ -305,7 +306,7 @@
           <a class="home-btn" href="#script"><span class="home-icon">✎</span><b>Script</b><small>Every line for FK and Upasana</small></a>
           <a class="home-btn" href="#led"><span class="home-icon">▣</span><b>LED</b><small>Cues for the audience screen</small></a>
           <a class="home-btn" href="#lights"><span class="home-icon">✦</span><b>Lights</b><small>Console rehearsal and every act’s lighting look</small></a>
-          <a class="home-btn" href="#volunteers"><span class="home-icon">☺</span><b>Volunteers</b><small>Walks each band down, then back</small></a>
+          <a class="home-btn" href="#volunteers"><span class="home-icon">☺</span><b>Volunteers</b><small>One band down, the next band waiting</small></a>
         </div>
       </div>
     </section>
@@ -569,10 +570,6 @@
       if(navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(done).catch(fallback);
       else fallback();
     }
-    function volunteerClock(minutes){
-      const [hour, minute] = formatClock(minutes).split(":").map(Number);
-      return `${hour%12||12}:${String(minute).padStart(2,"0")} ${hour<12?"AM":"PM"}`;
-    }
     function volunteerPlan(){
       const jobs = Object.fromEntries(VOLUNTEERS.map(v=>[v.id,[]]));
       const timed = timings();
@@ -586,32 +583,52 @@
       const load = id => jobs[id].reduce((sum, job)=>sum+job.people.length, 0);
       const walkers = VOLUNTEERS.filter(v=>v.walks!==false);
       const maxLoad = () => Math.max(...walkers.map(v=>load(v.id)));
-      const leaveCue = leave => {
-        if(leave<5) return {title:"Hosts Welcome", how:"before"};
-        const on = real.find(item=>item.start<=leave && leave<item.end);
-        if(on) return {title:on.event.title, how:"during"};
-        const prev = real.filter(item=>item.end<=leave).at(-1);
-        return {title:prev?.event.title || "Hosts Welcome", how:prev?"after":"before"};
-      };
       const freeFor = (person, slot) =>
         !slot.people.some(([name])=>person.kids.includes(name)) &&
         !blocked[person.id].some(window=>overlaps(window, slot.walk) || overlaps(window, slot.back)) &&
         !jobs[person.id].some(job=>clashes(job, slot));
       const warnings = [];
-      const slots = [...bands].sort((a,b)=>CAST[b.event.title].people.length-CAST[a.event.title].people.length || a.start-b.start).map(slot=>{
-        let leave = slot.start-VOL_LEAVE_BEFORE, arrive = slot.start-VOL_ARRIVE_BEFORE;
-        if(leave<5){ leave = VOL_PRESHOW_LEAVE; arrive = VOL_PRESHOW_ARRIVE; }
-        const cue = leaveCue(leave);
-        const next = real.find(item=>item.start>=slot.end-0.001 && item.event.id!==slot.event.id);
-        return {
-          event:slot.event, start:slot.start, end:slot.end, leave, arrive,
-          walk:{from:leave, to:arrive+4}, back:{from:slot.end, to:slot.end+6},
-          people:CAST[slot.event.title].people,
-          leaveTitle:cue.title, leaveHow:cue.how,
-          returnTitle:next?.event.title || "",
-          returnGap:!!(next && next.start>slot.end+1)
+      const order = [...bands].sort((a,b)=>a.start-b.start);
+      const ice = real.find(item=>item.event.title.startsWith("Ice Breaker"));
+      const welcome = real.find(item=>item.event.title==="Hosts Welcome");
+      const cueFor = index => {
+        const mine = order[index], prev = order[index-1], earlier = order[index-2];
+        if(index===0) return {
+          leave: welcome?.start ?? 0,
+          down:`When <b>Hosts Welcome</b> starts`,
+          downNote:"Take every student on this card down to the backstage door.",
+          wait:"Wait outside that door. The speeches happen first.",
+          go:`Stay there until the hosts call <b>${escapeHtml(mine.event.title)}</b>.`
         };
-      });
+        if(index===1) return {
+          leave: ice?.start ?? mine.start-6,
+          down:"When the <b>Ice Breaker</b> starts",
+          downNote:"Take every student on this card down to the backstage door.",
+          wait:`Wait outside that door while <b>${escapeHtml(prev.event.title)}</b> is on stage.`,
+          go:`Stay there until the hosts call <b>${escapeHtml(mine.event.title)}</b>. If the stage goes quiet, keep waiting.`
+        };
+        return {
+          leave: earlier.end,
+          down:`When <b>${escapeHtml(earlier.event.title)}</b> ends`,
+          downNote:"Take every student on this card down. Another band is walking up. Let them pass. Keep walking.",
+          wait:`Wait outside the door while <b>${escapeHtml(prev.event.title)}</b> is on stage. Do not go inside.`,
+          go:`Stay there until the hosts call <b>${escapeHtml(mine.event.title)}</b>. If the stage goes quiet, keep waiting.`
+        };
+      };
+      const slots = order.map((slot,index)=>{
+        const cue = cueFor(index);
+        const backHome = slot.end+6;
+        return {
+          event:slot.event, start:slot.start, end:slot.end, leave:cue.leave, arrive:slot.start,
+          walk:{from:cue.leave, to:backHome}, back:{from:cue.leave, to:backHome},
+          people:CAST[slot.event.title].people,
+          down:cue.down, downNote:cue.downNote, wait:cue.wait, go:cue.go,
+          home:`When <b>${escapeHtml(slot.event.title)}</b> ends`,
+          homeNote:index<order.length-2
+            ? "Meet the same students at the door and walk them back to the balcony. Another band may be coming down. Let them pass. Keep walking."
+            : "Meet the same students at the door and walk them back to the balcony."
+        };
+      }).sort((a,b)=>b.people.length-a.people.length || a.start-b.start);
       slots.forEach(slot=>{
         const pick = [...walkers].filter(v=>freeFor(v, slot))
           .sort((a,b)=>load(a.id)-load(b.id) || jobs[a.id].length-jobs[b.id].length || VOLUNTEERS.indexOf(a)-VOLUNTEERS.indexOf(b))[0];
@@ -637,21 +654,15 @@
       Object.values(jobs).forEach(list=>list.sort((a,b)=>a.start-b.start));
       return {jobs, blocked, warnings};
     }
-    function volunteerJobHtml(job){
+    function volunteerJobHtml(job, trip, trips){
       const count = job.people.length;
-      const down = job.leaveHow==="before"
-        ? `Before <b>${escapeHtml(job.leaveTitle)}</b> begins, take all ${count} students from the balcony to the backstage door.`
-        : job.leaveHow==="during"
-          ? `While <b>${escapeHtml(job.leaveTitle)}</b> is on stage, take all ${count} students from the balcony to the backstage door.`
-          : `As soon as <b>${escapeHtml(job.leaveTitle)}</b> ends, take all ${count} students from the balcony to the backstage door.`;
-      const back = job.returnTitle
-        ? (job.returnGap
-          ? `When <b>${escapeHtml(job.event.title)}</b> ends, meet all ${count} at the backstage door and walk them back to the balcony before <b>${escapeHtml(job.returnTitle)}</b> begins.`
-          : `When <b>${escapeHtml(job.event.title)}</b> ends and <b>${escapeHtml(job.returnTitle)}</b> begins, meet all ${count} at the backstage door and walk them back to the balcony.`)
-        : `When <b>${escapeHtml(job.event.title)}</b> ends, meet all ${count} at the backstage door and walk them back to the balcony.`;
-      return `<article class="vol-job"><header><div class="eyebrow">${job.event.number?`Act ${job.event.number}`:"Band"} · whole band · ${count} students</div><h3>${escapeHtml(job.event.title)}</h3></header>
-        <div class="vol-trip go"><span class="tag">Take them down</span><p>${down}</p><small>About ${volunteerClock(job.leave)}. A guide only — follow the event.</small></div>
-        <div class="vol-trip back"><span class="tag">Bring them back</span><p>${back}</p><small>About ${volunteerClock(job.end)}. A guide only — follow the event.</small></div>
+      return `<article class="vol-job"><header><div class="eyebrow">Trip ${trip} of ${trips} · ${count} students</div><h3>${escapeHtml(job.event.title)}</h3></header>
+        <ol class="vol-moves">
+          <li><b>1. Go down</b><p>${job.down}</p><small>${job.downNote}</small></li>
+          <li class="wait"><b>2. Wait outside</b><p>${job.wait}</p><small>${job.go}</small></li>
+          <li><b>3. Bring them back</b><p>${job.home}</p><small>${job.homeNote}</small></li>
+        </ol>
+        <p class="vol-who">Your students</p>
         <ol class="vol-names">${job.people.map(([name,instrument],index)=>`<li><span>${index+1}</span>${escapeHtml(name)}<em>${escapeHtml(instrument)}</em></li>`).join("")}</ol></article>`;
     }
     function renderVolunteers(){
@@ -665,9 +676,9 @@
       const freeTimes = blocked[me.id];
       const bandsWord = mine.length===1?"band":"bands";
       const freeLine = freeTimes.length?`<p class="vol-free">${me.performs?"No walks while you get ready for, or play in":"Free to watch"}: <b>${freeTimes.map(window=>escapeHtml(window.title)).join("</b>, <b>")}</b>.</p>`:"";
-      const rule = `<p class="vol-rule"><b>Follow the event, not the clock.</b> The times are only a rough guide. If the show runs early or late, do what the event name says.</p>`;
+      const rule = `<p class="vol-rule"><b>Only one band waits outside the door.</b> Stay outside. Do not go in. If you meet another band, let them pass and keep walking. Listen for the song name. Do not watch the clock.</p>`;
       const desk = me.walks===false;
-      const cards = desk?`<p class="vol-empty">${escapeHtml(me.name)} looks after entry passes at the door. This helper does not walk a band down or back.</p>`:mine.length?mine.map(volunteerJobHtml).join(""):`<p class="vol-empty">No bands for this helper.</p>`;
+      const cards = desk?`<p class="vol-empty">${escapeHtml(me.name)} looks after entry passes at the door. This helper does not walk a band down or back.</p>`:mine.length?mine.map((job,index)=>volunteerJobHtml(job,index+1,mine.length)).join(""):`<p class="vol-empty">No bands for this helper.</p>`;
       if(personal){
         document.title = `${me.name} — your bands`;
         if(desk){
@@ -677,17 +688,11 @@
             ${cards}`;
           return;
         }
-        page.innerHTML = `<div class="eyebrow">Your bands only</div>
+        page.innerHTML = `<div class="eyebrow">Your trips only</div>
           <h1>${escapeHtml(me.name)}</h1>
-          <p class="vol-lede">${escapeHtml(me.role)}. You have ${mine.length} ${bandsWord} and ${students} students. Take each whole band down to the backstage door, then bring that same band back to the balcony.</p>
-          <div class="vol-steps">
-            <div><b>1. Listen for the event</b><span>The bold name is your cue. The clock is only a guide.</span></div>
-            <div><b>2. Take them down</b><span>Every name on the card goes to the backstage door.</span></div>
-            <div><b>3. Bring them back</b><span>When that band finishes, walk the same students back to the balcony.</span></div>
-          </div>
+          <p class="vol-lede">You have ${mine.length} ${mine.length===1?"trip":"trips"}. Do them in order. Finish one band before you start the next.</p>
           ${rule}
           ${freeLine}
-          <div class="vol-head"><div><h2>${mine.length} ${bandsWord}</h2><p>${students} students</p></div></div>
           ${cards}`;
         return;
       }
@@ -695,11 +700,11 @@
       const count = id => jobs[id].reduce((sum,job)=>sum+job.people.length,0);
       page.innerHTML = `<div class="eyebrow">Balcony to backstage</div>
         <h1>Volunteers</h1>
-        <p class="vol-lede">One helper for each whole band. They take the band down to the backstage door, then bring that same band back to the balcony. They follow the event names. The clock is only a guide. Copy a link and send it. The link opens only that helper’s bands.</p>
+        <p class="vol-lede">One helper walks one whole band. While that band plays, the next band is already waiting outside. The band after that comes down as the finished band walks back up. Send each helper their own link.</p>
         <div class="vol-steps">
-          <div><b>1. Copy a link</b><span>One link per helper. Opening it shows only their bands.</span></div>
-          <div><b>2. They see only their page</b><span>No script, no lights, and no other helper’s bands.</span></div>
-          <div><b>3. Down, then back</b><span>The bold event is the cue. Acts 1 and 2 leave before Hosts Welcome.</span></div>
+          <div><b>1. Go down</b><span>Leave the balcony when the card says. Take every name on the card.</span></div>
+          <div><b>2. Wait outside</b><span>Stay outside the door until the hosts call their song.</span></div>
+          <div><b>3. Bring them back</b><span>When their song ends, walk the same students up to the balcony.</span></div>
         </div>
         ${rule}
         ${warnings.length?`<p class="vol-empty">${warnings.map(escapeHtml).join("<br>")}</p>`:""}
