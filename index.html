@@ -226,6 +226,19 @@
     .vol-card.on small{color:#ffffffb0}
     .vol-card.on button[data-copy-volunteer]{background:#ffffff14;color:#f3d48a;border-top-color:#ffffff22}
     .vol-copy-all{margin-top:10px}
+    .vol-show,.vol-back{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:999px;background:var(--ink);color:#fff;font-weight:700}
+    .vol-show{margin:0 0 16px}
+    .vol-back{margin:0 0 18px}
+    html.role-volunteer .run-rail{display:none}
+    html.role-volunteer .timeline-shell{grid-template-columns:1fr;height:auto}
+    html.role-volunteer .timeline-main{overflow:visible}
+    html.role-volunteer .schedule-row{cursor:default}
+    html.role-volunteer .schedule-row:hover{transform:none}
+    html.role-volunteer #volunteerTimelineBack:not(:empty){position:sticky;top:76px;z-index:4;background:#f7f5f0f2;padding:8px 0;margin-top:-12px}
+    html.role-volunteer .vol-back{margin:0}
+    html.role-volunteer .schedule-row.mine{border-color:#b8892f;background:#fffaf0}
+    html.role-volunteer .schedule-row.mine:hover{border-color:#b8892f}
+    .your-trip{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:99px;background:#b8892f;color:#fff;font-style:normal;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;vertical-align:2px}
     .gate{position:fixed;inset:0;z-index:80;display:none;place-items:center;padding:24px;background:radial-gradient(circle at 50% 30%,#b8892f24 0,#f7f5f0 42%)}
     html.locked .gate{display:grid}
     html.locked .app-header,html.locked main,html.locked .cast-backdrop,html.locked .cast-drawer,html.locked .toast,html.locked #ledOutput{display:none!important}
@@ -259,7 +272,7 @@
       var gateSaved=sessionStorage.getItem("seasons-gate-v1")||"";
       var gatePersonal=/^volunteers\/[a-z0-9-]+$/.test(location.hash.slice(1));
       if(gateSaved==="admin"){ /* the show passcode is already entered */ }
-      else if(gatePersonal) document.documentElement.classList.add("role-volunteer");
+      else if(gateSaved.indexOf("volunteer:")===0 || gatePersonal) document.documentElement.classList.add("role-volunteer");
       else document.documentElement.classList.add("locked");
     }catch(error){ document.documentElement.classList.add("locked"); }
   </script>
@@ -315,6 +328,7 @@
       <div class="timeline-shell">
         <aside class="run-rail"><div class="rail-head"><div class="eyebrow">Master run</div><h2>Show flow</h2></div><div class="rail-list" id="timelineRail"></div></aside>
         <div class="timeline-main">
+          <div id="volunteerTimelineBack"></div>
           <div class="timeline-top"><div><div class="eyebrow">Seasons Academy</div><h1>Running order</h1></div><div class="runtime-card"><strong id="totalRuntime">—</strong><span id="showWindow">total running time</span></div></div>
           <div class="schedule" id="schedule"></div>
         </div>
@@ -552,6 +566,13 @@
     function readAccess(){
       return sessionStorage.getItem(GATE_KEY)==="admin" ? {role:"admin"} : {role:null};
     }
+    function volunteerSessionId(){
+      const saved=sessionStorage.getItem(GATE_KEY)||"";
+      return saved.startsWith("volunteer:")?saved.slice("volunteer:".length):"";
+    }
+    function rememberVolunteer(id){
+      sessionStorage.setItem(GATE_KEY, `volunteer:${id}`);
+    }
     function volunteerUrl(id){ return `${location.origin}${location.pathname}#volunteers/${id}`; }
     function copyText(text, message){
       const done = () => toast(message);
@@ -685,12 +706,14 @@
           page.innerHTML = `<div class="eyebrow">Your job only</div>
             <h1>${escapeHtml(me.name)}</h1>
             <p class="vol-lede">You look after entry passes. You do not take a band from the balcony to the backstage door.</p>
+            <a class="vol-show" href="#timeline">See the running order</a>
             ${cards}`;
           return;
         }
         page.innerHTML = `<div class="eyebrow">Your trips only</div>
           <h1>${escapeHtml(me.name)}</h1>
           <p class="vol-lede">You have ${mine.length} ${mine.length===1?"trip":"trips"}. Do them in order. Finish one band before you start the next.</p>
+          <a class="vol-show" href="#timeline">See the running order</a>
           ${rule}
           ${freeLine}
           ${cards}`;
@@ -748,10 +771,23 @@
       const access = readAccess();
       const known = personal && VOLUNTEERS.some(v=>v.id===personal[1]);
       if(access.role!=="admin"){
+        const sessionId = volunteerSessionId();
+        const knownSession = VOLUNTEERS.some(v=>v.id===sessionId);
         if(known){
+          rememberVolunteer(personal[1]);
           unlockSite("volunteer");
           volLetter = personal[1];
           navigate("volunteers");
+          return;
+        }
+        if(knownSession && hash==="timeline"){
+          unlockSite("volunteer");
+          volLetter = sessionId;
+          navigate("timeline");
+          return;
+        }
+        if(knownSession){
+          location.replace(`#volunteers/${sessionId}`);
           return;
         }
         showGate();
@@ -1588,19 +1624,23 @@
     }
     function renderTimeline(){
       const list=timings(),total=showLength();
+      const personal=document.documentElement.classList.contains("role-volunteer");
+      const mine=new Set(personal?(volunteerPlan().jobs[volunteerSessionId()]||[]).map(job=>job.event.title):[]);
       document.getElementById("timelineRail").innerHTML=railHtml(currentId);
       document.getElementById("totalRuntime").textContent=formatDuration(total);
       document.getElementById("showWindow").textContent=`${formatClock(0)} → ${formatClock(total)}`;
+      document.getElementById("volunteerTimelineBack").innerHTML=personal?`<a class="vol-back" href="#volunteers/${volunteerSessionId()}">← Back to my trips</a>`:"";
       document.getElementById("schedule").innerHTML=list.map(({event,start},index)=>{
         const together=index>0 && list[index-1].start===start;
         const partner=mates(event);
         const detail=event.type==="filler"?"Transition and stage reset":peopleCount(event)?`${peopleCount(event)} performers · ${event.instruments.map(([r,c])=>`${c} ${escapeHtml(r)}`).join(" · ")}`:"Stage positions to be confirmed";
         const note=partner.length?`Runs in parallel with ${partner.map(e=>escapeHtml(e.title)).join(" & ")}. `:"";
-        const cue=event.notes?`<p class="cue">${escapeHtml(event.notes)}</p>`:"";
-        const led=event.led?`<p class="cue led">LED wall: ${escapeHtml(event.led)}</p>`:"";
-        const castLink=castFor(event)?`<button class="cast-link" type="button" data-cast="${event.id}">Names &amp; costume</button>`:"";
-        return `<article class="schedule-row ${event.type} ${together?"parallel":""}" data-open="${event.id}">
-          <span class="clock">${together?"same":formatClock(start)}</span><div><h3>${escapeHtml(event.title)}</h3><p>${note}${detail}</p>${cue}${led}${castLink}</div><strong>${event.duration}m</strong>
+        const cue=!personal && event.notes?`<p class="cue">${escapeHtml(event.notes)}</p>`:"";
+        const led=!personal && event.led?`<p class="cue led">LED wall: ${escapeHtml(event.led)}</p>`:"";
+        const castLink=!personal && castFor(event)?`<button class="cast-link" type="button" data-cast="${event.id}">Names &amp; costume</button>`:"";
+        const yours=mine.has(event.title)?`<em class="your-trip">Your trip</em>`:"";
+        return `<article class="schedule-row ${event.type} ${together?"parallel":""} ${mine.has(event.title)?"mine":""}" data-open="${event.id}">
+          <span class="clock">${together?"same":formatClock(start)}</span><div><h3>${escapeHtml(event.title)}${yours}</h3><p>${note}${detail}</p>${cue}${led}${castLink}</div><strong>${event.duration}m</strong>
         </article>`;
       }).join("");
     }
@@ -1814,7 +1854,10 @@
       if(named){showNameTip(named);return}
       if(!e.target.closest(".name-tip"))document.querySelector(".name-tip")?.remove();
       const target=e.target.closest("[data-open]");
-      if(target){currentId=target.dataset.open;location.hash="stage"}
+      if(target){
+        if(document.documentElement.classList.contains("role-volunteer")) return;
+        currentId=target.dataset.open;location.hash="stage"
+      }
     });
     document.getElementById("castClose").addEventListener("click",closeCast);
     document.getElementById("castBackdrop").addEventListener("click",closeCast);
