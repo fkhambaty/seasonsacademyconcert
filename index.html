@@ -445,6 +445,7 @@
           item(6,"We Are the Champions Mashup",[["Western Vocals",11],["Keyboard",1]]),
           item(7,"Raag Yaman",[["Flute",4]]),
           item(8,"The Flute Song",[["Guitar",1],["Keyboard & Vocals",2],["Keyboard",4]]),
+          item(null,"Launch Film — Seasons Dance & Wellness Academy",[["Host",2]],2,"ceremony",{layout:hostsCentre(),led:"LAUNCH FILM · DANCE & WELLNESS ACADEMY",notes:"Curtain stays closed. FK stops the bus at a glowing highway billboard; house lights go dark and the LED plays the 47-second launch film once with sound. Hosts watch from the sides, then announce Seasons Dance &amp; Wellness Academy and carry straight on to the Saiyaara host talk."}),
           item(9,"Saiyaara",[["Guitar",4],["Keyboard",5],["Drums",1],["Bass Guitar",1],["Vocals",1]]),filler(),
           item(11,"G Minute",[["Violin",7]]),
           item(12,"Ghar More Pardesiya & Moh Moh Ke Dhaage",[["Hindustani Vocals",5],["Flute",1]]),
@@ -505,6 +506,15 @@
           show.events.splice(ice<0?0:ice+1,0,sponsor);
         }
         done.add("sponsor-presentation-v1");
+      }
+      if(!done.has("dance-wellness-launch-v1")){
+        const launchTitle = "Launch Film — Seasons Dance & Wellness Academy";
+        if(!show.events.some(event=>event.title===launchTitle)){
+          const launch = createDefaults().events.find(event=>event.title===launchTitle);
+          const saiyaara = show.events.findIndex(event=>event.title==="Saiyaara");
+          show.events.splice(saiyaara<0?show.events.length:saiyaara,0,launch);
+        }
+        done.add("dance-wellness-launch-v1");
       }
       show.migrations = [...done];
       localStorage.setItem(STORAGE_KEY, JSON.stringify(show));
@@ -956,7 +966,7 @@
         {fk:"Taal, Sur se zyada zor se pooch sakte ho?"},
         {do:"Point to HOUSE RIGHT. Only Taal asks: “GOA KITNA DOOR?”"},
         {fk:"Abhi toh bus start bhi nahi hui. Chaar sau sattar kilometre."},
-        {up:"Har stop pe main poore hall ki taraf haath karungi — tab Sur aur Taal **saath mein** poochhenge. Jitna zor se poochoge, conductor utna sach bolega."},
+        {up:"Yeh sawaal har stop pe nahi — sirf bade stops pe. Jab main poore hall ki taraf haath karungi, tab Sur aur Taal **saath mein** poochhenge. Jitna zor se poochoge, conductor utna sach bolega."},
         {fk:"Guarantee nahi hai."},
         {phase:"Rehearsal 2 · the horn"},
         {fk:"Aur doosra rule. Har performance se pehle bus ka horn bajega. Jab Upasana bolegi “Driver sahab, horn!” — aap sab bologe: **“POM POM!”**"},
@@ -1058,8 +1068,8 @@
       hostTransition("Bharat Humko Jaan Se Pyara Hai","Drum Circle","Khambatki ghat tunnel",[
         {phase:"Core · use every time",core:true},
         {up:"Sinhagad ko ek salaam — aur in paanch performers ke liye zordaar taaliyaa!"},
-        {do:"Arm towards the hall: “GOA KITNA DOOR?”"},
-        {fk:"Chaar sau das. Aur aage aa raha hai — Khambatki ghat ka tunnel."},
+        {up:"(in a flat Google Maps voice) “Aapki manzil… chaar sau das kilometre door hai. Aage — tunnel.”"},
+        {fk:"Google Maps wali aunty ko bhi Pune ki hawa lag gayi. Seedha nahi bolti — pehle ghuma ke bolti hai. Aage aa raha hai — Khambatki ghat ka tunnel."},
         {up:"Ab sach batana. Jab bus tunnel mein jaati hai, toh har Indian bachcha kya karta hai?"},
         {fk:"Aur har Indian papa bhi."},
         {up:"Chillaata hai! Echo sunne ke liye. Tunnel aa gaya. Pehle **SUR** — teen, do, ek…"},
@@ -1088,8 +1098,7 @@
         {phase:"Core · use every time",core:true},
         {fk:"Tunnel se bahar aa gaye — aur kaan abhi bhi wahi hain!"},
         {up:"Baarah drummers — taaliyaa!"},
-        {do:"Arm towards the hall: “GOA KITNA DOOR?”"},
-        {fk:"Teen sau saath. Aur Satara aa gaya!"},
+        {fk:"Road ke kinare milestone dekho — peela patthar. “Satara 0. Goa 360.” Satara aa gaya!"},
         {up:"Satara matlab do cheezein. Ek — **Kaas pathaar**. Yahi season hai. September-October mein poora pathaar rang-birange phoolon se bhar jaata hai. UNESCO World Heritage ka hissa."},
         {fk:"Aur do — kandi pedhe."},
         {up:"FK, tum phoolon wali baat sun bhi rahe the?"},
@@ -1112,15 +1121,13 @@
         {phase:"Extension 2 · an old address"},
         {up:"Yeh rhyme lagbhag 240 saal purani hai. Aur 240 saal mein ek cheez bilkul nahi badli."},
         {fk:"Kya?"},
-        {up:"Jahan bahut saare bachche hon, wahan subah school ke time ek moza hamesha gayab hota hai. Parents — haath upar, jinke ghar mein yeh roz hota hai!"},
-        {do:"Hands go up across the hall."},
-        {fk:"Poora hall! Matlab woh aunty joote mein nahi rehti. Woh Pune ke har ghar mein rehti hai."}
+        {up:"Jahan bahut saare bachche hon, wahan subah school ke time ek moza hamesha gayab hota hai."},
+        {fk:"Matlab woh aunty joote mein nahi rehti. Woh Pune ke har ghar mein rehti hai."}
       ]),
       hostTransition("Old Woman in a Shoe","Mission Impossible","NH48 highway — the truck",[
         {phase:"Core · use every time",core:true},
         {up:"Chaar sabse chhote passengers — sabse zordaar taaliyaa!"},
-        {do:"Arm towards the hall: “GOA KITNA DOOR?”"},
-        {fk:"Teen sau tees. Lekin ek problem hai."},
+        {fk:"Speed achhi hai. Goa ab sirf teen sau tees kilometre. Lekin ek problem hai."},
         {up:"Kya?"},
         {fk:"Aage ek truck hai. Peeche likha hai “Horn OK Please.” Aur bees kilometre se side nahi de raha."},
         {up:"Matlab overtake karna padega."},
@@ -1150,8 +1157,7 @@
       hostTransition("Mission Impossible","We Are the Champions Mashup","Karad",[
         {phase:"Core · use every time",core:true},
         {fk:"Mission accomplished! Twelve performers — taaliyaa!"},
-        {do:"Arm towards the hall: “GOA KITNA DOOR?”"},
-        {fk:"Teen sau. Aur bus guzar rahi hai — Karad se."},
+        {fk:"Board dekha? **“Karad.”** Aur Goa — teen sau. Bus guzar rahi hai Karad se."},
         {up:"Karad ke paas ek chhota sa gaon hai, Goleshwar. Wahan ke ek pehelwan ne 1952 mein history banayi."},
         {fk:"**Khashaba Jadhav.** Helsinki Olympics. Wrestling. Bronze medal."},
         {up:"Azaad Bharat ka pehla individual Olympic medal. Ek gaon ke akhaade se."},
@@ -1163,14 +1169,11 @@
         {do:"Run it twice. The second must be louder — FK cups his ear to demand it."},
         {fk:"Itna loud? Helsinki tak awaaz gayi hogi."},
         {phase:"Extension 1 · medals for the parents"},
-        {up:"Aaj medals hum denge. Parents ko. Pehla — **Best Driver**: jo Pune ka traffic aur parking jeet ke time pe pahunche. Haath upar!"},
-        {do:"Wait for hands. Applaud them like a real ceremony."},
+        {up:"Aaj medals hum denge. Parents ko. Pehla — **Best Driver**: jo Pune ka traffic aur parking jeet ke time pe pahunche. Unke liye — taaliyaa!"},
+        {do:"Applaud them like a real ceremony. FK mimes hanging a medal on someone in the front row."},
         {fk:"Aur jo late pahunche — unke liye special medal: **Best Excuse.**"},
         {up:"Aur sabse bada — **Best Supporting Actor**: jo saal bhar ghar mein practice sunte rahe, aur ek baar bhi kaan band nahi kiye."},
-        {fk:"Ya kiye, par bachche ko pata nahi chalne diya. Woh bhi acting hai."},
-        {phase:"Extension 2 · twelve voices"},
-        {up:"Twelve singers aur ek keyboard aa rahe hain."},
-        {fk:"Twelve log ek saath ga rahe hain. Bus ki antakshari mein do log ek saath gaate hain toh jhagda ho jaata hai — “Yeh gaana ‘M’ se shuru hi nahi hota!”"}
+        {fk:"Ya kiye, par bachche ko pata nahi chalne diya. Woh bhi acting hai."}
       ]),
       hostTransition("We Are the Champions Mashup","Raag Yaman","Kolhapur, evening",[
         {phase:"Core · use every time",core:true},
@@ -1190,11 +1193,14 @@
         {fk:"Toh pyaar kaise dikhayein?"},
         {up:"Aise. Dono haath upar. Ungliyan dheere hilaao. Awaz bilkul nahi."},
         {do:"Upasana shows it once, slowly. The hall copies. FK joins, gets carried away, and nearly claps out loud. Upasana catches his hands and lowers them."},
-        {fk:"Maaf kijiye. Haath khud theatre ki aadat mein chale gaye."},
+        {up:"FK — silent mode!"},
+        {fk:"Sorry. Haath vibration pe the."},
         {up:"Beech mein sirf yahi. Raag khatam ho — tab zordaar taaliyaa. Phod ke."},
         {phase:"Extension 1 · Kolhapur’s music"},
         {up:"Waise Kolhapur sirf misal aur chappal nahi hai."},
         {fk:"Meri list mein abhi wahi do cheezein hain."},
+        {up:"Dono saath mein khaoge?"},
+        {do:"Pause for the laugh. FK looks at his own feet, considering it."},
         {up:"Ek naam aur jod lo. Ustad Alladiya Khan. Yahan ke darbar mein gaate the. Jaipur-Atrauli gharana unhi se shuru hui."},
         {fk:"Aur usi line mein aage ek awaaz aayi — Kishori Amonkar. Jinke saamne log gaana khatam hone tak saans rok ke baithe rehte the."},
         {up:"Aaj bhi wahi tameez. Pehle suno. Taaliyaa baad mein."},
@@ -1210,8 +1216,7 @@
         {phase:"Core · use every time",core:true},
         {up:"Ab zordaar taaliyaa! Chaar bansuri!"},
         {fk:"Main itna shaant ho gaya tha ki bhool gaya main conductor hoon. Teen log bina ticket chadh gaye."},
-        {do:"Arm towards the hall: “GOA KITNA DOOR?”"},
-        {fk:"Do sau bees. Aur ab — dhaba stop! Driver sahab bol rahe hain, “Sirf das minute.”"},
+        {fk:"Do sau bees kilometre baaki. Aur ab — dhaba stop! Driver sahab bol rahe hain, “Sirf das minute.”"},
         {up:"Bus wale ka “das minute.” Ekdum sach."},
         {fk:"Das minute ka matlab — chai, vada pav, washroom ki line, aur ek uncle jo phir bhi gaayab hain."},
         {up:"Bus wapas chalne se pehle conductor kya karta hai?"},
@@ -1245,8 +1250,19 @@
       hostTransition("The Flute Song","Saiyaara","Night falls",[
         {phase:"Core · use every time",core:true},
         {up:"Beautiful! Saat performers — taaliyaa!"},
-        {do:"Arm towards the hall: “GOA KITNA DOOR?”"},
-        {fk:"Ek sau assi. Aur raat ho gayi hai."},
+        {fk:"Ek sau assi kilometre baaki. Aur raat ho gayi hai — highway ekdum khaali."},
+        {phase:"Launch film · use every time",core:true},
+        {up:"Lekin raat ke highway pe, door se kuch chamak raha hai… ek bahut bada billboard."},
+        {fk:"Driver sahab — bus rokiye! Passengers — screen ki taraf dekhiye."},
+        {do:"Sound and lights: house lights to dark. LED operator plays <b>Launch film · Seasons Dance & Wellness Academy</b> with the volume all the way up. Both hosts step to the sides of the stage and turn to watch the screen with the audience. <b>Do not talk over the film</b> (47 seconds)."},
+        {wait:"The film ends and freezes on “Coming Soon”. House lights come back half up."},
+        {up:"Ladies and gentlemen — ab tak Seasons ne aapko **sur** diya, **taal** diya…"},
+        {fk:"…ab Seasons aapko **nachayega** bhi! Introducing — **Seasons Dance & Wellness Academy!**"},
+        {both:"Zordaar taaliyaa!"},
+        {do:"Lead the applause and let it run. This is the biggest cheer of the first half."},
+        {up:"Details bahut jald. Abhi ke liye — Coming Soon."},
+        {fk:"Aur conductor ka admission pakka. Dance mein nahi — wellness mein. Bus mein khade-khade kamar jawaab de gayi."},
+        {do:"Back to the bus story. The curtain stays closed and the film’s last card stays on the LED until the Saiyaara names."},
         {up:"Raat ki bus ho, aur antakshari na ho? Main line shuru karti hoon, poora hall complete karega. “Baithe baithe kya karein, karna hai kuch kaam…”"},
         {do:"Hall: “…shuru karo antakshari, leke prabhu ka naam!”"},
         {fk:"Wah! Pune ne antakshari ka entrance exam pass kar liya."},
@@ -1260,9 +1276,11 @@
         {fk:"Popcorn ka bill dekh ke."},
         {up:"Parents — tissue ready rakhiye. Barah performers aa rahe hain."},
         {phase:"Extension 1 · the replay count"},
-        {up:"Jinhone yeh gaana is saal kam se kam pachaas baar suna — haath upar!"},
-        {up:"Ab jinke bachche ne ghar mein pachaas baar bajaya — haath upar!"},
-        {fk:"Doosra group bada hai. Aur thoda thaka hua bhi lag raha hai."},
+        {up:"Jinhone yeh gaana is saal kam se kam pachaas baar suna hai — woh gunguna do!"},
+        {do:"The hall hums the Saiyaara hook. Let it run a few seconds."},
+        {up:"Ab jinke bachchon ne ghar mein pachaas baar bajaaya hai — aap gunguna do!"},
+        {do:"Near silence. A few tired parents stare back. Wait one beat."},
+        {fk:"Waah. Ekdum chup. Pachaas baar ke baad gunguna nahi sakte — sirf aah bhar sakte hain."},
         {phase:"Extension 2 · one more antakshari line"},
         {up:"Ek aur! “Mere sapnon ki rani kab aayegi tu…”"},
         {do:"Hall: “…aayi rut mastaani kab aayegi tu!”"},
@@ -1304,13 +1322,13 @@
         {fk:"Main so nahi raha tha! Aankhein band karke sun raha tha."},
         {up:"Kharrate bhi le rahe the."},
         {fk:"Woh… bass line thi."},
-        {up:"Sach batao — **SUR**, jo log lori mein so gaye the, haath upar!"},
-        {do:"Point to HOUSE LEFT. A few sheepish hands."},
-        {up:"**TAAL** — jinhone apne bagal wale ke kharrate sune, haath upar!"},
-        {do:"Point to HOUSE RIGHT. Many more hands."},
-        {fk:"Sur ke haath kam, Taal ke zyada. Matlab Sur waale so bhi rahe the — aur maan bhi nahi rahe."},
-        {do:"Arm towards the hall — back to full voice: “GOA KITNA DOOR?”"},
-        {fk:"Nabbe kilometre. Aur hum pahunche hain — **Amboli ghat.**"},
+        {up:"Sach batao — **SUR**, jo log lori mein so gaye the — bolo **“HAAN!”**"},
+        {do:"Point to HOUSE LEFT. A weak, sheepish “haan”."},
+        {fk:"Itni dheemi awaaz? Matlab abhi bhi so rahe hain."},
+        {up:"**TAAL** — jinhone bagal wale ke kharrate sune — **“HAAN!”**"},
+        {do:"Point to HOUSE RIGHT. A loud “HAAN!”"},
+        {fk:"Taal ne poori recording sun li. Sur — kal subah family WhatsApp group pe aa jaayegi."},
+        {up:"Uthiye, passengers! Raat nikal gayi — Goa sirf nabbe kilometre. Aur hum pahunche hain — **Amboli ghat.**"},
         {up:"Amboli — Maharashtra ki sabse zyada baarish wali jagahon mein se ek. Monsoon mein baadal sadak pe chalte hain."},
         {fk:"Aur subah-subah itna fog ki driver ko sirf awaaz se raasta pata chalta hai."},
         {up:"Toh agle chaar passengers awaaz se hi raasta dikhayenge. Koi instrument nahi. Sirf chaar awaazein — Hindustani classical."},
@@ -1332,8 +1350,7 @@
         {phase:"Core · use every time",core:true},
         {up:"Paanch awaazein — kya sukoon. Taaliyaa!"},
         {fk:"Itna sundar tha ki fog bhi ruk ke sunne laga."},
-        {do:"Arm towards the hall: “GOA KITNA DOOR?”"},
-        {fk:"Sattar. Lekin ab aate hain Amboli ke mod. Ek ke baad ek."},
+        {fk:"Sattar kilometre aur. Lekin ab aate hain Amboli ke mod. Ek ke baad ek."},
         {up:"Ab teams ka asli driving test. **SUR** bolun toh Sur waale halka sa centre ki taraf jhukenge. **TAAL** bolun toh Taal waale centre ki taraf. Girna nahi hai!"},
         {do:"Demonstrate once: HOUSE LEFT leans slightly towards the centre on “SUR”; HOUSE RIGHT leans slightly towards the centre on “TAAL.”"},
         {up:"SUR!… TAAL!… SUR!… TAAL!… SUR-TAAL!"},
@@ -1343,9 +1360,7 @@
         {fk:"(stares at the audience, wide-eyed) Dekh raha hoon. Pahaad nahi dikh raha. Teen sau log dikh rahe hain — aur sab mujhe hi dekh rahe hain."},
         {up:"Ab chakkar band?"},
         {fk:"Chakkar band. Stage fright shuru."},
-        {up:"Jinki mummy ne bola tha “bahar dekho, kuch nahi hoga” — aur phir kuch ho gaya — haath upar!"},
-        {do:"Let hands go up. FK looks at them, then at the mummies."},
-        {fk:"Aur aaj bhi har mummy yahi kehti hai — “Maine bola tha na, bahar dekho!”"},
+        {fk:"Aur agar phir bhi kuch ho jaaye — toh har mummy ka doosra dialogue ready hai: “Maine bola tha na, bahar dekho!”"},
         {up:"Aur road pe ghoomne wale musafir ka gaana — **Challa**, Jab Tak Hai Jaan se."},
         {fk:"A.R. Rahman ka sangeet, Gulzar sahab ke bol, Rabbi Shergill ki awaaz. Aur Yash Chopra ji ki aakhri film."},
         {up:"Aath performers aa rahe hain."},
@@ -1354,8 +1369,6 @@
         {fk:"Aur photo mein peeche sirf fog. Safed. Kuch nahi. Beech mein papa muskura rahe hain."},
         {up:"Album ka naam: “Amboli 2026.” Andar chaalees photos. Sab safed."},
         {fk:"Hamare ghar mein 2014 se sirf fog ki photos hain. Mausi dekh ke bolti hain — “Haan haan, yeh Amboli hai.”"},
-        {up:"Jiske phone mein aisi ek photo hai — sirf fog, aur beech mein ek chehra — haath upar!"},
-        {do:"Wait for hands."},
         {fk:"Woh photo nahi hai. Woh saboot hai ki aap wahan gaye the. Sambhal ke rakhna — kaam aayega."},
         {phase:"Extension 2 · Ladakh on a budget"},
         {fk:"Jab Tak Hai Jaan mein SRK Ladakh mein bike chalate hain. Hum Amboli mein bus mein jhool rahe hain."},
@@ -1387,14 +1400,15 @@
         {up:"FK, woh kandhe nahi, eyebrows hain."},
         {fk:"Budget cut."},
         {phase:"Extension 2 · the wedding test"},
-        {up:"Jinki shaadi mein yeh gaana baja tha — haath upar!"},
-        {fk:"Aur jinki shaadi mein nahi baja — tension mat lijiye. Shaadi abhi bhi valid hai."}
+        {up:"Jinki shaadi mein yeh gaana baja tha — ek awaaz!"},
+        {do:"Cheer from a few couples."},
+        {fk:"Aur jinki shaadi mein nahi baja — tension mat lijiye. Shaadi abhi bhi valid hai."},
+        {up:"Pata nahi woh kitne khush hain yeh sunke."}
       ]),
       hostTransition("Chammak Challo Mashup","Eye of the Tiger, Gehra Hua Mashup","Chapora fort",[
         {phase:"Core · use every time",core:true},
         {fk:"Dhinchak! Das performers — taaliyaa!"},
-        {do:"Arm towards the hall: “GOA KITNA DOOR?”"},
-        {fk:"Pachees. Lekin hotel se pehle ek stop — **Chapora fort.**"},
+        {fk:"Hotel bas pachees kilometre. Lekin usse pehle ek stop — **Chapora fort.**"},
         {up:"Woh fort jahan Dil Chahta Hai mein teen dost baith ke samandar dekhte hain."},
         {fk:"Aur jahan har Pune ka group jaake wahi photo khinchwata hai, aur caption likhta hai — “Dil Chahta Hai vibes.”"},
         {up:"Aur us group mein hamesha ek dost hota hai jo saari photos khinchta hai — aur kisi photo mein khud nahi hota."},
@@ -1456,8 +1470,7 @@
       hostTransition("Dil Diya Hai Jaan Bhi Denge — Karma","How Long — Charlie Puth","Goa time — susegad",[
         {phase:"Core · use every time",core:true},
         {fk:"Jai Hind! Ek baar phir — taaliyaa!"},
-        {up:"Ab mood switch."},
-        {do:"Arm towards the hall: “GOA KITNA DOOR?”"},
+        {up:"Ab mood switch. FK, hotel kitna door?"},
         {fk:"Bas paanch minute."},
         {up:"(to the audience) Yeh “paanch minute” pichhle chaalees kilometre se chal raha hai."},
         {fk:"Goa mein time alag chalta hai. Ek shabd hai — **susegad.**"},
@@ -1467,8 +1480,7 @@
         {fk:"Arre haan! Toh Goa aur Pune — bhai-bhai hain."},
         {up:"Aur “kitni der?” ka sawaal angrezi mein — **How Long.** Charlie Puth."},
         {fk:"Har Indian ghar mein yeh sawaal roz hota hai. “Mummy, khana kitni der mein?” “Bas paanch minute.”"},
-        {up:"Jisne aaj ghar se nikalte waqt “bas paanch minute” bola, aur aadha ghanta lagaya — haath upar!"},
-        {do:"Wait for hands. Point at a few, mock-shocked."},
+        {up:"Aaj bhi kisi ne ghar se nikalte waqt bola hoga — “bas paanch minute” — aur aadha ghanta lagaya."},
         {fk:"Aur jo time pe nikle, woh bhi late. Kyunki building ke neeche pahunch ke — “Chaabi kisne li?”"},
         {up:"Phir — “Gas band kiya?”"},
         {fk:"Phir — “Geyser?”"},
@@ -1486,8 +1498,7 @@
       hostTransition("How Long — Charlie Puth","Final Countdown","The beach at sunset",[
         {phase:"Core · use every time",core:true},
         {up:"Five performers, full power — taaliyaa!"},
-        {do:"Arm towards the hall: “GOA KITNA DOOR?”"},
-        {fk:"Paanch kilometre. Aur saamne dikh raha hai — samandar!"},
+        {fk:"Khidki kholiye — namak wali hawa aa rahi hai. Sirf paanch kilometre. Aur saamne dikh raha hai — samandar!"},
         {up:"Beach! Aur sooraj doob raha hai. Goa ka sunset."},
         {fk:"Sunset ka countdown teams karengi. **SUR** bolega even numbers — 10, 8, 6, 4, 2. **TAAL** bolega odd numbers — 9, 7, 5, 3, 1."},
         {up:"Main jis taraf point karun, sirf woh team bolegi. Ek pe sooraj paani mein. Ready?"},
@@ -1516,7 +1527,6 @@
         {do:"Point to HOUSE LEFT. Sur gives deliberately soft claps."},
         {up:"**TAAL — das number!**"},
         {do:"Point to HOUSE RIGHT. Taal cheers loudly."},
-        {fk:"Sur, Taal ne lead le li. Teachers ke baad badla lena."},
         {fk:"Itni energy? Kal class mein bhi yahi chahiye."},
         {up:"Goa aur music teachers ka rishta purana hai. Goa ke ek violin teacher the — Anthony Gonsalves."},
         {fk:"Unke ek student the Pyarelal — Laxmikant-Pyarelal wale. Unhone apne teacher ke naam pe gaana bana diya: **“My Name Is Anthony Gonsalves!”**"},
@@ -1535,9 +1545,8 @@
         {fk:"“Sir, keyboard ki battery khatam ho gayi.”"},
         {up:"Keyboard bijli se chalta hai."},
         {fk:"Haan. Isliye toh — light gayi thi."},
-        {up:"Jisne kabhi bola “ghar pe toh perfect baj raha tha” — haath upar!"},
-        {do:"Hands go up — including a few parents. FK points at the parents."},
-        {fk:"Parents bhi? Matlab yeh excuse khaandaani hai."},
+        {up:"Aur sach batao — yeh excuse bachchon ne kahan se seekha?"},
+        {fk:"(points at the parents) Khaandaani hai."},
         {phase:"Sponsor stop · use every time",core:true},
         {do:"Stage manager opens the curtain and LED operator cues <b>Sponsor picture · Snug Cafe</b>. Keep this picture up during the next lines."},
         {fk:"Beach shack aa gaya. Lekin board pe Snug Cafe ka photo kaise?"},
@@ -2291,7 +2300,7 @@
     else openFromHash();
   </script>
   <script src="opening.js?v=4"></script>
-  <script src="led.js?v=25"></script>
+  <script src="led.js?v=26"></script>
   <script src="lights.js?v=5"></script>
   <script>
     function warmShowCache(){

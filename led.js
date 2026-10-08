@@ -32,6 +32,7 @@ const LED_LOOPS = {
 };
 const ledLoopSrc = id => `loops/${LED_LOOPS[id] || "purple-warp"}.mp4`;
 const SPONSOR_IMAGE = "sponsors/snug-landscape.jpg";
+const LAUNCH_FILM = "loops/launch-dance-wellness.mp4";
 const PARTNERS = [
   {name:"Bodh Career & Coaching", image:"sponsors/partner-bodh.jpg", shape:"square"},
   {name:"Aahaar Nutrition", image:"sponsors/partner-aahaar.jpg", shape:"tall"},
@@ -69,7 +70,9 @@ const LED_CUES = [
       : id === "haseena"
         ? [{id:"sponsor-beach",group:"Sponsor · beach shack",title:"Sponsor picture · Snug Cafe",trigger:"At the Beach shack stop, before O Haseena names",scene:"sponsor-image",image:SPONSOR_IMAGE},
            {id:"partners-beach",group:"Sponsor · beach shack",title:PARTNERS_TITLE,trigger:"Upasana finishes thanking Snug Cafe",scene:"partners"}]
-        : [];
+        : id === "saiyaara"
+          ? [{id:"launch-dance",group:"Launch · before Saiyaara",title:"Launch film · Seasons Dance & Wellness Academy",trigger:"FK says “Driver sahab — bus rokiye!” and the house lights go down",scene:"launch-video",film:LAUNCH_FILM,music:LAUNCH_FILM,musicLoop:false}]
+          : [];
     return [...before, ...actCues(item)];
   }),
   {id:"felicitation",group:"Finale",title:"Felicitation",trigger:"The hosts announce the Felicitation Ceremony",scene:"perform",headline:"Felicitation",subline:"With gratitude",loop:"loops/felicitation-stars.mp4"},
@@ -244,7 +247,7 @@ function ledSceneHtml(cue) {
   if (cue.scene === "credits") return creditsHtml();
   if (cue.scene === "anthem") return `<div class="led-scene led-perform led-loop-scene led-anthem"><video class="led-loop" src="${cue.loop}" autoplay muted loop playsinline preload="auto"></video></div>`;
   if (cue.scene === "intro") return introHtml(cue);
-  if (cue.scene === "sponsor-video") return sponsorVideoHtml(cue);
+  if (cue.scene === "sponsor-video" || cue.scene === "launch-video") return sponsorVideoHtml(cue);
   if (cue.scene === "sponsor-image") return sponsorImageHtml(cue);
   if (cue.scene === "partners") return partnersHtml();
   if (cue.scene === "teacher") return teacherHtml(cue);
@@ -335,6 +338,7 @@ function ledAudienceLine(cue) {
   if (cue.scene === "intro") return "four pictures grow in from the corners and become a turning globe. The name appears with the music, then it stays until you press Next";
   if (cue.scene === "names") return `performer names for ${cue.act}`;
   if (cue.scene === "sponsor-video") return "the 45-second Snug Cafe sponsor film with sound; it stops on its last frame until you press Next";
+  if (cue.scene === "launch-video") return "the 47-second launch film with sound: teaser lines, the Seasons crest, then “Dance & Wellness Academy — Coming Soon”. It stops on that last card until you press Next";
   if (cue.scene === "sponsor-image") return "the Snug Cafe landscape sponsor picture";
   if (cue.scene === "partners") return "one slide with all three community partners: Bodh Career & Coaching, Aahaar Nutrition and Sonal's Classes";
   if (cue.scene === "teacher") return `${cue.name}, ${cue.role}${cue.photo ? ", with their photograph" : ", on a formal name card"}`;
@@ -349,13 +353,15 @@ function ledGroupHtml(group, cues) {
     ? "Two buttons only. Pale card first, while Upasana reads the names. Dark Song card when the band plays the first note."
     : group.startsWith("Sponsor")
       ? "Sponsor exception. Open the curtain on the first card, then follow the host script. Snug Cafe first, then the community partners slide. Never place a sponsor card between a Names card and its Song card."
+    : group.startsWith("Launch")
+      ? "Big moment. Volume all the way up. Press this the moment FK stops the bus. The film plays once and freezes on “Coming Soon”. Wait for the hosts to finish the launch lines, then go to the Saiyaara Names card."
     : group === "Finale"
       ? "Felicitation first, then advance the eight teacher cards one at a time as each name is called. Vote of Thanks follows, then National Anthem, then End credits."
       : "Play the opening first and turn the volume up. That picture has music. Then keep the holding screen until the hosts walk on.";
   return `<section class="led-section"><h2>${escapeHtml(group)}</h2><p>${hint}</p><div class="led-cue-grid">${cues.map(cue => {
     const index = LED_CUES.indexOf(cue);
     const preview = cue.scene === "perform" ? `<span class="led-mini-look look-${cue.look}" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></span>` : "";
-    return `<button type="button" class="led-cue${cue.scene === "perform" || cue.scene === "anthem" || cue.scene === "credits" || cue.scene === "sponsor-video" ? " is-song" : ""}${index === ledCurrentIndex ? " on" : ""}" data-led-index="${index}"><b>${index + 1}</b><strong>${escapeHtml(cue.title)}</strong><span>Audience sees: ${escapeHtml(ledAudienceLine(cue))}</span><em>Click when: ${escapeHtml(cue.trigger)}</em>${preview}</button>`;
+    return `<button type="button" class="led-cue${cue.scene === "perform" || cue.scene === "anthem" || cue.scene === "credits" || cue.scene === "sponsor-video" || cue.scene === "launch-video" ? " is-song" : ""}${index === ledCurrentIndex ? " on" : ""}" data-led-index="${index}"><b>${index + 1}</b><strong>${escapeHtml(cue.title)}</strong><span>Audience sees: ${escapeHtml(ledAudienceLine(cue))}</span><em>Click when: ${escapeHtml(cue.trigger)}</em>${preview}</button>`;
   }).join("")}</div></section>`;
 }
 
