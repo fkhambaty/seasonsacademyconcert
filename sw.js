@@ -7,7 +7,7 @@ const SHELL = [
   "./led.css?v=20",
   "./lights.css?v=3",
   "./opening.js?v=4",
-  "./led.js?v=23",
+  "./led.js?v=24",
   "./lights.js?v=5",
   "./logo.png",
   "./logo-mark.svg",
@@ -52,7 +52,8 @@ const MEDIA = [
   "./teachers/ashish-mehrotra.jpg",
   "./teachers/bhoomi-shah.jpg",
   "./teachers/vinay-rao.jpg",
-  "./teachers/joseph-sunil-kumar.jpg"
+  "./teachers/joseph-sunil-kumar.jpg",
+  "./teachers/sabastian-moktan.jpg"
 ];
 
 self.addEventListener("install", event => {

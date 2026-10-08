@@ -38,7 +38,7 @@ const TEACHERS = [
   {id:"nicholas", name:"Nicholas Umrethi", role:"Drums", photo:"teachers/nicholas-umrethi.jpg", position:"50% 32%"},
   {id:"ashish", name:"Ashish Mehrotra", role:"Flute", photo:"teachers/ashish-mehrotra.jpg", position:"50% 30%"},
   {id:"bhoomi", name:"Bhoomi Shah", role:"Hindustani Vocals", photo:"teachers/bhoomi-shah.jpg", position:"50% 32%"},
-  {id:"sabastian", name:"Sabastian Don Bosco Moktan", role:"Western Vocals"},
+  {id:"sabastian", name:"Sabastian Don Bosco Moktan", role:"Western Vocals", photo:"teachers/sabastian-moktan.jpg", position:"50% 28%"},
   {id:"vinay", name:"Vinay Rao", role:"Guitar", photo:"teachers/vinay-rao.jpg", position:"50% 26%"},
   {id:"joseph", name:"Joseph Sunil Kumar", role:"Guitar & Keyboard", photo:"teachers/joseph-sunil-kumar.jpg", position:"50% 28%"}
 ];
@@ -335,7 +335,7 @@ function ledGroupHtml(group, cues) {
     : group.startsWith("Sponsor")
       ? "Sponsor exception. Open the curtain on the first card, then follow the host script. Never place a sponsor card between a Names card and its Song card."
     : group === "Finale"
-      ? "Felicitation first, then advance the eight teacher cards one at a time as each name is called. Sabastian's formal card intentionally has no photograph. Vote of Thanks follows, then National Anthem, then End credits."
+      ? "Felicitation first, then advance the eight teacher cards one at a time as each name is called. Vote of Thanks follows, then National Anthem, then End credits."
       : "Play the opening first and turn the volume up. That picture has music. Then keep the holding screen until the hosts walk on.";
   return `<section class="led-section"><h2>${escapeHtml(group)}</h2><p>${hint}</p><div class="led-cue-grid">${cues.map(cue => {
     const index = LED_CUES.indexOf(cue);
