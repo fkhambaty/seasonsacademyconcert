@@ -39,6 +39,21 @@
     .sc-cue{display:grid;grid-template-columns:92px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid #f0ece4;font-size:14px;line-height:1.5;color:#2a2636}.sc-cue:last-child{border-bottom:0}.sc-cue>i{font-style:normal;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;align-self:start;margin-top:3px;text-align:center;padding:4px 0;border-radius:6px}
     .sc-cue.wait>i{background:#1a9ea31a;color:#137f84}.sc-cue.do>i{background:#1b18260d;color:var(--muted)}.sc-cue.confirm>i{background:#d9434d14;color:var(--danger)}.sc-cue.confirm>div{color:var(--danger)}
     .sc-go{margin:12px 0;border:2px solid #d9434d;border-radius:14px;padding:14px 16px;background:#d9434d08}.sc-go b{display:block;color:var(--danger);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}.sc-go ol{margin:0;padding-left:20px;display:grid;gap:4px;font-size:14.5px}.sc-go strong{font-size:16px}
+    .sc-curtain{display:grid;grid-template-columns:108px minmax(0,1fr) 108px;align-items:stretch;margin:16px 0;min-height:92px;border-radius:14px;overflow:hidden;border:3px solid #3a1020;background:#3a1020}
+    .sc-curtain .cloth{background:linear-gradient(#2a0a14,#2a0a14) top/100% 12px no-repeat,repeating-linear-gradient(90deg,#4c1224 0 7px,#9a3048 8px 15px,#6a1a30 15px 21px,#3d0e1c 21px 28px)}
+    .sc-curtain .mid{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px 14px;gap:3px}
+    .sc-curtain .mid small{font-size:10px;font-weight:800;letter-spacing:.22em}
+    .sc-curtain .mid b{font:800 30px/1 "DM Sans",system-ui,sans-serif;letter-spacing:.16em}
+    .sc-curtain .mid span{font-size:13.5px;font-weight:700;line-height:1.35;max-width:360px}
+    .sc-curtain.shut .mid{background:linear-gradient(90deg,#3d0e1c,#6a1a30 16%,#6a1a30 84%,#3d0e1c);color:#fff}
+    .sc-curtain.open{grid-template-columns:84px minmax(0,1fr) 84px;border-color:#b8892f;background:#f6f1e6}
+    .sc-curtain.open .mid{background:radial-gradient(circle at 50% 42%,#fff,#f3ead6 72%);color:#1b1826}
+    .sc-curtain.open .mid b{color:#8a5a12;font-size:34px}
+    .sc-curtain.half{border-color:#d9434d;background:#fff}
+    .sc-curtain.half .mid{background:#fff4f3;color:#9d1c28}
+    .sc-curtain.hold .mid b{font-size:22px;letter-spacing:.08em}
+    .curtain-key{width:28px;height:16px;border-radius:4px;display:inline-block;border:2px solid #3a1020;background:repeating-linear-gradient(90deg,#4c1224 0 4px,#9a3048 4px 8px,#3d0e1c 8px 12px)}
+    .curtain-key.open{border-color:#b8892f;background:linear-gradient(90deg,#6a1a30 0 6px,#f3ead6 6px 22px,#6a1a30 22px 28px)}
     .sc-names{margin:12px 0;border:1px solid #d83a7f40;border-radius:14px;background:#d83a7f08;padding:14px 16px}.sc-names-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:10px}.sc-names-head .sc-who{padding:0 12px}.sc-names-head b{font-size:15px}.sc-names-head small{color:var(--muted);font-size:12.5px;width:100%}
     .sc-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.sc-groups h4{margin:0 0 4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}.sc-groups ol{margin:0;padding:0;list-style:none;display:grid;gap:3px}.sc-groups li{display:flex;gap:8px;font-size:16px;font-weight:700}.sc-groups li span{color:var(--muted);font-weight:600;min-width:20px;font-variant-numeric:tabular-nums}
     .sc-warn{margin-top:10px;font-size:13px;color:var(--danger)}
@@ -52,7 +67,7 @@
     .rescue-body{padding:14px 20px 20px}.rescue-rule{margin:0 0 14px;padding:10px 12px;border-left:3px solid var(--danger);background:#d9434d08;font-size:13px;line-height:1.5}.rescue-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rescue-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:#faf8f3}.rescue-card h3{font:600 18px "Playfair Display",Georgia,serif;margin:0 0 3px}.rescue-card>p{color:var(--muted);font-size:12px;margin:0 0 10px}.rescue-card .sc-line{grid-template-columns:70px 1fr;padding:8px 0}.rescue-card .sc-say{font-size:14px;line-height:1.45}.rescue-card .sc-who{height:24px;font-size:10.5px}.rescue-card .sc-cue{grid-template-columns:70px 1fr;padding:8px 0;font-size:12.5px}.rescue-card .sc-cue>i{font-size:9px}
     .rescue-stop{grid-column:1/-1;border-color:#d9434d66;background:#d9434d08}.rescue-stop strong{color:var(--danger)}.rescue-wide{grid-column:1/-1;border-color:#b8892f66;background:#fffaf0}.rescue-games-head{font:600 21px "Playfair Display",Georgia,serif;margin:24px 0 12px;padding-top:18px;border-top:1px solid var(--line)}.rescue-games-head span{display:block;font:400 12.5px/1.45 "DM Sans",sans-serif;color:var(--muted);margin-top:3px}
     .script-page.only-fk .sc-line.up,.script-page.only-up .sc-line.fk{display:none}
-    @media(max-width:600px){.script-page{padding:26px 14px 120px}.script-jumps{top:66px;margin-left:-6px;margin-right:-6px}.script-jumps button{padding:9px 10px}.sc-head{padding:16px}.sc-steps{padding:6px 14px 14px}.sc-line,.sc-cue{grid-template-columns:1fr;gap:6px}.sc-who{justify-self:start;padding:0 12px}.sc-cue>i{justify-self:start;padding:3px 10px}.sc-say{font-size:16px}.sc-head h2{font-size:22px}.rescue-grid{grid-template-columns:1fr}.rescue-stop,.rescue-wide{grid-column:auto}.rescue-body{padding:12px}.sc-seg,.sc-rescue{scroll-margin-top:142px}}
+    @media(max-width:600px){.script-page{padding:26px 14px 120px}.script-jumps{top:66px;margin-left:-6px;margin-right:-6px}.script-jumps button{padding:9px 10px}.sc-head{padding:16px}.sc-steps{padding:6px 14px 14px}.sc-line,.sc-cue{grid-template-columns:1fr;gap:6px}.sc-who{justify-self:start;padding:0 12px}.sc-cue>i{justify-self:start;padding:3px 10px}.sc-say{font-size:16px}.sc-head h2{font-size:22px}.rescue-grid{grid-template-columns:1fr}.rescue-stop,.rescue-wide{grid-column:auto}.rescue-body{padding:12px}.sc-seg,.sc-rescue{scroll-margin-top:142px}.sc-curtain{grid-template-columns:46px minmax(0,1fr) 46px;min-height:80px}.sc-curtain.open{grid-template-columns:36px minmax(0,1fr) 36px}.sc-curtain .mid b{font-size:22px}.sc-curtain.open .mid b{font-size:24px}.sc-curtain.hold .mid b{font-size:16px}}
     .toast{position:fixed;right:25px;bottom:25px;background:#1b1826;color:#f8f4eb;border-radius:10px;padding:12px 16px;font-weight:700;font-size:12px;transform:translateY(100px);opacity:0;transition:.3s;z-index:40}.toast.show{transform:none;opacity:1}
     @media(max-width:900px){
       .app-header{height:60px;gap:10px;padding:0 14px;background:#f7f5f0;-webkit-backdrop-filter:none;backdrop-filter:none}
@@ -897,6 +912,7 @@
       title:`${from} ends → ${next}`,
       meta:[`Bus stop: ${stop}`,"Core: about 1 minute","Extensions: up to about 3 minutes"],
       steps:[
+        {curtain:"close",note:"After the bow. Leave it closed while the hosts talk."},
         {wait:"Wait for the final note and let the applause breathe. The curtain closes after the performers bow. Enter only when it is fully closed and the stage manager signals."},
         {do:"Walk to centre front, clapping. Keep the curtain closed throughout the host talk while the next band resets behind it."},
         ...steps,
@@ -905,6 +921,9 @@
         {do:opts.sponsorOpen
           ? `The curtain is already open on the community partners slide. LED operator switches directly to <b>Names · ${next}</b>. Do not close the curtain again.`
           : `LED operator cues <b>Names · ${next}</b> and the stage manager opens the curtain <b>at the same moment</b>. Do not open it before the Names slide.`},
+        opts.sponsorOpen
+          ? {curtain:"stay-open",note:"Already open. Do not close it."}
+          : {curtain:"open",note:"Open now, together with the Names slide."},
         {up:"Ab milte hain in bachchon se. Naam suniye — apna sunte hi haath upar."},
         {names:next},
         ...(opts.soft?SOFT_HORN:HORN),
@@ -914,6 +933,7 @@
     });
     const SCRIPT=[
       {kicker:"Opening",title:"Hosts Welcome → call Sonal",meta:["Bus stop: Swargate, Pune","Talk time about 3 min","Ends with: Sonal on stage"],steps:[
+        {curtain:"open",note:"Open before the hosts walk on. Leave it open."},
         {wait:"House lights dim and the intro music fades out. Stage manager says <b>“Hosts, go.”</b>"},
         {do:"Props (cheap, worth it): <b>FK</b> — a whistle and a small cross-body bag, like a bus conductor, with a folded A4 card inside (the “Puneri board”). <b>Upasana</b> — a small tour-guide flag. Walk in from opposite wings: <b>FK from the stage-right wing</b> (your right as you face the audience), <b>Upasana from the stage-left wing</b>. Meet at centre front."},
         {up:"Good evening, ladies and gentlemen! Welcome to the **Seasons Academy Musicale 2026**"},
@@ -1012,10 +1032,13 @@
         {up:"Ab **SUR aur TAAL saath mein!**"},
         {do:"Whole hall claps with hands <b>high above their heads</b> so the back rows can follow. Let it run until Joseph ends the tune."},
         {fk:"Hamare driver sahab — **Joseph sir!**"},
+        {curtain:"close",note:"Joseph is off. Start closing."},
         {do:"Joseph exits. As the curtain starts closing, FK suddenly turns, holds one palm towards it and calls out. The curtain pauses halfway."},
+        {curtain:"half",note:"Stop halfway. Wait for FK."},
         {fk:"Hello, hello, hello! Curtain waale bhaiya — reverse! **Sponsors ko forgot!**"},
         {up:"FK. Sponsor ko “forgot” nahi. Thank you bolna bhool gaye."},
         {fk:"Same thing. **Phir se kholo curtains!**"},
+        {curtain:"open",note:"Open all the way. Leave it open through Tauba Tauba."},
         {do:"Reopen the curtain. LED operator cues <b>Sponsor film · Snug Cafe</b>. Both hosts step to the two front corners and stay completely silent for the full 45-second film. Leave laptop volume up."},
         {wait:"Let the sponsor film finish. Do not talk over its last frame."},
         {do:"LED operator presses Next to <b>Sponsor picture · Snug Cafe</b>. Keep the curtain open."},
@@ -1240,6 +1263,7 @@
         {up:"Waah! Compliment."},
         {fk:"Phir bole — “sunne walon ko.”"},
         {phase:"Sponsor stop · use every time",core:true},
+        {curtain:"open",note:"Open for the sponsor picture. Leave it open."},
         {do:"Stage manager opens the curtain and LED operator cues <b>Sponsor picture · Snug Cafe</b>. Keep this picture up during the next lines."},
         {up:"Dhaba ki chai baad mein. Yeh dekh ke hamare sponsor **Snug Cafe** ki coffee yaad aa gayi."},
         {fk:"Warm cups, happy hearts. Aur sandwich dekh ke conductor ne route Undri ki taraf mod diya."},
@@ -1263,6 +1287,7 @@
         {do:"Lead the applause and let it run. This is the biggest cheer of the first half."},
         {up:"Details bahut jald. Abhi ke liye — Coming Soon."},
         {fk:"Aur conductor ka admission pakka. Dance mein nahi — wellness mein. Bus mein khade-khade kamar jawaab de gayi."},
+        {curtain:"stay-closed",note:"The film is on the screen. Do not open."},
         {do:"Back to the bus story. The curtain stays closed and the film’s last card stays on the LED until the Saiyaara names."},
         {up:"Raat ki bus ho, aur antakshari na ho? Main line shuru karti hoon, poora hall complete karega. “Baithe baithe kya karein, karna hai kuch kaam…”"},
         {do:"Hall: “…shuru karo antakshari, leke prabhu ka naam!”"},
@@ -1549,6 +1574,7 @@
         {up:"Aur sach batao — yeh excuse bachchon ne kahan se seekha?"},
         {fk:"(points at the parents) Khaandaani hai."},
         {phase:"Sponsor stop · use every time",core:true},
+        {curtain:"open",note:"Open for the sponsor picture. Leave it open."},
         {do:"Stage manager opens the curtain and LED operator cues <b>Sponsor picture · Snug Cafe</b>. Keep this picture up during the next lines."},
         {fk:"Beach shack aa gaya. Lekin board pe Snug Cafe ka photo kaise?"},
         {up:"Because good times are best shared. Snug Cafe — coffee, comfort food and love."},
@@ -1589,6 +1615,7 @@
         {fk:"Itne log toh meri birthday party mein bhi nahi aaye."}
       ]),
       {kicker:"After final musical act",title:"Ajeeb Daastaan ends → Felicitation",meta:["Bus stop: destination","Core: about 1 minute","Extensions: up to about 3 minutes"],steps:[
+        {curtain:"stay-open",note:"Leave it open for the rest of the show."},
         {wait:"Wait for the final note, then give this applause room to grow. Enter only after the performers bow and the stage manager signals."},
         {do:"Walk to centre front, clapping. Let the full band begin exiting behind you."},
         {phase:"Core · use every time",core:true},
@@ -1797,8 +1824,21 @@
       if(event&&named!=null&&count!==named)return `<div class="sc-go"><b>Stop — data conflict</b><ol><li>Stage plan says <strong>${count}</strong> performers; name sheet says <strong>${named}</strong>.</li><li>Do not read names or announce this act until the teacher and stage manager confirm the missing role/name.</li><li>Then confirm this is <strong>${escapeHtml(title)}</strong>.</li></ol></div>`;
       return `<div class="sc-go"><b>Stop — before names or title</b><ol><li>Stage manager shows a <strong>thumbs-up</strong> (band is ready).</li><li>Count the people on stage: <strong>${count??"?"}</strong>.</li><li>Check this is <strong>${escapeHtml(title)}</strong>.</li></ol></div>`;
     }
+    function scriptCurtainHtml(kind,note){
+      const marks={
+        close:{cls:"shut",word:"CLOSE"},
+        open:{cls:"open",word:"OPEN"},
+        "stay-closed":{cls:"shut hold",word:"STAY CLOSED"},
+        "stay-open":{cls:"open hold",word:"STAY OPEN"},
+        half:{cls:"half",word:"HOLD"}
+      };
+      const mark=marks[kind];
+      if(!mark)return `<div class="sc-warn">Unknown curtain mark: ${escapeHtml(String(kind))}</div>`;
+      return `<div class="sc-curtain ${mark.cls}"><i class="cloth" aria-hidden="true"></i><div class="mid"><small>CURTAIN</small><b>${mark.word}</b><span>${escapeHtml(note||"")}</span></div><i class="cloth" aria-hidden="true"></i></div>`;
+    }
     function scriptStepHtml(step){
       if(step.phase)return `<div class="sc-phase${step.core?" core":""}">${escapeHtml(step.phase)}</div>`;
+      if(step.curtain)return scriptCurtainHtml(step.curtain,step.note);
       if(step.wait)return `<div class="sc-cue wait"><i>Wait</i><div>${step.wait}</div></div>`;
       if(step.do)return `<div class="sc-cue do"><i>Do</i><div>${step.do}</div></div>`;
       if(step.confirm)return `<div class="sc-cue confirm"><i>Confirm</i><div>${escapeHtml(step.confirm)}</div></div>`;
@@ -1833,7 +1873,7 @@
       page.className=`script-page${scriptFocus==="all"?"":` only-${scriptFocus}`}`;
       page.innerHTML=`<div class="script-top"><div class="eyebrow">Hosts · FK &amp; Upasana</div><h1>Host script</h1><p>Every line has an owner. Read only your colour. Grey boxes are actions, not words to say out loud.</p></div>
         <div class="script-filter" role="group" aria-label="Highlight lines">${[["all","Both"],["fk","Only FK"],["up","Only Upasana"]].map(([k,l])=>`<button type="button" data-script-focus="${k}" class="${scriptFocus===k?"on":""}">${l}</button>`).join("")}</div>
-        <div class="script-legend"><span><i class="sc-who fk" style="width:36px;height:20px;font-size:10px">FK</i>FK speaks</span><span><i class="sc-who up" style="width:56px;height:20px;font-size:10px">Upasana</i>Upasana speaks</span><span><b style="color:#137f84">WAIT</b> don't speak yet</span><span><b>DO</b> action, not spoken</span><span><b style="color:var(--danger)">STOP box</b> check before names or title</span></div>
+        <div class="script-legend"><span><i class="sc-who fk" style="width:36px;height:20px;font-size:10px">FK</i>FK speaks</span><span><i class="sc-who up" style="width:56px;height:20px;font-size:10px">Upasana</i>Upasana speaks</span><span><b style="color:#137f84">WAIT</b> don't speak yet</span><span><b>DO</b> action, not spoken</span><span><b style="color:var(--danger)">STOP box</b> check before names or title</span><span><i class="curtain-key"></i><i class="curtain-key open"></i>Curtain operator — follow the curtain bars</span></div>
         <nav class="script-jumps" aria-label="Script section shortcuts"><div class="script-jump-list">${SCRIPT.map((seg,i)=>`<button type="button" data-script-jump="script-seg-${i}"><em>${i+1}</em>${escapeHtml(seg.kicker)}</button>`).join("")}</div><button type="button" class="rescue-btn" data-script-jump="scriptRescue">! Need time?</button></nav>
         <section class="sc-rules"><h2>Six rules for every act</h2><ol>
           <li><b>Read only your own colour.</b> FK is gold, Upasana is pink. If a line isn't yours, don't say it, even if your partner forgets.</li>
