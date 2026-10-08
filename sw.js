@@ -1,13 +1,13 @@
 /* Saves the show on this phone. A normal open uses the saved copy.
    A hard refresh asks the internet again. Song videos save only after the passcode. */
-const CACHE = "seasons-show-v7";
+const CACHE = "seasons-show-v8";
 const SHELL = [
   "./",
   "./index.html",
   "./led.css?v=22",
   "./lights.css?v=3",
   "./opening.js?v=4",
-  "./led.js?v=27",
+  "./led.js?v=28",
   "./lights.js?v=5",
   "./logo.png",
   "./logo-mark.svg",
