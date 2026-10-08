@@ -34,11 +34,11 @@ const ledLoopSrc = id => `loops/${LED_LOOPS[id] || "purple-warp"}.mp4`;
 const SPONSOR_IMAGE = "sponsors/snug-landscape.jpg";
 const LAUNCH_FILM = "loops/launch-dance-wellness.mp4";
 const PARTNERS = [
-  {name:"Bodh Career & Coaching", image:"sponsors/partner-bodh.jpg", shape:"square"},
-  {name:"Aahaar Nutrition", image:"sponsors/partner-aahaar.jpg", shape:"tall"},
-  {name:"Sonal's Classes", image:"sponsors/partner-sonal.jpg", shape:"square"}
+  {name:"Sonal's Classes", image:"sponsors/partner-sonal-hd.jpg"},
+  {name:"Bodh Career & Coaching", image:"sponsors/partner-bodh-hd.jpg"},
+  {name:"Aahaar Nutrition", image:"sponsors/partner-aahaar-hd.jpg"}
 ];
-const PARTNERS_TITLE = "Community partners · Bodh, Aahaar, Sonal's Classes";
+const PARTNERS_TITLE = "Community partners · Sonal's Classes, Bodh, Aahaar";
 const TEACHERS = [
   {id:"sourudra", name:"Sourudra S Samai", role:"Violin", photo:"teachers/sourudra-samai.jpg", position:"50% 34%"},
   {id:"harland", name:"Harland Braver", role:"Keyboard", photo:"teachers/harland-braver.jpg", position:"50% 30%"},
@@ -174,7 +174,7 @@ function sponsorVideoHtml(cue) {
 }
 
 function partnersHtml() {
-  return `<div class="led-scene partners-scene"><div class="partners-head"><small>Musicale 2026 · With thanks to</small><h1>Our Community Partners</h1></div><div class="partners-row">${PARTNERS.map(partner => `<figure class="partner-card ${partner.shape}"><img src="${partner.image}" alt="${escapeHtml(partner.name)}"></figure>`).join("")}</div></div>`;
+  return `<div class="led-scene partners-scene"><p class="partners-head">Musicale 2026 · Our Community Partners</p><div class="partners-row">${PARTNERS.map(partner => `<figure class="partner-card"><img src="${partner.image}" alt="${escapeHtml(partner.name)}"></figure>`).join("")}</div></div>`;
 }
 
 function sponsorImageHtml(cue) {
@@ -340,7 +340,7 @@ function ledAudienceLine(cue) {
   if (cue.scene === "sponsor-video") return "the 45-second Snug Cafe sponsor film with sound; it stops on its last frame until you press Next";
   if (cue.scene === "launch-video") return "the 47-second launch film with sound: teaser lines, the Seasons crest, then “Dance & Wellness Academy — Coming Soon”. It stops on that last card until you press Next";
   if (cue.scene === "sponsor-image") return "the Snug Cafe landscape sponsor picture";
-  if (cue.scene === "partners") return "one slide with all three community partners: Bodh Career & Coaching, Aahaar Nutrition and Sonal's Classes";
+  if (cue.scene === "partners") return "one slide with three equal blocks, left to right: Sonal's Classes, Bodh Career & Coaching, Aahaar Nutrition";
   if (cue.scene === "teacher") return `${cue.name}, ${cue.role}${cue.photo ? ", with their photograph" : ", on a formal name card"}`;
   if (cue.scene === "anthem") return "only the Indian flag, full screen, until the anthem ends";
   if (cue.scene === "credits") return "the thank-you names roll up with the goodbye music, then the last card stays until you press Next";

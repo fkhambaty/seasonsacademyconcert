@@ -282,17 +282,11 @@
 .sponsor-image-scene:before{content:"";position:absolute;inset:-5%;background:url("sponsors/snug-landscape.jpg") center/cover;filter:blur(32px) saturate(.8);opacity:.42;transform:scale(1.08)}
 .sponsor-image-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,#fff7dfaa,transparent 64%),linear-gradient(90deg,#24391555,transparent 20% 80%,#24391555)}
 .sponsor-image-scene>img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 18px 38px #2e311855)}
-.partners-scene{display:flex;flex-direction:column;justify-content:center;gap:4.2vh;background:radial-gradient(circle at 50% 38%,#fffaf0,#f3e6c8 58%,#e3d1a8)}
-.partners-scene:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#2a4a1c22,transparent 18% 82%,#5a1f3a22);pointer-events:none}
-.partners-head{position:relative;text-align:center}
-.partners-head small{display:block;color:#7a5a1e;font:800 clamp(12px,1.15vw,21px)/1.2 "DM Sans",system-ui,sans-serif;letter-spacing:.3em;text-transform:uppercase}
-.partners-head h1{margin:1.2vh 0 0;color:#1f3a18;font:600 clamp(34px,3.6vw,68px)/1 "Playfair Display",Georgia,serif;letter-spacing:-.02em}
-.partners-head h1:after{content:"";display:block;width:7vw;height:2px;margin:2vh auto 0;background:linear-gradient(90deg,transparent,#b8892f,transparent)}
-.partners-row{position:relative;display:flex;align-items:center;justify-content:center;gap:2.4vw}
-.partner-card{margin:0;padding:clamp(6px,.5vw,10px);border-radius:clamp(12px,1vw,20px);background:#fff;box-shadow:0 24px 50px #3d2f1240,0 0 0 1px #b8892f40}
-.partner-card img{display:block;height:min(66vh,32.5vw);border-radius:clamp(8px,.7vw,14px)}
-.partner-card.square img{width:min(66vh,32.5vw)}
-.partner-card.tall img{width:calc(min(66vh,32.5vw) * 686 / 1024)}
+.partners-scene{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4vh;padding:1.6vh 1.6vw;background:radial-gradient(circle at 50% 40%,#fffaf0,#f1e3c3 62%,#dcc79b)}
+.partners-head{position:relative;margin:0;color:#7a5a1e;font:800 clamp(11px,.95vw,18px)/1 "DM Sans",system-ui,sans-serif;letter-spacing:.34em;text-transform:uppercase}
+.partners-row{position:relative;display:grid;grid-template-columns:repeat(3,var(--card-w));gap:1.3vw;--card-w:min(calc((100vw - 3.2vw - 2.6vw) / 3),calc((100vh - 7vh) * .67))}
+.partner-card{margin:0;width:var(--card-w);aspect-ratio:67/100;padding:clamp(4px,.32vw,7px);border-radius:clamp(10px,.8vw,16px);background:#fff;box-shadow:0 18px 40px #3d2f1238,0 0 0 1px #b8892f55}
+.partner-card img{display:block;width:100%;height:100%;object-fit:cover;border-radius:clamp(7px,.55vw,12px)}
 .sponsor-image-scene>p{position:absolute;z-index:2;right:2.2vw;bottom:2.2vh;margin:0;padding:.55em 1em;border-radius:99px;background:#203b18e8;color:#fff8e8;font:800 clamp(12px,1.15vw,20px)/1.2 "DM Sans",system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 9px 28px #0004}
 
 /* Teacher cards deliberately replace the PowerPoint look with the show's playbill language. */
