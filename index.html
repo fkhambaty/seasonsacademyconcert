@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f7f5f0">
   <title>Seasons Academy — Show Flow</title>
-  <link rel="stylesheet" href="led.css?v=18">
+  <link rel="stylesheet" href="led.css?v=19">
   <link rel="stylesheet" href="lights.css?v=3">
   <style>
     :root{--ink:#1b1826;--muted:#5c5768;--night:#f7f5f0;--panel:#ffffff;--line:#e4e0d8;--gold:#b8892f;--pink:#d83a7f;--cyan:#1a9ea3;--danger:#d9434d;--stage:#ffffff;--shadow:0 24px 60px #1b182618}
@@ -436,6 +436,7 @@
           item(null,"Welcome Speech — Sonal",[["Speaker",1]],7,"ceremony",{group:"opening",layout:sonalLeft(),notes:"Sonal stands on the left side of the stage (the audience’s left), not at centre. She delivers the welcome speech and calls the respective guests up to light the lamp. Speech and lamp lighting run in sync."}),
           item(null,"Lighting the Lamp",[],7,"ceremony",{group:"opening",notes:"Guests called by Sonal light the lamp while she continues the speech. Lamp position and who lights it are still to be confirmed — no stage positions marked yet."}),
           item(null,"Ice Breaker — Hosts & Joseph",[["Host",2],["Guitar",1]],6,"ceremony",{layout:hostsCentre(),centerFirst:true,notes:"Sonal calls the hosts back; both stand at centre stage. Hosts demand to see the owner of Seasons Academy — Joseph enters and takes the guitar position nearest centre. He plays a complicated guitar piece; hosts try to clap along, can't match his expertise, stop him and ask for a simple tune. Hosts clap along, then get the whole audience clapping in the same rhythm."}),
+          item(null,"Sponsor Film — Snug Cafe",[["Host",2]],2,"ceremony",{layout:hostsCentre(),led:"SNUG CAFE FILM, THEN SPONSOR PICTURE",notes:"One deliberate sponsor exception. As the curtain starts closing, FK stops it. Reopen, play the 45-second film once with sound, then the landscape image. Keep the curtain open and move directly to Act 1 names."}),
           item(1,"Tauba Tauba, Urvashi Urvashi Mashup",[["Keyboard",3],["Drums",1],["Guitar",4],["Bass Guitar",1]]),
           item(2,"Bharat Humko Jaan Se Pyara Hai",[["Keyboard",4],["Djembe",1]]),filler(),
           item(3,"Drum Circle",[["Drums",12]]),filler(),
@@ -496,6 +497,14 @@
           event.instruments = instruments;
         });
         done.add("participants-2026-10-06");
+      }
+      if(!done.has("sponsor-presentation-v1")){
+        if(!show.events.some(event=>event.title==="Sponsor Film — Snug Cafe")){
+          const sponsor = createDefaults().events.find(event=>event.title==="Sponsor Film — Snug Cafe");
+          const ice = show.events.findIndex(event=>event.title==="Ice Breaker — Hosts & Joseph");
+          show.events.splice(ice<0?0:ice+1,0,sponsor);
+        }
+        done.add("sponsor-presentation-v1");
       }
       show.migrations = [...done];
       localStorage.setItem(STORAGE_KEY, JSON.stringify(show));
@@ -878,11 +887,14 @@
       title:`${from} ends → ${next}`,
       meta:[`Bus stop: ${stop}`,"Core: about 1 minute","Extensions: up to about 3 minutes"],
       steps:[
-        {wait:"Wait for the final note, then let the applause breathe. Enter only when the stage manager signals."},
-        {do:"Walk to centre front, clapping. Keep the centre and back of the stage clear for the changeover."},
+        {wait:"Wait for the final note and let the applause breathe. The curtain closes after the performers bow. Enter only when it is fully closed and the stage manager signals."},
+        {do:"Walk to centre front, clapping. Keep the curtain closed throughout the host talk while the next band resets behind it."},
         ...steps,
         {phase:"Final readiness check + names",core:true},
         {go:next},
+        {do:opts.sponsorOpen
+          ? `The curtain is already open on the sponsor picture. LED operator switches directly to <b>Names · ${next}</b>. Do not close the curtain again.`
+          : `LED operator cues <b>Names · ${next}</b> and the stage manager opens the curtain <b>at the same moment</b>. Do not open it before the Names slide.`},
         {names:next},
         ...(opts.soft?SOFT_HORN:HORN),
         {fk:`Ladies and gentlemen — **${next}!**`,title:true},
@@ -951,7 +963,17 @@
         {up:"Ab poori bus — taali! Haath upar, taaki peeche wali seats bhi dekh sakein!"},
         {do:"Clap with your hands <b>high above your head</b> so the back rows can follow. Let it run about 20 sec until Joseph ends the tune."},
         {fk:"Hamare driver sahab — **Joseph sir!**"},
-        {do:"Joseph exits the stage-left wing. The Act 1 band walks on behind you. <b>Stay at the front edge. Don’t block them.</b>"},
+        {do:"Joseph exits. As the curtain starts closing, FK suddenly turns, holds one palm towards it and calls out. The curtain pauses halfway."},
+        {fk:"Hello, hello, hello! Curtain waale bhaiya — reverse! **Sponsors ko forgot!**"},
+        {up:"FK. Sponsor ko “forgot” nahi. Thank you bolna bhool gaye."},
+        {fk:"Same thing. **Phir se kholo curtains!**"},
+        {do:"Reopen the curtain. LED operator cues <b>Sponsor film · Snug Cafe</b>. Both hosts step to the two front corners and stay completely silent for the full 45-second film. Leave laptop volume up."},
+        {wait:"Let the sponsor film finish. Do not talk over its last frame."},
+        {do:"LED operator presses Next to <b>Sponsor picture · Snug Cafe</b>. Keep the curtain open."},
+        {up:"A big thank you to **Snug Cafe** — our Sponsor and Food Stall Partner."},
+        {fk:"Undri mein, Corinthians Club ke next door. Coffee, comfort food… aur concert ke baad conductor ki table booking."},
+        {up:"Pehle show chala lo. Snug Cafe — thank you for backing our students and **Musicale 2026**."},
+        {do:"The sponsor segment is finished. Do not close the curtain. The Act 1 band is ready behind you."},
         {up:"Bus Swargate se nikal chuki hai. Aur har family bus mein pehli ladaai kis baat pe hoti hai?"},
         {fk:"Window seat?"},
         {up:"Usse bhi pehle. Gaana kaunsa lagega!"},
@@ -960,6 +982,7 @@
         {fk:"Aur normally is ladaai ka result ek hi hota hai. Mummy gaana band kar deti hai."},
         {up:"Lekin aaj ladaai nahi. Aaj dono gaane — ek saath."},
         {go:"Tauba Tauba, Urvashi Urvashi Mashup"},
+        {do:"LED operator switches from the sponsor picture to <b>Names · Tauba Tauba</b>. The curtain is already open."},
         {names:"Tauba Tauba, Urvashi Urvashi Mashup"},
         {up:"Pehla horn! Driver sahab — horn!"},
         {do:"Hall: “POM POM!”"},
@@ -1163,8 +1186,13 @@
         {phase:"Extension 2 · FK’s music teacher"},
         {fk:"Bachpan mein mere music teacher kehte the — “Beta, tumhari awaaz mein bahut dard hai.”"},
         {up:"Waah! Compliment."},
-        {fk:"Phir bole — “sunne walon ko.”"}
-      ]),
+        {fk:"Phir bole — “sunne walon ko.”"},
+        {phase:"Sponsor stop · use every time",core:true},
+        {do:"Stage manager opens the curtain and LED operator cues <b>Sponsor picture · Snug Cafe</b>. Keep this picture up during the next lines."},
+        {up:"Dhaba ki chai baad mein. Yeh dekh ke hamare sponsor **Snug Cafe** ki coffee yaad aa gayi."},
+        {fk:"Warm cups, happy hearts. Aur sandwich dekh ke conductor ne route Undri ki taraf mod diya."},
+        {up:"Seedha Goa, FK. Snug Cafe — thank you for supporting our students tonight."}
+      ],{sponsorOpen:true}),
       hostTransition("The Flute Song","Saiyaara","Night falls",[
         {phase:"Core · use every time",core:true},
         {up:"Beautiful! Saat performers — taali!"},
@@ -1416,8 +1444,14 @@
         {fk:"Mera kutta aaj tak meri notebooks pe zinda hai."},
         {phase:"Extension 2 · attendance"},
         {up:"Students — jinke teacher is stage par aa rahe hain, haath upar! Sir log attendance dekh lein."},
-        {fk:"Aur jo aaj practice skip karke aaye hain — haath neeche hi rakhna. Sir dekh rahe hain."}
-      ]),
+        {fk:"Aur jo aaj practice skip karke aaye hain — haath neeche hi rakhna. Sir dekh rahe hain."},
+        {phase:"Sponsor stop · use every time",core:true},
+        {do:"Stage manager opens the curtain and LED operator cues <b>Sponsor picture · Snug Cafe</b>. Keep this picture up during the next lines."},
+        {fk:"Beach shack aa gaya. Lekin board pe Snug Cafe ka photo kaise?"},
+        {up:"Because good times are best shared. Snug Cafe — coffee, comfort food and love."},
+        {fk:"Address Undri. Goa se bas ek chhota sa U-turn."},
+        {up:"Our Sponsor and Food Stall Partner — **Snug Cafe**. Thank you for being part of Musicale 2026."}
+      ],{sponsorOpen:true}),
       hostTransition("O Haseena","Ajeeb Daastaan","Goa — the last night",[
         {phase:"Core · use every time",core:true},
         {up:"Teachers! Students — kitne number?"},
@@ -1469,9 +1503,41 @@
         {up:"Aaj perfection se zyada zaroori tha courage. Stage par aana hi jeet hai."},
         {fk:"Kyunki confidence pehle nahi aata. Pehle aap stage par aate ho — confidence thodi late entry leta hai."},
         {up:"Aur ab samay hai us mehnat ko sammaan dene ka."},
-        {confirm:"Stage manager must hand FK the final felicitation card. Read only the names and titles printed on that card."},
         {fk:"Ladies and gentlemen, we now move to the **Felicitation Ceremony**."},
-        {do:"Invite the dignitaries exactly as written on the stage manager’s card. During felicitation, the LED wall plays the felicitation video. Do not compete with the screen; speak only when a name must be called."}
+        {do:"LED operator cues <b>Felicitation</b>. Invite the dignitaries named on the stage manager’s card. When everyone is in position, honour the teachers below in this exact order. For every teacher: cue the card, read the name and instrument, complete the honour and photograph, then advance only on the stage manager’s signal."},
+        {phase:"Teacher 1 · Violin",core:true},
+        {do:"LED cue: <b>Honouring · Sourudra S Samai</b>."},
+        {up:"For guiding our violin students with patience and precision — **Sourudra S Samai**."},
+        {fk:"Sir, please join us to be honoured."},
+        {phase:"Teacher 2 · Keyboard",core:true},
+        {do:"After the photograph, LED cue: <b>Honouring · Harland Braver</b>."},
+        {fk:"For turning keys into confidence — **Harland Braver**, Keyboard."},
+        {up:"Sir, please join us."},
+        {phase:"Teacher 3 · Drums",core:true},
+        {do:"After the photograph, LED cue: <b>Honouring · Nicholas Umrethi</b>."},
+        {up:"For teaching our students to find the beat and own it — **Nicholas Umrethi**, Drums."},
+        {fk:"Sir, please join us."},
+        {phase:"Teacher 4 · Flute",core:true},
+        {do:"After the photograph, LED cue: <b>Honouring · Ashish Mehrotra</b>."},
+        {fk:"For giving breath a melody — **Ashish Mehrotra**, Flute."},
+        {up:"Sir, please join us."},
+        {phase:"Teacher 5 · Hindustani Vocals",core:true},
+        {do:"After the photograph, LED cue: <b>Honouring · Bhoomi Shah</b>."},
+        {up:"For nurturing sur, expression and tradition — **Bhoomi Shah**, Hindustani Vocals."},
+        {fk:"Ma’am, please join us."},
+        {phase:"Teacher 6 · Western Vocals",core:true},
+        {do:"After the photograph, LED cue: <b>Honouring · Sabastian Don Bosco Moktan</b>. This is the intentional formal name card; no photograph was supplied."},
+        {fk:"For helping voices grow in strength and confidence — **Sabastian Don Bosco Moktan**, Western Vocals."},
+        {up:"Sir, please join us."},
+        {phase:"Teacher 7 · Guitar",core:true},
+        {do:"After the photograph, LED cue: <b>Honouring · Vinay Rao</b>."},
+        {up:"For bringing energy, discipline and expression to every string — **Vinay Rao**, Guitar."},
+        {fk:"Sir, please join us."},
+        {phase:"Teacher 8 · Guitar & Keyboard",core:true},
+        {do:"After the photograph, LED cue: <b>Honouring · Joseph Sunil Kumar</b>."},
+        {fk:"For building the academy, leading from the stage, and keeping this entire bus moving — **Joseph Sunil Kumar**, Guitar and Keyboard."},
+        {up:"Joseph sir, please join us."},
+        {do:"Hold Joseph’s card through the final teacher photograph. Then cue <b>Vote of Thanks</b> only when the stage manager signals."}
       ]},
       {kicker:"After Felicitation",title:"Felicitation → Joseph’s Vote of Thanks",meta:["Core: about 1 minute","Extension available if Joseph is not ready"],steps:[
         {wait:"Wait until the final felicitation photograph is complete and the stage manager signals."},
@@ -2125,7 +2191,7 @@
     else openFromHash();
   </script>
   <script src="opening.js?v=4"></script>
-  <script src="led.js?v=22"></script>
+  <script src="led.js?v=23"></script>
   <script src="lights.js?v=5"></script>
   <script>
     function warmShowCache(){
@@ -2159,9 +2225,9 @@
           say("shell", window.showShellNote);
         }
         if(data.kind === "media"){
-          if(data.ready) say("media", "Song videos are saved on this laptop. The wall still plays if the wifi stops.");
-          else if(data.failed) say("media", `Saving the song videos on this laptop… ${data.done} of ${data.total}. Some did not save yet. Leave this page open while the wifi works.`);
-          else say("media", `Saving the song videos on this laptop… ${data.done} of ${data.total}. Leave this page open until it finishes.`);
+          if(data.ready) say("media", "All show media is saved on this laptop. The wall still works if the wifi stops.");
+          else if(data.failed) say("media", `Saving show media on this laptop… ${data.done} of ${data.total}. Some did not save yet. Leave this page open while the wifi works.`);
+          else say("media", `Saving show media on this laptop… ${data.done} of ${data.total}. Leave this page open until it finishes.`);
         }
       });
       navigator.serviceWorker.addEventListener("controllerchange", send);

@@ -1,13 +1,13 @@
 /* Saves the show on this phone. A normal open uses the saved copy.
    A hard refresh asks the internet again. Song videos save only after the passcode. */
-const CACHE = "seasons-show-v1";
+const CACHE = "seasons-show-v2";
 const SHELL = [
   "./",
   "./index.html",
-  "./led.css?v=18",
+  "./led.css?v=19",
   "./lights.css?v=3",
   "./opening.js?v=4",
-  "./led.js?v=22",
+  "./led.js?v=23",
   "./lights.js?v=5",
   "./logo.png",
   "./logo-mark.svg",
@@ -42,7 +42,17 @@ const MEDIA = [
   "./loops/ajeeb-stars.mp4",
   "./loops/felicitation-stars.mp4",
   "./loops/thanks-sunset.mp4",
-  "./loops/indian-flag.mp4"
+  "./loops/indian-flag.mp4",
+  "./sponsors/snug-film.mp4",
+  "./sponsors/snug-landscape.jpg",
+  "./sponsors/snug-portrait.jpg",
+  "./teachers/sourudra-samai.jpg",
+  "./teachers/harland-braver.jpg",
+  "./teachers/nicholas-umrethi.jpg",
+  "./teachers/ashish-mehrotra.jpg",
+  "./teachers/bhoomi-shah.jpg",
+  "./teachers/vinay-rao.jpg",
+  "./teachers/joseph-sunil-kumar.jpg"
 ];
 
 self.addEventListener("install", event => {

@@ -31,17 +31,40 @@ const LED_LOOPS = {
   final:"final-sky", haseena:"haseena-gold", ajeeb:"ajeeb-stars"
 };
 const ledLoopSrc = id => `loops/${LED_LOOPS[id] || "purple-warp"}.mp4`;
+const SPONSOR_IMAGE = "sponsors/snug-landscape.jpg";
+const TEACHERS = [
+  {id:"sourudra", name:"Sourudra S Samai", role:"Violin", photo:"teachers/sourudra-samai.jpg", position:"50% 34%"},
+  {id:"harland", name:"Harland Braver", role:"Keyboard", photo:"teachers/harland-braver.jpg", position:"50% 30%"},
+  {id:"nicholas", name:"Nicholas Umrethi", role:"Drums", photo:"teachers/nicholas-umrethi.jpg", position:"50% 32%"},
+  {id:"ashish", name:"Ashish Mehrotra", role:"Flute", photo:"teachers/ashish-mehrotra.jpg", position:"50% 30%"},
+  {id:"bhoomi", name:"Bhoomi Shah", role:"Hindustani Vocals", photo:"teachers/bhoomi-shah.jpg", position:"50% 32%"},
+  {id:"sabastian", name:"Sabastian Don Bosco Moktan", role:"Western Vocals"},
+  {id:"vinay", name:"Vinay Rao", role:"Guitar", photo:"teachers/vinay-rao.jpg", position:"50% 26%"},
+  {id:"joseph", name:"Joseph Sunil Kumar", role:"Guitar & Keyboard", photo:"teachers/joseph-sunil-kumar.jpg", position:"50% 28%"}
+];
+const actCues = ([id, act, look, bpm, headline, subline, firstNote, number]) => {
+  const group = `Act ${number} · ${headline}`;
+  return [
+    {id:`names-${id}`,group,title:`Names · ${headline}`,trigger:"Upasana begins reading names and the curtain opens",scene:"names",act,loop:ledLoopSrc(id)},
+    {id:`play-${id}`,group,title:`Song · ${headline}`,trigger:`The ${firstNote} starts`,scene:"perform",act,look,bpm,headline,subline,loop:ledLoopSrc(id)}
+  ];
+};
 const LED_CUES = [
   {id:"intro",group:"Before doors open",title:"Cinematic Seasons opening",trigger:"Play 2–3 minutes before the hosts enter. Turn the volume up",scene:"intro",overline:"Seasons Music Academy",headline:"Musicale 2026",subline:"Annual Music Concert",music:"loops/opening.mp3"},
   {id:"holding",group:"Before doors open",title:"Welcome holding screen",trigger:"After the opening; keep until house lights dim",scene:"stars",overline:"Welcome aboard",headline:"Seasons Express",subline:"The musical journey begins shortly"},
-  ...LED_ACTS.flatMap(([id, act, look, bpm, headline, subline, firstNote, number]) => {
-    const group = `Act ${number} · ${headline}`;
-    return [
-      {id:`names-${id}`,group,title:`Names · ${headline}`,trigger:"Upasana begins reading names",scene:"names",act,loop:ledLoopSrc(id)},
-      {id:`play-${id}`,group,title:`Song · ${headline}`,trigger:`The ${firstNote} starts`,scene:"perform",act,look,bpm,headline,subline,loop:ledLoopSrc(id)}
-    ];
+  {id:"sponsor-film",group:"Sponsor · before Act 1",title:"Sponsor film · Snug Cafe",trigger:"FK says the sponsors were forgotten and the curtain reopens",scene:"sponsor-video",film:"sponsors/snug-film.mp4",music:"sponsors/snug-film.mp4",musicLoop:false},
+  {id:"sponsor-opening",group:"Sponsor · before Act 1",title:"Sponsor picture · Snug Cafe",trigger:"The sponsor film ends",scene:"sponsor-image",image:SPONSOR_IMAGE},
+  ...LED_ACTS.flatMap(item => {
+    const id = item[0];
+    const before = id === "flute"
+      ? [{id:"sponsor-dhaba",group:"Sponsor · dhaba stop",title:"Sponsor picture · Snug Cafe",trigger:"At the Dhaba chai break, before The Flute Song names",scene:"sponsor-image",image:SPONSOR_IMAGE}]
+      : id === "haseena"
+        ? [{id:"sponsor-beach",group:"Sponsor · beach shack",title:"Sponsor picture · Snug Cafe",trigger:"At the Beach shack stop, before O Haseena names",scene:"sponsor-image",image:SPONSOR_IMAGE}]
+        : [];
+    return [...before, ...actCues(item)];
   }),
-  {id:"felicitation",group:"Finale",title:"Felicitation",trigger:"The hosts start calling the guests up",scene:"perform",headline:"Felicitation",subline:"With gratitude",loop:"loops/felicitation-stars.mp4"},
+  {id:"felicitation",group:"Finale",title:"Felicitation",trigger:"The hosts announce the Felicitation Ceremony",scene:"perform",headline:"Felicitation",subline:"With gratitude",loop:"loops/felicitation-stars.mp4"},
+  ...TEACHERS.map(teacher => ({...teacher,id:`teacher-${teacher.id}`,group:"Finale",title:`Honouring · ${teacher.name}`,trigger:`${teacher.name} is called`,scene:"teacher"})),
   {id:"thanks",group:"Finale",title:"Vote of Thanks",trigger:"Joseph steps up to the microphone",scene:"perform",headline:"Vote of Thanks",subline:"Joseph",loop:"loops/thanks-sunset.mp4"},
   {id:"anthem",group:"Finale",title:"National Anthem",trigger:"The hosts say: please rise for the National Anthem",scene:"anthem",loop:"loops/indian-flag.mp4"},
   {id:"credits",group:"Finale",title:"End credits",trigger:"The National Anthem has finished. Leave the volume up",scene:"credits",music:"loops/credits-goodbye.mp3"}
@@ -54,11 +77,32 @@ const LED_CREDITS = [
   {kind:"role", role:"Our Co-Founder", name:"Shwetha Joseph"},
   {kind:"group", title:"Our Dedicated Music Faculty", note:"For their guidance, patience and constant encouragement", names:["Sourudra.S.Samai","Harland Braver","Nicholas Umrethi","Sabastian Don Bosco Moktan","Ashish Mehrotra","Bhoomi Shah","Vinay Rao"]},
   {kind:"group", title:"Our Wonderful Students", note:"For filling the stage with music, confidence and joy", names:["Aadhya Trivedi","Aahana Sen","Aarush Rahul Zarpure","Aarush Sandip Kawade","Aarya Pratap","Aavya Brid","Aayush Jahagirdar","Abigail Vairagar","Adarsh Satheesh","Adelyn Grace","Agastya Anil Yadav","Aishni Ratadiya","Akriti Hemant Gaikwad","Amaaya Nair","Amish Singh","Arika Hemant Gaikwad","Ariyan Bhattacharya","Arjun Kelkar","Arnab Banerjee","Arnik Sharma","Arohi Abhay Mundra","Aryan Halkude","Avir Parinit Tathed","Avni Bhatia","Avyukth Ujwal","Ayaan Solanki","Ayansh Agrawal","Ayansh Aniket Zarkar","Dakshi Devi","Devansh Wadhwa","Dilip Nitanta Ranade","Diya Tuteja","Eliana Vineet Sasane","Eva Alung","Eva Camillio Fernandes","Harish Acharya","Harshvardhan S Kendre","Immanuel Lojo","Inaya Kapadiya","Ishanvi Batra","Ishita Kothari","Ivan Raghava","Jyotsanaa Lokhandde","K.Gayatri","Kaivalya Shastry","Kartikeyan Jha","Keshav Coimbatore Balachandar","Kiana Mendis","Kinaera Sharma","Kush Jigar Shah","Leonora Mendis","Linisha Srivastava","Lubaina Godhrawala","Maghizini Viswanathan","Mahira Chandak","Milee Ninad Mahadik","Mireya Joseph","Mustafa Sabuwala","Myra Gomes","Myra Pokhrel","Myraa Vivian Pillai","Nakul Chandrakant Chandak","Natasha Chatterjee","Natasha Nainani","Nathania Joseph","Navya Alung","Nevaeh Sharma","Nivita Baliga","Noyanika Amit Chaudhari","Parthvee Jain","Pranchal","Pratibha Rathore","Preeti Bhandare","Prisha Mathur","Reyansh Bhatia","Reyansh Sinha","Ria Nikhil Naik","Richard D'souza","Ridhaan Kavthekar","Rishi Chitresh Bhatia","Rishika Singh","Ritu Rijhwani","Sameer Wasnik","Sanjeevini Chandramani Jarje","Sarah MohmedIrfan Memon","Savya Dubey","Sesha Datta Abhiram Babbepalli","Shanaya Sanoj","Sharwin Mani","Shaurya Mohit Sharma","Shreya Karthik","Siddhartha Basuroy","Siddhiksha Chaudhary","Simmi Arora","Srihitha Potnuru","Sudiksha Moolani","Sujata Pasupathi","Trishaa Nikhil Shirude","Veda Shrivastava","Vibhav Coimbatore Balachandar","Vihaani Roy","Viraj Phillips","Virat Jauhari","Vivaan Jitendra Virbhani","Vivaan Patel","Zoya Sajid Memon"]},
+  {kind:"directors", title:"Band Directors", entries:[
+    ["Tauba Tauba & Urvashi Urvashi Mashup","Joseph Sunil Kumar"],
+    ["Bharat Humko Jaan Se Pyara Hai","Harland Braver"],
+    ["Drum Circle","Nicholas Umrethi"],
+    ["Old Woman in a Shoe","Joseph Sunil Kumar"],
+    ["Mission Impossible","Joseph Sunil Kumar"],
+    ["We Are the Champions Mashup","Sabastian Don Bosco Moktan"],
+    ["Raag Yaman","Ashish Mehrotra"],
+    ["The Flute Song","Joseph Sunil Kumar"],
+    ["Saiyaara","Joseph Sunil Kumar"],
+    ["G Minuet","Sourudra S Samai"],
+    ["Ghar More Pardesiya & Moh Moh Ke Dhaage","Bhoomi Shah"],
+    ["Challa — Jab Tak Hai Jaan","Vinay Rao & Joseph Sunil Kumar"],
+    ["Chammak Challo Mashup","Joseph Sunil Kumar"],
+    ["Eye of the Tiger, Gehra Hua Mashup","Vinay Rao"],
+    ["Dil Diya Hai Jaan Bhi Denge — Karma","Harland Braver"],
+    ["How Long — Charlie Puth","Joseph Sunil Kumar"],
+    ["Final Countdown","Joseph Sunil Kumar"],
+    ["O Haseena","All teachers"],
+    ["Ajeeb Daastaan","Joseph Sunil Kumar, Vinay Rao & Sourudra S Samai"]
+  ]},
   {kind:"group", title:"All Parents", note:"For your unwavering support and encouragement", names:[]},
-  {kind:"group", title:"Event Screenplay & Direction", names:["Fakhruddin Khambaty"]},
+  {kind:"group", title:"Event Director & Screenplay", names:["Fakhruddin Khambaty"]},
   {kind:"group", title:"Comperes", names:["Fakhruddin Khambaty","Upasana Sharma","Sonal Shirude"]},
-  {kind:"group", title:"Volunteers", names:["Richa Sharma","Sonal Shirude","Fatema Bandukwala","Shruti Alung","Suman Agrawal","Sonali Nagwekar","Milee Ninad Mahadik","Dr. Prajakta","Richard D'souza","Sheelpy Sen","Pratibha Rathore","Kush Shah"]},
-  {kind:"group", title:"Camera, Sound & LED Wall", names:["Stephen & Team","Prakash & Team"]},
+  {kind:"group", title:"Volunteers", names:["Richa Sharma","Sonal Shirude","Fatema Bandukwala","Shruti Alung","Suman Agrawal","Sonali Nagwekar","Milee Ninad Mahadik","Dr. Prajakta","Richard D'souza","Sheelpy Sen","Pratibha Rathore","Kush Shah","Virat Jauhari","Helen John Mendis"]},
+  {kind:"group", title:"Camera, Sound & LED Wall", names:["Stephen & Team","Prakash & Team","Richa Sharma","Varun Martin","Virat Jauhari"]},
   {kind:"group", title:"LED Slides", names:["Richa Sharma"]},
   {kind:"kicker", text:"With our sincere gratitude to"},
   {kind:"group", title:"Our Sponsor & Food Stall Partner", names:["Snug Cafe"]},
@@ -113,21 +157,38 @@ function performHtml(cue) {
   return `<div class="led-scene led-perform led-loop-scene"><video class="led-loop" src="${cue.loop}" autoplay muted loop playsinline preload="auto"></video><div class="led-loop-shade"></div>${brand}<div class="loop-title"><small>Now playing</small><strong>${escapeHtml(cue.headline)}</strong>${cue.subline ? `<span>${escapeHtml(cue.subline)}</span>` : ""}</div></div>`;
 }
 
+function sponsorVideoHtml(cue) {
+  return `<div class="led-scene sponsor-video-scene"><video class="sponsor-film" src="${cue.film}" autoplay muted playsinline preload="auto"></video><div class="sponsor-film-frame"></div></div>`;
+}
+
+function sponsorImageHtml(cue) {
+  return `<div class="led-scene sponsor-image-scene"><div class="sponsor-image-glow"></div><img src="${cue.image}" alt="Snug Cafe sponsor"><p>Our Sponsor &amp; Food Stall Partner</p></div>`;
+}
+
+function teacherHtml(cue) {
+  const portrait = cue.photo
+    ? `<figure><img src="${cue.photo}" alt="${escapeHtml(cue.name)}" style="object-position:${cue.position || "50% 32%"}"></figure>`
+    : `<figure class="teacher-no-photo"><img src="logo-mark.svg" alt=""><span>With gratitude</span></figure>`;
+  return `<div class="led-scene teacher-scene"><div class="teacher-rings"></div><div class="teacher-copy"><small>Seasons Music Academy honours</small><h1>${escapeHtml(cue.name)}</h1><p>${escapeHtml(cue.role)}</p><b>Musicale 2026</b></div>${portrait}</div>`;
+}
+
 function introHtml() {
   return `<div class="led-scene led-opening-film"><canvas class="opening-sky" aria-hidden="true"></canvas><div class="opening-quarters"><figure class="season-quarter summer"><img src="seasons/summer.jpg" alt=""></figure><figure class="season-quarter monsoon"><img src="seasons/monsoon.jpg" alt=""></figure><figure class="season-quarter winter"><img src="seasons/winter.jpg" alt=""></figure><figure class="season-quarter autumn"><img src="seasons/autumn.jpg" alt=""></figure></div><canvas class="opening-globe" aria-hidden="true"></canvas><div class="opening-lockup"><div class="opening-crest-wrap"><div class="opening-halo"><img class="opening-crest" src="logo-mark.svg" alt=""></div><div class="opening-wordmark"><b>Seasons</b><i class="opening-rule"></i><span>Music Academy</span></div></div><div class="opening-titles"><p class="opening-musicale">Musicale 2026</p><p class="opening-annual">Annual Music Concert</p></div></div></div>`;
 }
 function creditsBlock(block) {
   switch (block.kind) {
     case "open":
-      return `<header class="credits-open"><img src="logo-mark.svg" alt=""><p>Seasons Music Academy presents</p><h1>Musicale 2026</h1><strong>Annual Music Concert</strong><span>A celebration of music, passion and learning</span></header>`;
+      return `<header class="credits-open"><img src="logo-mark.svg" alt=""><p>Seasons Music Academy presents</p><h1>Musicale 2026</h1><strong>Annual Music Concert</strong><span>A celebration of music, passion &amp; learning</span></header>`;
     case "kicker":
       return `<p class="credits-kicker">${escapeHtml(block.text)}</p>`;
     case "role":
       return `<div class="credits-role"><small>${escapeHtml(block.role)}</small><b>${escapeHtml(block.name)}</b></div>`;
     case "group":
       return `<section class="credits-group"><h2>${escapeHtml(block.title)}</h2>${block.note ? `<p>${escapeHtml(block.note)}</p>` : ""}${block.names.length ? `<div class="credits-names">${block.names.map(name => `<span>${escapeHtml(name)}</span>`).join("")}</div>` : ""}</section>`;
+    case "directors":
+      return `<section class="credits-group credits-directors"><h2>${escapeHtml(block.title)}</h2><div>${block.entries.map(([act,director]) => `<p><span>${escapeHtml(act)}</span><b>${escapeHtml(director)}</b></p>`).join("")}</div></section>`;
     case "finale":
-      return `<footer class="credits-finale"><img src="logo-mark.svg" alt=""><p>With love from</p><h2>Seasons Music Academy</h2><strong>Keep learning. Keep growing. Keep making music.</strong><b>Thank you for being a part of Musicale 2026</b><span>See you at Musicale 2027</span></footer>`;
+      return `<footer class="credits-finale"><img src="logo-mark.svg" alt=""><p>With love from</p><h2>Seasons Music Academy</h2><strong>Keep learning. Keep growing. Keep making music.</strong><b>Thank you for being a part of Musicale 2026 ❤</b><span>See you at Musicale 2027!</span></footer>`;
     default: {
       const unknown = block.kind;
       throw new Error(`Unknown credit block: ${unknown}`);
@@ -148,7 +209,7 @@ function mountCredits(root) {
   stopCredits();
   const roll = root.querySelector(".credits-roll");
   const finale = roll.querySelector(".credits-finale");
-  const speed = 54;
+  const speed = 62;
   let last = performance.now();
   let y = root.clientHeight;
   const stopAt = () => root.clientHeight / 2 - (finale.offsetTop + finale.offsetHeight / 2);
@@ -170,6 +231,9 @@ function ledSceneHtml(cue) {
   if (cue.scene === "credits") return creditsHtml();
   if (cue.scene === "anthem") return `<div class="led-scene led-perform led-loop-scene led-anthem"><video class="led-loop" src="${cue.loop}" autoplay muted loop playsinline preload="auto"></video></div>`;
   if (cue.scene === "intro") return introHtml(cue);
+  if (cue.scene === "sponsor-video") return sponsorVideoHtml(cue);
+  if (cue.scene === "sponsor-image") return sponsorImageHtml(cue);
+  if (cue.scene === "teacher") return teacherHtml(cue);
   if (cue.scene === "perform") return performHtml(cue);
   if (cue.scene === "names") {
     const cast = CAST[cue.act];
@@ -256,6 +320,9 @@ function stopLedProjection() {
 function ledAudienceLine(cue) {
   if (cue.scene === "intro") return "four pictures grow in from the corners and become a turning globe. The name appears with the music, then it stays until you press Next";
   if (cue.scene === "names") return `performer names for ${cue.act}`;
+  if (cue.scene === "sponsor-video") return "the 45-second Snug Cafe sponsor film with sound; it stops on its last frame until you press Next";
+  if (cue.scene === "sponsor-image") return "the Snug Cafe landscape sponsor picture";
+  if (cue.scene === "teacher") return `${cue.name}, ${cue.role}${cue.photo ? ", with their photograph" : ", on a formal name card"}`;
   if (cue.scene === "anthem") return "only the Indian flag, full screen, until the anthem ends";
   if (cue.scene === "credits") return "the thank-you names roll up with the goodbye music, then the last card stays until you press Next";
   if (cue.scene === "perform") return `looping music video with the Seasons logo, for ${cue.headline}`;
@@ -265,13 +332,15 @@ function ledAudienceLine(cue) {
 function ledGroupHtml(group, cues) {
   const hint = group.startsWith("Act ")
     ? "Two buttons only. Pale card first, while Upasana reads the names. Dark Song card when the band plays the first note."
+    : group.startsWith("Sponsor")
+      ? "Sponsor exception. Open the curtain on the first card, then follow the host script. Never place a sponsor card between a Names card and its Song card."
     : group === "Finale"
-      ? "Four buttons, in this order. Felicitation while the guests are called up. Vote of Thanks when Joseph speaks. National Anthem when everyone stands — that one is only the flag. End credits when the anthem has finished — the names roll up with the goodbye music, then the last card stays. Leave the volume up."
+      ? "Felicitation first, then advance the eight teacher cards one at a time as each name is called. Sabastian's formal card intentionally has no photograph. Vote of Thanks follows, then National Anthem, then End credits."
       : "Play the opening first and turn the volume up. That picture has music. Then keep the holding screen until the hosts walk on.";
   return `<section class="led-section"><h2>${escapeHtml(group)}</h2><p>${hint}</p><div class="led-cue-grid">${cues.map(cue => {
     const index = LED_CUES.indexOf(cue);
     const preview = cue.scene === "perform" ? `<span class="led-mini-look look-${cue.look}" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></span>` : "";
-    return `<button type="button" class="led-cue${cue.scene === "perform" || cue.scene === "anthem" || cue.scene === "credits" ? " is-song" : ""}${index === ledCurrentIndex ? " on" : ""}" data-led-index="${index}"><b>${index + 1}</b><strong>${escapeHtml(cue.title)}</strong><span>Audience sees: ${escapeHtml(ledAudienceLine(cue))}</span><em>Click when: ${escapeHtml(cue.trigger)}</em>${preview}</button>`;
+    return `<button type="button" class="led-cue${cue.scene === "perform" || cue.scene === "anthem" || cue.scene === "credits" || cue.scene === "sponsor-video" ? " is-song" : ""}${index === ledCurrentIndex ? " on" : ""}" data-led-index="${index}"><b>${index + 1}</b><strong>${escapeHtml(cue.title)}</strong><span>Audience sees: ${escapeHtml(ledAudienceLine(cue))}</span><em>Click when: ${escapeHtml(cue.trigger)}</em>${preview}</button>`;
   }).join("")}</div></section>`;
 }
 
@@ -284,9 +353,9 @@ window.ledRenderConsole = function renderLedConsole() {
     (all[cue.group] ||= []).push(cue);
     return all;
   }, {});
-  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>Each song has just two buttons. While Upasana reads the names, show the <b>Names</b> card. When the band starts, press the dark <b>Song</b> card. The wall fills with a looping music video, with the Seasons Music Academy logo in the centre. Each song has its own video, and it keeps looping until you press Next. The opening picture plays music, so turn the laptop volume up before the doors open. After Ajeeb Daastaan come Felicitation, then Vote of Thanks, then <b>National Anthem</b>, then <b>End credits</b>. The anthem is only the Indian flag, with no logo. The credits roll the names with a goodbye song, then stay on the last card until you press Next. Leave the laptop volume up for that song. Press <b>P</b> once to project. Opening this show with the passcode saves every song video on this laptop. When the line above says they are saved, the wall still plays if the wifi drops.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
+  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>For every student act: <b>Names</b> opens the curtain, then <b>Song</b> starts only after the hosts clear. The sponsor is the one exception and has three clearly labelled moments. The first sponsor film has sound and plays once; press Next when it ends. During felicitation, advance through the eight teacher cards only as each name is called. After the anthem, the credits roll with the goodbye song. Press <b>P</b> once to project. Opening this show with the passcode saves all media on this laptop; wait for the saved message before leaving reliable wifi.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
     <div class="led-how"><article><b>1</b><strong>Open this tab on the LED</strong><span>Or allow Chrome’s screen permission so P can use the second display.</span></article><article><b>2</b><strong>Select the cue</strong><span>Pale card for the names. Dark card for the song. Nothing else to press during host talk.</span></article><article><b>3</b><strong>Press P once</strong><span>That picture fills the screen immediately. No second window or click.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. The cue list comes back.</span></article></div>
-    <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong>${current.music ? `<small>Opening music · ${escapeHtml(current.music.replace("loops/", ""))}</small>` : current.loop ? `<small>Song video · ${escapeHtml(current.loop.replace("loops/", ""))}</small>` : ""}</div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
+    <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong>${current.music ? `<small>Audio · ${escapeHtml(current.music.replace("loops/", "").replace("sponsors/", ""))}</small>` : current.loop ? `<small>Song video · ${escapeHtml(current.loop.replace("loops/", ""))}</small>` : ""}</div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
     <div class="led-controls"><button type="button" id="ledPrevBtn">← Previous</button><button type="button" class="next" id="ledNextBtn">Next cue →</button><button type="button" id="ledReplayBtn"><kbd>R</kbd> Replay</button><button type="button" id="ledHoldBtn"><kbd>H</kbd> Safe holding image</button></div>
     ${Object.entries(groups).map(([group,cues]) => ledGroupHtml(group,cues)).join("")}`;
 };
@@ -438,7 +507,7 @@ function setLedSound(cue) {
   stopLedSound();
   stopLedBed();
   if (!ledAudioContext || ledAudioContext.state !== "running") return;
-  if (cue.music) playLedMusic(cue.music, cue.scene !== "credits");
+  if (cue.music) playLedMusic(cue.music, cue.musicLoop !== false && cue.scene !== "credits");
 }
 
 async function startLedSound() {

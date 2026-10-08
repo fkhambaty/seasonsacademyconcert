@@ -267,5 +267,35 @@
 .credits-names{display:grid;grid-template-columns:1fr 1fr;gap:.55vh 4vw;width:min(92vw,1280px);margin:0 auto}
 .credits-names span{font:600 clamp(22px,2.15vw,40px)/1.35 "DM Sans",system-ui,sans-serif;text-shadow:0 2px 14px #000}
 .credits-names span:last-child:nth-child(odd){grid-column:1 / -1}
+.credits-directors>div{width:min(92vw,1280px);margin:0 auto;display:grid;gap:1.1vh}
+.credits-directors>div>p{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:2.8vw;align-items:baseline;margin:0;padding:.7vh 0;border-bottom:1px solid #f3d48a24;text-align:left}
+.credits-directors>div span{font:600 clamp(17px,1.55vw,28px)/1.3 "DM Sans",system-ui,sans-serif;color:#fff8ee}
+.credits-directors>div b{font:700 clamp(17px,1.55vw,28px)/1.3 "DM Sans",system-ui,sans-serif;color:#f3d48a;text-align:right}
 .credits-finale b{display:block;margin-top:3vh;font:600 clamp(26px,3vw,52px)/1.2 "Playfair Display",Georgia,serif;letter-spacing:0;text-transform:none;color:#fff8ee}
 .credits-finale{padding-bottom:18vh}
+
+/* Sponsor moments keep the supplied artwork intact; no text or logo is cropped. */
+.sponsor-video-scene{background:#090c07}
+.sponsor-film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sponsor-film-frame{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 1px #fff2,inset 0 0 100px #0008}
+.sponsor-image-scene{background:#f4e4bd}
+.sponsor-image-scene:before{content:"";position:absolute;inset:-5%;background:url("sponsors/snug-landscape.jpg") center/cover;filter:blur(32px) saturate(.8);opacity:.42;transform:scale(1.08)}
+.sponsor-image-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,#fff7dfaa,transparent 64%),linear-gradient(90deg,#24391555,transparent 20% 80%,#24391555)}
+.sponsor-image-scene>img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 18px 38px #2e311855)}
+.sponsor-image-scene>p{position:absolute;z-index:2;right:2.2vw;bottom:2.2vh;margin:0;padding:.55em 1em;border-radius:99px;background:#203b18e8;color:#fff8e8;font:800 clamp(12px,1.15vw,20px)/1.2 "DM Sans",system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 9px 28px #0004}
+
+/* Teacher cards deliberately replace the PowerPoint look with the show's playbill language. */
+.teacher-scene{grid-template-columns:48% 52%;background:linear-gradient(135deg,#08070d 0 47.8%,#b8892f 47.9% 48.2%,#16101e 48.3%);isolation:isolate}
+.teacher-rings{position:absolute;left:-18vw;top:-30vh;width:78vw;aspect-ratio:1;border-radius:50%;border:1px solid #f3d48a33;box-shadow:0 0 0 7vw #f3d48a08,0 0 0 14vw #f3d48a05;z-index:-1}
+.teacher-copy{padding:7vh 4vw 7vh 7vw;align-self:center}
+.teacher-copy small{display:block;color:#f3d48a;font-size:clamp(14px,1.35vw,25px);font-weight:800;letter-spacing:.28em;text-transform:uppercase}
+.teacher-copy h1{margin:2.5vh 0 1.5vh;font:600 clamp(55px,6vw,112px)/.95 "Playfair Display",Georgia,serif;color:#fff8ee;letter-spacing:-.035em;text-wrap:balance}
+.teacher-copy p{margin:0;color:#f7d884;font-size:clamp(25px,2.5vw,47px);font-weight:700}
+.teacher-copy b{display:block;margin-top:5vh;color:#ffffff8f;font-size:clamp(12px,1.15vw,20px);letter-spacing:.3em;text-transform:uppercase}
+.teacher-scene figure{align-self:stretch;width:100%;height:100%;margin:0;overflow:hidden;position:relative;background:#120e18}
+.teacher-scene figure:after{content:"";position:absolute;inset:0;box-shadow:inset 45px 0 70px #08070d99,inset 0 -70px 80px #08070d66}
+.teacher-scene figure>img{width:100%;height:100%;object-fit:cover;filter:saturate(.92) contrast(1.04)}
+.teacher-no-photo{display:grid;place-content:center;text-align:center;background:radial-gradient(circle at 50% 45%,#5b3d1f,#160f1e 66%)!important}
+.teacher-no-photo:before{content:"";position:absolute;inset:9%;border:1px solid #f3d48a55;border-radius:50%}
+.teacher-no-photo>img{position:relative;width:min(18vw,280px)!important;height:auto!important;margin:auto;object-fit:contain!important;filter:drop-shadow(0 0 34px #f3d48a55)!important}
+.teacher-no-photo>span{position:relative;margin-top:2.5vh;color:#f3d48a;font:700 clamp(15px,1.5vw,27px)/1 "DM Sans",system-ui,sans-serif;letter-spacing:.3em;text-transform:uppercase}
