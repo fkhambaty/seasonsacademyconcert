@@ -1,6 +1,6 @@
 /* Saves the show on this phone. A normal open uses the saved copy.
    A hard refresh asks the internet again. Song videos save only after the passcode. */
-const CACHE = "seasons-show-v2";
+const CACHE = "seasons-show-v3";
 const SHELL = [
   "./",
   "./index.html",
