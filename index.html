@@ -919,11 +919,10 @@
       meta:[`Bus stop: ${stop}`,"Core: about 1 minute","Extensions: up to about 3 minutes"],
       steps:[
         ...(opts.openUntilLaunch?[
-          {curtain:"stay-open",note:`Do not close after ${from}. It closes after the launch film.`},
           {wait:`Wait for the final note and let the applause breathe. The curtain <b>stays open</b> — the launch film plays on the LED before it closes. Enter once the performers have bowed and walked off and the stage manager signals.`},
           {do:"Walk to centre front, clapping. The next band does not set up yet; it sets up only after the curtain closes behind the launch film."}
         ]:[
-          {curtain:"close",note:"After the bow. Leave it closed while the hosts talk."},
+          {curtain:"close",note:"After the bow."},
           {wait:"Wait for the final note and let the applause breathe. The curtain closes after the performers bow. Enter only when it is fully closed and the stage manager signals."},
           {do:"Walk to centre front, clapping. Keep the curtain closed throughout the host talk while the next band resets behind it."}
         ]),
@@ -933,9 +932,7 @@
         {do:opts.sponsorOpen
           ? `The curtain is already open on the community partners slide. LED operator switches directly to <b>Names · ${next}</b>. Do not close the curtain again.`
           : `LED operator cues <b>Names · ${next}</b> and the stage manager opens the curtain <b>at the same moment</b>. Do not open it before the Names slide.`},
-        opts.sponsorOpen
-          ? {curtain:"stay-open",note:"Already open. Do not close it."}
-          : {curtain:"open",note:"Open now, together with the Names slide."},
+        ...(opts.sponsorOpen?[]:[{curtain:"open",note:"Open now, together with the Names slide."}]),
         {up:"Ab milte hain in bachchon se. Naam suniye — apna sunte hi haath upar."},
         {names:next},
         ...(opts.soft?SOFT_HORN:HORN),
@@ -945,7 +942,7 @@
     });
     const SCRIPT=[
       {kicker:"Opening",title:"Hosts Welcome → call Sonal",meta:["Bus stop: Swargate, Pune","Talk time about 3 min","Ends with: Sonal on stage"],steps:[
-        {curtain:"open",note:"Open before the hosts walk on. Leave it open."},
+        {curtain:"open",note:"Before the hosts walk on."},
         {wait:"House lights dim and the intro music fades out. Stage manager says <b>“Hosts, go.”</b>"},
         {do:"Props (cheap, worth it): <b>FK</b> — a whistle and a small cross-body bag, like a bus conductor, with a folded A4 card inside (the “Puneri board”). <b>Upasana</b> — a small tour-guide flag. Walk in from opposite wings: <b>FK from the stage-right wing</b> (your right as you face the audience), <b>Upasana from the stage-left wing</b>. Meet at centre front."},
         {up:"Good evening, ladies and gentlemen! Welcome to the **Seasons Academy Musicale 2026**"},
@@ -1050,7 +1047,7 @@
         {fk:"Hello, hello, hello! Curtain waale bhaiya — reverse! **Sponsors ko forgot!**"},
         {up:"FK. Sponsor ko “forgot” nahi. Thank you bolna bhool gaye."},
         {fk:"Same thing. **Phir se kholo curtains!**"},
-        {curtain:"open",note:"Open all the way. Leave it open through Tauba Tauba."},
+        {curtain:"open",note:"Open all the way."},
         {do:"Reopen the curtain. LED operator cues <b>Sponsor film · Snug Cafe</b>. Both hosts step to the two front corners and stay completely silent for the full 45-second film. Leave laptop volume up."},
         {wait:"Let the sponsor film finish. Do not talk over its last frame."},
         {do:"LED operator presses Next to <b>Sponsor picture · Snug Cafe</b>. Keep the curtain open."},
@@ -1275,7 +1272,7 @@
         {up:"Waah! Compliment."},
         {fk:"Phir bole — “sunne walon ko.”"},
         {phase:"Sponsor stop · use every time",core:true},
-        {curtain:"open",note:"Open for the sponsor picture. Leave it open."},
+        {curtain:"open",note:"Open for the sponsor picture."},
         {do:"Stage manager opens the curtain and LED operator cues <b>Sponsor picture · Snug Cafe</b>. Keep this picture up during the next lines."},
         {up:"Dhaba ki chai baad mein. Yeh dekh ke hamare sponsor **Snug Cafe** ki coffee yaad aa gayi."},
         {fk:"Warm cups, happy hearts. Aur sandwich dekh ke conductor ne route Undri ki taraf mod diya."},
@@ -1300,7 +1297,6 @@
         {do:"Lead the applause and let it run. This is the biggest cheer of the first half."},
         {up:"Details bahut jald. Abhi ke liye — Coming Soon."},
         {fk:"Aur conductor ka admission pakka. Dance mein nahi — wellness mein. Bus mein khade-khade kamar jawaab de gayi."},
-        {curtain:"stay-closed",note:"Keep it shut until the Saiyaara names."},
         {do:"Back to the bus story. The curtain stays closed and the film’s last card stays on the LED until the Saiyaara names."},
         {up:"Raat ki bus ho, aur antakshari na ho? Main line shuru karti hoon, poora hall complete karega. “Baithe baithe kya karein, karna hai kuch kaam…”"},
         {do:"Hall: “…shuru karo antakshari, leke prabhu ka naam!”"},
@@ -1587,7 +1583,7 @@
         {up:"Aur sach batao — yeh excuse bachchon ne kahan se seekha?"},
         {fk:"(points at the parents) Khaandaani hai."},
         {phase:"Sponsor stop · use every time",core:true},
-        {curtain:"open",note:"Open for the sponsor picture. Leave it open."},
+        {curtain:"open",note:"Open for the sponsor picture."},
         {do:"Stage manager opens the curtain and LED operator cues <b>Sponsor picture · Snug Cafe</b>. Keep this picture up during the next lines."},
         {fk:"Beach shack aa gaya. Lekin board pe Snug Cafe ka photo kaise?"},
         {up:"Because good times are best shared. Snug Cafe — coffee, comfort food and love."},
@@ -1628,7 +1624,6 @@
         {fk:"Itne log toh meri birthday party mein bhi nahi aaye."}
       ]),
       {kicker:"After final musical act",title:"Ajeeb Daastaan ends → Felicitation",meta:["Bus stop: destination","Core: about 1 minute","Extensions: up to about 3 minutes"],steps:[
-        {curtain:"stay-open",note:"Leave it open for the rest of the show."},
         {wait:"Wait for the final note, then give this applause room to grow. Enter only after the performers bow and the stage manager signals."},
         {do:"Walk to centre front, clapping. Let the full band begin exiting behind you."},
         {phase:"Core · use every time",core:true},
@@ -1841,8 +1836,6 @@
       const marks={
         close:{cls:"shut",word:"CLOSE"},
         open:{cls:"open",word:"OPEN"},
-        "stay-closed":{cls:"shut hold",word:"STAY CLOSED"},
-        "stay-open":{cls:"open hold",word:"STAY OPEN"},
         half:{cls:"half",word:"HOLD"}
       };
       const mark=marks[kind];
