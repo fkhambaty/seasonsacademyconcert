@@ -4,7 +4,7 @@ const CACHE = "seasons-show-v2";
 const SHELL = [
   "./",
   "./index.html",
-  "./led.css?v=19",
+  "./led.css?v=20",
   "./lights.css?v=3",
   "./opening.js?v=4",
   "./led.js?v=23",

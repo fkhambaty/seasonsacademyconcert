@@ -289,7 +289,7 @@
 .teacher-rings{position:absolute;left:-18vw;top:-30vh;width:78vw;aspect-ratio:1;border-radius:50%;border:1px solid #f3d48a33;box-shadow:0 0 0 7vw #f3d48a08,0 0 0 14vw #f3d48a05;z-index:-1}
 .teacher-copy{padding:7vh 4vw 7vh 7vw;align-self:center}
 .teacher-copy small{display:block;color:#f3d48a;font-size:clamp(14px,1.35vw,25px);font-weight:800;letter-spacing:.28em;text-transform:uppercase}
-.teacher-copy h1{margin:2.5vh 0 1.5vh;font:600 clamp(55px,6vw,112px)/.95 "Playfair Display",Georgia,serif;color:#fff8ee;letter-spacing:-.035em;text-wrap:balance}
+.teacher-copy h1{margin:2.5vh 0 1.5vh;font:600 clamp(55px,6vw,112px)/.95 "Playfair Display",Georgia,serif;color:#fff8ee;letter-spacing:-.035em}
 .teacher-copy p{margin:0;color:#f7d884;font-size:clamp(25px,2.5vw,47px);font-weight:700}
 .teacher-copy b{display:block;margin-top:5vh;color:#ffffff8f;font-size:clamp(12px,1.15vw,20px);letter-spacing:.3em;text-transform:uppercase}
 .teacher-scene figure{align-self:stretch;width:100%;height:100%;margin:0;overflow:hidden;position:relative;background:#120e18}
