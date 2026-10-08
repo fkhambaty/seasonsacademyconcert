@@ -1,13 +1,13 @@
 /* Saves the show on this phone. A normal open uses the saved copy.
    A hard refresh asks the internet again. Song videos save only after the passcode. */
-const CACHE = "seasons-show-v4";
+const CACHE = "seasons-show-v5";
 const SHELL = [
   "./",
   "./index.html",
-  "./led.css?v=20",
+  "./led.css?v=21",
   "./lights.css?v=3",
   "./opening.js?v=4",
-  "./led.js?v=24",
+  "./led.js?v=25",
   "./lights.js?v=5",
   "./logo.png",
   "./logo-mark.svg",
@@ -46,6 +46,9 @@ const MEDIA = [
   "./sponsors/snug-film.mp4",
   "./sponsors/snug-landscape.jpg",
   "./sponsors/snug-portrait.jpg",
+  "./sponsors/partner-bodh.jpg",
+  "./sponsors/partner-aahaar.jpg",
+  "./sponsors/partner-sonal.jpg",
   "./teachers/sourudra-samai.jpg",
   "./teachers/harland-braver.jpg",
   "./teachers/nicholas-umrethi.jpg",

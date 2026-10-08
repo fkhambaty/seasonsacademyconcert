@@ -32,6 +32,12 @@ const LED_LOOPS = {
 };
 const ledLoopSrc = id => `loops/${LED_LOOPS[id] || "purple-warp"}.mp4`;
 const SPONSOR_IMAGE = "sponsors/snug-landscape.jpg";
+const PARTNERS = [
+  {name:"Bodh Career & Coaching", image:"sponsors/partner-bodh.jpg", shape:"square"},
+  {name:"Aahaar Nutrition", image:"sponsors/partner-aahaar.jpg", shape:"tall"},
+  {name:"Sonal's Classes", image:"sponsors/partner-sonal.jpg", shape:"square"}
+];
+const PARTNERS_TITLE = "Community partners · Bodh, Aahaar, Sonal's Classes";
 const TEACHERS = [
   {id:"sourudra", name:"Sourudra S Samai", role:"Violin", photo:"teachers/sourudra-samai.jpg", position:"50% 34%"},
   {id:"harland", name:"Harland Braver", role:"Keyboard", photo:"teachers/harland-braver.jpg", position:"50% 30%"},
@@ -54,12 +60,15 @@ const LED_CUES = [
   {id:"holding",group:"Before doors open",title:"Welcome holding screen",trigger:"After the opening; keep until house lights dim",scene:"stars",overline:"Welcome aboard",headline:"Seasons Express",subline:"The musical journey begins shortly"},
   {id:"sponsor-film",group:"Sponsor · before Act 1",title:"Sponsor film · Snug Cafe",trigger:"FK says the sponsors were forgotten and the curtain reopens",scene:"sponsor-video",film:"sponsors/snug-film.mp4",music:"sponsors/snug-film.mp4",musicLoop:false},
   {id:"sponsor-opening",group:"Sponsor · before Act 1",title:"Sponsor picture · Snug Cafe",trigger:"The sponsor film ends",scene:"sponsor-image",image:SPONSOR_IMAGE},
+  {id:"partners-opening",group:"Sponsor · before Act 1",title:PARTNERS_TITLE,trigger:"Upasana finishes thanking Snug Cafe",scene:"partners"},
   ...LED_ACTS.flatMap(item => {
     const id = item[0];
     const before = id === "flute"
-      ? [{id:"sponsor-dhaba",group:"Sponsor · dhaba stop",title:"Sponsor picture · Snug Cafe",trigger:"At the Dhaba chai break, before The Flute Song names",scene:"sponsor-image",image:SPONSOR_IMAGE}]
+      ? [{id:"sponsor-dhaba",group:"Sponsor · dhaba stop",title:"Sponsor picture · Snug Cafe",trigger:"At the Dhaba chai break, before The Flute Song names",scene:"sponsor-image",image:SPONSOR_IMAGE},
+         {id:"partners-dhaba",group:"Sponsor · dhaba stop",title:PARTNERS_TITLE,trigger:"Upasana finishes thanking Snug Cafe",scene:"partners"}]
       : id === "haseena"
-        ? [{id:"sponsor-beach",group:"Sponsor · beach shack",title:"Sponsor picture · Snug Cafe",trigger:"At the Beach shack stop, before O Haseena names",scene:"sponsor-image",image:SPONSOR_IMAGE}]
+        ? [{id:"sponsor-beach",group:"Sponsor · beach shack",title:"Sponsor picture · Snug Cafe",trigger:"At the Beach shack stop, before O Haseena names",scene:"sponsor-image",image:SPONSOR_IMAGE},
+           {id:"partners-beach",group:"Sponsor · beach shack",title:PARTNERS_TITLE,trigger:"Upasana finishes thanking Snug Cafe",scene:"partners"}]
         : [];
     return [...before, ...actCues(item)];
   }),
@@ -161,6 +170,10 @@ function sponsorVideoHtml(cue) {
   return `<div class="led-scene sponsor-video-scene"><video class="sponsor-film" src="${cue.film}" autoplay muted playsinline preload="auto"></video><div class="sponsor-film-frame"></div></div>`;
 }
 
+function partnersHtml() {
+  return `<div class="led-scene partners-scene"><div class="partners-head"><small>Musicale 2026 · With thanks to</small><h1>Our Community Partners</h1></div><div class="partners-row">${PARTNERS.map(partner => `<figure class="partner-card ${partner.shape}"><img src="${partner.image}" alt="${escapeHtml(partner.name)}"></figure>`).join("")}</div></div>`;
+}
+
 function sponsorImageHtml(cue) {
   return `<div class="led-scene sponsor-image-scene"><div class="sponsor-image-glow"></div><img src="${cue.image}" alt="Snug Cafe sponsor"><p>Our Sponsor &amp; Food Stall Partner</p></div>`;
 }
@@ -233,6 +246,7 @@ function ledSceneHtml(cue) {
   if (cue.scene === "intro") return introHtml(cue);
   if (cue.scene === "sponsor-video") return sponsorVideoHtml(cue);
   if (cue.scene === "sponsor-image") return sponsorImageHtml(cue);
+  if (cue.scene === "partners") return partnersHtml();
   if (cue.scene === "teacher") return teacherHtml(cue);
   if (cue.scene === "perform") return performHtml(cue);
   if (cue.scene === "names") {
@@ -322,6 +336,7 @@ function ledAudienceLine(cue) {
   if (cue.scene === "names") return `performer names for ${cue.act}`;
   if (cue.scene === "sponsor-video") return "the 45-second Snug Cafe sponsor film with sound; it stops on its last frame until you press Next";
   if (cue.scene === "sponsor-image") return "the Snug Cafe landscape sponsor picture";
+  if (cue.scene === "partners") return "one slide with all three community partners: Bodh Career & Coaching, Aahaar Nutrition and Sonal's Classes";
   if (cue.scene === "teacher") return `${cue.name}, ${cue.role}${cue.photo ? ", with their photograph" : ", on a formal name card"}`;
   if (cue.scene === "anthem") return "only the Indian flag, full screen, until the anthem ends";
   if (cue.scene === "credits") return "the thank-you names roll up with the goodbye music, then the last card stays until you press Next";
@@ -333,7 +348,7 @@ function ledGroupHtml(group, cues) {
   const hint = group.startsWith("Act ")
     ? "Two buttons only. Pale card first, while Upasana reads the names. Dark Song card when the band plays the first note."
     : group.startsWith("Sponsor")
-      ? "Sponsor exception. Open the curtain on the first card, then follow the host script. Never place a sponsor card between a Names card and its Song card."
+      ? "Sponsor exception. Open the curtain on the first card, then follow the host script. Snug Cafe first, then the community partners slide. Never place a sponsor card between a Names card and its Song card."
     : group === "Finale"
       ? "Felicitation first, then advance the eight teacher cards one at a time as each name is called. Vote of Thanks follows, then National Anthem, then End credits."
       : "Play the opening first and turn the volume up. That picture has music. Then keep the holding screen until the hosts walk on.";
