@@ -460,7 +460,7 @@
           item(6,"We Are the Champions Mashup",[["Western Vocals",11],["Keyboard",1]]),
           item(7,"Raag Yaman",[["Flute",4]]),
           item(8,"The Flute Song",[["Guitar",1],["Keyboard & Vocals",2],["Keyboard",4]]),
-          item(null,"Launch Film — Seasons Dance & Wellness Academy",[["Host",2]],2,"ceremony",{layout:hostsCentre(),led:"LAUNCH FILM · DANCE & WELLNESS ACADEMY",notes:"Curtain stays closed. FK stops the bus at a glowing highway billboard; house lights go dark and the LED plays the 47-second launch film once with sound. Hosts watch from the sides, then announce Seasons Dance &amp; Wellness Academy and carry straight on to the Saiyaara host talk."}),
+          item(null,"Launch Film — Seasons Dance & Wellness Academy",[["Host",2]],2,"ceremony",{layout:hostsCentre(),led:"LAUNCH FILM · DANCE & WELLNESS ACADEMY",notes:"Curtain stays open after The Flute Song. FK stops the bus at a glowing highway billboard; house lights go dark and the LED plays the 47-second launch film once with sound. Hosts watch from the front corners, in front of the curtain line. The curtain closes only after the film ends; the Saiyaara band sets up behind it while the hosts announce Seasons Dance &amp; Wellness Academy and carry on to the Saiyaara host talk."}),
           item(9,"Saiyaara",[["Guitar",4],["Keyboard",5],["Drums",1],["Bass Guitar",1],["Vocals",1]]),filler(),
           item(11,"G Minute",[["Violin",7]]),
           item(12,"Ghar More Pardesiya & Moh Moh Ke Dhaage",[["Hindustani Vocals",5],["Flute",1]]),
@@ -530,6 +530,12 @@
           show.events.splice(saiyaara<0?show.events.length:saiyaara,0,launch);
         }
         done.add("dance-wellness-launch-v1");
+      }
+      if(!done.has("launch-curtain-open-v1")){
+        const launchTitle = "Launch Film — Seasons Dance & Wellness Academy";
+        const launch = show.events.find(event=>event.title===launchTitle);
+        if(launch) launch.notes = createDefaults().events.find(event=>event.title===launchTitle).notes;
+        done.add("launch-curtain-open-v1");
       }
       show.migrations = [...done];
       localStorage.setItem(STORAGE_KEY, JSON.stringify(show));
@@ -912,9 +918,15 @@
       title:`${from} ends → ${next}`,
       meta:[`Bus stop: ${stop}`,"Core: about 1 minute","Extensions: up to about 3 minutes"],
       steps:[
-        {curtain:"close",note:"After the bow. Leave it closed while the hosts talk."},
-        {wait:"Wait for the final note and let the applause breathe. The curtain closes after the performers bow. Enter only when it is fully closed and the stage manager signals."},
-        {do:"Walk to centre front, clapping. Keep the curtain closed throughout the host talk while the next band resets behind it."},
+        ...(opts.openUntilLaunch?[
+          {curtain:"stay-open",note:`Do not close after ${from}. It closes after the launch film.`},
+          {wait:`Wait for the final note and let the applause breathe. The curtain <b>stays open</b> — the launch film plays on the LED before it closes. Enter once the performers have bowed and walked off and the stage manager signals.`},
+          {do:"Walk to centre front, clapping. The next band does not set up yet; it sets up only after the curtain closes behind the launch film."}
+        ]:[
+          {curtain:"close",note:"After the bow. Leave it closed while the hosts talk."},
+          {wait:"Wait for the final note and let the applause breathe. The curtain closes after the performers bow. Enter only when it is fully closed and the stage manager signals."},
+          {do:"Walk to centre front, clapping. Keep the curtain closed throughout the host talk while the next band resets behind it."}
+        ]),
         ...steps,
         {phase:"Final readiness check + names",core:true},
         {go:next},
@@ -1279,15 +1291,16 @@
         {phase:"Launch film · use every time",core:true},
         {up:"Lekin raat ke highway pe, door se kuch chamak raha hai… ek bahut bada billboard."},
         {fk:"Driver sahab — bus rokiye! Passengers — screen ki taraf dekhiye."},
-        {do:"Sound and lights: house lights to dark. LED operator plays <b>Launch film · Seasons Dance & Wellness Academy</b> with the volume all the way up. Both hosts step to the sides of the stage and turn to watch the screen with the audience. <b>Do not talk over the film</b> (47 seconds)."},
+        {do:"Sound and lights: house lights to dark. LED operator plays <b>Launch film · Seasons Dance & Wellness Academy</b> with the volume all the way up. Both hosts step to the front corners of the stage, <b>in front of the curtain line</b>, and turn to watch the screen with the audience. <b>Do not talk over the film</b> (47 seconds)."},
         {wait:"The film ends and freezes on “Coming Soon”. House lights come back half up."},
+        {curtain:"close",note:"The launch film is over. Close now. Saiyaara sets up behind it."},
         {up:"Ladies and gentlemen — ab tak Seasons ne aapko **sur** diya, **taal** diya…"},
         {fk:"…ab Seasons aapko **nachayega** bhi! Introducing — **Seasons Dance & Wellness Academy!**"},
         {both:"Zordaar taaliyaa!"},
         {do:"Lead the applause and let it run. This is the biggest cheer of the first half."},
         {up:"Details bahut jald. Abhi ke liye — Coming Soon."},
         {fk:"Aur conductor ka admission pakka. Dance mein nahi — wellness mein. Bus mein khade-khade kamar jawaab de gayi."},
-        {curtain:"stay-closed",note:"The film is on the screen. Do not open."},
+        {curtain:"stay-closed",note:"Keep it shut until the Saiyaara names."},
         {do:"Back to the bus story. The curtain stays closed and the film’s last card stays on the LED until the Saiyaara names."},
         {up:"Raat ki bus ho, aur antakshari na ho? Main line shuru karti hoon, poora hall complete karega. “Baithe baithe kya karein, karna hai kuch kaam…”"},
         {do:"Hall: “…shuru karo antakshari, leke prabhu ka naam!”"},
@@ -1311,7 +1324,7 @@
         {up:"Ek aur! “Mere sapnon ki rani kab aayegi tu…”"},
         {do:"Hall: “…aayi rut mastaani kab aayegi tu!”"},
         {fk:"Rajesh Khanna jeep mein the, hum bus mein hain. Feeling same hai, budget alag."}
-      ]),
+      ],{openUntilLaunch:true}),
       hostTransition("Saiyaara","G Minute","Midnight — the bus is asleep",[
         {phase:"Core · use every time",core:true},
         {up:"Saiyaara! Barah performers — taaliyaa! Aur jinki aankh geeli hai — haath mat uthaana. Hum samajh gaye."},
