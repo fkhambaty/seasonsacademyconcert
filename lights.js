@@ -1,21 +1,9 @@
-const LIGHTS_STATE_KEY = "seasons-lights-dmx192-v3";
-
-const PAR_FADERS = ["Dimmer", "Red", "Green", "Blue", "White", "Strobe"];
-const MOVER_FADERS = ["Pan", "Tilt", "Colour", "Gobo", "Dimmer", "Shutter"];
+const LIGHTS_STATE_KEY = "seasons-lights-tiger-v1";
 
 const RIG = [
-  { s: 1, kind: "par", name: "Front wash · left", where: "Front-of-house bar, shines on faces from the audience side" },
-  { s: 2, kind: "par", name: "Front wash · right", where: "Front-of-house bar, shines on faces from the audience side" },
-  { s: 3, kind: "par", name: "Host special · left", where: "Tight warm pool on the left apron (FK)" },
-  { s: 4, kind: "par", name: "Host special · right", where: "Tight warm pool on the right apron (Upasana)" },
-  { s: 5, kind: "par", name: "Back wash · left", where: "Upstage bar, behind the performers (rim glow)" },
-  { s: 6, kind: "par", name: "Back wash · right", where: "Upstage bar, behind the performers (rim glow)" },
-  { s: 7, kind: "par", name: "Overhead colour · left", where: "On the bar above the stage, left end, shining down" },
-  { s: 8, kind: "par", name: "Overhead colour · right", where: "On the bar above the stage, right end, shining down" },
-  { s: 9, kind: "mover", name: "Moving head · left", where: "Overhead bar, left — beams and patterns" },
-  { s: 10, kind: "mover", name: "Moving head · right", where: "Overhead bar, right — beams and patterns" },
-  { s: 11, kind: "par", name: "Audience blinder", where: "Stage edge, pointing at the audience" },
-  { s: 12, kind: "par", name: "Centre special", where: "Overhead centre, one round pool on the stage" }
+  { s: 1, kind: "par" }, { s: 2, kind: "par" }, { s: 3, kind: "par" }, { s: 4, kind: "par" },
+  { s: 5, kind: "par" }, { s: 6, kind: "par" }, { s: 7, kind: "par" }, { s: 8, kind: "par" },
+  { s: 9, kind: "mover" }, { s: 10, kind: "mover" }, { s: 11, kind: "par" }, { s: 12, kind: "par" }
 ];
 
 const WHEEL = {
@@ -37,145 +25,185 @@ function M(scanners, pan, tilt, colour, gobo, dim) {
 function FAN(pan, tilt, colour, gobo, dim) {
   return [M([9], pan, tilt, colour, gobo, dim), M([10], 255 - pan, tilt, colour, gobo, dim)];
 }
-const FACE = dim => P([1, 2], dim, "#ffd6a6", 70);
-const HOSTS = [FACE(25), P([3, 4], 100, "#ffcf8f", 90), P([5, 6], 15, "#1b2a5c")];
 
-const ACT_LIGHTS = [
-  { title: "Tauba Tauba, Urvashi Urvashi Mashup", theme: "Magenta · cyan dance party", look: "dance", shape: "rows",
-    trigger: "the first musical note", accentWhen: "the first big chorus",
-    kid: "Pink light from behind, blue light from the bar above, and two moving lights crossing like dancers.",
-    song: [FACE(75), P([5, 6], 90, "#e0218a"), P([7, 8], 80, "#00c8d8"), ...FAN(70, 120, "Cyan", "Dots", 70)],
-    accent: [P([7, 8], 85, "#e0218a"), ...FAN(40, 160, "Magenta", "Dots", 80), P([11], 35, "#ffd6a6", 40)] },
-  { title: "Bharat Humko Jaan Se Pyara Hai", theme: "Respectful tricolour from behind", look: "tricolor", shape: "line",
-    trigger: "the first musical note", accentWhen: "the last chorus",
-    kid: "Saffron from the left of the bar above, green from the right, clean white in the middle. Nothing moves. It feels proud and calm.",
-    song: [FACE(80), P([5], 90, "#ff8a1a"), P([6], 90, "#138808"), P([7, 8], 55, "#ffffff", 60), P([12], 50, "#ffffff", 80)],
-    accent: [...FAN(70, 25, "White", "Open", 60)] },
-  { title: "Drum Circle", theme: "Fire-red drum circle", look: "drums", shape: "circle",
-    trigger: "the first drum strike", accentWhen: "the big unison roll near the end",
-    kid: "Red fire behind, orange from the bar above, and one round pool in the middle like a campfire.",
-    song: [FACE(60), P([5, 6], 100, "#c1121f"), P([7, 8], 100, "#ff8c00"), P([12], 70, "#ff9d2e"), ...FAN(110, 200, "Red", "Breakup", 80)],
-    accent: [P([11], 70, "#ffb347", 40), ...FAN(90, 210, "Amber", "Breakup", 100)] },
-  { title: "Old Woman in a Shoe", theme: "Sunny storybook", look: "story", shape: "rows",
-    trigger: "the first musical note", accentWhen: "the second verse",
-    kid: "Bright like a picture book: sunny yellow behind, sky blue from the bar above, and a soft pink circle.",
-    song: [FACE(85), P([5, 6], 70, "#ffd23f"), P([7, 8], 60, "#4cc9f0"), P([12], 40, "#ff9fb2", 30)],
-    accent: [...FAN(30, 90, "Yellow", "Star", 50)] },
-  { title: "Mission Impossible", theme: "Spy-movie steel blue", look: "spy", shape: "rows",
-    trigger: "the theme begins", accentWhen: "the final build-up",
-    kid: "Dark navy like a night mission. Two sharp white beams cross the stage like laser alarms.",
-    song: [FACE(55), P([5, 6], 90, "#0b3d91"), P([7, 8], 40, "#dbe9ff", 40), ...FAN(40, 150, "White", "Open", 85)],
-    accent: [P([7, 8], 0, "#000000"), ...FAN(80, 175, "Red", "Open", 95)] },
-  { title: "We Are the Champions Mashup", theme: "Royal blue · stadium gold", look: "stadium", shape: "rows",
-    trigger: "the first vocal note", accentWhen: "the “We are the champions” chorus",
-    kid: "Royal blue like a trophy ribbon, gold from the bar above, and a warm lift toward the audience.",
-    song: [FACE(80), P([5, 6], 85, "#1f4fd1"), P([7, 8], 70, "#f4c430"), ...FAN(90, 230, "Yellow", "Open", 70)],
-    accent: [P([11], 80, "#ffe7a8", 60), ...FAN(60, 245, "White", "Open", 80)] },
-  { title: "Raag Yaman", theme: "Midnight indigo · one golden pool", look: "raga", shape: "arc",
-    trigger: "the first flute note", accentWhen: "the slow ending",
-    kid: "Like a quiet night: deep indigo behind and one golden circle on the musicians. The moving lights stay off.",
-    song: [FACE(65), P([5, 6], 70, "#1d2b64"), P([12], 80, "#f2b84b", 40)],
-    accent: [P([5, 6], 55, "#2a1f6b"), P([12], 95, "#f2b84b", 50), FACE(45)] },
-  { title: "The Flute Song", theme: "Mint garden", look: "flute", shape: "arc",
-    trigger: "the first musical note", accentWhen: "the middle section",
-    kid: "Fresh mint green like a garden, with warm white from the bar above so the little ones look bright.",
-    song: [FACE(80), P([5, 6], 60, "#5ad1a4"), P([7, 8], 50, "#ffe6b3", 60)],
-    accent: [...FAN(60, 205, "White", "Dots", 40)] },
-  { title: "Saiyaara", theme: "Violet moonlight", look: "moon", shape: "rows",
-    trigger: "the first musical note", accentWhen: "the hook line",
-    kid: "Purple like a dream, moon-blue from the bar above, and a slow soft pattern on the floor like moonlight through leaves.",
-    song: [FACE(65), P([5, 6], 85, "#6a3fb5"), P([7, 8], 55, "#4e7fd6"), ...FAN(100, 195, "Lavender", "Breakup", 45)],
-    accent: [P([12], 55, "#e8e4ff", 60), ...FAN(120, 210, "Blue", "Breakup", 55)] },
-  { title: "G Minute", theme: "Midnight strings · silver", look: "strings", shape: "arc",
-    trigger: "the first violin note", accentWhen: "the final phrase",
-    kid: "Dark blue night with silver-white edges, like moonlight on violins.",
-    song: [FACE(70), P([5, 6], 75, "#10245c"), P([7, 8], 35, "#e8eef9", 50), P([12], 55, "#dfe8ff", 60)],
-    accent: [...FAN(20, 70, "Blue", "Star", 30)] },
-  { title: "Ghar More Pardesiya & Moh Moh Ke Dhaage", theme: "Rose · antique gold", look: "home", shape: "line",
-    trigger: "the first vocal note", accentWhen: "the switch into Moh Moh Ke Dhaage",
-    kid: "Rose pink behind, old gold from the bar above, like a lamp-lit room at home.",
-    song: [FACE(75), P([5, 6], 70, "#b23a75"), P([7, 8], 65, "#d8a24a"), P([12], 60, "#ffd8a0", 40)],
-    accent: [P([5, 6], 70, "#e0892f"), P([7, 8], 55, "#b23a75")] },
-  { title: "Challa — Jab Tak Hai Jaan", theme: "Road-trip amber · teal", look: "highway", shape: "rows",
-    trigger: "the first guitar note", accentWhen: "the chorus",
-    kid: "Sunset orange behind and sea-teal from the bar above, like a highway at sunset.",
-    song: [FACE(75), P([5, 6], 85, "#e07a1f"), P([7, 8], 65, "#1e9a95"), ...FAN(85, 140, "Amber", "Breakup", 50)],
-    accent: [P([11], 30, "#ffc27a", 40), ...FAN(55, 185, "Amber", "Breakup", 70)] },
-  { title: "Chammak Challo Mashup", theme: "Red · magenta party with gold beams", look: "disco", shape: "rows",
-    trigger: "the first musical note", accentWhen: "the drop",
-    kid: "Party time: red behind, pink from the bar above, and gold beams fanning out like a disco.",
-    song: [FACE(80), P([5, 6], 95, "#d01535"), P([7, 8], 80, "#e0218a"), ...FAN(30, 110, "Yellow", "Open", 80)],
-    accent: [P([11], 60, "#ffd6a6", 50), ...FAN(10, 95, "White", "Dots", 90)] },
-  { title: "Eye of the Tiger, Gehra Hua Mashup", theme: "Boxing-ring red · hard white", look: "tiger", shape: "rows",
-    trigger: "the first guitar note", accentWhen: "the guitar riff after the verse",
-    kid: "Red like a boxing ring, hard white light from the bar above, and two straight beams like spotlights on fighters.",
-    song: [FACE(70), P([5, 6], 100, "#c1121f"), P([7, 8], 80, "#ffffff", 80), ...FAN(105, 235, "White", "Open", 90)],
-    accent: [P([7, 8], 90, "#c1121f"), ...FAN(105, 235, "Red", "Open", 100)] },
-  { title: "Dil Diya Hai Jaan Bhi Denge — Karma", theme: "Tricolour from the bar above", look: "flag", shape: "line",
-    trigger: "the first vocal note", accentWhen: "“Dil diya hai” chorus",
-    kid: "The tricolour comes from the bar above: saffron on the left end, green on the right end, white behind.",
-    song: [FACE(80), P([7], 85, "#ff8a1a"), P([8], 85, "#138808"), P([5, 6], 60, "#ffffff", 70), P([12], 60, "#ffffff", 80)],
-    accent: [...FAN(80, 30, "White", "Open", 70)] },
-  { title: "How Long — Charlie Puth", theme: "Purple · electric cyan", look: "neon", shape: "rows",
-    trigger: "the first drum count", accentWhen: "the chorus",
-    kid: "Purple behind, electric blue from the bar above, and pink dots dancing on the floor.",
-    song: [FACE(70), P([5, 6], 85, "#6d2fb3"), P([7, 8], 70, "#00b4d8"), ...FAN(75, 200, "Magenta", "Dots", 60)],
-    accent: [...FAN(45, 215, "Cyan", "Dots", 75)] },
-  { title: "Final Countdown", theme: "Arena blue · gold hit", look: "countdown", shape: "rows",
-    trigger: "the opening keyboard note", accentWhen: "the famous keyboard riff comes back",
-    kid: "Big arena: blue behind, gold from the bar above, and white beams fanned wide.",
-    song: [FACE(75), P([5, 6], 90, "#1438a6"), P([7, 8], 60, "#f4c430"), ...FAN(20, 85, "White", "Open", 90)],
-    accent: [P([11], 100, "#ffe7a8", 70), ...FAN(50, 240, "Yellow", "Open", 100)] },
-  { title: "O Haseena", theme: "Retro amber · ruby", look: "retro", shape: "line",
-    trigger: "the first guitar note", accentWhen: "the chorus",
-    kid: "Old-film colours: honey amber behind, ruby red from the bar above, little gold dots like a 70s dance floor.",
-    song: [FACE(75), P([5, 6], 80, "#d9822b"), P([7, 8], 70, "#9b1d42"), ...FAN(95, 205, "Amber", "Dots", 50)],
-    accent: [P([11], 40, "#ffd6a6", 40)] },
-  { title: "Ajeeb Daastaan", theme: "Champagne · lavender finale", look: "finale", shape: "arc",
-    trigger: "the first musical note", accentWhen: "the last chorus",
-    kid: "The grand finale: champagne gold behind, lavender from the bar above, and soft beams opening toward the audience.",
-    song: [FACE(85), P([5, 6], 75, "#d9b46b"), P([7, 8], 65, "#9a86d6"), P([12], 50, "#ffd8a0", 40), ...FAN(70, 245, "White", "Breakup", 40)],
-    accent: [P([11], 50, "#ffe7a8", 50), ...FAN(40, 250, "Lavender", "Breakup", 60)] }
+const FULL = 100, HALF = 50, OFF = 0;
+
+const FADERS = [
+  { n: 1, name: "HOSTS", swatch: ["#ffcf8f"],
+    plain: "Warm light on the front edge of the stage, where FK and Upasana stand to talk.",
+    tech: "Profiles 1–4, open white, 70%. Two focused on the front-left edge, two on the front-right edge, so the hosts are lit even when the curtain is closed behind them.",
+    groups: l => [P([3, 4], l, "#ffcf8f", 90)] },
+  { n: 2, name: "FACES", swatch: ["#fff1d6"],
+    plain: "Clean white light over the whole stage, so every child’s face can be seen and photographed.",
+    tech: "All White Pars, 100%. Even white over the full stage depth.",
+    groups: l => [P([1, 2], l, "#ffd6a6", 70), P([12], l * .6, "#ffffff", 80)] },
+  { n: 3, name: "PARTY PINK", colour: true, swatch: ["#e0218a", "#00c8d8"],
+    plain: "Hot pink from behind, bright blue from above. A dance party.",
+    tech: "Wing Pars magenta, Col Pars cyan, both 100%.",
+    groups: l => [P([5, 6], l * .9, "#e0218a"), P([7, 8], l * .8, "#00c8d8")] },
+  { n: 4, name: "TRICOLOUR", colour: true, swatch: ["#ff8a1a", "#ffffff", "#138808"],
+    plain: "Saffron on the left, green on the right, white from above. Proud and calm.",
+    tech: "Wing Pars: left half saffron, right half green. Col Pars white. All 100%.",
+    groups: l => [P([5], l * .9, "#ff8a1a"), P([6], l * .9, "#138808"), P([7, 8], l * .55, "#ffffff", 60)] },
+  { n: 5, name: "FIRE", colour: true, swatch: ["#c1121f", "#ff8c00"],
+    plain: "Red from behind, orange from above. Like a big fire.",
+    tech: "Wing Pars red, Col Pars orange, both 100%.",
+    groups: l => [P([5, 6], l, "#c1121f"), P([7, 8], l, "#ff8c00")] },
+  { n: 6, name: "BLUE & GOLD", colour: true, swatch: ["#1f4fd1", "#f4c430"],
+    plain: "Royal blue from behind, gold from above. A stadium on a big night.",
+    tech: "Wing Pars royal blue, Col Pars gold (deep amber-yellow), both 100%.",
+    groups: l => [P([5, 6], l * .9, "#1f4fd1"), P([7, 8], l * .7, "#f4c430")] },
+  { n: 7, name: "SUNSHINE", colour: true, swatch: ["#e0892f", "#ffd23f"],
+    plain: "Warm amber from behind, sunny yellow from above. A happy, sunny day.",
+    tech: "Wing Pars amber, Col Pars warm yellow, both 100%.",
+    groups: l => [P([5, 6], l * .8, "#e0892f"), P([7, 8], l * .65, "#ffd23f")] },
+  { n: 8, name: "MOONLIGHT", colour: true, swatch: ["#6a3fb5", "#4e7fd6"],
+    plain: "Purple from behind, cool blue from above. A quiet night sky.",
+    tech: "Wing Pars violet, Col Pars soft blue, both 100%.",
+    groups: l => [P([5, 6], l * .85, "#6a3fb5"), P([7, 8], l * .55, "#4e7fd6")] },
+  { n: 9, name: "GARDEN", colour: true, swatch: ["#5ad1a4", "#ffe6b3"],
+    plain: "Fresh mint green from behind, soft warm white from above. A garden in the morning.",
+    tech: "Wing Pars mint green, Col Pars warm white, both 100%.",
+    groups: l => [P([5, 6], l * .6, "#5ad1a4"), P([7, 8], l * .5, "#ffe6b3", 60)] },
+  { n: 10, name: "BEAMS", swatch: ["#ffffff"],
+    plain: "The moving lights on the top bar make white beams that sweep slowly across the stage.",
+    tech: "Spots 1–8, open white, no pattern, 80%, slow side-to-side sweep (about one sweep every 8 seconds). Over the stage only, never into the audience’s eyes.",
+    groups: l => FAN(70, 200, "White", "Breakup", l * .9) }
+];
+const faderOf = n => FADERS[n - 1];
+const COLOUR_FADERS = FADERS.filter(f => f.colour).map(f => f.n);
+
+const ACTS = [
+  { title: "Tauba Tauba, Urvashi Urvashi Mashup", colour: 3, beams: true, look: "dance", shape: "rows", open: true, first: "the first musical note" },
+  { title: "Bharat Humko Jaan Se Pyara Hai", colour: 4, look: "tricolor", shape: "line", first: "the first musical note" },
+  { title: "Drum Circle", colour: 5, beams: true, look: "drums", shape: "circle", first: "the first drum strike" },
+  { title: "Old Woman in a Shoe", colour: 7, look: "story", shape: "rows", first: "the first musical note" },
+  { title: "Mission Impossible", colour: 6, beams: true, look: "spy", shape: "rows", first: "the theme begins" },
+  { title: "We Are the Champions Mashup", colour: 6, beams: true, look: "stadium", shape: "rows", first: "the first vocal note" },
+  { title: "Raag Yaman", colour: 8, look: "raga", shape: "arc", first: "the first flute note" },
+  { title: "The Flute Song", colour: 9, look: "flute", shape: "arc", open: true, staysOpen: true, first: "the first musical note" },
+  { title: "Saiyaara", colour: 8, beams: true, look: "moon", shape: "rows", first: "the first musical note" },
+  { title: "G Minute", colour: 8, look: "strings", shape: "arc", first: "the first violin note" },
+  { title: "Ghar More Pardesiya & Moh Moh Ke Dhaage", colour: 7, look: "home", shape: "line", first: "the first vocal note" },
+  { title: "Challa — Jab Tak Hai Jaan", colour: 7, beams: true, look: "highway", shape: "rows", first: "the first guitar note" },
+  { title: "Chammak Challo Mashup", colour: 5, beams: true, look: "disco", shape: "rows", first: "the first musical note" },
+  { title: "Eye of the Tiger, Gehra Hua Mashup", colour: 5, beams: true, look: "tiger", shape: "rows", first: "the first guitar note" },
+  { title: "Dil Diya Hai Jaan Bhi Denge — Karma", colour: 4, look: "flag", shape: "line", first: "the first vocal note" },
+  { title: "How Long — Charlie Puth", colour: 3, beams: true, look: "neon", shape: "rows", first: "the first drum count" },
+  { title: "Final Countdown", colour: 6, beams: true, look: "countdown", shape: "rows", first: "the opening keyboard note" },
+  { title: "O Haseena", colour: 7, look: "retro", shape: "line", open: true, first: "the first guitar note" },
+  { title: "Ajeeb Daastaan", colour: 8, look: "finale", shape: "arc", first: "the first musical note" }
 ];
 
-function oneLook(label, theme, look, people, trigger, kid, groups, extra = {}) {
-  return { label, theme, look, kid, scene: { people, trigger, kid, groups }, ...extra };
+const step = (when, set, people, note = "") => ({ when, set, people, note });
+
+function actMoment(act, index) {
+  const colour = faderOf(act.colour);
+  const bow = act.staysOpen
+    ? "The song ends and the band bows. This time the curtain stays open."
+    : "The song ends, the band bows and the curtain starts to close.";
+  return {
+    label: act.title,
+    act: index + 1 + (index >= 9 ? 1 : 0),
+    look: act.look,
+    shape: act.shape,
+    sub: `${colour.name}${act.beams ? " + BEAMS" : ""}`,
+    kid: `${colour.plain}${act.beams ? " The white beams sweep over the band." : ""}`,
+    steps: [
+      step(act.open ? "The LED wall changes to the Names slide. The curtain is already open." : "The curtain starts to open, together with the Names slide on the LED wall.",
+        { [act.colour]: FULL }, "band", "Leave HOSTS up. The hosts are still on stage reading the names."),
+      step(`Both hosts have walked off and the band plays ${act.first}.`,
+        { 1: OFF, 2: FULL, ...(act.beams ? { 10: FULL } : {}) }, "band",
+        act.beams ? "This is the main picture for the whole song. Nothing else moves until the bow." : "No beams for this song. Keep it calm. Nothing else moves until the bow."),
+      step(bow, { [act.colour]: OFF, 2: OFF, 10: OFF, 1: FULL }, "hosts",
+        "Only HOSTS stays up. The hosts walk to the front and talk.")
+    ]
+  };
 }
 
-const LIGHT_BANKS = [
-  oneLook("Pre-show", "Soft welcome", "welcome", "none", "the doors open", "Soft warm glow so the stage looks ready but not busy.", [FACE(35), P([5, 6], 30, "#e0a050")]),
-  oneLook("Opening video", "Dark, so the film shows", "opening", "none", "the house lights go down and the opening video starts", "The stage stays almost dark so the LED film is the star.", [P([5, 6], 25, "#4b2a8a"), ...FAN(60, 40, "Yellow", "Open", 35)]),
-  oneLook("Hosts", "Warm circles on FK and Upasana", "welcome", "hosts", "FK and Upasana are talking", "Two warm circles on the hosts. The back of the stage stays dark so the crew can move. Use this same look every time the hosts talk.", HOSTS),
-  oneLook("Speech", "One light on the speaker", "welcome", "speaker", "the speaker reaches the podium", "One bright round light on the speaker in the middle.", [FACE(70), P([12], 90, "#ffd8a0", 70), P([5, 6], 20, "#1b2a5c")]),
-  oneLook("Lamp lighting", "Golden lamp glow", "diya", "lamp", "the guests reach the lamp", "Warm golden light, like the lamp itself is glowing.", [FACE(80), P([12], 90, "#ffb04a", 50), P([5, 6], 40, "#e0892f")]),
-  oneLook("Icebreaker", "Hosts, with a little colour", "welcome", "hosts", "the hosts start the audience icebreaker", "Hosts lit, with a little teal on the stage so it feels fun.", [...HOSTS, P([5, 6], 40, "#1e9a95"), P([11], 30, "#ffd6a6", 40)]),
-  ...ACT_LIGHTS.map((act, index) => oneLook(act.title, act.theme, act.look, "band", act.trigger, act.kid, act.song, {
-    act: index + 1 + (index >= 9 ? 1 : 0),
-    shape: act.shape
-  })),
-  oneLook("Felicitation", "Bright faces for photos", "finale", "crowd", "teachers and guests come on stage", "Bright and warm so every face looks good in photos.", [FACE(90), P([5, 6], 50, "#d9b46b"), P([7, 8], 40, "#9a86d6", 30)]),
-  oneLook("Vote of thanks", "One light on the speaker", "welcome", "speaker", "the speaker reaches the podium", "One clean light on the speaker.", [FACE(70), P([12], 90, "#ffd8a0", 70), P([5, 6], 20, "#1b2a5c")]),
-  oneLook("National anthem", "Plain white", "tricolor", "crowd", "the hosts ask everyone to stand", "Plain bright white. No colours, nothing moving.", [FACE(90), P([5, 6], 80, "#ffffff", 100), P([12], 70, "#ffffff", 100)]),
-  oneLook("Show end", "Soft goodbye", "welcome", "none", "the anthem ends and people start to leave", "Soft warm stage while people leave.", [FACE(40), P([5, 6], 20, "#e0a050")])
+const MOMENTS = [
+  { label: "Doors open", sub: "SUNSHINE at half", look: "welcome",
+    kid: "A soft, warm glow so the stage looks ready while people find their seats.",
+    steps: [step("The hall doors open and people start walking in.", { 7: HALF }, "none")] },
+  { label: "Opening video", sub: "Everything down", look: "opening",
+    kid: "The stage goes dark so the opening video on the LED wall is the star.",
+    steps: [step("The hall’s audience lights go down and the opening video starts on the LED wall.", { 7: OFF }, "none",
+      "Every fader is down now. That is correct.")] },
+  { label: "Hosts walk on", sub: "HOSTS", look: "welcome",
+    kid: "Two warm circles on FK and Upasana at the front.",
+    steps: [step("The stage manager says “Hosts, go.” FK and Upasana walk to the front.", { 1: FULL }, "hosts")] },
+  { label: "Sonal’s welcome & the lamp", sub: "FACES + SUNSHINE", look: "diya",
+    kid: "White light on the whole stage with a warm golden glow for the lamp lighting.",
+    steps: [
+      step("The hosts say “Please welcome — Sonal!” and walk off.", { 1: OFF, 2: FULL, 7: HALF }, "speaker"),
+      step("Sonal calls the guests up to light the lamp.", {}, "lamp")
+    ] },
+  { label: "Ice breaker & Snug film", sub: "HOSTS + FACES", look: "welcome",
+    kid: "The hosts at the front, and Joseph with his guitar lit behind them.",
+    steps: [
+      step("Sonal calls the hosts back on stage.", { 1: FULL, 7: OFF }, "hosts", "Leave FACES up. Joseph plays guitar behind the hosts and needs light."),
+      step("The Snug Cafe film and the sponsor pictures play on the LED wall.", {}, "hosts")
+    ] }
 ];
-LIGHT_BANKS.forEach((item, index) => { item.bank = index + 1; });
+ACTS.forEach((act, index) => {
+  MOMENTS.push(actMoment(act, index));
+  if (act.staysOpen) MOMENTS.push({
+    label: "Dance Academy launch film", sub: "Everything down", look: "opening",
+    kid: "The stage goes fully dark so the launch film fills the room.",
+    steps: [
+      step("FK says “Driver sahab — bus rokiye!” and the launch film starts on the LED wall.", { 1: OFF }, "none",
+        "Every fader is down now. The stage is dark for 47 seconds."),
+      step("The film ends on “Coming Soon”.", { 1: FULL }, "hosts", "The curtain closes now. The hosts talk in front of it.")
+    ]
+  });
+});
+MOMENTS.push(
+  { label: "Felicitation & vote of thanks", sub: "HOSTS + FACES + SUNSHINE", look: "finale",
+    kid: "Bright and warm so every teacher and guest looks good in the photos.",
+    steps: [
+      step("The hosts call the teachers and guests up for the Felicitation.", { 2: FULL, 7: HALF }, "crowd"),
+      step("Joseph steps up for the Vote of Thanks.", {}, "speaker")
+    ] },
+  { label: "National Anthem", sub: "HOSTS + FACES", look: "tricolor",
+    kid: "Plain white light. No colours, nothing moving.",
+    steps: [step("The hosts ask everyone to stand for the National Anthem.", { 7: OFF }, "crowd", "No colour during the anthem.")] },
+  { label: "Bloopers film", sub: "Everything down", look: "opening",
+    kid: "Dark, so the funny bloopers film on the LED wall is all anyone sees.",
+    steps: [step("The anthem ends. Two seconds later the bloopers film starts on the LED wall.", { 1: OFF, 2: OFF }, "none",
+      "Every fader is down now. That is correct.")] },
+  { label: "End credits & goodbye", sub: "FACES + SUNSHINE at half", look: "welcome",
+    kid: "Soft warm light so families can find their way out.",
+    steps: [step("The bloopers end on “Thank you!!!” and the end credits start.", { 2: HALF, 7: HALF }, "none",
+      "Leave these up until the hall is empty. The hall staff bring the audience lights up.")] }
+);
+
+(function replaySteps() {
+  let state = Array(11).fill(OFF);
+  MOMENTS.forEach((moment, index) => {
+    moment.n = index + 1;
+    moment.steps.forEach(item => {
+      item.before = state.slice();
+      Object.entries(item.set).forEach(([fader, level]) => { state[Number(fader)] = level; });
+      item.after = state.slice();
+      const colours = COLOUR_FADERS.filter(n => item.after[n] > 0);
+      if (colours.length > 1) console.warn(`Lights: two colour faders up at “${moment.label}”`, colours);
+    });
+  });
+})();
 
 let lx = loadLightsState();
 
 function loadLightsState() {
   try {
     const saved = JSON.parse(localStorage.getItem(LIGHTS_STATE_KEY) || "{}");
-    return { bank: clampBank(saved.bank || 1), displayBank: clampBank(saved.displayBank || saved.bank || 1), blackout: false };
+    return { moment: clampMoment(saved.moment || 1) };
   } catch {
-    return { bank: 1, displayBank: 1, blackout: false };
+    return { moment: 1 };
   }
 }
-function clampBank(value) { return Math.max(1, Math.min(LIGHT_BANKS.length, Number(value) || 1)); }
-function saveLightsState() {
-  localStorage.setItem(LIGHTS_STATE_KEY, JSON.stringify({ bank: lx.bank, displayBank: lx.displayBank }));
-}
+function clampMoment(value) { return Math.max(1, Math.min(MOMENTS.length, Number(value) || 1)); }
+function saveLightsState() { localStorage.setItem(LIGHTS_STATE_KEY, JSON.stringify({ moment: lx.moment })); }
 const pad2 = n => String(n).padStart(2, "0");
-const bankOf = n => LIGHT_BANKS[n - 1];
 const escLx = value => String(value).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[ch]);
 
 function sceneChannels(groups) {
@@ -192,8 +220,8 @@ function parLight(ch) {
   return { color: `rgb(${rr | 0},${gg | 0},${bb | 0})`, level };
 }
 
-function crowdSize(bank) {
-  const cast = typeof CAST !== "undefined" ? CAST[bank.label] : null;
+function crowdSize(label) {
+  const cast = typeof CAST !== "undefined" ? CAST[label] : null;
   return Math.max(3, Math.min(17, cast?.people?.length || 6));
 }
 
@@ -254,8 +282,9 @@ function ledWall(look) {
   return `<foreignObject x="285" y="52" width="430" height="196"><div xmlns="http://www.w3.org/1999/xhtml" class="lx-led-mini look-${look}"><div class="led-perform-art">${dots}</div></div></foreignObject>`;
 }
 
-function stageSimSvg(bank, scene, blackout) {
-  const ch = sceneChannels(scene.groups);
+let simRenderCount = 0;
+function stageSimSvg(moment, people, groups) {
+  const ch = sceneChannels(groups);
   const L = s => parLight(ch[s]);
   const front = [L(1), L(2)], back = [L(5), L(6)], side = [L(7), L(8)], host = [L(3), L(4)], blinder = L(11), centre = L(12);
   const faceLevel = Math.max(front[0].level, front[1].level);
@@ -281,20 +310,18 @@ function stageSimSvg(bank, scene, blackout) {
       ${hitsFloor ? goboMark(tx, ty, color, c.gobo, (level * .9).toFixed(2)) : ""}`;
   }).join("");
 
-  const n = crowdSize(bank);
   const rimColor = back[0].level >= back[1].level ? back[0].color : back[1].color;
   const bodyFill = mixHex("#17151d", faceColor, faceLevel * .38 + centre.level * .18 + sideLevel * .08);
   const rim = backLevel > .05 ? rimColor : "#2a2733";
+  const hostFill = mixHex("#17151d", host[0].color, Math.max(host[0].level, faceLevel) * .9);
+  const hosts = person(392, 452, hostFill, host[0].level > .05 ? "#ffcf8f" : "#2a2733", 1.12) + person(608, 452, hostFill, host[0].level > .05 ? "#ffcf8f" : "#2a2733", 1.12);
   let cast = "";
-  if (scene.people === "band") cast = performerSpots(n, bank.shape).map(([x, y]) => person(x, y, bodyFill, rim)).join("");
-  if (scene.people === "hosts") {
-    const hostFill = mixHex("#17151d", host[0].color, Math.max(host[0].level, faceLevel) * .9);
-    cast = person(392, 452, hostFill, "#ffcf8f", 1.12) + person(608, 452, hostFill, "#ffcf8f", 1.12);
-  }
-  if (scene.people === "speaker") cast = `<rect x="478" y="392" width="44" height="52" rx="4" fill="#3a2f26"/>` + person(500, 395, mixHex("#17151d", centre.color, centre.level), rim, 1.05);
-  if (scene.people === "lamp") cast = `<rect x="494" y="372" width="12" height="62" fill="#c9a24a"/><ellipse cx="500" cy="370" rx="22" ry="7" fill="#e0b85a"/><circle cx="500" cy="360" r="6" fill="#ffd36b"/>` +
-    [[420, 420], [460, 430], [545, 430], [585, 420]].map(([x, y]) => person(x, y, bodyFill, rim)).join("");
-  if (scene.people === "crowd") cast = performerSpots(12, "rows").map(([x, y]) => person(x, y, bodyFill, rim)).join("");
+  if (people === "band") cast = performerSpots(crowdSize(moment.label), moment.shape).map(([x, y]) => person(x, y, bodyFill, rim)).join("") + (host[0].level > .05 ? hosts : "");
+  if (people === "hosts") cast = hosts;
+  if (people === "speaker") cast = `<rect x="198" y="392" width="44" height="52" rx="4" fill="#3a2f26"/>` + person(220, 395, bodyFill, rim, 1.05);
+  if (people === "lamp") cast = `<rect x="494" y="372" width="12" height="62" fill="#c9a24a"/><ellipse cx="500" cy="370" rx="22" ry="7" fill="#e0b85a"/><circle cx="500" cy="360" r="6" fill="#ffd36b"/>` +
+    [[420, 420], [460, 430], [545, 430], [585, 420]].map(([x, y]) => person(x, y, bodyFill, rim)).join("") + person(220, 395, bodyFill, rim, 1.05);
+  if (people === "crowd") cast = performerSpots(12, "rows").map(([x, y]) => person(x, y, bodyFill, rim)).join("") + (host[0].level > .05 ? hosts : "");
 
   const heads = Array.from({ length: 22 }, (_, i) => {
     const x = 20 + i * 46 + (i % 2) * 8, y = 548 + (i % 3) * 6;
@@ -302,7 +329,7 @@ function stageSimSvg(bank, scene, blackout) {
   }).join("");
 
   const uid = `_${++simRenderCount}`;
-  return `<svg class="lx-sim-svg" viewBox="0 0 1000 560" role="img" aria-label="Simulated stage for ${escLx(bank.label)} — ${escLx(scene.name)}">
+  return `<svg class="lx-sim-svg" viewBox="0 0 1000 560" role="img" aria-label="What the stage looks like at this moment">
     <defs>
       ${glow("lxBackL", back[0])}${glow("lxBackR", back[1])}${glow("lxSideFloorL", { color: side[0].color, level: side[0].level * .6 })}${glow("lxSideFloorR", { color: side[1].color, level: side[1].level * .6 })}${glow("lxHostL", host[0])}${glow("lxHostR", host[1])}${glow("lxCentre", centre)}${glow("lxBlind", blinder)}
       ${beamGrad("lxSideL", side[0].color, side[0].level, 340, 28, 430, 420)}${beamGrad("lxSideR", side[1].color, side[1].level, 660, 28, 570, 420)}
@@ -312,9 +339,9 @@ function stageSimSvg(bank, scene, blackout) {
       <linearGradient id="lxFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d1a24"/><stop offset="1" stop-color="#2a2531"/></linearGradient>
     </defs>
     <rect width="1000" height="560" fill="#0c0b11"/>
-    ${ledWall(bank.look)}
+    ${ledWall(moment.look)}
     <rect x="285" y="52" width="430" height="196" fill="none" stroke="#000" stroke-width="6"/>
-    <text x="500" y="45" text-anchor="middle" fill="#8b8597" font-size="11" letter-spacing="3">LED WALL (separate system)</text>
+    <text x="500" y="45" text-anchor="middle" fill="#8b8597" font-size="11" letter-spacing="3">LED WALL</text>
     <polygon points="110,478 890,478 770,250 230,250" fill="url(#lxFloor)"/>
     <g style="mix-blend-mode:screen">
       <polygon points="350,30 370,30 470,330 250,330" fill="url(#lxCone5)"/>
@@ -343,244 +370,276 @@ function stageSimSvg(bank, scene, blackout) {
     ${[340, 420, 500, 580, 660].map(x => `<circle cx="${x}" cy="30" r="7" fill="#3a3744"/>`).join("")}
     <g style="mix-blend-mode:screen"><ellipse cx="500" cy="560" rx="620" ry="95" fill="url(#lxBlind)"/></g>
     ${heads}
-    ${blackout ? `<rect width="1000" height="560" fill="#000" opacity=".92"/><text x="500" y="420" text-anchor="middle" fill="#ff6b6b" font-size="22" font-weight="700" letter-spacing="4">BLACKOUT</text>` : ""}
   </svg>`.replace(/\b(lx[A-Z][A-Za-z0-9]*)\b/g, `$1${uid}`);
 }
-let simRenderCount = 0;
 
-const DEVICE_KEYS = {
-  bankup: "BANK ▲", bankdown: "BANK ▼", prog: "PROGRAM", midi: "MIDI/ADD", auto: "AUTO/DEL",
-  music: "MUSIC/BANK COPY", tap: "TAP/DISPLAY", blackout: "BLACKOUT", page: "PAGE SELECT", fade: "FADE TIME", speed: "SPEED"
-};
+const lookGroups = state => FADERS.flatMap(f => state[f.n] ? f.groups(state[f.n]) : []);
+const levelWord = level => level >= FULL ? "UP" : level > OFF ? "HALF" : "DOWN";
 
-function deviceSvg(highlight, faders, display, liveScene, blackout) {
-  const hl = key => highlight.includes(key) ? " hl" : "";
-  const btn = (key, x, y, w, h, label, extra = "") =>
-    `<g class="dev-btn${hl(key)}${extra}" aria-label="${escLx(label)}">
-      <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5"/>
-      <text x="${x + w / 2}" y="${y + h / 2 + 4}" text-anchor="middle">${label}</text></g>`;
-  const scanners = Array.from({ length: 12 }, (_, i) =>
-    btn(`sc${i + 1}`, 28 + (i % 6) * 48, 70 + Math.floor(i / 6) * 46, 38, 32, i + 1)).join("");
-  const scenes = Array.from({ length: 8 }, (_, i) =>
-    btn(`scene${i + 1}`, 28 + i * 36, 182, 30, 32, i + 1, liveScene === i + 1 && !blackout ? " live" : "")).join("");
-  const chases = Array.from({ length: 6 }, (_, i) => btn(`chase${i + 1}`, 28 + i * 48, 262, 38, 24, i + 1)).join("");
-  const faderEls = Array.from({ length: 8 }, (_, i) => {
-    const x = 362 + i * 40, v = faders?.[i] ?? 0, capY = 214 - v / 255 * 128;
-    return `<g class="dev-fader${hl(`f${i + 1}`)}">
-      <rect x="${x - 3}" y="86" width="6" height="150" rx="3" class="track"/>
-      <rect x="${x - 16}" y="${capY.toFixed(1)}" width="32" height="22" rx="4" class="cap"/>
-      <text x="${x}" y="268" text-anchor="middle" class="dev-small">${i + 1}</text>
-      ${faders ? `<text x="${x}" y="${(capY + 15).toFixed(1)}" text-anchor="middle" class="dev-cap-num">${v}</text>` : ""}</g>`;
+function legendLines(name) {
+  const words = name.split(" ");
+  if (words.length === 1) return [name];
+  return [words.slice(0, -1).join(" "), words[words.length - 1]];
+}
+
+function consoleSvg(before, after, options = {}) {
+  const changed = n => before[n] !== after[n];
+  const pageName = options.pageName || "SEASONS";
+  const x0 = 186, gap = 60;
+  const legends = FADERS.map((f, i) => {
+    const x = x0 + i * gap;
+    const lines = legendLines(f.name);
+    const bar = f.swatch.map((c, k) => `<rect x="${x - 25 + k * 50 / f.swatch.length}" y="62" width="${50 / f.swatch.length}" height="5" fill="${c}"/>`).join("");
+    return `<g class="tt-legend${changed(f.n) ? " hl" : ""}"><rect x="${x - 27}" y="28" width="54" height="42" rx="3"/>
+      ${lines.map((line, k) => `<text x="${x}" y="${(lines.length === 1 ? 50 : 44) + k * 11}" text-anchor="middle">${escLx(line)}</text>`).join("")}${bar}</g>`;
   }).join("");
-  const right = [["prog", "midi"], ["auto", "music"], ["bankup", "bankdown"], ["tap", "blackout"]].map((row, r) =>
-    row.map((key, c) => btn(key, 712 + c * 88, 118 + r * 42, 80, 32, DEVICE_KEYS[key].replace("MUSIC/BANK COPY", "BANK COPY"), key === "blackout" ? ` danger${blackout ? " live" : ""}` : "")).join("")).join("");
-  const slider = (key, x, label) => `<g class="dev-fader${hl(key)}"><text x="${x}" y="296" class="dev-label">${label}</text>
-    <rect x="${x}" y="304" width="120" height="6" rx="3" class="track"/><rect x="${x + (key === "fade" ? 30 : 60)}" y="299" width="16" height="16" rx="3" class="cap"/></g>`;
-  return `<svg class="lx-device-svg" viewBox="0 0 900 340" role="img" aria-label="Drawing of a generic DMX-512 192-channel controller">
-    <rect x="4" y="4" width="892" height="332" rx="18" class="dev-body"/>
-    <rect x="14" y="14" width="872" height="30" rx="8" class="dev-strip"/>
-    <text x="28" y="34" class="dev-brand">DMX-512 CONTROLLER</text>
-    <text x="872" y="34" text-anchor="end" class="dev-brand dim">192 CH · 12 SCANNERS × 16 CH · 30 BANKS × 8 SCENES</text>
-    <text x="28" y="62" class="dev-label">SCANNERS</text>${scanners}
-    <text x="28" y="174" class="dev-label">SCENES</text>${scenes}
-    <text x="28" y="254" class="dev-label">CHASE</text>${chases}
-    <text x="342" y="62" class="dev-label">FADERS · PAGE A = CH 1–8</text>${faderEls}
-    ${btn("page", 342, 282, 96, 26, "PAGE A/B")}
-    ${slider("speed", 470, "SPEED")}${slider("fade", 610, "FADE TIME")}
-    <rect x="712" y="56" width="168" height="52" rx="6" class="dev-lcd"/>
-    <text x="724" y="78" class="dev-lcd-text">${escLx(display[0])}</text>
-    <text x="724" y="99" class="dev-lcd-text small">${escLx(display[1])}</text>
-    ${right}
+  const faders = FADERS.map((f, i) => {
+    const x = x0 + i * gap;
+    const level = after[f.n], top = 168, bottom = 318;
+    const capY = bottom - (level / 100) * (bottom - top) - 13;
+    const hot = changed(f.n);
+    const fromY = bottom - (before[f.n] / 100) * (bottom - top);
+    const toY = bottom - (level / 100) * (bottom - top);
+    const arrow = hot ? `<path class="tt-arrow" d="M${x + 24} ${fromY.toFixed(1)} L${x + 24} ${(toY + (toY < fromY ? 8 : -8)).toFixed(1)}"/><path class="tt-arrow-head" d="M${x + 17} ${(toY + (toY < fromY ? 10 : -10)).toFixed(1)} L${x + 24} ${toY.toFixed(1)} L${x + 31} ${(toY + (toY < fromY ? 10 : -10)).toFixed(1)}Z"/>` : "";
+    return `<g class="tt-fader${hot ? " hl" : ""}${level ? " on" : ""}">
+      <rect x="${x - 15}" y="84" width="30" height="20" rx="3" class="tt-blue"/><circle cx="${x}" cy="94" r="3.5" class="tt-led"/>
+      <rect x="${x - 15}" y="108" width="30" height="20" rx="3" class="tt-grey"/>
+      <text x="${x}" y="150" text-anchor="middle" class="tt-num">${f.n}</text>
+      ${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(t => `<line x1="${x - 13}" x2="${x - 8}" y1="${top + t * 15}" y2="${top + t * 15}" class="tt-tick"/>`).join("")}
+      <rect x="${x - 3}" y="${top}" width="6" height="${bottom - top}" rx="3" class="tt-track"/>
+      ${arrow}
+      <rect x="${x - 17}" y="${capY.toFixed(1)}" width="34" height="26" rx="4" class="tt-cap"/>
+      <line x1="${x - 13}" x2="${x + 13}" y1="${(capY + 13).toFixed(1)}" y2="${(capY + 13).toFixed(1)}" class="tt-cap-line"/>
+      ${hot ? `<text x="${x}" y="350" text-anchor="middle" class="tt-word">${levelWord(level)}</text>` : ""}
+    </g>`;
+  }).join("");
+  return `<svg class="tt-svg" viewBox="0 0 800 362" role="img" aria-label="The ten faders of the Tiger Touch II at this moment">
+    <rect x="4" y="4" width="792" height="354" rx="16" class="tt-body"/>
+    <rect x="150" y="14" width="636" height="62" rx="6" class="tt-screen"/>
+    <text x="158" y="25" class="tt-screen-title">Page: ${escLx(pageName)}</text>
+    ${legends}
+    <text x="72" y="44" text-anchor="middle" class="tt-label">PLAYBACK PAGE</text>
+    <rect x="34" y="52" width="38" height="24" rx="3" class="tt-cream${options.pageKeys ? " hl" : ""}"/><rect x="74" y="52" width="38" height="24" rx="3" class="tt-cream${options.pageKeys ? " hl" : ""}"/>
+    <text x="53" y="68" text-anchor="middle" class="tt-key">−1</text><text x="93" y="68" text-anchor="middle" class="tt-key">+1</text>
+    <rect x="54" y="98" width="36" height="28" rx="3" class="tt-blue tt-dbo"/>
+    <text x="72" y="140" text-anchor="middle" class="tt-label danger">DON’T PRESS</text>
+    <text x="72" y="160" text-anchor="middle" class="tt-label">MASTER</text>
+    <rect x="69" y="168" width="6" height="150" rx="3" class="tt-track"/>
+    <rect x="55" y="155" width="34" height="26" rx="4" class="tt-cap tt-master${options.masterHl ? " hl" : ""}"/>
+    <text x="72" y="340" text-anchor="middle" class="tt-label gold">ALWAYS UP</text>
+    ${faders}
   </svg>`;
 }
 
-function faderText(group) {
-  const names = group.kind === "mover" ? MOVER_FADERS : PAR_FADERS;
-  return names.map((name, i) => `<span><em>F${i + 1}</em> ${name} <b>${group.values[i]}</b></span>`).join("");
-}
-function scannerLabel(list) { return list.map(s => `SCANNER ${s}`).join(" + "); }
-
-function handMoves(bank) {
-  const b = pad2(bank.bank);
-  const scene = bank.scene;
-  const show = [
-    {
-      title: "Match this screen",
-      text: `Press <b>BANK ▲</b> or <b>BANK ▼</b> until the green screen says <b>BANK ${b}</b>. Stop there. The lights do not change yet.`,
-      keys: ["bankup", "bankdown"],
-      display: [`BANK ${b}`, "READY"]
-    },
-    {
-      title: "Press this one button",
-      text: `When <b>${escLx(scene.trigger)}</b>, press <b>SCENE 1</b>. That is the only button for this look.`,
-      keys: ["scene1"],
-      display: [`BANK ${b}`, "SCENE 1"],
-      live: 1
-    }
-  ];
-  const save = [
-    {
-      title: "Open save mode",
-      text: "Hold <b>PROGRAM</b> for 3 seconds, until its light blinks.",
-      keys: ["prog"],
-      display: [`BANK ${b}`, "RECORD"]
-    },
-    {
-      title: "Use the top row of faders",
-      text: "Press <b>PAGE A/B</b> until <b>A</b> is lit. Faders 1 to 8 now match the names under each picture.",
-      keys: ["page"],
-      display: [`BANK ${b}`, "PAGE A"]
-    },
-    {
-      title: "Put every light at zero",
-      text: "Press all 12 <b>SCANNER</b> buttons so they light up. Pull all 8 faders down to <b>0</b>. Press the same 12 buttons again so they go dark.",
-      keys: RIG.map(fixture => `sc${fixture.s}`),
-      faders: [0, 0, 0, 0, 0, 0, 0, 0],
-      display: [`BANK ${b}`, "CLEAR"]
-    }
-  ];
-  scene.groups.forEach(group => {
-    save.push({
-      title: scannerLabel(group.scanners),
-      text: `${group.scanners.map(scanner => RIG[scanner - 1].name).join(" and ")}. Slide the faders until each cap shows the number below. Then press the same scanner button again so it goes dark.`,
-      detail: faderText(group),
-      keys: group.scanners.map(scanner => `sc${scanner}`),
-      faders: [...group.values, 0, 0].slice(0, 8),
-      display: [`BANK ${b}`, `SC ${group.scanners.join(" ")}`]
-    });
-  });
-  save.push({
-    title: "Store it on Scene 1",
-    text: "Press <b>MIDI/ADD</b>, then press <b>SCENE 1</b>. The buttons blink once. The look is saved.",
-    keys: ["midi", "scene1"],
-    display: [`BANK ${b}`, "SAVED"],
-    live: 1
-  });
-  save.push({
-    title: "Close save mode",
-    text: "Hold <b>PROGRAM</b> for 3 seconds again, until its light stops blinking.",
-    keys: ["prog"],
-    display: [`BANK ${b}`, "SCENE 1"],
-    live: 1
-  });
-  return { show, save };
+function changeLines(item) {
+  const ups = [], downs = [];
+  for (let n = 1; n <= 10; n++) {
+    const from = item.before[n], to = item.after[n];
+    if (from === to) continue;
+    const f = faderOf(n);
+    const label = `<b class="lx-chip" style="--sw:${f.swatch[0]}">${n} · ${escLx(f.name)}</b>`;
+    if (to === FULL) ups.push(`Push ${label} all the way <strong>up</strong>.`);
+    else if (to === OFF) downs.push(`Pull ${label} all the way <strong>down</strong>.`);
+    else (to > from ? ups : downs).push(`Slide ${label} ${to > from ? "up" : "down"} to the <strong>middle</strong>.`);
+  }
+  return [...ups, ...downs];
 }
 
-function moveCard(move, number) {
-  return `<article class="lx-move">
-    <div class="lx-move-copy"><i>${number}</i><div><b>${escLx(move.title)}</b><p>${move.text}</p>${move.detail ? `<div class="lx-faders">${move.detail}</div>` : ""}</div></div>
-    <div class="lx-move-board">${deviceSvg(move.keys, move.faders || null, move.display, move.live || 0, false)}</div>
+function stepCard(moment, item, index) {
+  const lines = changeLines(item);
+  return `<article class="lx-step">
+    <header class="lx-step-head"><i>${index + 1}</i><div><small>When</small><b>${escLx(item.when)}</b></div></header>
+    <div class="lx-step-body">
+      <div class="lx-step-do">
+        <small>Do this</small>
+        ${lines.length ? `<ul>${lines.map(line => `<li>${line}</li>`).join("")}</ul>${lines.length > 1 ? `<p class="lx-together">Move them together, slowly. Count “one-and-two” while you slide.</p>` : `<p class="lx-together">Slowly. Count “one-and-two” while you slide.</p>`}` : `<p class="lx-nothing">Nothing to move. Hands off, just watch.</p>`}
+        ${item.note ? `<p class="lx-step-note">${escLx(item.note)}</p>` : ""}
+      </div>
+      <figure class="lx-pic"><figcaption>Your faders after this step</figcaption>${consoleSvg(item.before, item.after)}</figure>
+      <figure class="lx-pic"><figcaption>What the stage looks like</figcaption>${stageSimSvg(moment, item.people, lookGroups(item.after))}</figure>
+    </div>
   </article>`;
+}
+
+const PHOTO_MARKS = [
+  { id: "A", ok: true, x: 19, y: 48, name: "The bottom of the screen", text: "Shows the page name and the name of each fader. Before the show it must say SEASONS." },
+  { id: "B", ok: true, x: 10.5, y: 58.5, name: "Playback Page −1 / +1", text: "Only before the show, to reach the SEASONS page. Never during the show." },
+  { id: "C", ok: true, x: 9.5, y: 77, name: "Master (one fader, far left)", text: "All the way up. Then never touch it again." },
+  { id: "D", ok: true, x: 50, y: 70.5, name: "Faders 1 to 10", text: "The only things you move during the show." },
+  { id: "1", ok: false, x: 10, y: 64.5, name: "Blue button above Master", text: "Can black out the whole stage in one press." },
+  { id: "2", ok: false, x: 31, y: 61, name: "Blue and grey buttons above each fader", text: "They flash lights on and off. Leave them alone." },
+  { id: "3", ok: false, x: 58.5, y: 73, name: "Three big round wheels", text: "They change colour and position. Programming only." },
+  { id: "4", ok: false, x: 74.6, y: 81, name: "Red GO button", text: "Not used in our show." },
+  { id: "5", ok: false, x: 83, y: 70, name: "Number keypad", text: "Programming only." },
+  { id: "6", ok: false, x: 92.8, y: 79.4, name: "Red Locate button", text: "Turns lights to plain white. Never press it." },
+  { id: "7", ok: false, x: 80, y: 18, name: "The faders at the top right", text: "A different set, called Preset Playbacks. Not ours." }
+];
+
+function photoHtml() {
+  return `<div class="lx-photo-wrap">
+    <figure class="lx-photo">
+      <img src="tiger-touch-ii.jpg" alt="The Avolites Tiger Touch II lighting console at the hall" loading="lazy">
+      ${PHOTO_MARKS.map(m => `<span class="lx-pin ${m.ok ? "ok" : "no"}" style="left:${m.x}%;top:${m.y}%">${m.id}</span>`).join("")}
+      <span class="lx-zone" style="left:13.5%;top:70%;width:36%;height:20%" aria-hidden="true"></span>
+    </figure>
+    <div class="lx-keys">
+      <div><h4 class="ok">Green = you touch these</h4>${PHOTO_MARKS.filter(m => m.ok).map(m => `<p><i class="lx-pin ok">${m.id}</i><span><b>${escLx(m.name)}</b>${escLx(m.text)}</span></p>`).join("")}</div>
+      <div><h4 class="no">Red = never touch</h4>${PHOTO_MARKS.filter(m => !m.ok).map(m => `<p><i class="lx-pin no">${m.id}</i><span><b>${escLx(m.name)}</b>${escLx(m.text)}</span></p>`).join("")}</div>
+    </div>
+  </div>`;
+}
+
+function setupHtml() {
+  const zero = Array(11).fill(OFF);
+  const checks = [
+    ["Find our page", "Look at the bottom of the screen. Today it says <b>Page 1: SHREE</b>. That is someone else’s show. Press <b>Playback Page +1</b> (or −1) until it says <b>SEASONS</b>. The fader names on the screen should now match the picture."],
+    ["Pull all ten faders down", "Pull faders 1 to 10 all the way down, towards you. In the photo, fader 1 is still pushed up from the last show. Pull it down too."],
+    ["Push the Master up", "The single fader on the far left, labelled <b>Master</b>, goes all the way up, away from you. It stays there all evening. If the Master is down, nothing lights, whatever else you do."],
+    ["Test, then reset", "Push fader 1 · HOSTS up and look at the stage: the front edge should glow warm. Pull it back down. Do the same for 2 · FACES. Now every fader is down again and you are ready."]
+  ];
+  return `<section class="lx-block">
+    <div class="lx-block-head"><span class="lx-tag prog">Before the doors open</span><h3>Two minutes, four checks</h3></div>
+    <div class="lx-setup">
+      <ol>${checks.map(([title, text], i) => `<li><i>${i + 1}</i><span><b>${title}</b>${text}</span></li>`).join("")}</ol>
+      <figure class="lx-pic"><figcaption>The board after the checks: page SEASONS, Master up, faders 1–10 down</figcaption>${consoleSvg(zero, zero, { pageKeys: true, masterHl: true })}</figure>
+    </div>
+  </section>`;
+}
+
+function fadersHtml() {
+  return `<section class="lx-block">
+    <div class="lx-block-head"><span class="lx-tag show">Your ten faders</span><h3>Each fader is one ready-made light</h3></div>
+    <p class="lx-lede">Think of the faders like the light switches at home, but with a dimmer. Up = on, down = off, middle = half. The hall’s light person has already saved a picture of light on each one. You never make colours yourself.</p>
+    <div class="lx-fader-grid">${FADERS.map(f => `<article class="lx-fcard${f.colour ? " colour" : ""}">
+      <div class="lx-fswatch${f.n === 10 ? " beam" : ""}">${f.swatch.map(c => `<i style="background:${c}"></i>`).join("")}</div>
+      <b><em>${f.n}</em>${escLx(f.name)}</b><p>${escLx(f.plain)}</p></article>`).join("")}</div>
+    <div class="lx-rules">
+      <p><b>Golden rule 1.</b> Only <b>one</b> colour fader (3 to 9) is ever up at a time. They all paint the same lights, so two at once would fight.</p>
+      <p><b>Golden rule 2.</b> Move slowly. Count “one-and-two” while you slide, so the light fades instead of jumping.</p>
+      <p><b>Golden rule 3.</b> Lost? Look at this page, find the moment, and make your faders match the picture. That always fixes it.</p>
+    </div>
+  </section>`;
+}
+
+function techHtml() {
+  return `<details class="lx-block lx-tech">
+    <summary><span class="lx-tag prog">For the hall’s light technician</span><b>Record these ten faders once, before the show</b></summary>
+    <ol class="lx-tech-steps">
+      <li>Use a <b>new, empty playback page</b>. Do not change “Page 1: SHREE”. Name the new page <b>SEASONS</b>.</li>
+      <li>Record each look below on playback faders 1 to 10 of that page. Set each fader’s legend to the name in capitals, so it shows on the screen above the fader.</li>
+      <li>Fade in and fade out about 2 seconds on every fader. No chases except the slow sweep on 10.</li>
+      <li>Faders 3 to 9 all use the same Wing Pars and Col Pars. The operator will only ever have one of them up.</li>
+      <li>If the audience lights are on this console, tell the operator. Otherwise the hall staff run them.</li>
+    </ol>
+    <table class="lx-rig"><thead><tr><th>Fader</th><th>Legend</th><th>What to record</th></tr></thead><tbody>
+      ${FADERS.map(f => `<tr><td><b>${f.n}</b></td><td><span class="lx-fswatch small">${f.swatch.map(c => `<i style="background:${c}"></i>`).join("")}</span>${escLx(f.name)}</td><td>${escLx(f.tech)}</td></tr>`).join("")}
+    </tbody></table>
+    <p class="lx-note">Fixture names are the ones on this console’s screen: Profile, White Par, Col Par, Wing Par, Spot. If the hall’s lights are arranged differently, keep the idea: 1 warm on the hosts, 2 white on the whole stage, 3–9 one colour picture each, 10 moving white beams.</p>
+  </details>`;
+}
+
+function troubleHtml() {
+  const rows = [
+    ["Everything went dark", "Check the <b>Master</b> on the far left is all the way up. Then look at the picture for this moment and match your faders."],
+    ["The colours look mixed or wrong", "Two colour faders are up. Pull every colour fader (3 to 9) down, then push up only the one in the picture."],
+    ["The screen shows a different page", "Someone pressed Playback Page. Press −1 or +1 until it says SEASONS again. The faders you have up keep working."],
+    ["The lights are flashing", "You pressed a button above a fader. Take your finger off. If it keeps flashing, call the hall’s light person."]
+  ];
+  return `<section class="lx-block">
+    <div class="lx-block-head"><span class="lx-tag warn">If something goes wrong</span><h3>Don’t panic. Every problem has one fix.</h3></div>
+    <div class="lx-trouble">${rows.map(([q, a]) => `<article><b>${q}</b><p>${a}</p></article>`).join("")}</div>
+  </section>`;
+}
+
+function railSwatches(moment) {
+  const last = moment.steps.reduce((best, item) => item.after.reduce((a, b) => a + b, 0) > best.after.reduce((a, b) => a + b, 0) ? item : best, moment.steps[0]);
+  const lit = FADERS.filter(f => last.after[f.n] > 0);
+  return lit.flatMap(f => f.swatch.slice(0, 1)).slice(0, 4);
 }
 
 function renderLights() {
   const root = document.getElementById("lightsConsole");
   if (!root) return;
-  const bank = bankOf(lx.bank);
-  const scene = bank.scene;
-  const hosts = LIGHT_BANKS.find(item => item.label === "Hosts");
-  const { show, save } = handMoves(bank);
-  const onLights = scene.groups.filter(group => group.values[group.kind === "mover" ? 4 : 0] > 0);
-  const lastByScanner = {};
-  onLights.forEach(group => group.scanners.forEach(scanner => { lastByScanner[scanner] = group; }));
+  const moment = MOMENTS[lx.moment - 1];
+  const prev = MOMENTS[lx.moment - 2], next = MOMENTS[lx.moment];
 
   root.innerHTML = `<div class="lx-page">
     <header class="lx-top">
       <div>
-        <div class="eyebrow">Lighting desk · one look each</div>
+        <div class="eyebrow">Lighting console · Avolites Tiger Touch II</div>
         <h1>Lights</h1>
-        <p>Each name in the list is <b>one</b> light look. Copy the board pictures with your hands. Yellow rings are the buttons to press. The fader caps show the exact height.</p>
+        <p>Never touched a lighting desk before? Good, this page is for you. You will only slide <b>ten faders</b>. For every moment of the show there is a picture of where each fader goes, and a picture of how the stage will look.</p>
       </div>
       <ol class="lx-how">
-        <li><i>1</i><span><b>On the show</b><br>Copy only the first two pictures.</span></li>
-        <li><i>2</i><span><b>Before Friday</b><br>Copy the save pictures once.</span></li>
-        <li><i>3</i><span><b>Hosts talking</b><br>Always Bank ${pad2(hosts.bank)}, Scene 1.</span></li>
+        <li><i>1</i><span><b>Meet the desk</b><br>Green is yours. Red is never.</span></li>
+        <li><i>2</i><span><b>Before doors</b><br>Four quick checks.</span></li>
+        <li><i>3</i><span><b>During the show</b><br>Pick the moment. Copy the faders.</span></li>
       </ol>
     </header>
 
-    <details class="lx-device-why">
-      <summary><b>Which board is this?</b> A generic black <b>DMX-512 192-channel controller</b>, the most common board in Indian halls. Tap to see which light is which scanner.</summary>
-      <div class="lx-why-grid">
-        <div>
-          <p>Think of <b>BANK</b> as a folder and <b>SCENE 1</b> as the one saved picture inside it. Every act has its own folder, and only one picture.</p>
-          <p>A <b>SCANNER</b> button chooses which light you are holding. The <b>faders</b> are that light’s sliders. You slide them only while saving, before the show.</p>
-        </div>
-        <table class="lx-rig"><thead><tr><th>Scanner</th><th>Light</th><th>DMX address</th></tr></thead><tbody>
-          ${RIG.map(fixture => `<tr><td><b>${fixture.s}</b></td><td>${fixture.name}<small>${fixture.where}</small></td><td>${(fixture.s - 1) * 16 + 1}</td></tr>`).join("")}
-        </tbody></table>
-      </div>
-      <p class="lx-note">Ask the hall’s light person to set each light’s address to the number above, so Scanner 1 really is the front wash. On a PAR light the faders are 1 Dimmer, 2 Red, 3 Green, 4 Blue, 5 White, 6 Strobe (leave it at 0). On a moving head they are 1 Pan, 2 Tilt, 3 Colour, 4 Gobo, 5 Dimmer, 6 Shutter. If that light’s paper says different numbers, follow the paper.</p>
-    </details>
+    <section class="lx-block">
+      <div class="lx-block-head"><span class="lx-tag show">Meet the desk</span><h3>This is the real desk at the hall</h3></div>
+      <p class="lx-lede">It has hundreds of buttons. You need almost none of them. Your hands only go to the green letters. The gold box is where you will spend the whole evening.</p>
+      ${photoHtml()}
+    </section>
 
-    <div class="lx-shell">
-      <aside class="lx-rail" aria-label="Looks">
-        ${LIGHT_BANKS.map(item => {
-          const colors = [...new Set(item.scene.groups.filter(group => group.kind === "par" && group.values[0] > 0 && !group.scanners.includes(1)).map(group => `rgb(${group.values[1]},${group.values[2]},${group.values[3]})`))].slice(0, 3);
-          return `<button class="lx-bank${item.bank === lx.bank ? " active" : ""}" data-bank="${item.bank}">
-            <span class="lx-bank-num">${pad2(item.bank)}</span>
-            <span class="lx-bank-copy"><b>${item.act ? `Act ${item.act} · ` : ""}${escLx(item.label)}</b><small>${escLx(item.theme)}</small></span>
-            <span class="lx-swatches">${colors.map(color => `<i style="background:${color}"></i>`).join("")}</span></button>`;
-        }).join("")}
-      </aside>
+    ${setupHtml()}
+    ${fadersHtml()}
 
-      <section class="lx-main">
-        <div class="lx-act-head">
-          <div>
-            <div class="eyebrow">Bank ${pad2(bank.bank)} · Scene 1 only${bank.act ? ` · Act ${bank.act}` : ""}</div>
-            <h2>${escLx(bank.label)}</h2>
-            <p class="lx-kid">${escLx(scene.kid)}</p>
+    <section class="lx-block" id="lxShow">
+      <div class="lx-block-head"><span class="lx-tag show">During the show</span><h3>Moment by moment</h3></div>
+      <p class="lx-lede">Pick the moment on the left (or press the ← → keys). Each card tells you <b>when</b> to move, <b>what</b> to move, and shows the result.</p>
+      <div class="lx-shell">
+        <aside class="lx-rail" aria-label="Moments">
+          ${MOMENTS.map(m => `<button class="lx-bank${m.n === lx.moment ? " active" : ""}" data-moment="${m.n}">
+            <span class="lx-bank-num">${pad2(m.n)}</span>
+            <span class="lx-bank-copy"><b>${m.act ? `Act ${m.act} · ` : ""}${escLx(m.label)}</b><small>${escLx(m.sub)}</small></span>
+            <span class="lx-swatches">${railSwatches(m).map(color => `<i style="background:${color}"></i>`).join("")}</span></button>`).join("")}
+        </aside>
+        <div class="lx-main">
+          <div class="lx-act-head">
+            <div class="eyebrow">Moment ${pad2(moment.n)} of ${MOMENTS.length}${moment.act ? ` · Act ${moment.act}` : ""}</div>
+            <h2>${escLx(moment.label)}</h2>
+            <p class="lx-kid">${escLx(moment.kid)}</p>
           </div>
+          ${moment.steps.map((item, index) => stepCard(moment, item, index)).join("")}
+          <nav class="lx-pager">
+            ${prev ? `<button data-moment="${prev.n}">← ${escLx(prev.label)}</button>` : "<span></span>"}
+            ${next ? `<button class="next" data-moment="${next.n}">Next: ${escLx(next.label)} →</button>` : "<span></span>"}
+          </nav>
         </div>
+      </div>
+    </section>
 
-        <figure class="lx-sim">
-          ${stageSimSvg(bank, scene, lx.blackout)}
-          <figcaption>
-            <span class="lx-live-dot"></span> This is the only look. Press <b>Scene 1</b> when <b>${escLx(scene.trigger)}</b>.
-          </figcaption>
-        </figure>
-
-        <div class="lx-chips">
-          ${Object.keys(lastByScanner).length ? Object.entries(lastByScanner).map(([scanner, group]) => {
-            const color = group.kind === "mover" ? WHEEL[group.colour][1] : `rgb(${Math.min(255, group.values[1] + group.values[4])},${Math.min(255, group.values[2] + group.values[4])},${Math.min(255, group.values[3] + group.values[4])})`;
-            const level = Math.round((group.kind === "mover" ? group.values[4] : group.values[0]) / 2.55);
-            return `<span><i style="background:${color}"></i>S${scanner} ${RIG[scanner - 1].name}${group.kind === "mover" ? ` · ${group.gobo.toLowerCase()}` : ""} <b>${level}%</b></span>`;
-          }).join("") : "<span>All lights off</span>"}
-        </div>
-
-        <section class="lx-copy">
-          <h3><span class="lx-tag show">On the show</span> Copy these two pictures</h3>
-          ${show.map((move, index) => moveCard(move, index + 1)).join("")}
-        </section>
-        <section class="lx-copy">
-          <h3><span class="lx-tag prog">Before Friday</span> Copy these pictures once, then never during the song</h3>
-          ${save.map((move, index) => moveCard(move, index + 1)).join("")}
-        </section>
-      </section>
-    </div>
+    ${troubleHtml()}
+    ${techHtml()}
   </div>`;
 
-  root.querySelectorAll("[data-bank]").forEach(button => button.addEventListener("click", () => selectBank(Number(button.dataset.bank))));
-  const rail = root.querySelector(".lx-rail"), activeBank = root.querySelector(".lx-bank.active");
-  if (rail && activeBank) {
-    if (rail.scrollWidth > rail.clientWidth + 4) rail.scrollLeft = activeBank.offsetLeft - rail.clientWidth / 2 + activeBank.offsetWidth / 2;
-    else rail.scrollTop = activeBank.offsetTop - rail.clientHeight / 2 + activeBank.offsetHeight / 2;
+  root.querySelectorAll("[data-moment]").forEach(button => button.addEventListener("click", () => {
+    const fromPager = button.closest(".lx-pager");
+    selectMoment(Number(button.dataset.moment));
+    if (fromPager) document.querySelector("#lxShow")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }));
+  const rail = root.querySelector(".lx-rail"), active = root.querySelector(".lx-bank.active");
+  if (rail && active) {
+    if (rail.scrollWidth > rail.clientWidth + 4) rail.scrollLeft = active.offsetLeft - rail.clientWidth / 2 + active.offsetWidth / 2;
+    else rail.scrollTop = active.offsetTop - rail.clientHeight / 2 + active.offsetHeight / 2;
   }
 }
 
-function selectBank(n) {
-  lx.bank = clampBank(n);
-  lx.displayBank = lx.bank;
-  lx.blackout = false;
-  commitLights();
+function selectMoment(n) {
+  lx.moment = clampMoment(n);
+  saveLightsState();
+  const y = window.scrollY;
+  renderLights();
+  window.scrollTo(0, y);
 }
-
-function commitLights() { saveLightsState(); renderLights(); }
 
 document.addEventListener("keydown", event => {
   if (!document.getElementById("lightsView")?.classList.contains("active")) return;
   if (event.target.closest("input,textarea,select,[contenteditable]")) return;
-  if (event.key === "ArrowRight") { event.preventDefault(); selectBank(lx.bank + 1); }
-  else if (event.key === "ArrowLeft") { event.preventDefault(); selectBank(lx.bank - 1); }
+  if (event.key === "ArrowRight") { event.preventDefault(); selectMoment(lx.moment + 1); }
+  else if (event.key === "ArrowLeft") { event.preventDefault(); selectMoment(lx.moment - 1); }
 });
 
 window.lightsRenderConsole = renderLights;
