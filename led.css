@@ -278,6 +278,9 @@
 .sponsor-video-scene{background:#090c07}
 .sponsor-film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .sponsor-film-frame{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 1px #fff2,inset 0 0 100px #0008}
+.bloopers-scene{background:#fff}
+.bloopers-film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;background:#fff}
+.led-screen:has(.bloopers-scene):after{display:none}
 .sponsor-image-scene{background:#f4e4bd}
 .sponsor-image-scene:before{content:"";position:absolute;inset:-5%;background:url("sponsors/snug-landscape.jpg") center/cover;filter:blur(32px) saturate(.8);opacity:.42;transform:scale(1.08)}
 .sponsor-image-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,#fff7dfaa,transparent 64%),linear-gradient(90deg,#24391555,transparent 20% 80%,#24391555)}

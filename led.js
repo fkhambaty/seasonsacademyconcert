@@ -79,7 +79,8 @@ const LED_CUES = [
   ...TEACHERS.map(teacher => ({...teacher,id:`teacher-${teacher.id}`,group:"Finale",title:`Honouring · ${teacher.name}`,trigger:`${teacher.name} is called`,scene:"teacher"})),
   {id:"thanks",group:"Finale",title:"Vote of Thanks",trigger:"Joseph steps up to the microphone",scene:"perform",headline:"Vote of Thanks",subline:"Joseph",loop:"loops/thanks-sunset.mp4"},
   {id:"anthem",group:"Finale",title:"National Anthem",trigger:"The hosts say: please rise for the National Anthem",scene:"anthem",loop:"loops/indian-flag.mp4"},
-  {id:"credits",group:"Finale",title:"End credits",trigger:"The National Anthem has finished. Leave the volume up",scene:"credits",music:"loops/credits-goodbye.mp3"}
+  {id:"bloopers",group:"Finale",title:"Bloopers",trigger:"The National Anthem has finished. Wait two seconds, then press this. Leave the volume up",scene:"bloopers",film:"loops/bloopers.mp4",music:"loops/bloopers.mp4",musicLoop:false},
+  {id:"credits",group:"Finale",title:"End credits",trigger:"The bloopers have finished on Thank you. Leave the volume up",scene:"credits",music:"loops/credits-goodbye.mp3"}
 ];
 
 const LED_CREDITS = [
@@ -172,6 +173,9 @@ function performHtml(cue) {
 function sponsorVideoHtml(cue) {
   return `<div class="led-scene sponsor-video-scene"><video class="sponsor-film" src="${cue.film}" autoplay muted playsinline preload="auto"></video><div class="sponsor-film-frame"></div></div>`;
 }
+function bloopersHtml(cue) {
+  return `<div class="led-scene bloopers-scene"><video class="bloopers-film" src="${cue.film}" autoplay muted playsinline preload="auto"></video></div>`;
+}
 
 function partnersHtml() {
   return `<div class="led-scene partners-scene"><p class="partners-head">Musicale 2026 · Our Community Partners</p><div class="partners-row">${PARTNERS.map(partner => `<figure class="partner-card"><img src="${partner.image}" alt="${escapeHtml(partner.name)}"></figure>`).join("")}</div></div>`;
@@ -247,6 +251,7 @@ function ledSceneHtml(cue) {
   if (cue.scene === "credits") return creditsHtml();
   if (cue.scene === "anthem") return `<div class="led-scene led-perform led-loop-scene led-anthem"><video class="led-loop" src="${cue.loop}" autoplay muted loop playsinline preload="auto"></video></div>`;
   if (cue.scene === "intro") return introHtml(cue);
+  if (cue.scene === "bloopers") return bloopersHtml(cue);
   if (cue.scene === "sponsor-video" || cue.scene === "launch-video") return sponsorVideoHtml(cue);
   if (cue.scene === "sponsor-image") return sponsorImageHtml(cue);
   if (cue.scene === "partners") return partnersHtml();
@@ -343,6 +348,7 @@ function ledAudienceLine(cue) {
   if (cue.scene === "partners") return "one slide with three equal blocks, left to right: Aahaar Nutrition, Bodh Career & Coaching, Sonal's Classes";
   if (cue.scene === "teacher") return `${cue.name}, ${cue.role}${cue.photo ? ", with their photograph" : ", on a formal name card"}`;
   if (cue.scene === "anthem") return "only the Indian flag, full screen, until the anthem ends";
+  if (cue.scene === "bloopers") return "the full-screen bloopers film with its own sound, from “We Practiced… We Swear!!!” to “Thank you!!!”. It plays once and holds the last card until you press Next";
   if (cue.scene === "credits") return "the thank-you names roll up with the goodbye music, then the last card stays until you press Next";
   if (cue.scene === "perform") return `looping music video with the Seasons logo, for ${cue.headline}`;
   return cue.headline || cue.title;
@@ -356,12 +362,12 @@ function ledGroupHtml(group, cues) {
     : group.startsWith("Launch")
       ? "Big moment. Volume all the way up. Press this the moment FK stops the bus. The film plays once and freezes on “Coming Soon”. Wait for the hosts to finish the launch lines, then go to the Saiyaara Names card."
     : group === "Finale"
-      ? "Felicitation first, then advance the eight teacher cards one at a time as each name is called. Vote of Thanks follows, then National Anthem, then End credits."
+      ? "Felicitation first, then advance the eight teacher cards one at a time as each name is called. Vote of Thanks follows, then National Anthem, then Bloopers, then End credits."
       : "Play the opening first and turn the volume up. That picture has music. Then keep the holding screen until the hosts walk on.";
   return `<section class="led-section"><h2>${escapeHtml(group)}</h2><p>${hint}</p><div class="led-cue-grid">${cues.map(cue => {
     const index = LED_CUES.indexOf(cue);
     const preview = cue.scene === "perform" ? `<span class="led-mini-look look-${cue.look}" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></span>` : "";
-    return `<button type="button" class="led-cue${cue.scene === "perform" || cue.scene === "anthem" || cue.scene === "credits" || cue.scene === "sponsor-video" || cue.scene === "launch-video" ? " is-song" : ""}${index === ledCurrentIndex ? " on" : ""}" data-led-index="${index}"><b>${index + 1}</b><strong>${escapeHtml(cue.title)}</strong><span>Audience sees: ${escapeHtml(ledAudienceLine(cue))}</span><em>Click when: ${escapeHtml(cue.trigger)}</em>${preview}</button>`;
+    return `<button type="button" class="led-cue${cue.scene === "perform" || cue.scene === "anthem" || cue.scene === "credits" || cue.scene === "bloopers" || cue.scene === "sponsor-video" || cue.scene === "launch-video" ? " is-song" : ""}${index === ledCurrentIndex ? " on" : ""}" data-led-index="${index}"><b>${index + 1}</b><strong>${escapeHtml(cue.title)}</strong><span>Audience sees: ${escapeHtml(ledAudienceLine(cue))}</span><em>Click when: ${escapeHtml(cue.trigger)}</em>${preview}</button>`;
   }).join("")}</div></section>`;
 }
 
@@ -374,7 +380,7 @@ window.ledRenderConsole = function renderLedConsole() {
     (all[cue.group] ||= []).push(cue);
     return all;
   }, {});
-  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>For every student act: <b>Names</b> opens the curtain, then <b>Song</b> starts only after the hosts clear. The sponsor is the one exception and has three clearly labelled moments. The first sponsor film has sound and plays once; press Next when it ends. During felicitation, advance through the eight teacher cards only as each name is called. After the anthem, the credits roll with the goodbye song. Press <b>P</b> once to project. Opening this show with the passcode saves all media on this laptop; wait for the saved message before leaving reliable wifi.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
+  root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>For every student act: <b>Names</b> opens the curtain, then <b>Song</b> starts only after the hosts clear. The sponsor is the one exception and has three clearly labelled moments. The first sponsor film has sound and plays once; press Next when it ends. During felicitation, advance through the eight teacher cards only as each name is called. After the anthem, play the bloopers, then the credits roll with the goodbye song. Press <b>P</b> once to project. Opening this show with the passcode saves all media on this laptop; wait for the saved message before leaving reliable wifi.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
     <div class="led-how"><article><b>1</b><strong>Open this tab on the LED</strong><span>Or allow Chrome’s screen permission so P can use the second display.</span></article><article><b>2</b><strong>Select the cue</strong><span>Pale card for the names. Dark card for the song. Nothing else to press during host talk.</span></article><article><b>3</b><strong>Press P once</strong><span>That picture fills the screen immediately. No second window or click.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. The cue list comes back.</span></article></div>
     <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong>${current.music ? `<small>Audio · ${escapeHtml(current.music.replace("loops/", "").replace("sponsors/", ""))}</small>` : current.loop ? `<small>Song video · ${escapeHtml(current.loop.replace("loops/", ""))}</small>` : ""}</div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
     <div class="led-controls"><button type="button" id="ledPrevBtn">← Previous</button><button type="button" class="next" id="ledNextBtn">Next cue →</button><button type="button" id="ledReplayBtn"><kbd>R</kbd> Replay</button><button type="button" id="ledHoldBtn"><kbd>H</kbd> Safe holding image</button></div>
