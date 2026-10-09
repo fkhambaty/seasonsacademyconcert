@@ -49,11 +49,17 @@ const TEACHERS = [
   {id:"vinay", name:"Vinay Rao", role:"Guitar", photo:"teachers/vinay-rao.jpg", position:"50% 26%"},
   {id:"joseph", name:"Joseph Sunil Kumar", role:"Guitar & Keyboard", photo:"teachers/joseph-sunil-kumar.jpg", position:"50% 28%"}
 ];
+const CHAMPIONS_TRACK = "loops/champions-mashup.mp3";
 const actCues = ([id, act, look, bpm, headline, subline, firstNote, number]) => {
   const group = `Act ${number} · ${headline}`;
+  const play = {id:`play-${id}`,group,title:`Song · ${headline}`,trigger:`The ${firstNote} starts`,scene:"perform",act,look,bpm,headline,subline,loop:ledLoopSrc(id)};
+  if (id === "champions") {
+    play.music = CHAMPIONS_TRACK;
+    play.trigger = "After the names, when the Now playing picture goes up and the first vocal note starts. Leave the volume up. This mashup loops until you press Next";
+  }
   return [
     {id:`names-${id}`,group,title:`Names · ${headline}`,trigger:"Upasana begins reading names and the curtain opens",scene:"names",act,loop:ledLoopSrc(id)},
-    {id:`play-${id}`,group,title:`Song · ${headline}`,trigger:`The ${firstNote} starts`,scene:"perform",act,look,bpm,headline,subline,loop:ledLoopSrc(id)}
+    play
   ];
 };
 const LED_CUES = [
@@ -350,12 +356,15 @@ function ledAudienceLine(cue) {
   if (cue.scene === "anthem") return "only the Indian flag, full screen, until the anthem ends";
   if (cue.scene === "bloopers") return "the bloopers film in a gold frame, with the Seasons logo beneath it. It plays once, with its own sound, and holds on “Thank you!!!” until you press Next";
   if (cue.scene === "credits") return "the thank-you names roll up with the goodbye music, then the last card stays until you press Next";
+  if (cue.scene === "perform" && cue.music) return `the Now playing picture for ${cue.headline}, with the mashup track looping underneath`;
   if (cue.scene === "perform") return `looping music video with the Seasons logo, for ${cue.headline}`;
   return cue.headline || cue.title;
 }
 
 function ledGroupHtml(group, cues) {
-  const hint = group.startsWith("Act ")
+  const hint = group.includes("We Are the Champions")
+    ? "Two buttons only. Pale Names card first, while Upasana reads the names. No music yet. Dark Song card after the names, when the Now playing picture goes up. That card plays the mashup on a loop. Leave the volume up until you press Next."
+    : group.startsWith("Act ")
     ? "Two buttons only. Pale card first, while Upasana reads the names. Dark Song card when the band plays the first note."
     : group.startsWith("Sponsor")
       ? "Sponsor exception. Open the curtain on the first card, then follow the host script. Snug Cafe first, then the community partners slide. Never place a sponsor card between a Names card and its Song card."
@@ -382,7 +391,7 @@ window.ledRenderConsole = function renderLedConsole() {
   }, {});
   root.innerHTML = `<div class="led-console-head"><div><div class="eyebrow">Dedicated LED operator</div><h1>Audience screen</h1><p>For every student act: <b>Names</b> opens the curtain, then <b>Song</b> starts only after the hosts clear. The sponsor is the one exception and has three clearly labelled moments. The first sponsor film has sound and plays once; press Next when it ends. During felicitation, advance through the eight teacher cards only as each name is called. After the anthem, play the bloopers, then the credits roll with the goodbye song. Press <b>P</b> once to project. Opening this show with the passcode saves all media on this laptop; wait for the saved message before leaving reliable wifi.</p></div><div class="led-launch"><button type="button" class="project" id="ledOpenBtn"><kbd>P</kbd> Project selected cue</button><button type="button" class="stop" id="ledStopBtn"><kbd>Esc</kbd> Stop projecting</button></div></div>
     <div class="led-how"><article><b>1</b><strong>Open this tab on the LED</strong><span>Or allow Chrome’s screen permission so P can use the second display.</span></article><article><b>2</b><strong>Select the cue</strong><span>Pale card for the names. Dark card for the song. Nothing else to press during host talk.</span></article><article><b>3</b><strong>Press P once</strong><span>That picture fills the screen immediately. No second window or click.</span></article><article><b>4</b><strong>To stop</strong><span>Press <kbd>Escape</kbd>. The cue list comes back.</span></article></div>
-    <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong>${current.music ? `<small>Audio · ${escapeHtml(current.music.replace("loops/", "").replace("sponsors/", ""))}</small>` : current.loop ? `<small>Song video · ${escapeHtml(current.loop.replace("loops/", ""))}</small>` : ""}</div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
+    <div class="led-status"><div><small>Currently selected · cue ${ledCurrentIndex + 1} of ${LED_CUES.length}</small><strong>${escapeHtml(current.title)}</strong>${current.music ? `<small>Audio · ${escapeHtml(current.music.replace("loops/", "").replace("sponsors/", ""))}${current.musicLoop === false || current.scene === "credits" ? " · plays once" : " · loops"}</small>` : ""}${!current.music && current.loop ? `<small>Song video · ${escapeHtml(current.loop.replace("loops/", ""))}</small>` : ""}</div><span class="led-live-dot${ledConnected ? " connected" : ""}">${ledConnected ? "Audience window connected" : "Audience window not detected"}</span></div>
     <div class="led-controls"><button type="button" id="ledPrevBtn">← Previous</button><button type="button" class="next" id="ledNextBtn">Next cue →</button><button type="button" id="ledReplayBtn"><kbd>R</kbd> Replay</button><button type="button" id="ledHoldBtn"><kbd>H</kbd> Safe holding image</button></div>
     ${Object.entries(groups).map(([group,cues]) => ledGroupHtml(group,cues)).join("")}`;
 };
