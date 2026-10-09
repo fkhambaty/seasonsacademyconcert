@@ -174,7 +174,7 @@ function sponsorVideoHtml(cue) {
   return `<div class="led-scene sponsor-video-scene"><video class="sponsor-film" src="${cue.film}" autoplay muted playsinline preload="auto"></video><div class="sponsor-film-frame"></div></div>`;
 }
 function bloopersHtml(cue) {
-  return `<div class="led-scene bloopers-scene"><video class="bloopers-film" src="${cue.film}" autoplay muted playsinline preload="auto"></video></div>`;
+  return `<div class="led-scene bloopers-scene"><div class="bloopers-stage"><div class="bloopers-frame"><video class="bloopers-film" src="${cue.film}" autoplay muted playsinline preload="auto"></video></div><footer class="bloopers-brand"><span class="bloopers-crest"><img src="logo-mark.svg" alt=""></span><span><b>Seasons</b><small>Music Academy</small></span></footer></div></div>`;
 }
 
 function partnersHtml() {
@@ -348,7 +348,7 @@ function ledAudienceLine(cue) {
   if (cue.scene === "partners") return "one slide with three equal blocks, left to right: Aahaar Nutrition, Bodh Career & Coaching, Sonal's Classes";
   if (cue.scene === "teacher") return `${cue.name}, ${cue.role}${cue.photo ? ", with their photograph" : ", on a formal name card"}`;
   if (cue.scene === "anthem") return "only the Indian flag, full screen, until the anthem ends";
-  if (cue.scene === "bloopers") return "the full-screen bloopers film with its own sound, from “We Practiced… We Swear!!!” to “Thank you!!!”. It plays once and holds the last card until you press Next";
+  if (cue.scene === "bloopers") return "the bloopers film in a gold frame, with the Seasons logo beneath it. It plays once, with its own sound, and holds on “Thank you!!!” until you press Next";
   if (cue.scene === "credits") return "the thank-you names roll up with the goodbye music, then the last card stays until you press Next";
   if (cue.scene === "perform") return `looping music video with the Seasons logo, for ${cue.headline}`;
   return cue.headline || cue.title;

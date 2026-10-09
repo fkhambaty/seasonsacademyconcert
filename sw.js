@@ -4,10 +4,10 @@ const CACHE = "seasons-show-v8";
 const SHELL = [
   "./",
   "./index.html",
-  "./led.css?v=23",
+  "./led.css?v=24",
   "./lights.css?v=3",
   "./opening.js?v=4",
-  "./led.js?v=29",
+  "./led.js?v=30",
   "./lights.js?v=5",
   "./logo.png",
   "./logo-mark.svg",
